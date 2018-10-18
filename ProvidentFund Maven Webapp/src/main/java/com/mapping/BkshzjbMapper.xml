@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.BkshzjbMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.BkshzjbKey" >
+    <id column="shbh" property="shbh" jdbcType="INTEGER" />
+    <id column="dkxxbh" property="dkxxbh" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.entity.BkshzjbKey" >
+    delete from bkshzjb
+    where shbh = #{shbh,jdbcType=INTEGER}
+      and dkxxbh = #{dkxxbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.BkshzjbKey" >
+    insert into bkshzjb (shbh, dkxxbh)
+    values (#{shbh,jdbcType=INTEGER}, #{dkxxbh,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.BkshzjbKey" >
+    insert into bkshzjb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shbh != null" >
+        shbh,
+      </if>
+      <if test="dkxxbh != null" >
+        dkxxbh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shbh != null" >
+        #{shbh,jdbcType=INTEGER},
+      </if>
+      <if test="dkxxbh != null" >
+        #{dkxxbh,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

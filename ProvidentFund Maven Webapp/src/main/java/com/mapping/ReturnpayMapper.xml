@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.ReturnpayMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Returnpay" >
+    <id column="chbh" property="chbh" jdbcType="INTEGER" />
+    <result column="grzhbhs" property="grzhbhs" jdbcType="INTEGER" />
+    <result column="chje" property="chje" jdbcType="DECIMAL" />
+    <result column="shjn" property="shjn" jdbcType="DECIMAL" />
+    <result column="chsj" property="chsj" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    chbh, grzhbhs, chje, shjn, chsj
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from returnpay
+    where chbh = #{chbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from returnpay
+    where chbh = #{chbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Returnpay" >
+    insert into returnpay (chbh, grzhbhs, chje, 
+      shjn, chsj)
+    values (#{chbh,jdbcType=INTEGER}, #{grzhbhs,jdbcType=INTEGER}, #{chje,jdbcType=DECIMAL}, 
+      #{shjn,jdbcType=DECIMAL}, #{chsj,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Returnpay" >
+    insert into returnpay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="chbh != null" >
+        chbh,
+      </if>
+      <if test="grzhbhs != null" >
+        grzhbhs,
+      </if>
+      <if test="chje != null" >
+        chje,
+      </if>
+      <if test="shjn != null" >
+        shjn,
+      </if>
+      <if test="chsj != null" >
+        chsj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="chbh != null" >
+        #{chbh,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null" >
+        #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="chje != null" >
+        #{chje,jdbcType=DECIMAL},
+      </if>
+      <if test="shjn != null" >
+        #{shjn,jdbcType=DECIMAL},
+      </if>
+      <if test="chsj != null" >
+        #{chsj,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Returnpay" >
+    update returnpay
+    <set >
+      <if test="grzhbhs != null" >
+        grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="chje != null" >
+        chje = #{chje,jdbcType=DECIMAL},
+      </if>
+      <if test="shjn != null" >
+        shjn = #{shjn,jdbcType=DECIMAL},
+      </if>
+      <if test="chsj != null" >
+        chsj = #{chsj,jdbcType=DATE},
+      </if>
+    </set>
+    where chbh = #{chbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Returnpay" >
+    update returnpay
+    set grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      chje = #{chje,jdbcType=DECIMAL},
+      shjn = #{shjn,jdbcType=DECIMAL},
+      chsj = #{chsj,jdbcType=DATE}
+    where chbh = #{chbh,jdbcType=INTEGER}
+  </update>
+</mapper>
