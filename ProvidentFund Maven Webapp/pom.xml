@@ -206,15 +206,15 @@
 				<path>/ProvidentFund</path><!-- 应用的部署位置 -->
 				</configuration>
 			</plugin>
-		<plugin><!-- generator配置plugin -->
+		<plugin>
 		   <groupId>org.mybatis.generator</groupId>
              <artifactId>mybatis-generator-maven-plugin</artifactId>
              <version>1.3.2</version>
-				<!-- <configuration>
+				<configuration>
 				   <configurationFile>
 				    ${basedir}/src/main/resources/generatorConfig.xml
 				   </configurationFile>
-				</configuration> -->
+				</configuration>
 				<executions>
 				<execution>
 				<id>Generate MyBatis Files</id>
@@ -246,7 +246,7 @@
 			 <version>3.4.2</version>
 			 </dependency>
 			 </dependencies>
-			 </plugin>
+			</plugin>
 		</plugins>
 	</build>
 </project>
