@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.XwlxMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Xwlx" >
+    <id column="xwlxbh" property="xwlxbh" jdbcType="INTEGER" />
+    <result column="xwbh" property="xwbh" jdbcType="INTEGER" />
+    <result column="xwlxmc" property="xwlxmc" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    xwlxbh, xwbh, xwlxmc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from xwlx
+    where xwlxbh = #{xwlxbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from xwlx
+    where xwlxbh = #{xwlxbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Xwlx" >
+    insert into xwlx (xwlxbh, xwbh, xwlxmc
+      )
+    values (#{xwlxbh,jdbcType=INTEGER}, #{xwbh,jdbcType=INTEGER}, #{xwlxmc,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Xwlx" >
+    insert into xwlx
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xwlxbh != null" >
+        xwlxbh,
+      </if>
+      <if test="xwbh != null" >
+        xwbh,
+      </if>
+      <if test="xwlxmc != null" >
+        xwlxmc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xwlxbh != null" >
+        #{xwlxbh,jdbcType=INTEGER},
+      </if>
+      <if test="xwbh != null" >
+        #{xwbh,jdbcType=INTEGER},
+      </if>
+      <if test="xwlxmc != null" >
+        #{xwlxmc,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Xwlx" >
+    update xwlx
+    <set >
+      <if test="xwbh != null" >
+        xwbh = #{xwbh,jdbcType=INTEGER},
+      </if>
+      <if test="xwlxmc != null" >
+        xwlxmc = #{xwlxmc,jdbcType=CHAR},
+      </if>
+    </set>
+    where xwlxbh = #{xwlxbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Xwlx" >
+    update xwlx
+    set xwbh = #{xwbh,jdbcType=INTEGER},
+      xwlxmc = #{xwlxmc,jdbcType=CHAR}
+    where xwlxbh = #{xwlxbh,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.LoaninfoMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Loaninfo" >
+    <id column="dkxxbh" property="dkxxbh" jdbcType="INTEGER" />
+    <result column="grzhbhs" property="grzhbhs" jdbcType="INTEGER" />
+    <result column="pobh" property="pobh" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="jkhtbh" property="jkhtbh" jdbcType="VARCHAR" />
+    <result column="bkname" property="bkname" jdbcType="VARCHAR" />
+    <result column="bksex" property="bksex" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="zjtype" property="zjtype" jdbcType="VARCHAR" />
+    <result column="idNumber" property="idnumber" jdbcType="VARCHAR" />
+    <result column="incomes" property="incomes" jdbcType="DECIMAL" />
+    <result column="hkzh" property="hkzh" jdbcType="VARCHAR" />
+    <result column="dkje" property="dkje" jdbcType="DECIMAL" />
+    <result column="grdkqs" property="grdkqs" jdbcType="DECIMAL" />
+    <result column="dkrgjjzh" property="dkrgjjzh" jdbcType="VARCHAR" />
+    <result column="eamil" property="eamil" jdbcType="VARCHAR" />
+    <result column="dwzh" property="dwzh" jdbcType="VARCHAR" />
+    <result column="jkhtll" property="jkhtll" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dkxxbh, grzhbhs, pobh, id, jkhtbh, bkname, bksex, phone, zjtype, idNumber, incomes, 
+    hkzh, dkje, grdkqs, dkrgjjzh, eamil, dwzh, jkhtll
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from loaninfo
+    where dkxxbh = #{dkxxbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from loaninfo
+    where dkxxbh = #{dkxxbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Loaninfo" >
+    insert into loaninfo (dkxxbh, grzhbhs, pobh, 
+      id, jkhtbh, bkname, 
+      bksex, phone, zjtype, 
+      idNumber, incomes, hkzh, 
+      dkje, grdkqs, dkrgjjzh, 
+      eamil, dwzh, jkhtll
+      )
+    values (#{dkxxbh,jdbcType=INTEGER}, #{grzhbhs,jdbcType=INTEGER}, #{pobh,jdbcType=INTEGER}, 
+      #{id,jdbcType=INTEGER}, #{jkhtbh,jdbcType=VARCHAR}, #{bkname,jdbcType=VARCHAR}, 
+      #{bksex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{zjtype,jdbcType=VARCHAR}, 
+      #{idnumber,jdbcType=VARCHAR}, #{incomes,jdbcType=DECIMAL}, #{hkzh,jdbcType=VARCHAR}, 
+      #{dkje,jdbcType=DECIMAL}, #{grdkqs,jdbcType=DECIMAL}, #{dkrgjjzh,jdbcType=VARCHAR}, 
+      #{eamil,jdbcType=VARCHAR}, #{dwzh,jdbcType=VARCHAR}, #{jkhtll,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Loaninfo" >
+    insert into loaninfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dkxxbh != null" >
+        dkxxbh,
+      </if>
+      <if test="grzhbhs != null" >
+        grzhbhs,
+      </if>
+      <if test="pobh != null" >
+        pobh,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="jkhtbh != null" >
+        jkhtbh,
+      </if>
+      <if test="bkname != null" >
+        bkname,
+      </if>
+      <if test="bksex != null" >
+        bksex,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="zjtype != null" >
+        zjtype,
+      </if>
+      <if test="idnumber != null" >
+        idNumber,
+      </if>
+      <if test="incomes != null" >
+        incomes,
+      </if>
+      <if test="hkzh != null" >
+        hkzh,
+      </if>
+      <if test="dkje != null" >
+        dkje,
+      </if>
+      <if test="grdkqs != null" >
+        grdkqs,
+      </if>
+      <if test="dkrgjjzh != null" >
+        dkrgjjzh,
+      </if>
+      <if test="eamil != null" >
+        eamil,
+      </if>
+      <if test="dwzh != null" >
+        dwzh,
+      </if>
+      <if test="jkhtll != null" >
+        jkhtll,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dkxxbh != null" >
+        #{dkxxbh,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null" >
+        #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="pobh != null" >
+        #{pobh,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="jkhtbh != null" >
+        #{jkhtbh,jdbcType=VARCHAR},
+      </if>
+      <if test="bkname != null" >
+        #{bkname,jdbcType=VARCHAR},
+      </if>
+      <if test="bksex != null" >
+        #{bksex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="zjtype != null" >
+        #{zjtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null" >
+        #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="incomes != null" >
+        #{incomes,jdbcType=DECIMAL},
+      </if>
+      <if test="hkzh != null" >
+        #{hkzh,jdbcType=VARCHAR},
+      </if>
+      <if test="dkje != null" >
+        #{dkje,jdbcType=DECIMAL},
+      </if>
+      <if test="grdkqs != null" >
+        #{grdkqs,jdbcType=DECIMAL},
+      </if>
+      <if test="dkrgjjzh != null" >
+        #{dkrgjjzh,jdbcType=VARCHAR},
+      </if>
+      <if test="eamil != null" >
+        #{eamil,jdbcType=VARCHAR},
+      </if>
+      <if test="dwzh != null" >
+        #{dwzh,jdbcType=VARCHAR},
+      </if>
+      <if test="jkhtll != null" >
+        #{jkhtll,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Loaninfo" >
+    update loaninfo
+    <set >
+      <if test="grzhbhs != null" >
+        grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="pobh != null" >
+        pobh = #{pobh,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="jkhtbh != null" >
+        jkhtbh = #{jkhtbh,jdbcType=VARCHAR},
+      </if>
+      <if test="bkname != null" >
+        bkname = #{bkname,jdbcType=VARCHAR},
+      </if>
+      <if test="bksex != null" >
+        bksex = #{bksex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="zjtype != null" >
+        zjtype = #{zjtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null" >
+        idNumber = #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="incomes != null" >
+        incomes = #{incomes,jdbcType=DECIMAL},
+      </if>
+      <if test="hkzh != null" >
+        hkzh = #{hkzh,jdbcType=VARCHAR},
+      </if>
+      <if test="dkje != null" >
+        dkje = #{dkje,jdbcType=DECIMAL},
+      </if>
+      <if test="grdkqs != null" >
+        grdkqs = #{grdkqs,jdbcType=DECIMAL},
+      </if>
+      <if test="dkrgjjzh != null" >
+        dkrgjjzh = #{dkrgjjzh,jdbcType=VARCHAR},
+      </if>
+      <if test="eamil != null" >
+        eamil = #{eamil,jdbcType=VARCHAR},
+      </if>
+      <if test="dwzh != null" >
+        dwzh = #{dwzh,jdbcType=VARCHAR},
+      </if>
+      <if test="jkhtll != null" >
+        jkhtll = #{jkhtll,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where dkxxbh = #{dkxxbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Loaninfo" >
+    update loaninfo
+    set grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      pobh = #{pobh,jdbcType=INTEGER},
+      id = #{id,jdbcType=INTEGER},
+      jkhtbh = #{jkhtbh,jdbcType=VARCHAR},
+      bkname = #{bkname,jdbcType=VARCHAR},
+      bksex = #{bksex,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      zjtype = #{zjtype,jdbcType=VARCHAR},
+      idNumber = #{idnumber,jdbcType=VARCHAR},
+      incomes = #{incomes,jdbcType=DECIMAL},
+      hkzh = #{hkzh,jdbcType=VARCHAR},
+      dkje = #{dkje,jdbcType=DECIMAL},
+      grdkqs = #{grdkqs,jdbcType=DECIMAL},
+      dkrgjjzh = #{dkrgjjzh,jdbcType=VARCHAR},
+      eamil = #{eamil,jdbcType=VARCHAR},
+      dwzh = #{dwzh,jdbcType=VARCHAR},
+      jkhtll = #{jkhtll,jdbcType=DECIMAL}
+    where dkxxbh = #{dkxxbh,jdbcType=INTEGER}
+  </update>
+</mapper>
