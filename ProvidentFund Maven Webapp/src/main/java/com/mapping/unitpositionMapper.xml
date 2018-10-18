@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.unitpositionMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.unitposition" >
+    <id column="UnitpositionId" property="unitpositionid" jdbcType="INTEGER" />
+    <result column="UnitInfoId" property="unitinfoid" jdbcType="INTEGER" />
+    <result column="jobTitle" property="jobtitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UnitpositionId, UnitInfoId, jobTitle
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from unitposition
+    where UnitpositionId = #{unitpositionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from unitposition
+    where UnitpositionId = #{unitpositionid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.unitposition" >
+    insert into unitposition (UnitpositionId, UnitInfoId, jobTitle
+      )
+    values (#{unitpositionid,jdbcType=INTEGER}, #{unitinfoid,jdbcType=INTEGER}, #{jobtitle,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.unitposition" >
+    insert into unitposition
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="unitpositionid != null" >
+        UnitpositionId,
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId,
+      </if>
+      <if test="jobtitle != null" >
+        jobTitle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="unitpositionid != null" >
+        #{unitpositionid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="jobtitle != null" >
+        #{jobtitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.unitposition" >
+    update unitposition
+    <set >
+      <if test="unitinfoid != null" >
+        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="jobtitle != null" >
+        jobTitle = #{jobtitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UnitpositionId = #{unitpositionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.unitposition" >
+    update unitposition
+    set UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      jobTitle = #{jobtitle,jdbcType=VARCHAR}
+    where UnitpositionId = #{unitpositionid,jdbcType=INTEGER}
+  </update>
+</mapper>

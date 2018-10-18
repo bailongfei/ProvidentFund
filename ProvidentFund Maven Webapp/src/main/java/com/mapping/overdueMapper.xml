@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.overdueMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.overdue" >
+    <id column="yqdjbh" property="yqdjbh" jdbcType="INTEGER" />
+    <result column="dkbh" property="dkbh" jdbcType="INTEGER" />
+    <result column="ywbh" property="ywbh" jdbcType="VARCHAR" />
+    <result column="yqqc" property="yqqc" jdbcType="DECIMAL" />
+    <result column="grfdyqbj" property="grfdyqbj" jdbcType="DECIMAL" />
+    <result column="grfdyqlx" property="grfdyqlx" jdbcType="DECIMAL" />
+    <result column="yqfx" property="yqfx" jdbcType="DECIMAL" />
+    <result column="ssrq" property="ssrq" jdbcType="DATE" />
+    <result column="hkqc" property="hkqc" jdbcType="DECIMAL" />
+    <result column="ssyqbjje" property="ssyqbjje" jdbcType="DECIMAL" />
+    <result column="ssyqlxje" property="ssyqlxje" jdbcType="DECIMAL" />
+    <result column="ssyqfxje" property="ssyqfxje" jdbcType="DECIMAL" />
+    <result column="yqztzs" property="yqztzs" jdbcType="VARCHAR" />
+    <result column="sfetf" property="sfetf" jdbcType="VARCHAR" />
+    <result column="zxkkrq" property="zxkkrq" jdbcType="DATE" />
+    <result column="djsj" property="djsj" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    yqdjbh, dkbh, ywbh, yqqc, grfdyqbj, grfdyqlx, yqfx, ssrq, hkqc, ssyqbjje, ssyqlxje, 
+    ssyqfxje, yqztzs, sfetf, zxkkrq, djsj
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from overdue
+    where yqdjbh = #{yqdjbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from overdue
+    where yqdjbh = #{yqdjbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.overdue" >
+    insert into overdue (yqdjbh, dkbh, ywbh, 
+      yqqc, grfdyqbj, grfdyqlx, 
+      yqfx, ssrq, hkqc, ssyqbjje, 
+      ssyqlxje, ssyqfxje, yqztzs, 
+      sfetf, zxkkrq, djsj)
+    values (#{yqdjbh,jdbcType=INTEGER}, #{dkbh,jdbcType=INTEGER}, #{ywbh,jdbcType=VARCHAR}, 
+      #{yqqc,jdbcType=DECIMAL}, #{grfdyqbj,jdbcType=DECIMAL}, #{grfdyqlx,jdbcType=DECIMAL}, 
+      #{yqfx,jdbcType=DECIMAL}, #{ssrq,jdbcType=DATE}, #{hkqc,jdbcType=DECIMAL}, #{ssyqbjje,jdbcType=DECIMAL}, 
+      #{ssyqlxje,jdbcType=DECIMAL}, #{ssyqfxje,jdbcType=DECIMAL}, #{yqztzs,jdbcType=VARCHAR}, 
+      #{sfetf,jdbcType=VARCHAR}, #{zxkkrq,jdbcType=DATE}, #{djsj,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.overdue" >
+    insert into overdue
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="yqdjbh != null" >
+        yqdjbh,
+      </if>
+      <if test="dkbh != null" >
+        dkbh,
+      </if>
+      <if test="ywbh != null" >
+        ywbh,
+      </if>
+      <if test="yqqc != null" >
+        yqqc,
+      </if>
+      <if test="grfdyqbj != null" >
+        grfdyqbj,
+      </if>
+      <if test="grfdyqlx != null" >
+        grfdyqlx,
+      </if>
+      <if test="yqfx != null" >
+        yqfx,
+      </if>
+      <if test="ssrq != null" >
+        ssrq,
+      </if>
+      <if test="hkqc != null" >
+        hkqc,
+      </if>
+      <if test="ssyqbjje != null" >
+        ssyqbjje,
+      </if>
+      <if test="ssyqlxje != null" >
+        ssyqlxje,
+      </if>
+      <if test="ssyqfxje != null" >
+        ssyqfxje,
+      </if>
+      <if test="yqztzs != null" >
+        yqztzs,
+      </if>
+      <if test="sfetf != null" >
+        sfetf,
+      </if>
+      <if test="zxkkrq != null" >
+        zxkkrq,
+      </if>
+      <if test="djsj != null" >
+        djsj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="yqdjbh != null" >
+        #{yqdjbh,jdbcType=INTEGER},
+      </if>
+      <if test="dkbh != null" >
+        #{dkbh,jdbcType=INTEGER},
+      </if>
+      <if test="ywbh != null" >
+        #{ywbh,jdbcType=VARCHAR},
+      </if>
+      <if test="yqqc != null" >
+        #{yqqc,jdbcType=DECIMAL},
+      </if>
+      <if test="grfdyqbj != null" >
+        #{grfdyqbj,jdbcType=DECIMAL},
+      </if>
+      <if test="grfdyqlx != null" >
+        #{grfdyqlx,jdbcType=DECIMAL},
+      </if>
+      <if test="yqfx != null" >
+        #{yqfx,jdbcType=DECIMAL},
+      </if>
+      <if test="ssrq != null" >
+        #{ssrq,jdbcType=DATE},
+      </if>
+      <if test="hkqc != null" >
+        #{hkqc,jdbcType=DECIMAL},
+      </if>
+      <if test="ssyqbjje != null" >
+        #{ssyqbjje,jdbcType=DECIMAL},
+      </if>
+      <if test="ssyqlxje != null" >
+        #{ssyqlxje,jdbcType=DECIMAL},
+      </if>
+      <if test="ssyqfxje != null" >
+        #{ssyqfxje,jdbcType=DECIMAL},
+      </if>
+      <if test="yqztzs != null" >
+        #{yqztzs,jdbcType=VARCHAR},
+      </if>
+      <if test="sfetf != null" >
+        #{sfetf,jdbcType=VARCHAR},
+      </if>
+      <if test="zxkkrq != null" >
+        #{zxkkrq,jdbcType=DATE},
+      </if>
+      <if test="djsj != null" >
+        #{djsj,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.overdue" >
+    update overdue
+    <set >
+      <if test="dkbh != null" >
+        dkbh = #{dkbh,jdbcType=INTEGER},
+      </if>
+      <if test="ywbh != null" >
+        ywbh = #{ywbh,jdbcType=VARCHAR},
+      </if>
+      <if test="yqqc != null" >
+        yqqc = #{yqqc,jdbcType=DECIMAL},
+      </if>
+      <if test="grfdyqbj != null" >
+        grfdyqbj = #{grfdyqbj,jdbcType=DECIMAL},
+      </if>
+      <if test="grfdyqlx != null" >
+        grfdyqlx = #{grfdyqlx,jdbcType=DECIMAL},
+      </if>
+      <if test="yqfx != null" >
+        yqfx = #{yqfx,jdbcType=DECIMAL},
+      </if>
+      <if test="ssrq != null" >
+        ssrq = #{ssrq,jdbcType=DATE},
+      </if>
+      <if test="hkqc != null" >
+        hkqc = #{hkqc,jdbcType=DECIMAL},
+      </if>
+      <if test="ssyqbjje != null" >
+        ssyqbjje = #{ssyqbjje,jdbcType=DECIMAL},
+      </if>
+      <if test="ssyqlxje != null" >
+        ssyqlxje = #{ssyqlxje,jdbcType=DECIMAL},
+      </if>
+      <if test="ssyqfxje != null" >
+        ssyqfxje = #{ssyqfxje,jdbcType=DECIMAL},
+      </if>
+      <if test="yqztzs != null" >
+        yqztzs = #{yqztzs,jdbcType=VARCHAR},
+      </if>
+      <if test="sfetf != null" >
+        sfetf = #{sfetf,jdbcType=VARCHAR},
+      </if>
+      <if test="zxkkrq != null" >
+        zxkkrq = #{zxkkrq,jdbcType=DATE},
+      </if>
+      <if test="djsj != null" >
+        djsj = #{djsj,jdbcType=DATE},
+      </if>
+    </set>
+    where yqdjbh = #{yqdjbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.overdue" >
+    update overdue
+    set dkbh = #{dkbh,jdbcType=INTEGER},
+      ywbh = #{ywbh,jdbcType=VARCHAR},
+      yqqc = #{yqqc,jdbcType=DECIMAL},
+      grfdyqbj = #{grfdyqbj,jdbcType=DECIMAL},
+      grfdyqlx = #{grfdyqlx,jdbcType=DECIMAL},
+      yqfx = #{yqfx,jdbcType=DECIMAL},
+      ssrq = #{ssrq,jdbcType=DATE},
+      hkqc = #{hkqc,jdbcType=DECIMAL},
+      ssyqbjje = #{ssyqbjje,jdbcType=DECIMAL},
+      ssyqlxje = #{ssyqlxje,jdbcType=DECIMAL},
+      ssyqfxje = #{ssyqfxje,jdbcType=DECIMAL},
+      yqztzs = #{yqztzs,jdbcType=VARCHAR},
+      sfetf = #{sfetf,jdbcType=VARCHAR},
+      zxkkrq = #{zxkkrq,jdbcType=DATE},
+      djsj = #{djsj,jdbcType=DATE}
+    where yqdjbh = #{yqdjbh,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.networkinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.networkinfo" >
+    <id column="netinfoId" property="netinfoid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="NetworkName" property="networkname" jdbcType="VARCHAR" />
+    <result column="NetworkAddress" property="networkaddress" jdbcType="VARCHAR" />
+    <result column="NetworkPhone" property="networkphone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    netinfoId, userId, NetworkName, NetworkAddress, NetworkPhone
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from networkinfo
+    where netinfoId = #{netinfoid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from networkinfo
+    where netinfoId = #{netinfoid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.networkinfo" >
+    insert into networkinfo (netinfoId, userId, NetworkName, 
+      NetworkAddress, NetworkPhone)
+    values (#{netinfoid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{networkname,jdbcType=VARCHAR}, 
+      #{networkaddress,jdbcType=VARCHAR}, #{networkphone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.networkinfo" >
+    insert into networkinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="netinfoid != null" >
+        netinfoId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="networkname != null" >
+        NetworkName,
+      </if>
+      <if test="networkaddress != null" >
+        NetworkAddress,
+      </if>
+      <if test="networkphone != null" >
+        NetworkPhone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="netinfoid != null" >
+        #{netinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="networkname != null" >
+        #{networkname,jdbcType=VARCHAR},
+      </if>
+      <if test="networkaddress != null" >
+        #{networkaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="networkphone != null" >
+        #{networkphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.networkinfo" >
+    update networkinfo
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="networkname != null" >
+        NetworkName = #{networkname,jdbcType=VARCHAR},
+      </if>
+      <if test="networkaddress != null" >
+        NetworkAddress = #{networkaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="networkphone != null" >
+        NetworkPhone = #{networkphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where netinfoId = #{netinfoid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.networkinfo" >
+    update networkinfo
+    set userId = #{userid,jdbcType=INTEGER},
+      NetworkName = #{networkname,jdbcType=VARCHAR},
+      NetworkAddress = #{networkaddress,jdbcType=VARCHAR},
+      NetworkPhone = #{networkphone,jdbcType=VARCHAR}
+    where netinfoId = #{netinfoid,jdbcType=INTEGER}
+  </update>
+</mapper>

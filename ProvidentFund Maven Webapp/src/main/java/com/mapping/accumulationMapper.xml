@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.accumulationMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.accumulation" >
+    <id column="accumulation" property="accumulation" jdbcType="INTEGER" />
+    <result column="lmkbh" property="lmkbh" jdbcType="INTEGER" />
+    <result column="grzhbh" property="grzhbh" jdbcType="INTEGER" />
+    <result column="netinfoId" property="netinfoid" jdbcType="INTEGER" />
+    <result column="dkxxbh" property="dkxxbh" jdbcType="INTEGER" />
+    <result column="UnitInfoId" property="unitinfoid" jdbcType="INTEGER" />
+    <result column="ExtractingAmount" property="extractingamount" jdbcType="DECIMAL" />
+    <result column="grapprovalStatuss" property="grapprovalstatuss" jdbcType="VARCHAR" />
+    <result column="spsj" property="spsj" jdbcType="DATE" />
+    <result column="sqsj" property="sqsj" jdbcType="DATE" />
+    <result column="fwdz" property="fwdz" jdbcType="VARCHAR" />
+    <result column="gfhtxybh" property="gfhtxybh" jdbcType="VARCHAR" />
+    <result column="fwmj" property="fwmj" jdbcType="DECIMAL" />
+    <result column="fwdj" property="fwdj" jdbcType="DECIMAL" />
+    <result column="fwzj" property="fwzj" jdbcType="DECIMAL" />
+    <result column="fzzc" property="fzzc" jdbcType="DECIMAL" />
+    <result column="zfhth" property="zfhth" jdbcType="VARCHAR" />
+    <result column="zzlwhth" property="zzlwhth" jdbcType="VARCHAR" />
+    <result column="dkzje" property="dkzje" jdbcType="DECIMAL" />
+    <result column="txpwwh" property="txpwwh" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    accumulation, lmkbh, grzhbh, netinfoId, dkxxbh, UnitInfoId, ExtractingAmount, grapprovalStatuss, 
+    spsj, sqsj, fwdz, gfhtxybh, fwmj, fwdj, fwzj, fzzc, zfhth, zzlwhth, dkzje, txpwwh
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from accumulation
+    where accumulation = #{accumulation,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from accumulation
+    where accumulation = #{accumulation,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.accumulation" >
+    insert into accumulation (accumulation, lmkbh, grzhbh, 
+      netinfoId, dkxxbh, UnitInfoId, 
+      ExtractingAmount, grapprovalStatuss, spsj, 
+      sqsj, fwdz, gfhtxybh, 
+      fwmj, fwdj, fwzj, fzzc, 
+      zfhth, zzlwhth, dkzje, 
+      txpwwh)
+    values (#{accumulation,jdbcType=INTEGER}, #{lmkbh,jdbcType=INTEGER}, #{grzhbh,jdbcType=INTEGER}, 
+      #{netinfoid,jdbcType=INTEGER}, #{dkxxbh,jdbcType=INTEGER}, #{unitinfoid,jdbcType=INTEGER}, 
+      #{extractingamount,jdbcType=DECIMAL}, #{grapprovalstatuss,jdbcType=VARCHAR}, #{spsj,jdbcType=DATE}, 
+      #{sqsj,jdbcType=DATE}, #{fwdz,jdbcType=VARCHAR}, #{gfhtxybh,jdbcType=VARCHAR}, 
+      #{fwmj,jdbcType=DECIMAL}, #{fwdj,jdbcType=DECIMAL}, #{fwzj,jdbcType=DECIMAL}, #{fzzc,jdbcType=DECIMAL}, 
+      #{zfhth,jdbcType=VARCHAR}, #{zzlwhth,jdbcType=VARCHAR}, #{dkzje,jdbcType=DECIMAL}, 
+      #{txpwwh,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.accumulation" >
+    insert into accumulation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accumulation != null" >
+        accumulation,
+      </if>
+      <if test="lmkbh != null" >
+        lmkbh,
+      </if>
+      <if test="grzhbh != null" >
+        grzhbh,
+      </if>
+      <if test="netinfoid != null" >
+        netinfoId,
+      </if>
+      <if test="dkxxbh != null" >
+        dkxxbh,
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId,
+      </if>
+      <if test="extractingamount != null" >
+        ExtractingAmount,
+      </if>
+      <if test="grapprovalstatuss != null" >
+        grapprovalStatuss,
+      </if>
+      <if test="spsj != null" >
+        spsj,
+      </if>
+      <if test="sqsj != null" >
+        sqsj,
+      </if>
+      <if test="fwdz != null" >
+        fwdz,
+      </if>
+      <if test="gfhtxybh != null" >
+        gfhtxybh,
+      </if>
+      <if test="fwmj != null" >
+        fwmj,
+      </if>
+      <if test="fwdj != null" >
+        fwdj,
+      </if>
+      <if test="fwzj != null" >
+        fwzj,
+      </if>
+      <if test="fzzc != null" >
+        fzzc,
+      </if>
+      <if test="zfhth != null" >
+        zfhth,
+      </if>
+      <if test="zzlwhth != null" >
+        zzlwhth,
+      </if>
+      <if test="dkzje != null" >
+        dkzje,
+      </if>
+      <if test="txpwwh != null" >
+        txpwwh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accumulation != null" >
+        #{accumulation,jdbcType=INTEGER},
+      </if>
+      <if test="lmkbh != null" >
+        #{lmkbh,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbh != null" >
+        #{grzhbh,jdbcType=INTEGER},
+      </if>
+      <if test="netinfoid != null" >
+        #{netinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="dkxxbh != null" >
+        #{dkxxbh,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="extractingamount != null" >
+        #{extractingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="grapprovalstatuss != null" >
+        #{grapprovalstatuss,jdbcType=VARCHAR},
+      </if>
+      <if test="spsj != null" >
+        #{spsj,jdbcType=DATE},
+      </if>
+      <if test="sqsj != null" >
+        #{sqsj,jdbcType=DATE},
+      </if>
+      <if test="fwdz != null" >
+        #{fwdz,jdbcType=VARCHAR},
+      </if>
+      <if test="gfhtxybh != null" >
+        #{gfhtxybh,jdbcType=VARCHAR},
+      </if>
+      <if test="fwmj != null" >
+        #{fwmj,jdbcType=DECIMAL},
+      </if>
+      <if test="fwdj != null" >
+        #{fwdj,jdbcType=DECIMAL},
+      </if>
+      <if test="fwzj != null" >
+        #{fwzj,jdbcType=DECIMAL},
+      </if>
+      <if test="fzzc != null" >
+        #{fzzc,jdbcType=DECIMAL},
+      </if>
+      <if test="zfhth != null" >
+        #{zfhth,jdbcType=VARCHAR},
+      </if>
+      <if test="zzlwhth != null" >
+        #{zzlwhth,jdbcType=VARCHAR},
+      </if>
+      <if test="dkzje != null" >
+        #{dkzje,jdbcType=DECIMAL},
+      </if>
+      <if test="txpwwh != null" >
+        #{txpwwh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.accumulation" >
+    update accumulation
+    <set >
+      <if test="lmkbh != null" >
+        lmkbh = #{lmkbh,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbh != null" >
+        grzhbh = #{grzhbh,jdbcType=INTEGER},
+      </if>
+      <if test="netinfoid != null" >
+        netinfoId = #{netinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="dkxxbh != null" >
+        dkxxbh = #{dkxxbh,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="extractingamount != null" >
+        ExtractingAmount = #{extractingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="grapprovalstatuss != null" >
+        grapprovalStatuss = #{grapprovalstatuss,jdbcType=VARCHAR},
+      </if>
+      <if test="spsj != null" >
+        spsj = #{spsj,jdbcType=DATE},
+      </if>
+      <if test="sqsj != null" >
+        sqsj = #{sqsj,jdbcType=DATE},
+      </if>
+      <if test="fwdz != null" >
+        fwdz = #{fwdz,jdbcType=VARCHAR},
+      </if>
+      <if test="gfhtxybh != null" >
+        gfhtxybh = #{gfhtxybh,jdbcType=VARCHAR},
+      </if>
+      <if test="fwmj != null" >
+        fwmj = #{fwmj,jdbcType=DECIMAL},
+      </if>
+      <if test="fwdj != null" >
+        fwdj = #{fwdj,jdbcType=DECIMAL},
+      </if>
+      <if test="fwzj != null" >
+        fwzj = #{fwzj,jdbcType=DECIMAL},
+      </if>
+      <if test="fzzc != null" >
+        fzzc = #{fzzc,jdbcType=DECIMAL},
+      </if>
+      <if test="zfhth != null" >
+        zfhth = #{zfhth,jdbcType=VARCHAR},
+      </if>
+      <if test="zzlwhth != null" >
+        zzlwhth = #{zzlwhth,jdbcType=VARCHAR},
+      </if>
+      <if test="dkzje != null" >
+        dkzje = #{dkzje,jdbcType=DECIMAL},
+      </if>
+      <if test="txpwwh != null" >
+        txpwwh = #{txpwwh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where accumulation = #{accumulation,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.accumulation" >
+    update accumulation
+    set lmkbh = #{lmkbh,jdbcType=INTEGER},
+      grzhbh = #{grzhbh,jdbcType=INTEGER},
+      netinfoId = #{netinfoid,jdbcType=INTEGER},
+      dkxxbh = #{dkxxbh,jdbcType=INTEGER},
+      UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      ExtractingAmount = #{extractingamount,jdbcType=DECIMAL},
+      grapprovalStatuss = #{grapprovalstatuss,jdbcType=VARCHAR},
+      spsj = #{spsj,jdbcType=DATE},
+      sqsj = #{sqsj,jdbcType=DATE},
+      fwdz = #{fwdz,jdbcType=VARCHAR},
+      gfhtxybh = #{gfhtxybh,jdbcType=VARCHAR},
+      fwmj = #{fwmj,jdbcType=DECIMAL},
+      fwdj = #{fwdj,jdbcType=DECIMAL},
+      fwzj = #{fwzj,jdbcType=DECIMAL},
+      fzzc = #{fzzc,jdbcType=DECIMAL},
+      zfhth = #{zfhth,jdbcType=VARCHAR},
+      zzlwhth = #{zzlwhth,jdbcType=VARCHAR},
+      dkzje = #{dkzje,jdbcType=DECIMAL},
+      txpwwh = #{txpwwh,jdbcType=VARCHAR}
+    where accumulation = #{accumulation,jdbcType=INTEGER}
+  </update>
+</mapper>

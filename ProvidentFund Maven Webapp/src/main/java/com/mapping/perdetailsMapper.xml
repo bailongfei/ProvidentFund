@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.perdetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.perdetails" >
+    <id column="personNO" property="personno" jdbcType="INTEGER" />
+    <result column="UnitInfoAccount" property="unitinfoaccount" jdbcType="INTEGER" />
+    <result column="UnitpositionId" property="unitpositionid" jdbcType="INTEGER" />
+    <result column="UnitInfoId" property="unitinfoid" jdbcType="INTEGER" />
+    <result column="grname" property="grname" jdbcType="VARCHAR" />
+    <result column="grsex" property="grsex" jdbcType="VARCHAR" />
+    <result column="phoneNums" property="phonenums" jdbcType="VARCHAR" />
+    <result column="IdTypes" property="idtypes" jdbcType="VARCHAR" />
+    <result column="idNumber" property="idnumber" jdbcType="VARCHAR" />
+    <result column="birthdays" property="birthdays" jdbcType="VARCHAR" />
+    <result column="maritals" property="maritals" jdbcType="VARCHAR" />
+    <result column="educations" property="educations" jdbcType="VARCHAR" />
+    <result column="gremail" property="gremail" jdbcType="VARCHAR" />
+    <result column="grpostcode" property="grpostcode" jdbcType="VARCHAR" />
+    <result column="graddress" property="graddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    personNO, UnitInfoAccount, UnitpositionId, UnitInfoId, grname, grsex, phoneNums, 
+    IdTypes, idNumber, birthdays, maritals, educations, gremail, grpostcode, graddress
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from perdetails
+    where personNO = #{personno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from perdetails
+    where personNO = #{personno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.perdetails" >
+    insert into perdetails (personNO, UnitInfoAccount, UnitpositionId, 
+      UnitInfoId, grname, grsex, 
+      phoneNums, IdTypes, idNumber, 
+      birthdays, maritals, educations, 
+      gremail, grpostcode, graddress
+      )
+    values (#{personno,jdbcType=INTEGER}, #{unitinfoaccount,jdbcType=INTEGER}, #{unitpositionid,jdbcType=INTEGER}, 
+      #{unitinfoid,jdbcType=INTEGER}, #{grname,jdbcType=VARCHAR}, #{grsex,jdbcType=VARCHAR}, 
+      #{phonenums,jdbcType=VARCHAR}, #{idtypes,jdbcType=VARCHAR}, #{idnumber,jdbcType=VARCHAR}, 
+      #{birthdays,jdbcType=VARCHAR}, #{maritals,jdbcType=VARCHAR}, #{educations,jdbcType=VARCHAR}, 
+      #{gremail,jdbcType=VARCHAR}, #{grpostcode,jdbcType=VARCHAR}, #{graddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.perdetails" >
+    insert into perdetails
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="personno != null" >
+        personNO,
+      </if>
+      <if test="unitinfoaccount != null" >
+        UnitInfoAccount,
+      </if>
+      <if test="unitpositionid != null" >
+        UnitpositionId,
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId,
+      </if>
+      <if test="grname != null" >
+        grname,
+      </if>
+      <if test="grsex != null" >
+        grsex,
+      </if>
+      <if test="phonenums != null" >
+        phoneNums,
+      </if>
+      <if test="idtypes != null" >
+        IdTypes,
+      </if>
+      <if test="idnumber != null" >
+        idNumber,
+      </if>
+      <if test="birthdays != null" >
+        birthdays,
+      </if>
+      <if test="maritals != null" >
+        maritals,
+      </if>
+      <if test="educations != null" >
+        educations,
+      </if>
+      <if test="gremail != null" >
+        gremail,
+      </if>
+      <if test="grpostcode != null" >
+        grpostcode,
+      </if>
+      <if test="graddress != null" >
+        graddress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="personno != null" >
+        #{personno,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoaccount != null" >
+        #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="unitpositionid != null" >
+        #{unitpositionid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="grname != null" >
+        #{grname,jdbcType=VARCHAR},
+      </if>
+      <if test="grsex != null" >
+        #{grsex,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenums != null" >
+        #{phonenums,jdbcType=VARCHAR},
+      </if>
+      <if test="idtypes != null" >
+        #{idtypes,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null" >
+        #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdays != null" >
+        #{birthdays,jdbcType=VARCHAR},
+      </if>
+      <if test="maritals != null" >
+        #{maritals,jdbcType=VARCHAR},
+      </if>
+      <if test="educations != null" >
+        #{educations,jdbcType=VARCHAR},
+      </if>
+      <if test="gremail != null" >
+        #{gremail,jdbcType=VARCHAR},
+      </if>
+      <if test="grpostcode != null" >
+        #{grpostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="graddress != null" >
+        #{graddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.perdetails" >
+    update perdetails
+    <set >
+      <if test="unitinfoaccount != null" >
+        UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="unitpositionid != null" >
+        UnitpositionId = #{unitpositionid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="grname != null" >
+        grname = #{grname,jdbcType=VARCHAR},
+      </if>
+      <if test="grsex != null" >
+        grsex = #{grsex,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenums != null" >
+        phoneNums = #{phonenums,jdbcType=VARCHAR},
+      </if>
+      <if test="idtypes != null" >
+        IdTypes = #{idtypes,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null" >
+        idNumber = #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdays != null" >
+        birthdays = #{birthdays,jdbcType=VARCHAR},
+      </if>
+      <if test="maritals != null" >
+        maritals = #{maritals,jdbcType=VARCHAR},
+      </if>
+      <if test="educations != null" >
+        educations = #{educations,jdbcType=VARCHAR},
+      </if>
+      <if test="gremail != null" >
+        gremail = #{gremail,jdbcType=VARCHAR},
+      </if>
+      <if test="grpostcode != null" >
+        grpostcode = #{grpostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="graddress != null" >
+        graddress = #{graddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where personNO = #{personno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.perdetails" >
+    update perdetails
+    set UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      UnitpositionId = #{unitpositionid,jdbcType=INTEGER},
+      UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      grname = #{grname,jdbcType=VARCHAR},
+      grsex = #{grsex,jdbcType=VARCHAR},
+      phoneNums = #{phonenums,jdbcType=VARCHAR},
+      IdTypes = #{idtypes,jdbcType=VARCHAR},
+      idNumber = #{idnumber,jdbcType=VARCHAR},
+      birthdays = #{birthdays,jdbcType=VARCHAR},
+      maritals = #{maritals,jdbcType=VARCHAR},
+      educations = #{educations,jdbcType=VARCHAR},
+      gremail = #{gremail,jdbcType=VARCHAR},
+      grpostcode = #{grpostcode,jdbcType=VARCHAR},
+      graddress = #{graddress,jdbcType=VARCHAR}
+    where personNO = #{personno,jdbcType=INTEGER}
+  </update>
+</mapper>

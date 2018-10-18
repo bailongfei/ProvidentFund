@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.jjlxbMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.jjlxb" >
+    <id column="jjlxbh" property="jjlxbh" jdbcType="INTEGER" />
+    <result column="UnitInfoId" property="unitinfoid" jdbcType="INTEGER" />
+    <result column="jjlxmc" property="jjlxmc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    jjlxbh, UnitInfoId, jjlxmc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from jjlxb
+    where jjlxbh = #{jjlxbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from jjlxb
+    where jjlxbh = #{jjlxbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.jjlxb" >
+    insert into jjlxb (jjlxbh, UnitInfoId, jjlxmc
+      )
+    values (#{jjlxbh,jdbcType=INTEGER}, #{unitinfoid,jdbcType=INTEGER}, #{jjlxmc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.jjlxb" >
+    insert into jjlxb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jjlxbh != null" >
+        jjlxbh,
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId,
+      </if>
+      <if test="jjlxmc != null" >
+        jjlxmc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jjlxbh != null" >
+        #{jjlxbh,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="jjlxmc != null" >
+        #{jjlxmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.jjlxb" >
+    update jjlxb
+    <set >
+      <if test="unitinfoid != null" >
+        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="jjlxmc != null" >
+        jjlxmc = #{jjlxmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where jjlxbh = #{jjlxbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.jjlxb" >
+    update jjlxb
+    set UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      jjlxmc = #{jjlxmc,jdbcType=VARCHAR}
+    where jjlxbh = #{jjlxbh,jdbcType=INTEGER}
+  </update>
+</mapper>

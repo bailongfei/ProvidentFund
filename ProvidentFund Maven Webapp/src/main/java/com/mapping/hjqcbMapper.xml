@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.hjqcbMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.hjqcb" >
+    <id column="hjbh" property="hjbh" jdbcType="INTEGER" />
+    <result column="UnitInfoAccount" property="unitinfoaccount" jdbcType="INTEGER" />
+    <result column="grzhbhs" property="grzhbhs" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="gjind" property="gjind" jdbcType="VARCHAR" />
+    <result column="jnmy" property="jnmy" jdbcType="DATE" />
+    <result column="nhyf" property="nhyf" jdbcType="INTEGER" />
+    <result column="bjjzrq" property="bjjzrq" jdbcType="DATE" />
+    <result column="bczjrs" property="bczjrs" jdbcType="INTEGER" />
+    <result column="bczjje" property="bczjje" jdbcType="DECIMAL" />
+    <result column="bcjsrs" property="bcjsrs" jdbcType="INTEGER" />
+    <result column="bcjsje" property="bcjsje" jdbcType="DECIMAL" />
+    <result column="scjnrs" property="scjnrs" jdbcType="INTEGER" />
+    <result column="scjnje" property="scjnje" jdbcType="DECIMAL" />
+    <result column="bchnrs" property="bchnrs" jdbcType="INTEGER" />
+    <result column="bchnje" property="bchnje" jdbcType="DECIMAL" />
+    <result column="ssje" property="ssje" jdbcType="DECIMAL" />
+    <result column="bjjkfs" property="bjjkfs" jdbcType="VARCHAR" />
+    <result column="bjjkzt" property="bjjkzt" jdbcType="VARCHAR" />
+    <result column="rzrq" property="rzrq" jdbcType="DATE" />
+    <result column="hjywlx" property="hjywlx" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    hjbh, UnitInfoAccount, grzhbhs, userId, gjind, jnmy, nhyf, bjjzrq, bczjrs, bczjje, 
+    bcjsrs, bcjsje, scjnrs, scjnje, bchnrs, bchnje, ssje, bjjkfs, bjjkzt, rzrq, hjywlx
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hjqcb
+    where hjbh = #{hjbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hjqcb
+    where hjbh = #{hjbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.hjqcb" >
+    insert into hjqcb (hjbh, UnitInfoAccount, grzhbhs, 
+      userId, gjind, jnmy, nhyf, 
+      bjjzrq, bczjrs, bczjje, 
+      bcjsrs, bcjsje, scjnrs, 
+      scjnje, bchnrs, bchnje, 
+      ssje, bjjkfs, bjjkzt, 
+      rzrq, hjywlx)
+    values (#{hjbh,jdbcType=INTEGER}, #{unitinfoaccount,jdbcType=INTEGER}, #{grzhbhs,jdbcType=INTEGER}, 
+      #{userid,jdbcType=INTEGER}, #{gjind,jdbcType=VARCHAR}, #{jnmy,jdbcType=DATE}, #{nhyf,jdbcType=INTEGER}, 
+      #{bjjzrq,jdbcType=DATE}, #{bczjrs,jdbcType=INTEGER}, #{bczjje,jdbcType=DECIMAL}, 
+      #{bcjsrs,jdbcType=INTEGER}, #{bcjsje,jdbcType=DECIMAL}, #{scjnrs,jdbcType=INTEGER}, 
+      #{scjnje,jdbcType=DECIMAL}, #{bchnrs,jdbcType=INTEGER}, #{bchnje,jdbcType=DECIMAL}, 
+      #{ssje,jdbcType=DECIMAL}, #{bjjkfs,jdbcType=VARCHAR}, #{bjjkzt,jdbcType=VARCHAR}, 
+      #{rzrq,jdbcType=DATE}, #{hjywlx,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.hjqcb" >
+    insert into hjqcb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hjbh != null" >
+        hjbh,
+      </if>
+      <if test="unitinfoaccount != null" >
+        UnitInfoAccount,
+      </if>
+      <if test="grzhbhs != null" >
+        grzhbhs,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="gjind != null" >
+        gjind,
+      </if>
+      <if test="jnmy != null" >
+        jnmy,
+      </if>
+      <if test="nhyf != null" >
+        nhyf,
+      </if>
+      <if test="bjjzrq != null" >
+        bjjzrq,
+      </if>
+      <if test="bczjrs != null" >
+        bczjrs,
+      </if>
+      <if test="bczjje != null" >
+        bczjje,
+      </if>
+      <if test="bcjsrs != null" >
+        bcjsrs,
+      </if>
+      <if test="bcjsje != null" >
+        bcjsje,
+      </if>
+      <if test="scjnrs != null" >
+        scjnrs,
+      </if>
+      <if test="scjnje != null" >
+        scjnje,
+      </if>
+      <if test="bchnrs != null" >
+        bchnrs,
+      </if>
+      <if test="bchnje != null" >
+        bchnje,
+      </if>
+      <if test="ssje != null" >
+        ssje,
+      </if>
+      <if test="bjjkfs != null" >
+        bjjkfs,
+      </if>
+      <if test="bjjkzt != null" >
+        bjjkzt,
+      </if>
+      <if test="rzrq != null" >
+        rzrq,
+      </if>
+      <if test="hjywlx != null" >
+        hjywlx,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hjbh != null" >
+        #{hjbh,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoaccount != null" >
+        #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null" >
+        #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="gjind != null" >
+        #{gjind,jdbcType=VARCHAR},
+      </if>
+      <if test="jnmy != null" >
+        #{jnmy,jdbcType=DATE},
+      </if>
+      <if test="nhyf != null" >
+        #{nhyf,jdbcType=INTEGER},
+      </if>
+      <if test="bjjzrq != null" >
+        #{bjjzrq,jdbcType=DATE},
+      </if>
+      <if test="bczjrs != null" >
+        #{bczjrs,jdbcType=INTEGER},
+      </if>
+      <if test="bczjje != null" >
+        #{bczjje,jdbcType=DECIMAL},
+      </if>
+      <if test="bcjsrs != null" >
+        #{bcjsrs,jdbcType=INTEGER},
+      </if>
+      <if test="bcjsje != null" >
+        #{bcjsje,jdbcType=DECIMAL},
+      </if>
+      <if test="scjnrs != null" >
+        #{scjnrs,jdbcType=INTEGER},
+      </if>
+      <if test="scjnje != null" >
+        #{scjnje,jdbcType=DECIMAL},
+      </if>
+      <if test="bchnrs != null" >
+        #{bchnrs,jdbcType=INTEGER},
+      </if>
+      <if test="bchnje != null" >
+        #{bchnje,jdbcType=DECIMAL},
+      </if>
+      <if test="ssje != null" >
+        #{ssje,jdbcType=DECIMAL},
+      </if>
+      <if test="bjjkfs != null" >
+        #{bjjkfs,jdbcType=VARCHAR},
+      </if>
+      <if test="bjjkzt != null" >
+        #{bjjkzt,jdbcType=VARCHAR},
+      </if>
+      <if test="rzrq != null" >
+        #{rzrq,jdbcType=DATE},
+      </if>
+      <if test="hjywlx != null" >
+        #{hjywlx,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.hjqcb" >
+    update hjqcb
+    <set >
+      <if test="unitinfoaccount != null" >
+        UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null" >
+        grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="gjind != null" >
+        gjind = #{gjind,jdbcType=VARCHAR},
+      </if>
+      <if test="jnmy != null" >
+        jnmy = #{jnmy,jdbcType=DATE},
+      </if>
+      <if test="nhyf != null" >
+        nhyf = #{nhyf,jdbcType=INTEGER},
+      </if>
+      <if test="bjjzrq != null" >
+        bjjzrq = #{bjjzrq,jdbcType=DATE},
+      </if>
+      <if test="bczjrs != null" >
+        bczjrs = #{bczjrs,jdbcType=INTEGER},
+      </if>
+      <if test="bczjje != null" >
+        bczjje = #{bczjje,jdbcType=DECIMAL},
+      </if>
+      <if test="bcjsrs != null" >
+        bcjsrs = #{bcjsrs,jdbcType=INTEGER},
+      </if>
+      <if test="bcjsje != null" >
+        bcjsje = #{bcjsje,jdbcType=DECIMAL},
+      </if>
+      <if test="scjnrs != null" >
+        scjnrs = #{scjnrs,jdbcType=INTEGER},
+      </if>
+      <if test="scjnje != null" >
+        scjnje = #{scjnje,jdbcType=DECIMAL},
+      </if>
+      <if test="bchnrs != null" >
+        bchnrs = #{bchnrs,jdbcType=INTEGER},
+      </if>
+      <if test="bchnje != null" >
+        bchnje = #{bchnje,jdbcType=DECIMAL},
+      </if>
+      <if test="ssje != null" >
+        ssje = #{ssje,jdbcType=DECIMAL},
+      </if>
+      <if test="bjjkfs != null" >
+        bjjkfs = #{bjjkfs,jdbcType=VARCHAR},
+      </if>
+      <if test="bjjkzt != null" >
+        bjjkzt = #{bjjkzt,jdbcType=VARCHAR},
+      </if>
+      <if test="rzrq != null" >
+        rzrq = #{rzrq,jdbcType=DATE},
+      </if>
+      <if test="hjywlx != null" >
+        hjywlx = #{hjywlx,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where hjbh = #{hjbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.hjqcb" >
+    update hjqcb
+    set UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      gjind = #{gjind,jdbcType=VARCHAR},
+      jnmy = #{jnmy,jdbcType=DATE},
+      nhyf = #{nhyf,jdbcType=INTEGER},
+      bjjzrq = #{bjjzrq,jdbcType=DATE},
+      bczjrs = #{bczjrs,jdbcType=INTEGER},
+      bczjje = #{bczjje,jdbcType=DECIMAL},
+      bcjsrs = #{bcjsrs,jdbcType=INTEGER},
+      bcjsje = #{bcjsje,jdbcType=DECIMAL},
+      scjnrs = #{scjnrs,jdbcType=INTEGER},
+      scjnje = #{scjnje,jdbcType=DECIMAL},
+      bchnrs = #{bchnrs,jdbcType=INTEGER},
+      bchnje = #{bchnje,jdbcType=DECIMAL},
+      ssje = #{ssje,jdbcType=DECIMAL},
+      bjjkfs = #{bjjkfs,jdbcType=VARCHAR},
+      bjjkzt = #{bjjkzt,jdbcType=VARCHAR},
+      rzrq = #{rzrq,jdbcType=DATE},
+      hjywlx = #{hjywlx,jdbcType=VARCHAR}
+    where hjbh = #{hjbh,jdbcType=INTEGER}
+  </update>
+</mapper>
