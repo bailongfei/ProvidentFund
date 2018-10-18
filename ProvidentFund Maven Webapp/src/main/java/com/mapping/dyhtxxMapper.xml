@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.dyhtxxMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.dyhtxx" >
+    <id column="dbhtbh" property="dbhtbh" jdbcType="INTEGER" />
+    <result column="dkxxbh" property="dkxxbh" jdbcType="INTEGER" />
+    <result column="dbgsbh" property="dbgsbh" jdbcType="INTEGER" />
+    <result column="dywfwzl" property="dywfwzl" jdbcType="VARCHAR" />
+    <result column="dywpgjz" property="dywpgjz" jdbcType="DECIMAL" />
+    <result column="bzhtbh" property="bzhtbh" jdbcType="INTEGER" />
+    <result column="ddbzt" property="ddbzt" jdbcType="VARCHAR" />
+    <result column="dyrxm" property="dyrxm" jdbcType="VARCHAR" />
+    <result column="sfzh" property="sfzh" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dbhtbh, dkxxbh, dbgsbh, dywfwzl, dywpgjz, bzhtbh, ddbzt, dyrxm, sfzh
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dyhtxx
+    where dbhtbh = #{dbhtbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dyhtxx
+    where dbhtbh = #{dbhtbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.dyhtxx" >
+    insert into dyhtxx (dbhtbh, dkxxbh, dbgsbh, 
+      dywfwzl, dywpgjz, bzhtbh, 
+      ddbzt, dyrxm, sfzh)
+    values (#{dbhtbh,jdbcType=INTEGER}, #{dkxxbh,jdbcType=INTEGER}, #{dbgsbh,jdbcType=INTEGER}, 
+      #{dywfwzl,jdbcType=VARCHAR}, #{dywpgjz,jdbcType=DECIMAL}, #{bzhtbh,jdbcType=INTEGER}, 
+      #{ddbzt,jdbcType=VARCHAR}, #{dyrxm,jdbcType=VARCHAR}, #{sfzh,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.dyhtxx" >
+    insert into dyhtxx
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dbhtbh != null" >
+        dbhtbh,
+      </if>
+      <if test="dkxxbh != null" >
+        dkxxbh,
+      </if>
+      <if test="dbgsbh != null" >
+        dbgsbh,
+      </if>
+      <if test="dywfwzl != null" >
+        dywfwzl,
+      </if>
+      <if test="dywpgjz != null" >
+        dywpgjz,
+      </if>
+      <if test="bzhtbh != null" >
+        bzhtbh,
+      </if>
+      <if test="ddbzt != null" >
+        ddbzt,
+      </if>
+      <if test="dyrxm != null" >
+        dyrxm,
+      </if>
+      <if test="sfzh != null" >
+        sfzh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dbhtbh != null" >
+        #{dbhtbh,jdbcType=INTEGER},
+      </if>
+      <if test="dkxxbh != null" >
+        #{dkxxbh,jdbcType=INTEGER},
+      </if>
+      <if test="dbgsbh != null" >
+        #{dbgsbh,jdbcType=INTEGER},
+      </if>
+      <if test="dywfwzl != null" >
+        #{dywfwzl,jdbcType=VARCHAR},
+      </if>
+      <if test="dywpgjz != null" >
+        #{dywpgjz,jdbcType=DECIMAL},
+      </if>
+      <if test="bzhtbh != null" >
+        #{bzhtbh,jdbcType=INTEGER},
+      </if>
+      <if test="ddbzt != null" >
+        #{ddbzt,jdbcType=VARCHAR},
+      </if>
+      <if test="dyrxm != null" >
+        #{dyrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzh != null" >
+        #{sfzh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.dyhtxx" >
+    update dyhtxx
+    <set >
+      <if test="dkxxbh != null" >
+        dkxxbh = #{dkxxbh,jdbcType=INTEGER},
+      </if>
+      <if test="dbgsbh != null" >
+        dbgsbh = #{dbgsbh,jdbcType=INTEGER},
+      </if>
+      <if test="dywfwzl != null" >
+        dywfwzl = #{dywfwzl,jdbcType=VARCHAR},
+      </if>
+      <if test="dywpgjz != null" >
+        dywpgjz = #{dywpgjz,jdbcType=DECIMAL},
+      </if>
+      <if test="bzhtbh != null" >
+        bzhtbh = #{bzhtbh,jdbcType=INTEGER},
+      </if>
+      <if test="ddbzt != null" >
+        ddbzt = #{ddbzt,jdbcType=VARCHAR},
+      </if>
+      <if test="dyrxm != null" >
+        dyrxm = #{dyrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzh != null" >
+        sfzh = #{sfzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dbhtbh = #{dbhtbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.dyhtxx" >
+    update dyhtxx
+    set dkxxbh = #{dkxxbh,jdbcType=INTEGER},
+      dbgsbh = #{dbgsbh,jdbcType=INTEGER},
+      dywfwzl = #{dywfwzl,jdbcType=VARCHAR},
+      dywpgjz = #{dywpgjz,jdbcType=DECIMAL},
+      bzhtbh = #{bzhtbh,jdbcType=INTEGER},
+      ddbzt = #{ddbzt,jdbcType=VARCHAR},
+      dyrxm = #{dyrxm,jdbcType=VARCHAR},
+      sfzh = #{sfzh,jdbcType=VARCHAR}
+    where dbhtbh = #{dbhtbh,jdbcType=INTEGER}
+  </update>
+</mapper>

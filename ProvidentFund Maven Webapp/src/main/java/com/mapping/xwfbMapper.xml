@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.xwfbMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.xwfb" >
+    <id column="xwbh" property="xwbh" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="xwbt" property="xwbt" jdbcType="VARCHAR" />
+    <result column="fbsj" property="fbsj" jdbcType="DATE" />
+    <result column="xwnr" property="xwnr" jdbcType="VARCHAR" />
+    <result column="fbr" property="fbr" jdbcType="VARCHAR" />
+    <result column="gqsj" property="gqsj" jdbcType="DATE" />
+    <result column="xwzt" property="xwzt" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    xwbh, userId, xwbt, fbsj, xwnr, fbr, gqsj, xwzt
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from xwfb
+    where xwbh = #{xwbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from xwfb
+    where xwbh = #{xwbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.xwfb" >
+    insert into xwfb (xwbh, userId, xwbt, 
+      fbsj, xwnr, fbr, gqsj, 
+      xwzt)
+    values (#{xwbh,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{xwbt,jdbcType=VARCHAR}, 
+      #{fbsj,jdbcType=DATE}, #{xwnr,jdbcType=VARCHAR}, #{fbr,jdbcType=VARCHAR}, #{gqsj,jdbcType=DATE}, 
+      #{xwzt,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.xwfb" >
+    insert into xwfb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xwbh != null" >
+        xwbh,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="xwbt != null" >
+        xwbt,
+      </if>
+      <if test="fbsj != null" >
+        fbsj,
+      </if>
+      <if test="xwnr != null" >
+        xwnr,
+      </if>
+      <if test="fbr != null" >
+        fbr,
+      </if>
+      <if test="gqsj != null" >
+        gqsj,
+      </if>
+      <if test="xwzt != null" >
+        xwzt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xwbh != null" >
+        #{xwbh,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="xwbt != null" >
+        #{xwbt,jdbcType=VARCHAR},
+      </if>
+      <if test="fbsj != null" >
+        #{fbsj,jdbcType=DATE},
+      </if>
+      <if test="xwnr != null" >
+        #{xwnr,jdbcType=VARCHAR},
+      </if>
+      <if test="fbr != null" >
+        #{fbr,jdbcType=VARCHAR},
+      </if>
+      <if test="gqsj != null" >
+        #{gqsj,jdbcType=DATE},
+      </if>
+      <if test="xwzt != null" >
+        #{xwzt,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.xwfb" >
+    update xwfb
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="xwbt != null" >
+        xwbt = #{xwbt,jdbcType=VARCHAR},
+      </if>
+      <if test="fbsj != null" >
+        fbsj = #{fbsj,jdbcType=DATE},
+      </if>
+      <if test="xwnr != null" >
+        xwnr = #{xwnr,jdbcType=VARCHAR},
+      </if>
+      <if test="fbr != null" >
+        fbr = #{fbr,jdbcType=VARCHAR},
+      </if>
+      <if test="gqsj != null" >
+        gqsj = #{gqsj,jdbcType=DATE},
+      </if>
+      <if test="xwzt != null" >
+        xwzt = #{xwzt,jdbcType=INTEGER},
+      </if>
+    </set>
+    where xwbh = #{xwbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.xwfb" >
+    update xwfb
+    set userId = #{userid,jdbcType=INTEGER},
+      xwbt = #{xwbt,jdbcType=VARCHAR},
+      fbsj = #{fbsj,jdbcType=DATE},
+      xwnr = #{xwnr,jdbcType=VARCHAR},
+      fbr = #{fbr,jdbcType=VARCHAR},
+      gqsj = #{gqsj,jdbcType=DATE},
+      xwzt = #{xwzt,jdbcType=INTEGER}
+    where xwbh = #{xwbh,jdbcType=INTEGER}
+  </update>
+</mapper>

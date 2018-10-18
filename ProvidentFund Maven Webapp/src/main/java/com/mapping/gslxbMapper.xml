@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.gslxbMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.gslxb" >
+    <id column="gslxbh" property="gslxbh" jdbcType="INTEGER" />
+    <result column="UnitInfoId" property="unitinfoid" jdbcType="INTEGER" />
+    <result column="gslxmc" property="gslxmc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    gslxbh, UnitInfoId, gslxmc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from gslxb
+    where gslxbh = #{gslxbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gslxb
+    where gslxbh = #{gslxbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.gslxb" >
+    insert into gslxb (gslxbh, UnitInfoId, gslxmc
+      )
+    values (#{gslxbh,jdbcType=INTEGER}, #{unitinfoid,jdbcType=INTEGER}, #{gslxmc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.gslxb" >
+    insert into gslxb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gslxbh != null" >
+        gslxbh,
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId,
+      </if>
+      <if test="gslxmc != null" >
+        gslxmc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gslxbh != null" >
+        #{gslxbh,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="gslxmc != null" >
+        #{gslxmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.gslxb" >
+    update gslxb
+    <set >
+      <if test="unitinfoid != null" >
+        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="gslxmc != null" >
+        gslxmc = #{gslxmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gslxbh = #{gslxbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.gslxb" >
+    update gslxb
+    set UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      gslxmc = #{gslxmc,jdbcType=VARCHAR}
+    where gslxbh = #{gslxbh,jdbcType=INTEGER}
+  </update>
+</mapper>

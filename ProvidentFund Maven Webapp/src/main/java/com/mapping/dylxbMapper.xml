@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.dylxbMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.dylxb" >
+    <id column="dylxbh" property="dylxbh" jdbcType="INTEGER" />
+    <result column="dbhtbh" property="dbhtbh" jdbcType="INTEGER" />
+    <result column="dylxmc" property="dylxmc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dylxbh, dbhtbh, dylxmc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dylxb
+    where dylxbh = #{dylxbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dylxb
+    where dylxbh = #{dylxbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.dylxb" >
+    insert into dylxb (dylxbh, dbhtbh, dylxmc
+      )
+    values (#{dylxbh,jdbcType=INTEGER}, #{dbhtbh,jdbcType=INTEGER}, #{dylxmc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.dylxb" >
+    insert into dylxb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dylxbh != null" >
+        dylxbh,
+      </if>
+      <if test="dbhtbh != null" >
+        dbhtbh,
+      </if>
+      <if test="dylxmc != null" >
+        dylxmc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dylxbh != null" >
+        #{dylxbh,jdbcType=INTEGER},
+      </if>
+      <if test="dbhtbh != null" >
+        #{dbhtbh,jdbcType=INTEGER},
+      </if>
+      <if test="dylxmc != null" >
+        #{dylxmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.dylxb" >
+    update dylxb
+    <set >
+      <if test="dbhtbh != null" >
+        dbhtbh = #{dbhtbh,jdbcType=INTEGER},
+      </if>
+      <if test="dylxmc != null" >
+        dylxmc = #{dylxmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dylxbh = #{dylxbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.dylxb" >
+    update dylxb
+    set dbhtbh = #{dbhtbh,jdbcType=INTEGER},
+      dylxmc = #{dylxmc,jdbcType=VARCHAR}
+    where dylxbh = #{dylxbh,jdbcType=INTEGER}
+  </update>
+</mapper>

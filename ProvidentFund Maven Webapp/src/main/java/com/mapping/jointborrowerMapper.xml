@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.jointborrowerMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.jointborrower" >
+    <id column="gtjkrbh" property="gtjkrbh" jdbcType="INTEGER" />
+    <result column="dkxxbh" property="dkxxbh" jdbcType="INTEGER" />
+    <result column="gtjkrxm" property="gtjkrxm" jdbcType="VARCHAR" />
+    <result column="gtjkrgjjzh" property="gtjkrgjjzh" jdbcType="VARCHAR" />
+    <result column="incomes" property="incomes" jdbcType="DECIMAL" />
+    <result column="gtjkrxb" property="gtjkrxb" jdbcType="VARCHAR" />
+    <result column="gtjkrsjhm" property="gtjkrsjhm" jdbcType="VARCHAR" />
+    <result column="gtjkrdwmc" property="gtjkrdwmc" jdbcType="VARCHAR" />
+    <result column="gtjkrdwdz" property="gtjkrdwdz" jdbcType="VARCHAR" />
+    <result column="gtjkrzjhm" property="gtjkrzjhm" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    gtjkrbh, dkxxbh, gtjkrxm, gtjkrgjjzh, incomes, gtjkrxb, gtjkrsjhm, gtjkrdwmc, gtjkrdwdz, 
+    gtjkrzjhm
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from jointborrower
+    where gtjkrbh = #{gtjkrbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from jointborrower
+    where gtjkrbh = #{gtjkrbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.jointborrower" >
+    insert into jointborrower (gtjkrbh, dkxxbh, gtjkrxm, 
+      gtjkrgjjzh, incomes, gtjkrxb, 
+      gtjkrsjhm, gtjkrdwmc, gtjkrdwdz, 
+      gtjkrzjhm)
+    values (#{gtjkrbh,jdbcType=INTEGER}, #{dkxxbh,jdbcType=INTEGER}, #{gtjkrxm,jdbcType=VARCHAR}, 
+      #{gtjkrgjjzh,jdbcType=VARCHAR}, #{incomes,jdbcType=DECIMAL}, #{gtjkrxb,jdbcType=VARCHAR}, 
+      #{gtjkrsjhm,jdbcType=VARCHAR}, #{gtjkrdwmc,jdbcType=VARCHAR}, #{gtjkrdwdz,jdbcType=VARCHAR}, 
+      #{gtjkrzjhm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.jointborrower" >
+    insert into jointborrower
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gtjkrbh != null" >
+        gtjkrbh,
+      </if>
+      <if test="dkxxbh != null" >
+        dkxxbh,
+      </if>
+      <if test="gtjkrxm != null" >
+        gtjkrxm,
+      </if>
+      <if test="gtjkrgjjzh != null" >
+        gtjkrgjjzh,
+      </if>
+      <if test="incomes != null" >
+        incomes,
+      </if>
+      <if test="gtjkrxb != null" >
+        gtjkrxb,
+      </if>
+      <if test="gtjkrsjhm != null" >
+        gtjkrsjhm,
+      </if>
+      <if test="gtjkrdwmc != null" >
+        gtjkrdwmc,
+      </if>
+      <if test="gtjkrdwdz != null" >
+        gtjkrdwdz,
+      </if>
+      <if test="gtjkrzjhm != null" >
+        gtjkrzjhm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gtjkrbh != null" >
+        #{gtjkrbh,jdbcType=INTEGER},
+      </if>
+      <if test="dkxxbh != null" >
+        #{dkxxbh,jdbcType=INTEGER},
+      </if>
+      <if test="gtjkrxm != null" >
+        #{gtjkrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrgjjzh != null" >
+        #{gtjkrgjjzh,jdbcType=VARCHAR},
+      </if>
+      <if test="incomes != null" >
+        #{incomes,jdbcType=DECIMAL},
+      </if>
+      <if test="gtjkrxb != null" >
+        #{gtjkrxb,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrsjhm != null" >
+        #{gtjkrsjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrdwmc != null" >
+        #{gtjkrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrdwdz != null" >
+        #{gtjkrdwdz,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrzjhm != null" >
+        #{gtjkrzjhm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.jointborrower" >
+    update jointborrower
+    <set >
+      <if test="dkxxbh != null" >
+        dkxxbh = #{dkxxbh,jdbcType=INTEGER},
+      </if>
+      <if test="gtjkrxm != null" >
+        gtjkrxm = #{gtjkrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrgjjzh != null" >
+        gtjkrgjjzh = #{gtjkrgjjzh,jdbcType=VARCHAR},
+      </if>
+      <if test="incomes != null" >
+        incomes = #{incomes,jdbcType=DECIMAL},
+      </if>
+      <if test="gtjkrxb != null" >
+        gtjkrxb = #{gtjkrxb,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrsjhm != null" >
+        gtjkrsjhm = #{gtjkrsjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrdwmc != null" >
+        gtjkrdwmc = #{gtjkrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrdwdz != null" >
+        gtjkrdwdz = #{gtjkrdwdz,jdbcType=VARCHAR},
+      </if>
+      <if test="gtjkrzjhm != null" >
+        gtjkrzjhm = #{gtjkrzjhm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gtjkrbh = #{gtjkrbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.jointborrower" >
+    update jointborrower
+    set dkxxbh = #{dkxxbh,jdbcType=INTEGER},
+      gtjkrxm = #{gtjkrxm,jdbcType=VARCHAR},
+      gtjkrgjjzh = #{gtjkrgjjzh,jdbcType=VARCHAR},
+      incomes = #{incomes,jdbcType=DECIMAL},
+      gtjkrxb = #{gtjkrxb,jdbcType=VARCHAR},
+      gtjkrsjhm = #{gtjkrsjhm,jdbcType=VARCHAR},
+      gtjkrdwmc = #{gtjkrdwmc,jdbcType=VARCHAR},
+      gtjkrdwdz = #{gtjkrdwdz,jdbcType=VARCHAR},
+      gtjkrzjhm = #{gtjkrzjhm,jdbcType=VARCHAR}
+    where gtjkrbh = #{gtjkrbh,jdbcType=INTEGER}
+  </update>
+</mapper>
