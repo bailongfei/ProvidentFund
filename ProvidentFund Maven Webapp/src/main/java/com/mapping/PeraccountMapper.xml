@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.PeraccountMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Peraccount" >
+    <id column="grzhbh" property="grzhbh" jdbcType="INTEGER" />
+    <result column="zhztbh" property="zhztbh" jdbcType="INTEGER" />
+    <result column="UnitpositionId" property="unitpositionid" jdbcType="INTEGER" />
+    <result column="UnitInfoId" property="unitinfoid" jdbcType="INTEGER" />
+    <result column="netinfoId" property="netinfoid" jdbcType="INTEGER" />
+    <result column="peracId" property="peracid" jdbcType="VARCHAR" />
+    <result column="peracloginpw" property="peracloginpw" jdbcType="VARCHAR" />
+    <result column="peracTransactionpw" property="peractransactionpw" jdbcType="VARCHAR" />
+    <result column="peracBalance" property="peracbalance" jdbcType="VARCHAR" />
+    <result column="peracUpdatestatus" property="peracupdatestatus" jdbcType="VARCHAR" />
+    <result column="bkname" property="bkname" jdbcType="VARCHAR" />
+    <result column="bksex" property="bksex" jdbcType="VARCHAR" />
+    <result column="phoneNum" property="phonenum" jdbcType="VARCHAR" />
+    <result column="IdType" property="idtype" jdbcType="VARCHAR" />
+    <result column="IdNumbers" property="idnumbers" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="marital" property="marital" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="monthlyProfit" property="monthlyprofit" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    grzhbh, zhztbh, UnitpositionId, UnitInfoId, netinfoId, peracId, peracloginpw, peracTransactionpw, 
+    peracBalance, peracUpdatestatus, bkname, bksex, phoneNum, IdType, IdNumbers, birthday, 
+    marital, education, email, postcode, address, monthlyProfit
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from peraccount
+    where grzhbh = #{grzhbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from peraccount
+    where grzhbh = #{grzhbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Peraccount" >
+    insert into peraccount (grzhbh, zhztbh, UnitpositionId, 
+      UnitInfoId, netinfoId, peracId, 
+      peracloginpw, peracTransactionpw, peracBalance, 
+      peracUpdatestatus, bkname, bksex, 
+      phoneNum, IdType, IdNumbers, 
+      birthday, marital, education, 
+      email, postcode, address, 
+      monthlyProfit)
+    values (#{grzhbh,jdbcType=INTEGER}, #{zhztbh,jdbcType=INTEGER}, #{unitpositionid,jdbcType=INTEGER}, 
+      #{unitinfoid,jdbcType=INTEGER}, #{netinfoid,jdbcType=INTEGER}, #{peracid,jdbcType=VARCHAR}, 
+      #{peracloginpw,jdbcType=VARCHAR}, #{peractransactionpw,jdbcType=VARCHAR}, #{peracbalance,jdbcType=VARCHAR}, 
+      #{peracupdatestatus,jdbcType=VARCHAR}, #{bkname,jdbcType=VARCHAR}, #{bksex,jdbcType=VARCHAR}, 
+      #{phonenum,jdbcType=VARCHAR}, #{idtype,jdbcType=VARCHAR}, #{idnumbers,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{marital,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{monthlyprofit,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Peraccount" >
+    insert into peraccount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="grzhbh != null" >
+        grzhbh,
+      </if>
+      <if test="zhztbh != null" >
+        zhztbh,
+      </if>
+      <if test="unitpositionid != null" >
+        UnitpositionId,
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId,
+      </if>
+      <if test="netinfoid != null" >
+        netinfoId,
+      </if>
+      <if test="peracid != null" >
+        peracId,
+      </if>
+      <if test="peracloginpw != null" >
+        peracloginpw,
+      </if>
+      <if test="peractransactionpw != null" >
+        peracTransactionpw,
+      </if>
+      <if test="peracbalance != null" >
+        peracBalance,
+      </if>
+      <if test="peracupdatestatus != null" >
+        peracUpdatestatus,
+      </if>
+      <if test="bkname != null" >
+        bkname,
+      </if>
+      <if test="bksex != null" >
+        bksex,
+      </if>
+      <if test="phonenum != null" >
+        phoneNum,
+      </if>
+      <if test="idtype != null" >
+        IdType,
+      </if>
+      <if test="idnumbers != null" >
+        IdNumbers,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="marital != null" >
+        marital,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="monthlyprofit != null" >
+        monthlyProfit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="grzhbh != null" >
+        #{grzhbh,jdbcType=INTEGER},
+      </if>
+      <if test="zhztbh != null" >
+        #{zhztbh,jdbcType=INTEGER},
+      </if>
+      <if test="unitpositionid != null" >
+        #{unitpositionid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="netinfoid != null" >
+        #{netinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="peracid != null" >
+        #{peracid,jdbcType=VARCHAR},
+      </if>
+      <if test="peracloginpw != null" >
+        #{peracloginpw,jdbcType=VARCHAR},
+      </if>
+      <if test="peractransactionpw != null" >
+        #{peractransactionpw,jdbcType=VARCHAR},
+      </if>
+      <if test="peracbalance != null" >
+        #{peracbalance,jdbcType=VARCHAR},
+      </if>
+      <if test="peracupdatestatus != null" >
+        #{peracupdatestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bkname != null" >
+        #{bkname,jdbcType=VARCHAR},
+      </if>
+      <if test="bksex != null" >
+        #{bksex,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null" >
+        #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null" >
+        #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumbers != null" >
+        #{idnumbers,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="marital != null" >
+        #{marital,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyprofit != null" >
+        #{monthlyprofit,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Peraccount" >
+    update peraccount
+    <set >
+      <if test="zhztbh != null" >
+        zhztbh = #{zhztbh,jdbcType=INTEGER},
+      </if>
+      <if test="unitpositionid != null" >
+        UnitpositionId = #{unitpositionid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null" >
+        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="netinfoid != null" >
+        netinfoId = #{netinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="peracid != null" >
+        peracId = #{peracid,jdbcType=VARCHAR},
+      </if>
+      <if test="peracloginpw != null" >
+        peracloginpw = #{peracloginpw,jdbcType=VARCHAR},
+      </if>
+      <if test="peractransactionpw != null" >
+        peracTransactionpw = #{peractransactionpw,jdbcType=VARCHAR},
+      </if>
+      <if test="peracbalance != null" >
+        peracBalance = #{peracbalance,jdbcType=VARCHAR},
+      </if>
+      <if test="peracupdatestatus != null" >
+        peracUpdatestatus = #{peracupdatestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bkname != null" >
+        bkname = #{bkname,jdbcType=VARCHAR},
+      </if>
+      <if test="bksex != null" >
+        bksex = #{bksex,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null" >
+        phoneNum = #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null" >
+        IdType = #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumbers != null" >
+        IdNumbers = #{idnumbers,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="marital != null" >
+        marital = #{marital,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyprofit != null" >
+        monthlyProfit = #{monthlyprofit,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where grzhbh = #{grzhbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Peraccount" >
+    update peraccount
+    set zhztbh = #{zhztbh,jdbcType=INTEGER},
+      UnitpositionId = #{unitpositionid,jdbcType=INTEGER},
+      UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
+      netinfoId = #{netinfoid,jdbcType=INTEGER},
+      peracId = #{peracid,jdbcType=VARCHAR},
+      peracloginpw = #{peracloginpw,jdbcType=VARCHAR},
+      peracTransactionpw = #{peractransactionpw,jdbcType=VARCHAR},
+      peracBalance = #{peracbalance,jdbcType=VARCHAR},
+      peracUpdatestatus = #{peracupdatestatus,jdbcType=VARCHAR},
+      bkname = #{bkname,jdbcType=VARCHAR},
+      bksex = #{bksex,jdbcType=VARCHAR},
+      phoneNum = #{phonenum,jdbcType=VARCHAR},
+      IdType = #{idtype,jdbcType=VARCHAR},
+      IdNumbers = #{idnumbers,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      marital = #{marital,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      monthlyProfit = #{monthlyprofit,jdbcType=DECIMAL}
+    where grzhbh = #{grzhbh,jdbcType=INTEGER}
+  </update>
+</mapper>

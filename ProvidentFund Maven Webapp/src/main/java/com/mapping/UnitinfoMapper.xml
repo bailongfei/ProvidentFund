@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.UnitinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Unitinfo" >
+    <id column="UnitInfoId" property="unitinfoid" jdbcType="INTEGER" />
+    <result column="UnitInfoAccount" property="unitinfoaccount" jdbcType="INTEGER" />
+    <result column="UnitInfoName" property="unitinfoname" jdbcType="VARCHAR" />
+    <result column="UnitInfoCredit" property="unitinfocredit" jdbcType="VARCHAR" />
+    <result column="UnitInfoProperty" property="unitinfoproperty" jdbcType="VARCHAR" />
+    <result column="UnitInfoAddress" property="unitinfoaddress" jdbcType="VARCHAR" />
+    <result column="UnitInfoFader" property="unitinfofader" jdbcType="VARCHAR" />
+    <result column="UnitInfoType" property="unitinfotype" jdbcType="VARCHAR" />
+    <result column="UnitInfoNumber" property="unitinfonumber" jdbcType="VARCHAR" />
+    <result column="UnitInfoSubjection" property="unitinfosubjection" jdbcType="VARCHAR" />
+    <result column="UnitInfoEconomic" property="unitinfoeconomic" jdbcType="VARCHAR" />
+    <result column="UnitInfoClass" property="unitinfoclass" jdbcType="VARCHAR" />
+    <result column="UnitInfoPostcode" property="unitinfopostcode" jdbcType="VARCHAR" />
+    <result column="UnitInfoEmail" property="unitinfoemail" jdbcType="VARCHAR" />
+    <result column="UnitInfoPayday" property="unitinfopayday" jdbcType="VARCHAR" />
+    <result column="UnitInfoOperatorName" property="unitinfooperatorname" jdbcType="VARCHAR" />
+    <result column="UnitInfoOperatorPhone" property="unitinfooperatorphone" jdbcType="VARCHAR" />
+    <result column="nitInfoOperatorType" property="nitinfooperatortype" jdbcType="VARCHAR" />
+    <result column="UnitInfoOperatorNumber" property="unitinfooperatornumber" jdbcType="VARCHAR" />
+    <result column="UnitInfoBankName" property="unitinfobankname" jdbcType="VARCHAR" />
+    <result column="UnitInfoSwiftCode" property="unitinfoswiftcode" jdbcType="VARCHAR" />
+    <result column="UnitInfoSocialAccount" property="unitinfosocialaccount" jdbcType="VARCHAR" />
+    <result column="UnitInfoSection" property="unitinfosection" jdbcType="VARCHAR" />
+    <result column="UnitInfoTissueCode" property="unitinfotissuecode" jdbcType="VARCHAR" />
+    <result column="UnitInfoFoundLusd" property="unitinfofoundlusd" jdbcType="VARCHAR" />
+    <result column="UnitInfoAccountLusd" property="unitinfoaccountlusd" jdbcType="VARCHAR" />
+    <result column="Fattype" property="fattype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UnitInfoId, UnitInfoAccount, UnitInfoName, UnitInfoCredit, UnitInfoProperty, UnitInfoAddress, 
+    UnitInfoFader, UnitInfoType, UnitInfoNumber, UnitInfoSubjection, UnitInfoEconomic, 
+    UnitInfoClass, UnitInfoPostcode, UnitInfoEmail, UnitInfoPayday, UnitInfoOperatorName, 
+    UnitInfoOperatorPhone, nitInfoOperatorType, UnitInfoOperatorNumber, UnitInfoBankName, 
+    UnitInfoSwiftCode, UnitInfoSocialAccount, UnitInfoSection, UnitInfoTissueCode, UnitInfoFoundLusd, 
+    UnitInfoAccountLusd, Fattype
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from unitinfo
+    where UnitInfoId = #{unitinfoid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from unitinfo
+    where UnitInfoId = #{unitinfoid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Unitinfo" >
+    insert into unitinfo (UnitInfoId, UnitInfoAccount, UnitInfoName, 
+      UnitInfoCredit, UnitInfoProperty, UnitInfoAddress, 
+      UnitInfoFader, UnitInfoType, UnitInfoNumber, 
+      UnitInfoSubjection, UnitInfoEconomic, UnitInfoClass, 
+      UnitInfoPostcode, UnitInfoEmail, UnitInfoPayday, 
+      UnitInfoOperatorName, UnitInfoOperatorPhone, 
+      nitInfoOperatorType, UnitInfoOperatorNumber, 
+      UnitInfoBankName, UnitInfoSwiftCode, UnitInfoSocialAccount, 
+      UnitInfoSection, UnitInfoTissueCode, UnitInfoFoundLusd, 
+      UnitInfoAccountLusd, Fattype)
+    values (#{unitinfoid,jdbcType=INTEGER}, #{unitinfoaccount,jdbcType=INTEGER}, #{unitinfoname,jdbcType=VARCHAR}, 
+      #{unitinfocredit,jdbcType=VARCHAR}, #{unitinfoproperty,jdbcType=VARCHAR}, #{unitinfoaddress,jdbcType=VARCHAR}, 
+      #{unitinfofader,jdbcType=VARCHAR}, #{unitinfotype,jdbcType=VARCHAR}, #{unitinfonumber,jdbcType=VARCHAR}, 
+      #{unitinfosubjection,jdbcType=VARCHAR}, #{unitinfoeconomic,jdbcType=VARCHAR}, #{unitinfoclass,jdbcType=VARCHAR}, 
+      #{unitinfopostcode,jdbcType=VARCHAR}, #{unitinfoemail,jdbcType=VARCHAR}, #{unitinfopayday,jdbcType=VARCHAR}, 
+      #{unitinfooperatorname,jdbcType=VARCHAR}, #{unitinfooperatorphone,jdbcType=VARCHAR}, 
+      #{nitinfooperatortype,jdbcType=VARCHAR}, #{unitinfooperatornumber,jdbcType=VARCHAR}, 
+      #{unitinfobankname,jdbcType=VARCHAR}, #{unitinfoswiftcode,jdbcType=VARCHAR}, #{unitinfosocialaccount,jdbcType=VARCHAR}, 
+      #{unitinfosection,jdbcType=VARCHAR}, #{unitinfotissuecode,jdbcType=VARCHAR}, #{unitinfofoundlusd,jdbcType=VARCHAR}, 
+      #{unitinfoaccountlusd,jdbcType=VARCHAR}, #{fattype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Unitinfo" >
+    insert into unitinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="unitinfoid != null" >
+        UnitInfoId,
+      </if>
+      <if test="unitinfoaccount != null" >
+        UnitInfoAccount,
+      </if>
+      <if test="unitinfoname != null" >
+        UnitInfoName,
+      </if>
+      <if test="unitinfocredit != null" >
+        UnitInfoCredit,
+      </if>
+      <if test="unitinfoproperty != null" >
+        UnitInfoProperty,
+      </if>
+      <if test="unitinfoaddress != null" >
+        UnitInfoAddress,
+      </if>
+      <if test="unitinfofader != null" >
+        UnitInfoFader,
+      </if>
+      <if test="unitinfotype != null" >
+        UnitInfoType,
+      </if>
+      <if test="unitinfonumber != null" >
+        UnitInfoNumber,
+      </if>
+      <if test="unitinfosubjection != null" >
+        UnitInfoSubjection,
+      </if>
+      <if test="unitinfoeconomic != null" >
+        UnitInfoEconomic,
+      </if>
+      <if test="unitinfoclass != null" >
+        UnitInfoClass,
+      </if>
+      <if test="unitinfopostcode != null" >
+        UnitInfoPostcode,
+      </if>
+      <if test="unitinfoemail != null" >
+        UnitInfoEmail,
+      </if>
+      <if test="unitinfopayday != null" >
+        UnitInfoPayday,
+      </if>
+      <if test="unitinfooperatorname != null" >
+        UnitInfoOperatorName,
+      </if>
+      <if test="unitinfooperatorphone != null" >
+        UnitInfoOperatorPhone,
+      </if>
+      <if test="nitinfooperatortype != null" >
+        nitInfoOperatorType,
+      </if>
+      <if test="unitinfooperatornumber != null" >
+        UnitInfoOperatorNumber,
+      </if>
+      <if test="unitinfobankname != null" >
+        UnitInfoBankName,
+      </if>
+      <if test="unitinfoswiftcode != null" >
+        UnitInfoSwiftCode,
+      </if>
+      <if test="unitinfosocialaccount != null" >
+        UnitInfoSocialAccount,
+      </if>
+      <if test="unitinfosection != null" >
+        UnitInfoSection,
+      </if>
+      <if test="unitinfotissuecode != null" >
+        UnitInfoTissueCode,
+      </if>
+      <if test="unitinfofoundlusd != null" >
+        UnitInfoFoundLusd,
+      </if>
+      <if test="unitinfoaccountlusd != null" >
+        UnitInfoAccountLusd,
+      </if>
+      <if test="fattype != null" >
+        Fattype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="unitinfoid != null" >
+        #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoaccount != null" >
+        #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoname != null" >
+        #{unitinfoname,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfocredit != null" >
+        #{unitinfocredit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoproperty != null" >
+        #{unitinfoproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoaddress != null" >
+        #{unitinfoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfofader != null" >
+        #{unitinfofader,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfotype != null" >
+        #{unitinfotype,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfonumber != null" >
+        #{unitinfonumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfosubjection != null" >
+        #{unitinfosubjection,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoeconomic != null" >
+        #{unitinfoeconomic,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoclass != null" >
+        #{unitinfoclass,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfopostcode != null" >
+        #{unitinfopostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoemail != null" >
+        #{unitinfoemail,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfopayday != null" >
+        #{unitinfopayday,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfooperatorname != null" >
+        #{unitinfooperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfooperatorphone != null" >
+        #{unitinfooperatorphone,jdbcType=VARCHAR},
+      </if>
+      <if test="nitinfooperatortype != null" >
+        #{nitinfooperatortype,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfooperatornumber != null" >
+        #{unitinfooperatornumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfobankname != null" >
+        #{unitinfobankname,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoswiftcode != null" >
+        #{unitinfoswiftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfosocialaccount != null" >
+        #{unitinfosocialaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfosection != null" >
+        #{unitinfosection,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfotissuecode != null" >
+        #{unitinfotissuecode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfofoundlusd != null" >
+        #{unitinfofoundlusd,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoaccountlusd != null" >
+        #{unitinfoaccountlusd,jdbcType=VARCHAR},
+      </if>
+      <if test="fattype != null" >
+        #{fattype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Unitinfo" >
+    update unitinfo
+    <set >
+      <if test="unitinfoaccount != null" >
+        UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoname != null" >
+        UnitInfoName = #{unitinfoname,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfocredit != null" >
+        UnitInfoCredit = #{unitinfocredit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoproperty != null" >
+        UnitInfoProperty = #{unitinfoproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoaddress != null" >
+        UnitInfoAddress = #{unitinfoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfofader != null" >
+        UnitInfoFader = #{unitinfofader,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfotype != null" >
+        UnitInfoType = #{unitinfotype,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfonumber != null" >
+        UnitInfoNumber = #{unitinfonumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfosubjection != null" >
+        UnitInfoSubjection = #{unitinfosubjection,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoeconomic != null" >
+        UnitInfoEconomic = #{unitinfoeconomic,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoclass != null" >
+        UnitInfoClass = #{unitinfoclass,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfopostcode != null" >
+        UnitInfoPostcode = #{unitinfopostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoemail != null" >
+        UnitInfoEmail = #{unitinfoemail,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfopayday != null" >
+        UnitInfoPayday = #{unitinfopayday,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfooperatorname != null" >
+        UnitInfoOperatorName = #{unitinfooperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfooperatorphone != null" >
+        UnitInfoOperatorPhone = #{unitinfooperatorphone,jdbcType=VARCHAR},
+      </if>
+      <if test="nitinfooperatortype != null" >
+        nitInfoOperatorType = #{nitinfooperatortype,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfooperatornumber != null" >
+        UnitInfoOperatorNumber = #{unitinfooperatornumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfobankname != null" >
+        UnitInfoBankName = #{unitinfobankname,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoswiftcode != null" >
+        UnitInfoSwiftCode = #{unitinfoswiftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfosocialaccount != null" >
+        UnitInfoSocialAccount = #{unitinfosocialaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfosection != null" >
+        UnitInfoSection = #{unitinfosection,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfotissuecode != null" >
+        UnitInfoTissueCode = #{unitinfotissuecode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfofoundlusd != null" >
+        UnitInfoFoundLusd = #{unitinfofoundlusd,jdbcType=VARCHAR},
+      </if>
+      <if test="unitinfoaccountlusd != null" >
+        UnitInfoAccountLusd = #{unitinfoaccountlusd,jdbcType=VARCHAR},
+      </if>
+      <if test="fattype != null" >
+        Fattype = #{fattype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UnitInfoId = #{unitinfoid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Unitinfo" >
+    update unitinfo
+    set UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      UnitInfoName = #{unitinfoname,jdbcType=VARCHAR},
+      UnitInfoCredit = #{unitinfocredit,jdbcType=VARCHAR},
+      UnitInfoProperty = #{unitinfoproperty,jdbcType=VARCHAR},
+      UnitInfoAddress = #{unitinfoaddress,jdbcType=VARCHAR},
+      UnitInfoFader = #{unitinfofader,jdbcType=VARCHAR},
+      UnitInfoType = #{unitinfotype,jdbcType=VARCHAR},
+      UnitInfoNumber = #{unitinfonumber,jdbcType=VARCHAR},
+      UnitInfoSubjection = #{unitinfosubjection,jdbcType=VARCHAR},
+      UnitInfoEconomic = #{unitinfoeconomic,jdbcType=VARCHAR},
+      UnitInfoClass = #{unitinfoclass,jdbcType=VARCHAR},
+      UnitInfoPostcode = #{unitinfopostcode,jdbcType=VARCHAR},
+      UnitInfoEmail = #{unitinfoemail,jdbcType=VARCHAR},
+      UnitInfoPayday = #{unitinfopayday,jdbcType=VARCHAR},
+      UnitInfoOperatorName = #{unitinfooperatorname,jdbcType=VARCHAR},
+      UnitInfoOperatorPhone = #{unitinfooperatorphone,jdbcType=VARCHAR},
+      nitInfoOperatorType = #{nitinfooperatortype,jdbcType=VARCHAR},
+      UnitInfoOperatorNumber = #{unitinfooperatornumber,jdbcType=VARCHAR},
+      UnitInfoBankName = #{unitinfobankname,jdbcType=VARCHAR},
+      UnitInfoSwiftCode = #{unitinfoswiftcode,jdbcType=VARCHAR},
+      UnitInfoSocialAccount = #{unitinfosocialaccount,jdbcType=VARCHAR},
+      UnitInfoSection = #{unitinfosection,jdbcType=VARCHAR},
+      UnitInfoTissueCode = #{unitinfotissuecode,jdbcType=VARCHAR},
+      UnitInfoFoundLusd = #{unitinfofoundlusd,jdbcType=VARCHAR},
+      UnitInfoAccountLusd = #{unitinfoaccountlusd,jdbcType=VARCHAR},
+      Fattype = #{fattype,jdbcType=VARCHAR}
+    where UnitInfoId = #{unitinfoid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.GjjtqyybMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Gjjtqyyb" >
+    <id column="tqyyId" property="tqyyid" jdbcType="INTEGER" />
+    <result column="accumulation" property="accumulation" jdbcType="INTEGER" />
+    <result column="cause" property="cause" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tqyyId, accumulation, cause
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from gjjtqyyb
+    where tqyyId = #{tqyyid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gjjtqyyb
+    where tqyyId = #{tqyyid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Gjjtqyyb" >
+    insert into gjjtqyyb (tqyyId, accumulation, cause
+      )
+    values (#{tqyyid,jdbcType=INTEGER}, #{accumulation,jdbcType=INTEGER}, #{cause,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Gjjtqyyb" >
+    insert into gjjtqyyb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tqyyid != null" >
+        tqyyId,
+      </if>
+      <if test="accumulation != null" >
+        accumulation,
+      </if>
+      <if test="cause != null" >
+        cause,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tqyyid != null" >
+        #{tqyyid,jdbcType=INTEGER},
+      </if>
+      <if test="accumulation != null" >
+        #{accumulation,jdbcType=INTEGER},
+      </if>
+      <if test="cause != null" >
+        #{cause,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Gjjtqyyb" >
+    update gjjtqyyb
+    <set >
+      <if test="accumulation != null" >
+        accumulation = #{accumulation,jdbcType=INTEGER},
+      </if>
+      <if test="cause != null" >
+        cause = #{cause,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tqyyId = #{tqyyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Gjjtqyyb" >
+    update gjjtqyyb
+    set accumulation = #{accumulation,jdbcType=INTEGER},
+      cause = #{cause,jdbcType=VARCHAR}
+    where tqyyId = #{tqyyid,jdbcType=INTEGER}
+  </update>
+</mapper>

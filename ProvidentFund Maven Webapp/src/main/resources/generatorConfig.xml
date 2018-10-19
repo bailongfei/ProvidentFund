@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"> -->
+<generatorConfiguration>
+  <!--导入属性配置-->
+	<properties resource="jdbc.properties" />
+	<!-- context 是逆向工程的主要配置信息 -->
+    <!-- id：起个名字 -->
+    <!-- targetRuntime：设置生成的文件适用于那个 mybatis 版本 -->
+	<context id="mysqlTables" targetRuntime="MyBatis3">
+	<!--jdbc的数据库连接-->
+		<jdbcConnection  driverClass="com.mysql.jdbc.Driver"  connectionURL="${jdbc.url}"  userId="${jdbc.username}"  password="${jdbc.password}"/>
+		<!--指定生成的类型为java类型，避免数据库中number等类型字段 -->
+		<!--非必须，类型处理器，在数据库类型和java类型之间的转换控制-->
+		 <javaTypeResolver>
+		    <!-- 默认情况下数据库中的 decimal，bigInt 在 Java 对应是 sql 下的 BigDecimal 类 -->
+            <!-- 不是 double 和 long 类型 -->
+            <!-- 使用常用的基本类型代替 sql 包下的引用类型 -->
+            <property name="forceBigDecimals"  value="false" />
+        </javaTypeResolver>
+		<!--自动生成的实体的存放包路径 -->
+		 <!-- targetPackage：生成的实体类所在的包 -->
+        <!-- targetProject：生成的实体类所在的硬盘位置 -->
+		<javaModelGenerator targetPackage="com.entity" targetProject="src/main/java">
+            <!-- 是否允许子包 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否清理从数据库中查询出的字符串左右两边的空白字符 -->
+			<property name="trimStrings" value="true"/>
+		</javaModelGenerator>
+		<!--自动生成的*Mapper.xml文件存放路径 -->
+		<sqlMapGenerator targetPackage="com.mapping" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+		<!--自动生成的*Mapper.java存放路径 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+		<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+		<!-- <table tableName="accumulation" domainObjectName="Accumulation" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+           <generatedKey column="ID" sqlStatement="selectuuid_short()" identity="false" />
+        </table> -->
+        <table   tableName="accumulation"   domainObjectName="Accumulation"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="bankdetails"   domainObjectName="Bankdetails"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="bjmxb"   domainObjectName="Bjmxb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="bjqcb"   domainObjectName="Bjqcb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="bkshzjb"   domainObjectName="Bkshzjb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="dyhtxx"   domainObjectName="Dyhtxx"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="dylxb"   domainObjectName="Dylxb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="fjlxb"   domainObjectName="Fjlxb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="gjjtqjl"   domainObjectName="Gjjtqjl"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="gjjtqyyb"   domainObjectName="Gjjtqyyb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="grzfbkzhxx"   domainObjectName="Grzfbkzhxx"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="grzhztb"   domainObjectName="Grzhztb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="gshylx"   domainObjectName="Gshylx"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="gslxb"   domainObjectName="Gslxb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="guaporation"   domainObjectName="Guaporation"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="hjmx"   domainObjectName="Hjmx"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="hjqcb"   domainObjectName="Hjqcb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="individualpay"   domainObjectName="Individualpay"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="jjlxb"   domainObjectName="Jjlxb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="jointborrower"   domainObjectName="Jointborrower"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="lenderspou"   domainObjectName="Lenderspou"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="loaninfo"   domainObjectName="Loaninfo"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="marstatuts"   domainObjectName="Marstatuts"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="messagement"   domainObjectName="Messagement"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="networkinfo"   domainObjectName="Networkinfo"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="overdue"   domainObjectName="Overdue"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="peraccount"   domainObjectName="Peraccount"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="perbusiness"   domainObjectName="Perbusiness"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="perdetails"   domainObjectName="Perdetails"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="purchase"   domainObjectName="Purchase"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="repayplan"   domainObjectName="Repayplan"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="returnpay"   domainObjectName="Returnpay"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="shzt"   domainObjectName="Shzt"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="sys_role"   domainObjectName="Sys_role"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="sys_role_menu"   domainObjectName="Sys_role_menu"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="sys_user"   domainObjectName="Sys_user"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="sys_user_role"   domainObjectName="Sys_user_role"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="unitinfo"   domainObjectName="Unitinfo"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="unitposition"   domainObjectName="Unitposition"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="unitsaccount"   domainObjectName="Unitsaccount"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="xtyjbxx"   domainObjectName="Xtyjbxx"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="xwfb"   domainObjectName="Xwfb"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="xwlx"   domainObjectName="Xwlx"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+<table   tableName="zhhbjl"   domainObjectName="Zhhbjl"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+															
+        
+</context>
+</generatorConfiguration>
