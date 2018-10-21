@@ -171,7 +171,13 @@
 <table   tableName="zhhbjl"   domainObjectName="Zhhbjl"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
 			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
 		</table>
-															
+		
+		<table   tableName="branded"   domainObjectName="Branded"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>
+		<table   tableName="sys_menu"   domainObjectName="Sys_menu"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
+			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
+		</table>													
         
 </context>
 </generatorConfiguration>

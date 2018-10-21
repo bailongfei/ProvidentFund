@@ -26,7 +26,8 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven><!--引入mvc -->
 	<!-- 配置静态资源 .js .css .jpg .html -->
-	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
+	<!-- <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources> -->
+	  <mvc:default-servlet-handler/>
 	<!--SpringMvc文件上传时,需要配置MultipartResolver处理器 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -39,4 +40,10 @@
 		<property name="prefix" value="/view/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+	<!--配置 Shiro  -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
 </beans>
