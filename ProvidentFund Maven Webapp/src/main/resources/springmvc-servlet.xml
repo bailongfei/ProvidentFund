@@ -41,5 +41,5 @@
 		<property name="prefix" value="/view/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
-	<!--配置 Shiro11  -->
+	
 </beans>
