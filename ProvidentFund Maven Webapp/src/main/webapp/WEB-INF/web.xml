@@ -8,23 +8,21 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
-	<!-- 配置由Spring提供的过滤器，用于整合shiro框架 -->
-  <!-- 在项目启动的过程中，当前过滤器会从Spring工厂中提取同名对象 -->
- 
-	<filter><!-- 编码过滤器 -->
-		<filter-name>Encoding</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<async-supported>true</async-supported>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>utf-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>Encoding</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<!-- Spring监听器 -->
+
+<!-- 防止中文乱码 -->
+    <filter>
+        <filter-name>Encoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>Encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    	<!-- Spring监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
