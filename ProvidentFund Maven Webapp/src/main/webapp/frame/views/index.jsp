@@ -1,9 +1,8 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" isELIgnored="false"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -521,25 +520,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<!-- ******************************************************************* -->
 						<!-- ****************************新加的left****************************** -->
 						<!-- ******************************************************************* -->
-
-						<li data-name="template" class="layui-nav-item"><a
-							href="javascript:;" lay-tips="单位网上缴存" lay-direction="2"> <i
-								class="layui-icon layui-icon-app"></i> <cite>单位网上缴存</cite>
-						</a>
+                         <!-- 单位网上缴存 -->
+						<li data-name="blf" class="layui-nav-item">
+								<a href="javascript:;" lay-tips="单位网上缴存" lay-direction="2"> 
+								<i class="layui-icon layui-icon-app"></i> 
+								<cite>单位网上缴存</cite>
+							    </a>
 							<dl class="layui-nav-child">
 								<dd>
-									<a lay-href="index7.jsp">汇缴</a>
+									<a lay-href="${pageContext.request.contextPath}/blf/huijiao.jsp">汇缴</a>
 								</dd>
 								<dd>
-									<a lay-href="index8.jsp">补缴</a>
+									<a lay-href="${pageContext.request.contextPath}/blf/huijiaos.jsp">补缴</a>
 								</dd>
 								<dd>
-									<a lay-href="index9.jsp">跨年清册核定</a>
+									<a lay-href="index.jsp">跨年清册核定</a>
 								</dd>
 								
-							</dl></li>
+							</dl>
+						</li>
 
-                              
+                         <!--单位网上登记开户  --> 
                               <li data-name="template" class="layui-nav-item"><a
 							href="javascript:;" lay-tips="单位网上登记开户" lay-direction="2"> <i
 								class="layui-icon layui-icon-app"></i> <cite>单位网上登记开户</cite>

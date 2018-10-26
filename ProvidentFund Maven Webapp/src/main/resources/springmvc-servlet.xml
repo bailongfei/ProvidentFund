@@ -27,7 +27,8 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven><!--引入mvc -->
 	<!-- 配置静态资源 .js .css .jpg .html -->
-	<!-- <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources> -->
+	 <!-- <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources> 
+	 <mvc:resources location="/frame/" mapping="/frame/**"></mvc:resources>  -->
 	  <mvc:default-servlet-handler/>
 	<!--SpringMvc文件上传时,需要配置MultipartResolver处理器 -->
 	<bean id="multipartResolver"
