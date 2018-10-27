@@ -15,7 +15,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css"
 	media="all">
 <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
-
+  <script type="text/javascript" src="../../resources/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="../../resources/jqueryExt.js"></script>
 <script>
 /*  /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问'); */
 </script>
@@ -66,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							class="layui-icon layui-icon-screen-full"></i>
 					</a></li>
 					<li class="layui-nav-item" lay-unselect><a href="javascript:;">
-							<cite>贤心</cite>
+							<cite id="userAdmin"></cite>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -654,5 +655,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
 </body>
 </html>
+<script>
+  $(function(){
+    $.ajax({
+       url:"${pageContext.request.contextPath}/login/getSession",
+       dataType:"text",
+       type:"post",
+       success:function(data){
+       alert(data);
+         $("#userAdmin").html(data);
+       }
+    })
+  }
+ 
+  )
+</script>
 
 

@@ -1,3 +1,8 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" isELIgnored="false"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +14,11 @@
   <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
   <link rel="stylesheet" href="../../layuiadmin/style/login.css" media="all">
+  <script type="text/javascript" src="../../../resources/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="../../../resources/jqueryExt.js"></script>
+  
 </head>
 <body>
-
   <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
 
     <div class="layadmin-user-login-main">
@@ -19,20 +26,23 @@
         <h2>layuiAdmin</h2>
         <p>layui 官方出品的单页面后台管理模板系统</p>
       </div>
+      
+      <form id="loginForm" method="post">
+      
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-          <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+          <input type="text" name="userAccount" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
         </div>
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
-          <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+          <input type="password" name="userPwd" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
         </div>
         <div class="layui-form-item">
           <div class="layui-row">
             <div class="layui-col-xs7">
               <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-              <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+              <input type="text"  id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
             </div>
             <div class="layui-col-xs5">
               <div style="margin-left: 10px;">
@@ -46,7 +56,7 @@
           <a href="forget.html" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
         </div>
         <div class="layui-form-item">
-          <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
+          <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit" onclick="login()">登 入</button>
         </div>
         <div class="layui-trans layui-form-item layadmin-user-login-other">
           <label>社交账号登入</label>
@@ -57,6 +67,7 @@
           <a href="reg.html" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
         </div>
       </div>
+      </form>
     </div>
     
    <!--  <div class="layui-trans layadmin-user-login-footer">
@@ -84,7 +95,7 @@
     
   </div>
 
-  <script src="../../layuiadmin/layui/layui.js"></script>  
+  <!-- <script src="../../layuiadmin/layui/layui.js"></script>  
   <script>
   layui.config({
     base: '../../layuiadmin/' //静态资源所在路径
@@ -105,7 +116,8 @@
     
       //请求登入接口
       admin.req({
-        url: layui.setter.base + 'json/user/login.js' //实际使用请改成服务端真实接口
+     
+        url: '${pageContext.request.contextPath}/login/shiroLogin' //实际使用请改成服务端真实接口
         ,data: obj.field
         ,done: function(res){
         
@@ -121,7 +133,7 @@
             ,icon: 1
             ,time: 1000
           }, function(){
-            location.href = '../'; //后台主页
+            location.href = '../../../index.jsp'; //后台主页
           });
         }
       });
@@ -129,13 +141,36 @@
     });
     
     
-   /*  //实际使用时记得删除该代码
+   //实际使用时记得删除该代码
     layer.msg('为了方便演示，用户名密码可随意输入', {
       offset: '15px'
       ,icon: 1
-    }); */
+    }); 
     
   }); 
-  </script>
+  </script> -->
+
 </body>
 </html>
+ <script type="text/javascript">
+
+function login(){
+    var obj = $("#loginForm").serializeObject();
+   $.ajax({
+      url:"${pageContext.request.contextPath}/login/logindo",
+      contentType : "application/json;charset=utf-8",
+      data:JSON.stringify(obj),
+      dataType:"text",
+      type:"post",
+      success:function(data){
+      alert(data);
+       // window.location.href = "http://localhost:8080/ProvidentFund/frame/views/index.jsp";
+       if(data=='1'){
+         window.location.href = "../index.jsp";
+       }else{
+       window.location.href = "login.jsp";
+       }
+      }
+    }) 
+}
+</script>
