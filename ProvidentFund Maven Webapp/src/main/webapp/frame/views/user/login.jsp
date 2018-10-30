@@ -32,11 +32,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-          <input type="text" name="userAccount" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+          <input type="text" name="userName" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
         </div>
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
-          <input type="password" name="userPwd" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+          <input type="password" name="password"  id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
         </div>
         <div class="layui-form-item">
           <div class="layui-row">
@@ -153,7 +153,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 </html>
  <script type="text/javascript">
-
+/* 对比密码登陆 */
 function login(){
     var obj = $("#loginForm").serializeObject();
    $.ajax({
@@ -168,9 +168,12 @@ function login(){
        if(data=='1'){
          window.location.href = "../index.jsp";
        }else{
+       alert("密码错误，请重试！");
        window.location.href = "login.jsp";
        }
       }
     }) 
 }
+
+
 </script>

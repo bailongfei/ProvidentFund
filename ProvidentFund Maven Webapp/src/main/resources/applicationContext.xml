@@ -7,14 +7,14 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 	<context:component-scan base-package="com"></context:component-scan>
-	
+
 	<!--引入外部属性文件 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:jdbc.properties"></property>
 
 	</bean>
-	
+
 	<!-- 配置dbcp数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -32,8 +32,20 @@
 	<bean id="sqlSessionFaction" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property><!-- 注入数据源 -->
 		<property name="mapperLocations" value="classpath:com/mapping/*.xml"></property><!--自动扫描dao映射文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<property name="typeAliasesPackage" value="com.entity"></property><!--类型别名 
 			dao映射可以直接返回实体对象 -->
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<value>
+							helperDialect=mysql
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>		
 	</bean>
 	<!-- 配置扫描dao接口 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -46,5 +58,5 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionMapper" />
-	
+
 </beans>
