@@ -522,24 +522,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<!-- ******************************************************************* -->
                          <!-- 单位网上缴存 -->
 						<li data-name="blf" class="layui-nav-item">
-								<a href="javascript:;" lay-tips="单位网上缴存" lay-direction="2"> 
+								<a href="javascript:;" lay-tips="单位业务" lay-direction="2"> 
 								<i class="layui-icon layui-icon-app"></i> 
-								<cite>单位网上缴存</cite>
+								<cite>单位业务</cite>
 							    </a>
 							<dl class="layui-nav-child">
-								<dd>
-									<a lay-href="${pageContext.request.contextPath}/blf/huijiao.jsp">汇缴</a>
+							   <dd>
+									<a lay-href="${pageContext.request.contextPath}/blf/grkh.jsp">个人开户</a>
 								</dd>
 								<dd>
-									<a lay-href="${pageContext.request.contextPath}/blf/huijiaos.jsp">补缴</a>
+									<a lay-href="${pageContext.request.contextPath}/blf/huijiao.jsp">汇缴办理</a>
+								</dd>
+								<dd>
+									<a lay-href="${pageContext.request.contextPath}/blf/huijiaos.jsp">补缴办理</a>
 								</dd>
 								<dd>
 									<a lay-href="index.jsp">跨年清册核定</a>
 								</dd>
+								<dd>
+									<a lay-href="index.jsp">比例变更</a>
+								</dd>
+								<dd>
+									<a lay-href="index.jsp">冲缴办理</a>
+								</dd>
+								<dd>
+									<a lay-href="${pageContext.request.contextPath}/blf/mingxicx.jsp">明细查询</a>
+								</dd>
+								<dd>
+									<a lay-href="index.jsp">变更记录</a>
+								</dd>
+							</dl>
+						</li>
+                           <!-- 个人网上缴存 -->
+						<li data-name="blf" class="layui-nav-item">
+								<a href="javascript:;" lay-tips="个人业务" lay-direction="2"> 
+								<i class="layui-icon layui-icon-app"></i> 
+								<cite>个人业务</cite>
+							    </a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a lay-href="${pageContext.request.contextPath}/blf/grmx.jsp">个人明细</a>
+								</dd>
+								
 								
 							</dl>
 						</li>
-
                          <!--单位网上登记开户  --> 
                               <li data-name="template" class="layui-nav-item"><a
 							href="javascript:;" lay-tips="单位网上登记开户" lay-direction="2"> <i

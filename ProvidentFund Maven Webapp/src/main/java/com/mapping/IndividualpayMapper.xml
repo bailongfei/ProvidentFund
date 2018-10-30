@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.IndividualpayMapper">
  <select id="selectSum" parameterType="Integer" resultType="int">
-   select sum(ip.personalDepositBase) as grjnjszh from individualpay ip left join perdetails prs on ip.personNO=prs.personNO where prs.UnitInfoAccount=#{unitinfoaccount}
+   select COUNT(*) as grjnjszh from individualpay ip left join perdetails prs on ip.personNO=prs.personNO where prs.UnitInfoAccount=#{unitinfoaccount}
+  </select>
+  <select id="selectBGjce" parameterType="Integer" resultType="map">
+     select ip.* from individualpay ip left join perdetails prs on ip.personNO=prs.personNO where prs.UnitInfoAccount=#{unitinfoaccount}
+     
   </select>
   <resultMap id="BaseResultMap" type="com.entity.Individualpay">
     <id column="grzhbhs" jdbcType="INTEGER" property="grzhbhs" />

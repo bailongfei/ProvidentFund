@@ -37,12 +37,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="layui-inline">
             <label class="layui-form-label">搜索</label>
             <div class="layui-input-block">
-             <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+             <input type="text" id="ids" name="UnitInfoName" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           
           <div class="layui-inline">
-            <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
+            <button id="hhcx" onclick="queryDWxx()" class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
               <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
             </button>
           </div>
@@ -64,13 +64,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<tr class="success">
 				<th>单位账号</th>
 				<th>单位名称</th>
-				<th>单位缴存比例</th>
-				<th>个人缴存比例</th>
-				<th>单位缴存人数</th>
-				<th>单位账户余额</th>
-				<th>暂存款余额</th>
-				<th>单位账户状态</th>
-				<th>单位缴至年月</th>
+				<th>缴纳人数</th>
+				<th>缴纳金额</th>
+				<th>业务类型</th>
+				<th>业务日期</th>
+				<th>结算状态</th>
+				<th>创建人</th>
+				<th>创建日期</th>
 				<!-- <th colspan="6">
 				搜索:<input type="text" class="goodsName" id="goodsNames" placeholder="请输入名称" name="goodsName"> 
 				</th> -->
@@ -81,28 +81,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		</tbody>
 	</table>
-        <script type="text/html" id="table-useradmin-webuser">
-          <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-         
-        </script>
+	
+  <ul class="pager" >
+ 	<li>
+ 	当前页:<span id="curPage"></span>总页数:<span id="totalPages"></span>
+ 	</li>
+ 	<li><a  id="first" onclick="changePage(this)">首页</a></li>
+ 	<li><a  id="prev" onclick="changePage(this)">上一页</a></li>
+ 	<li><a  id="next" onclick="changePage(this)">下一页</a></li>
+ 	<li><a  id="last"  onclick="changePage(this)">尾页</a></li>
+ 	<li><input type="number"  id="txtCurPage"   min="1" max="10"></input><input type="button" class="btn btn-default" value="go" onclick="gotoPage()"/></li>
+  </ul>
+	
+       
       </div>
     </div>
     
-    <div class="layui-fluid">
+   <!--  <div class="layui-fluid">
 			<div class="layui-row layui-col-space15">
 				<div class="layui-col-md12">
 					<div class="layui-card">
-						<!--  <div class="layui-card-header">显示完整功能</div> -->
+						 <div class="layui-card-header">显示完整功能</div>
 						<div class="layui-card-body">
 							<div id="test-laypage-demo7"></div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
     
   </div>
-  <script src="../frame/layuiadmin/layui/layui.js"></script>
+  <!-- <script src="../frame/layuiadmin/layui/layui.js"></script>
   <script>
 		 layui.config({
 			base : '${pageContext.request.contextPath}/frame/layuiadmin/' //静态资源所在路径
@@ -122,9 +131,71 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 	
 		}); 
-	</script>  
+	</script>   -->
 </body>
 </html>
 <script>
+  $(function(){
+     queryDWxx(1);
+  });
+  function queryDWxx(page){
+   var tj=$('#ids').val();
+     $.ajax({
+       url:"${pageContext.request.contextPath}/hjqcb/queryHj",
+       type:"post",
+       data:{"UnitInfoName":tj,"pageNum":page},
+       dataType:"json",
+       success:function(data){
+         var obj=data.list;
+         $("#tbody").empty();
+         $.each(obj,function(key,val){
+            var tr="<tr>";
+            tr+="<td>"+val.UnitInfoAccount+"</td>";
+            tr+="<td>"+val.UnitInfoName+"</td>";
+            tr+="<td>"+val.bchnrs+"</td>";
+            tr+="<td>"+val.bchnje+"</td>";
+            tr+="<td>"+val.hjywlx+"</td>";
+            tr+="<td>"+val.gjind+"</td>";
+            tr+="<td>"+val.bjjkfs+"</td>";
+            tr+="<td>"+val.bjjkzt+"</td>";
+            tr+="<td>"+val.user_account+"</td>";
+            tr+="<td>"+val.bjjzrq+"</td>";
+            tr+="</tr>";
+            $("#tbody").append(tr);
+         });
+         //重新初始化分页链接
+        $("#curPage").html(data.curPage);
+		$("#totalPages").html(data.totalPages);
+        $("#first").attr("data",data.first);
+		$("#prev").attr("data",data.prev);
+		$("#next").attr("data",data.next);
+		$("#last").attr("data",data.last);
+		$("#txtCurPage").val(data.curPage).attr("max",data.last);
+       }
+     });
+  };
   
+  //改变页面
+function changePage(obj){
+    var page=$(obj).attr("data");//取出data属性值
+    queryDWxx(page);
+}
+//跳转到指定页面
+	function gotoPage(page){
+		var page=$("#txtCurPage").val();
+		queryDWxx(page);
+	}
+  /* $(document).on("click","#hhcx",function(){
+    var ids=$("#ids").val();
+     alert($("#ids").val());
+     $.ajax({
+        url:"${pageContext.request.contextPath}/",
+        type:"post",
+        data:{"UnitInfoName":ids},
+        dataType:"json",
+        success:function(data){
+         alert(data);
+        }
+     });
+  }); */
 </script>

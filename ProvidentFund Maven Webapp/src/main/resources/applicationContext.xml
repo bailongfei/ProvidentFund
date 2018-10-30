@@ -32,6 +32,18 @@
 		<property name="dataSource" ref="dataSource"></property><!-- 注入数据源 -->
 		<property name="mapperLocations" value="classpath:com/mapping/*.xml"></property><!--自动扫描dao映射文件 -->
 		<property name="typeAliasesPackage" value="com.entity"></property><!--类型别名 dao映射可以直接返回实体对象 -->
+		<!--PageHelper配置  -->
+		<property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+　　　　　　　　　　　　　　　　helperDialect=mysql
+　　　　　　　　　　　　　　</value>
+                    </property>
+                </bean>
+            </array>
+        </property>
 	</bean>
 	<!-- 配置扫描dao接口 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

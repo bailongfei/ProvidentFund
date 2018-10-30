@@ -5,6 +5,9 @@
  <select id="queryUnccfo" resultType="map">
     select uc.*,uf.* from unitsaccount uc join Unitinfo uf on uc.unitinfoaccount=uf.unitinfoaccount
  </select>
+ <select id="queryUnfo" parameterType="Integer" resultType="map">
+    select ua.*,uf.* from unitsaccount ua join unitinfo uf on ua.UnitInfoId=uf.UnitInfoId where ua.UnitInfoAccount=#{unitinfoaccount}
+ </select>
   <resultMap id="BaseResultMap" type="com.entity.Unitsaccount">
     <id column="UnitInfoAccount" jdbcType="INTEGER" property="unitinfoaccount" />
     <result column="UnitInfoId" jdbcType="INTEGER" property="unitinfoid" />

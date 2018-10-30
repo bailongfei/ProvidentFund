@@ -1,9 +1,13 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Individualpay;
 
 public interface IndividualpayMapper {
 	public int selectSum(Integer unitinfoaccount);
+	public List<Map<String,Object>> selectBGjce(Integer unitinfoaccount);
     int deleteByPrimaryKey(Integer grzhbhs);
 
     int insert(Individualpay record);

@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
   <meta charset="utf-8">
-  <title>会叫管理</title>
+  <title>管理</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -62,15 +62,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <table class="table table-hover" id="LAY-user-manage" lay-filter="LAY-user-manage">
 		<thead>
 			<tr class="success">
-				<th>单位账号</th>
+				<th>个人账号</th>
 				<th>单位名称</th>
-				<th>单位缴存比例</th>
-				<th>个人缴存比例</th>
-				<th>单位缴存人数</th>
-				<th>单位账户余额</th>
-				<th>暂存款余额</th>
-				<th>单位账户状态</th>
-				<th>单位缴至年月</th>
+				<th>缴纳人数</th>
+				<th>缴纳金额</th>
+				<th>业务类型</th>
+				<th>业务日期</th>
+				<th>结算状态</th>
+				<th>创建人</th>
+				<th>创建日期</th>
 				<!-- <th colspan="6">
 				搜索:<input type="text" class="goodsName" id="goodsNames" placeholder="请输入名称" name="goodsName"> 
 				</th> -->

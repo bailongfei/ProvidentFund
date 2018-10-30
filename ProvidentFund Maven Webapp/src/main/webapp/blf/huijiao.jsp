@@ -44,6 +44,9 @@
    /* font-size:1.5em; */
    color:#f00;
 }
+#table tr td select{
+  border:0px;
+}
 </style>
 </head>
 <body>
@@ -111,7 +114,7 @@
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 					aria-labelledby="modalTitle1" aria-hidden="true" style="relative-left:0px;">
 					<div class="modal-dialog">
-						<div class="modal-content" style=" height: 600px; width: 730px;">
+						<div class="modal-content" style=" height: 520px; width: 730px;">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true">
@@ -122,8 +125,10 @@
 							</div>
 							<div class="modal-body">
 								<!--form提交表单  -->
-								<form class="form-horizontal" id="form1" enctype="multipart/form-data">
+								<form class="form-horizontal" id="form1" ><!--enctype="multipart/form-data"  -->
 									
+							
+												
 									
 									 <table border="1" id="table" >
 
@@ -134,21 +139,20 @@
 													name="unitinfoaccount" placeholder="请输入" readonly="readonly"></td>
 												<td >单位名称</td>
 												<td colspan="2"><input type="text" id="UnitInfoName"
-													name="unitinfoname" placeholder="请输入" readonly="readonly"></td>
-												<td colspan="2"></td>
+													  readonly="readonly"></td>
+												<td colspan="2">
+												  <input type="hidden" value="成功" id="" name="bjjkzt" readonly="readonly">
+												</td>
 												
 											</tr>
 											<tr >
 												<td >缴至年月</td>
 												<td colspan="2"><input type="text" id="jnmy"
-													name="jnmy" placeholder="请输入" readonly="readonly"></td>
+													name="jnmy"  readonly="readonly"></td>
 												<td >汇缴月数</td>
 												<td >
-												   <input type="number" max="10" min="1" value="1" id="nhyf" name="nhyf" > 
-												   <!--   <select name="nhyf">
-												      <option value="1">1个月</option>
-												      <option value="2">2个月</option>
-												   </select> -->
+												   <input type="number" onclick="hijiaoyuee(this.value)" max="12" min="1" value="1" id="nhyf" name="nhyf" > 
+												   
 												</td>
 												<td colspan="2">汇缴日期</td>
 												<td ><input type="date" id="dates"
@@ -171,26 +175,34 @@
 												<td >金额</td>
 											</tr>
 										  <tr >
-												<td ><input type="text" size="1" id="scjnrs" name="scjnrs" readonly="readonly"></td>
-												<td ><input type="text" size="4" id="scjnje" name="scjnje" readonly="readonly"></td>
-												<td><input type="text" size="4" id="bczjrs" name="bczjrs" readonly="readonly"></td>
-												<td><input type="text" size="1" id="bczjje" name="bczjje" readonly="readonly"></td>
-												<td><input type="text" size="4" id="bcjsrs" name="bcjsrs" readonly="readonly"></td>
-												<td><input type="text" size="1" id="bcjsje" name="bcjsje" readonly="readonly"></td>
-												<td><input type="text" size="1" id="bchnrs" name="bchnrs" readonly="readonly"></td>
-												<td><input type="text" size="4" id="bchnje" name="bchnje" readonly="readonly"></td>
+												<td ><input type="text" size="1" id="scrs" name="scjnrs"  readonly="readonly"></td>
+												<td ><input type="text" size="4" id="srje" name="scjnje"  readonly="readonly"></td>
+												<td><input type="text" size="4" id="bczjrs" name="bczjrs" value="0"  readonly="readonly"></td>
+												<td><input type="text" size="1" id="bczjje" name="bczjje"  value="0"   readonly="readonly"></td>
+												<td><input type="text" size="4" id="bcjsrs" name="bcjsrs"   value="0"   readonly="readonly"></td>
+												<td><input type="text" size="1" id="bcjsje" name="bcjsje"  value="0"    readonly="readonly"></td>
+												<td><input type="text" size="1" class="coumtRs" name="bchnrs" readonly="readonly"></td>
+												<td><input type="text" size="4" class="jcze"  name="bchnje" readonly="readonly"></td>
 											</tr>
 											<tr>
 											   <td>实收金额</td>
-											   <td colspan="2"><input type="text"  id="ssje" name="ssje" readonly="readonly"></td>
-											   <td colspan="4">大写:<input type="text"  id="" name="" readonly="readonly"></td>
-											   <td colspan="1"></td>
+											   <td colspan="2"><input type="text" class="jcze"   name="ssje" readonly="readonly"></td>
+											   <td colspan="4">大写:<input type="text"  id="jedxzh" name="jedxzh" readonly="readonly"></td>
+											   <td colspan="1"><input type="test" value="汇缴" id="" name="hjywlx" readonly="readonly"></td>
 											</tr>
 											<tr>
 											  <td>缴纳方式</td>
-											  <td colspan="2"><input type="text"  id="bjjkfs" name="bjjkfs" ></td>
+											  <td colspan="2">
+											     <select name="bjjkfs">
+											       <option value="均缴">均缴</option>
+											     </select>
+											  </td>
 											  <td colspan="4">备注:<input type="text"  id="hjbz" name="hjbz" ></td>
-											  <td colspan="1">操作员:<input type="text"  id="user_account" name="user_account" readonly="readonly"></td>
+											  <td colspan="1">操作员:
+											     <select id="seleUser" name="userid">
+											       
+											     </select>
+											  </td>
 											</tr>
 											<tr>
 											 <td colspan="2">缴纳年月</td>
@@ -202,25 +214,19 @@
 											</tr>
 											<tr>
 											 <td colspan="2"><input type="text" size="6" id="gjind" name="gjind" readonly="readonly"></td>
-											 <td ><input type="text" size="1" id="bchnrs2" name="bchnrs" ></td>
-											 <td colspan="1"><input type="text" size="1" id="grjnjszh" name="" readonly="readonly"></td>
-											 <td ><input type="text" size="1" class="personalDepositBase" id="" name="monPayAmount" readonly="readonly"></td>
-											 <td colspan="1"><input type="text" size="1" class="personalDepositBase" id="personalDepositBase" name="unitMonPayAmount" readonly="readonly"></td>
-											 <td colspan="2"><input type="text" size="1"  id="" name="" readonly="readonly"></td>
+											 <td ><input type="text" size="5" class="coumtRs" name="" ></td>
+											 <td colspan="1"><input type="text" size="6" id="grjnjszh" name="" readonly="readonly"></td>
+											 <td ><input type="text" size="6" class="" id="grce" name="" readonly="readonly"></td>
+											 <td colspan="1"><input type="text" size="6"  id="dwce" name="" readonly="readonly"></td>
+											 <td colspan="2"><input type="text" size="6"  class="jcze" name="" readonly="readonly"></td>
+											  <td><input type="hidden" size="1"  class="gr"  readonly="readonly"></td>
+											  <td><input type="hidden" size="1"  class="dw"  readonly="readonly"></td>
 											</tr>
 									</table> 
-									<!-- <div class="form-group">
-											<label for="roleName" class="col-sm-2 control-label">单位账号</label>
-											<div class="col-sm-4">
-											
-										<input type="hidden" id="goodsId" name="goodsId" class="form-control"  placeholder="请输入">
-										<input type="text" id="goodsName" name="goodsName" class="form-control"  placeholder="请输入">
-											</div>
-										</div> 
-										-->
+									
 									<input type="button" id="saveUploadOrUpdate"
 										data-toggle='modal' data-target='#myModal'
-										class="btn btn-primary" value="保存">
+										class="btn btn-primary" value="保存汇缴">
 								</form>
 
 							</div>
@@ -258,7 +264,7 @@
 	<script
 		src="${pageContext.request.contextPath}/frame/layuiadmin/layui/layui.js"></script>
 	<script>
-		layui.config({
+		 layui.config({
 			base : '${pageContext.request.contextPath}/frame/layuiadmin/' //静态资源所在路径
 		}).extend({
 			index : 'lib/index' //主入口模块
@@ -275,7 +281,7 @@
 				}
 			});
 	
-		});
+		}); 
 	</script>
 </body>
 </html>
@@ -315,51 +321,74 @@
 	}
 	$(document).on("click",".huijiaoSelect",function(){
 	 var id=this.id
+	    
+	     $.ajax({
+	       url:"${pageContext.request.contextPath}/hjqcb/selectSum",
+	       type:"post",
+	       data:{"unitinfoaccount":id},
+	       dataType:"json",
+	       success:function(data){
+	          $(".coumtRs").val(data);
+	          }
+	    }); 
+	     $.ajax({
+	       url:"${pageContext.request.contextPath}/hjqcb/selectBGjce",
+	       type:"post",
+	       data:{"unitinfoaccount":id},
+	       dataType:"json",
+	       success:function(data){
+	           var grzjs=0;
+	           var grce=0;
+	           var dwce=0;
+	            for (var i = 0; i < data.length; i++) {
+					var obj = data[i];
+					 var js=obj.personalDepositBase;
+					 var grbl=obj.perContributionRate;
+					 var dwbl=obj.unitRateDeposit;
+					  grzjs+=parseFloat(js);
+					  grce+=parseFloat(js)*parseFloat(grbl);
+					   dwce+=parseFloat(js)*parseFloat(dwbl);
+					}
+					var jcze=grce+dwce;
+					$("#grjnjszh").val(grzjs);
+					$("#grce").val(grce);
+					$("#dwce").val(dwce);
+					$(".gr").val(grce);
+					$(".dw").val(dwce);
+					$(".jcze").val(jcze);
+					
+	          }
+	          
+	    });
 	    $.ajax({
 	       url:"${pageContext.request.contextPath}/hjqcb/queryHjqcb",
 	       type:"post",
 	       data:{"unitinfoaccount":id},
 	       dataType:"json",
 	       success:function(data){
-	         
-				/* for (var i = 0; i < data.length; i++) {
-					var obj = data[i];
-					 $(".personalDepositBase").val(data[0].personalDepositBase);
-					} */
 	          $("#UnitInfoAccount").val(data[0].UnitInfoAccount);
 	          $("#UnitInfoName").val(data[0].UnitInfoName);
 	          $("#jnmy").val(data[0].jnmy);
-	          //$("#nhyf").val(data[0].nhyf);
-	          //$("#bjjzrq").val(data[0].bjjzrq);
-	          $("#scjnrs").val(data[0].scjnrs);
-	          $("#scjnje").val(data[0].scjnje);
-	          $("#bczjrs").val(data[0].bczjrs);
-	          $("#bczjje").val(data[0].bczjje);
-	          $("#bcjsrs").val(data[0].bcjsrs);
-	          $("#bcjsje").val(data[0].bcjsje);
-	          $("#bchnrs").val(data[0].bchnrs);
-	          $("#bchnje").val(data[0].bchnje);
-	          $("#ssje").val(data[0].ssje);
-	          $("#bjjkfs").val(data[0].bjjkfs);
-	         
-	          //$("#gjind").val(data[0].gjind);
-	          $("#bchnrs2").val(data[0].bchnrs);
-	          $("#user_account").val(data[0].user_account);
-	          //$("#").val(data[0].);
+	          $("#scrs").val(data[0].bchnrs);
+	          $("#srje").val(data[0].bchnje);
 	          $("#hjbz").val(data[0].hjbz);
+	          hjzjrsje();
 	       }
 	    });
-	    $.ajax({
-	       url:"${pageContext.request.contextPath}/hjqcb/selectSum",
-	       type:"post",
-	       data:{"unitinfoaccount":id},
-	       dataType:"json",
-	       success:function(data){
-	          $("#grjnjszh").val(data);
-	          }
-	    });
+	    queryUser();
 	});
-	
+	             //汇缴月数
+	              
+					  function hijiaoyuee(obj){
+					 
+					  var gr=parseFloat($(".gr").val())*obj;
+					   var dw=parseFloat($(".dw").val())*obj;
+					   var ze=gr+dw;
+					    $("#grce").val(gr);
+						$("#dwce").val(dw);
+						$(".jcze").val(ze);
+						hjzjrsje();
+					} ;   
 	//获取日期
    function getDate(){
     var d=new Date();
@@ -370,7 +399,159 @@
     $("#dates").val(rq);
     $("#gjind").val(rq);
     };
+    //汇缴增减人数金额
+    
+    function hjzjrsje(){
+         var sr=$("#scrs").val();
+       var sj=$("#srje").val();
+       var rs=$(".coumtRs").val();
+       var je=$(".jcze").val();
+     
+       if(parseFloat(sr-rs)>0){
+          $("#bcjsrs").val(parseFloat(sr-rs));
+          $("#bcjsje").val(parseFloat(sj-je));
+       }else{
+          $("#bczjrs").val(parseFloat(rs-sr));
+           $("#bczjje").val(parseFloat(je-sj));
+       }
+       Arabia_to_Chinese($(".jcze").val());
+    }
+    //大写转换
+    
+     function Arabia_to_Chinese(Num) {
+            for (i = Num.length - 1; i >= 0; i--) {
+                Num = Num.replace(",", "")//替换tomoney()中的“,”
+                Num = Num.replace(" ", "")//替换tomoney()中的空格
+            }
+            Num = Num.replace("￥", "")//替换掉可能出现的￥字符
+            if (isNaN(Num)) { //验证输入的字符是否为数字
+                alert("请检查小写金额是否正确");
+                return;
+            }
+            //---字符处理完毕，开始转换，转换采用前后两部分分别转换---//
+            part = String(Num).split(".");
+            newchar = "";
+            //小数点前进行转化
+            for (i = part[0].length - 1; i >= 0; i--) {
+                if (part[0].length > 10) { alert("位数过大，无法计算"); return ""; } //若数量超过拾亿单位，提示
+                tmpnewchar = ""
+                perchar = part[0].charAt(i);
+                switch (perchar) {
+                    case "0": tmpnewchar = "零" + tmpnewchar; break;
+                    case "1": tmpnewchar = "壹" + tmpnewchar; break;
+                    case "2": tmpnewchar = "贰" + tmpnewchar; break;
+                    case "3": tmpnewchar = "叁" + tmpnewchar; break;
+                    case "4": tmpnewchar = "肆" + tmpnewchar; break;
+                    case "5": tmpnewchar = "伍" + tmpnewchar; break;
+                    case "6": tmpnewchar = "陆" + tmpnewchar; break;
+                    case "7": tmpnewchar = "柒" + tmpnewchar; break;
+                    case "8": tmpnewchar = "捌" + tmpnewchar; break;
+                    case "9": tmpnewchar = "玖" + tmpnewchar; break;
+                }
+                switch (part[0].length - i - 1) {
+                    case 0: tmpnewchar = tmpnewchar + "元"; break;
+                    case 1: if (perchar != 0) tmpnewchar = tmpnewchar + "拾"; break;
+                    case 2: if (perchar != 0) tmpnewchar = tmpnewchar + "佰"; break;
+                    case 3: if (perchar != 0) tmpnewchar = tmpnewchar + "仟"; break;
+                    case 4: tmpnewchar = tmpnewchar + "万"; break;
+                    case 5: if (perchar != 0) tmpnewchar = tmpnewchar + "拾"; break;
+                    case 6: if (perchar != 0) tmpnewchar = tmpnewchar + "佰"; break;
+                    case 7: if (perchar != 0) tmpnewchar = tmpnewchar + "仟"; break;
+                    case 8: tmpnewchar = tmpnewchar + "亿"; break;
+                    case 9: tmpnewchar = tmpnewchar + "拾"; break;
+                }
+                newchar = tmpnewchar + newchar;
+            }
+            
+            //小数点之后进行转化
+            if (Num.indexOf(".") != -1) {
+                if (part[1].length > 2) {
+                    alert("小数点之后只能保留两位,系统将自动截段");
+                    part[1] = part[1].substr(0, 2)
+                }
+                for (i = 0; i < part[1].length; i++) {
+                    tmpnewchar = ""
+                    perchar = part[1].charAt(i)
+                    switch (perchar) {
+                        case "0": tmpnewchar = "零" + tmpnewchar; break;
+                        case "1": tmpnewchar = "壹" + tmpnewchar; break;
+                        case "2": tmpnewchar = "贰" + tmpnewchar; break;
+                        case "3": tmpnewchar = "叁" + tmpnewchar; break;
+                        case "4": tmpnewchar = "肆" + tmpnewchar; break;
+                        case "5": tmpnewchar = "伍" + tmpnewchar; break;
+                        case "6": tmpnewchar = "陆" + tmpnewchar; break;
+                        case "7": tmpnewchar = "柒" + tmpnewchar; break;
+                        case "8": tmpnewchar = "捌" + tmpnewchar; break;
+                        case "9": tmpnewchar = "玖" + tmpnewchar; break;
+                    }
+                    if (i == 0) tmpnewchar = tmpnewchar + "角";
+                    if (i == 1) tmpnewchar = tmpnewchar + "分";
+                    newchar = newchar + tmpnewchar;
+                }
+            }
+            //替换所有无用汉字
+            while (newchar.search("零零") != -1)
+                newchar = newchar.replace("零零", "零");
+            newchar = newchar.replace("零亿", "亿");
+            newchar = newchar.replace("亿万", "亿");
+            newchar = newchar.replace("零万", "万");
+            newchar = newchar.replace("零元", "元");
+            newchar = newchar.replace("零角", "");
+            newchar = newchar.replace("零分", "");
+
+            if (newchar.charAt(newchar.length - 1) == "元" || newchar.charAt(newchar.length - 1) == "角")
+                newchar = newchar + "整"
+          //  document.write(newchar);
+          $("#jedxzh").val(newchar);
+            //return newchar;
+          
+        };
+    //操做员
+    function queryUser(){
+       $.ajax({
+         url:"${pageContext.request.contextPath}/hjqcb/queryUser",
+         type:"post",
+         data:{},
+         dataType:"json",
+         success:function(data){
+           $("#seleUser").empty(); 
+          $.each(data,function(key,val){
+            /* alert(key+"潇洒"+val.userId+"这是"+val.user_account); */
+            $("#seleUser").append("<option value='"+val.userId+"'>"+val.user_account+"</option>");
+          });
+         }
+       });
+    };
+    //汇缴
     $(document).on("click","#saveUploadOrUpdate",function(){
-       //alert($("#nhyf").val());
+        /* var obj=$("#form1").serializeObject();//将表单数据转换json对象
+       alert(JSON.stringify(obj)); 
+        $.ajax({
+          url:"${pageContext.request.contextPath}/hjqcb/saveHjqcb",
+          type:"post",
+          contentType:"application/json;charset=utf-8",//发送的内容类型utf-8
+          data:JSON.stringify(obj),//将json对象转换成json字符串
+          dataType:"json",
+          success:function(data){
+           if(data.state>0){
+             alert(data.message);
+           }
+          }
+       });    */
+         
+       $.ajax({
+       	 url:"${pageContext.request.contextPath}/hjqcb/saveHjqcb",
+       	 type:"post",
+       	 data:$("#form1").serialize(),
+       	 dataType:"json",
+       	 success:function(data){
+           if(data.state>0){
+             alert(data.message);
+            }
+      //window.location.href="${pageContext.request.contextPath}/blf/mingxicx.jsp";
+            
+         }
+       });   
     });
+ 
 </script>

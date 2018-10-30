@@ -7,6 +7,7 @@ import com.entity.Unitsaccount;
 
 public interface UnitsaccountMapper {
 	public List<Map<String,Object>> queryUnccfo();
+	public List<Map<String,Object>> queryUnfo(Unitsaccount unitinfoaccount);
     int deleteByPrimaryKey(Integer unitinfoaccount);
 
     int insert(Unitsaccount record);

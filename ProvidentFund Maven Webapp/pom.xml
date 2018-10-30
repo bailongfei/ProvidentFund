@@ -188,6 +188,12 @@
 			<artifactId>commons-pool</artifactId>
 			<version>1.5.4</version>
 		</dependency>
+		<!-- pagehelper分页插件 -->
+		<dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper</artifactId>
+		    <version>5.1.2</version>
+		</dependency>
 		<dependency><!-- generator配置dependency -->
 		 <groupId>org.mybatis.generator</groupId>
 		 <artifactId>mybatis-generator-core</artifactId>

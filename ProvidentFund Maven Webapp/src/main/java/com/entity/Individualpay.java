@@ -16,7 +16,7 @@ public class Individualpay {
     private String unitratedeposit;
 
     private String percontributionrate;
-
+    
     private String openaccountstatus;
 
     private String openingdate;
@@ -290,4 +290,7 @@ public class Individualpay {
     public void setExtractthisyear(String extractthisyear) {
         this.extractthisyear = extractthisyear == null ? null : extractthisyear.trim();
     }
+
+	
+    
 }
