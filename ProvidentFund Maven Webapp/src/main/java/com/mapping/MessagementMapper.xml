@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MessagementMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Messagement">
+    <id column="messageId" jdbcType="INTEGER" property="messageid" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="messageContent" jdbcType="VARCHAR" property="messagecontent" />
+    <result column="readStatus" jdbcType="VARCHAR" property="readstatus" />
+    <result column="senderNum" jdbcType="VARCHAR" property="sendernum" />
+    <result column="sendTime" jdbcType="VARCHAR" property="sendtime" />
+    <result column="recipientNum" jdbcType="VARCHAR" property="recipientnum" />
+    <result column="readTime" jdbcType="VARCHAR" property="readtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    messageId, userId, messageContent, readStatus, senderNum, sendTime, recipientNum, 
+    readTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from messagement
+    where messageId = #{messageid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from messagement
+    where messageId = #{messageid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Messagement">
+    insert into messagement (messageId, userId, messageContent, 
+      readStatus, senderNum, sendTime, 
+      recipientNum, readTime)
+    values (#{messageid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{messagecontent,jdbcType=VARCHAR}, 
+      #{readstatus,jdbcType=VARCHAR}, #{sendernum,jdbcType=VARCHAR}, #{sendtime,jdbcType=VARCHAR}, 
+      #{recipientnum,jdbcType=VARCHAR}, #{readtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Messagement">
+    insert into messagement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageid != null">
+        messageId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="messagecontent != null">
+        messageContent,
+      </if>
+      <if test="readstatus != null">
+        readStatus,
+      </if>
+      <if test="sendernum != null">
+        senderNum,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="recipientnum != null">
+        recipientNum,
+      </if>
+      <if test="readtime != null">
+        readTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageid != null">
+        #{messageid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="messagecontent != null">
+        #{messagecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="readstatus != null">
+        #{readstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sendernum != null">
+        #{sendernum,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientnum != null">
+        #{recipientnum,jdbcType=VARCHAR},
+      </if>
+      <if test="readtime != null">
+        #{readtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Messagement">
+    update messagement
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="messagecontent != null">
+        messageContent = #{messagecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="readstatus != null">
+        readStatus = #{readstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sendernum != null">
+        senderNum = #{sendernum,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null">
+        sendTime = #{sendtime,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientnum != null">
+        recipientNum = #{recipientnum,jdbcType=VARCHAR},
+      </if>
+      <if test="readtime != null">
+        readTime = #{readtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where messageId = #{messageid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Messagement">
+    update messagement
+    set userId = #{userid,jdbcType=INTEGER},
+      messageContent = #{messagecontent,jdbcType=VARCHAR},
+      readStatus = #{readstatus,jdbcType=VARCHAR},
+      senderNum = #{sendernum,jdbcType=VARCHAR},
+      sendTime = #{sendtime,jdbcType=VARCHAR},
+      recipientNum = #{recipientnum,jdbcType=VARCHAR},
+      readTime = #{readtime,jdbcType=VARCHAR}
+    where messageId = #{messageid,jdbcType=INTEGER}
+  </update>
+</mapper>

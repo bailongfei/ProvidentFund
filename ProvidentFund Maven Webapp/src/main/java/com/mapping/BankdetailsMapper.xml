@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.BankdetailsMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Bankdetails">
+    <id column="Bankdetailsid" jdbcType="INTEGER" property="bankdetailsid" />
+    <result column="UnitInfoAccount" jdbcType="INTEGER" property="unitinfoaccount" />
+    <result column="grzhbhs" jdbcType="INTEGER" property="grzhbhs" />
+    <result column="bankName" jdbcType="VARCHAR" property="bankname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    Bankdetailsid, UnitInfoAccount, grzhbhs, bankName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bankdetails
+    where Bankdetailsid = #{bankdetailsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bankdetails
+    where Bankdetailsid = #{bankdetailsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Bankdetails">
+    insert into bankdetails (Bankdetailsid, UnitInfoAccount, grzhbhs, 
+      bankName)
+    values (#{bankdetailsid,jdbcType=INTEGER}, #{unitinfoaccount,jdbcType=INTEGER}, #{grzhbhs,jdbcType=INTEGER}, 
+      #{bankname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Bankdetails">
+    insert into bankdetails
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bankdetailsid != null">
+        Bankdetailsid,
+      </if>
+      <if test="unitinfoaccount != null">
+        UnitInfoAccount,
+      </if>
+      <if test="grzhbhs != null">
+        grzhbhs,
+      </if>
+      <if test="bankname != null">
+        bankName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bankdetailsid != null">
+        #{bankdetailsid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoaccount != null">
+        #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null">
+        #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="bankname != null">
+        #{bankname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Bankdetails">
+    update bankdetails
+    <set>
+      <if test="unitinfoaccount != null">
+        UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null">
+        grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="bankname != null">
+        bankName = #{bankname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Bankdetailsid = #{bankdetailsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Bankdetails">
+    update bankdetails
+    set UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      bankName = #{bankname,jdbcType=VARCHAR}
+    where Bankdetailsid = #{bankdetailsid,jdbcType=INTEGER}
+  </update>
+</mapper>

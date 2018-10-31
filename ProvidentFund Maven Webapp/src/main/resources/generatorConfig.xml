@@ -128,9 +128,6 @@
 <table   tableName="perbusiness"   domainObjectName="Perbusiness"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
 			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
 		</table>
-<table   tableName="perdetails"   domainObjectName="Perdetails"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
-			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
-		</table>
 <table   tableName="purchase"   domainObjectName="Purchase"  enableCountByExample="false"   enableUpdateByExample="false"  enableDeleteByExample="false"   enableSelectByExample="false"  selectByExampleQueryId="false">
 			<generatedKey   column="ID"   sqlStatement="selectuuid_short()" identity="false" />
 		</table>

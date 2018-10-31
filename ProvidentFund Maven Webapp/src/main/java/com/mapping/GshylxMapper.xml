@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.GshylxMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Gshylx">
+    <id column="gshylxbh" jdbcType="INTEGER" property="gshylxbh" />
+    <result column="gshylxmc" jdbcType="VARCHAR" property="gshylxmc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    gshylxbh, gshylxmc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from gshylx
+    where gshylxbh = #{gshylxbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from gshylx
+    where gshylxbh = #{gshylxbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Gshylx">
+    insert into gshylx (gshylxbh, gshylxmc)
+    values (#{gshylxbh,jdbcType=INTEGER}, #{gshylxmc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Gshylx">
+    insert into gshylx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gshylxbh != null">
+        gshylxbh,
+      </if>
+      <if test="gshylxmc != null">
+        gshylxmc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gshylxbh != null">
+        #{gshylxbh,jdbcType=INTEGER},
+      </if>
+      <if test="gshylxmc != null">
+        #{gshylxmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Gshylx">
+    update gshylx
+    <set>
+      <if test="gshylxmc != null">
+        gshylxmc = #{gshylxmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gshylxbh = #{gshylxbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Gshylx">
+    update gshylx
+    set gshylxmc = #{gshylxmc,jdbcType=VARCHAR}
+    where gshylxbh = #{gshylxbh,jdbcType=INTEGER}
+  </update>
+</mapper>

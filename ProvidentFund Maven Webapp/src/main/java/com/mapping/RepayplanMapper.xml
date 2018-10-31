@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RepayplanMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Repayplan">
+    <id column="jhbh" jdbcType="INTEGER" property="jhbh" />
+    <result column="dkbh" jdbcType="INTEGER" property="dkbh" />
+    <result column="hkrq" jdbcType="DATE" property="hkrq" />
+    <result column="qic" jdbcType="DECIMAL" property="qic" />
+    <result column="yhbj" jdbcType="DECIMAL" property="yhbj" />
+    <result column="yhlx" jdbcType="DECIMAL" property="yhlx" />
+    <result column="yqztzs" jdbcType="VARCHAR" property="yqztzs" />
+    <result column="cjrs" jdbcType="VARCHAR" property="cjrs" />
+    <result column="cjsjs" jdbcType="DATE" property="cjsjs" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    jhbh, dkbh, hkrq, qic, yhbj, yhlx, yqztzs, cjrs, cjsjs
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from repayplan
+    where jhbh = #{jhbh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from repayplan
+    where jhbh = #{jhbh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Repayplan">
+    insert into repayplan (jhbh, dkbh, hkrq, 
+      qic, yhbj, yhlx, yqztzs, 
+      cjrs, cjsjs)
+    values (#{jhbh,jdbcType=INTEGER}, #{dkbh,jdbcType=INTEGER}, #{hkrq,jdbcType=DATE}, 
+      #{qic,jdbcType=DECIMAL}, #{yhbj,jdbcType=DECIMAL}, #{yhlx,jdbcType=DECIMAL}, #{yqztzs,jdbcType=VARCHAR}, 
+      #{cjrs,jdbcType=VARCHAR}, #{cjsjs,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Repayplan">
+    insert into repayplan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jhbh != null">
+        jhbh,
+      </if>
+      <if test="dkbh != null">
+        dkbh,
+      </if>
+      <if test="hkrq != null">
+        hkrq,
+      </if>
+      <if test="qic != null">
+        qic,
+      </if>
+      <if test="yhbj != null">
+        yhbj,
+      </if>
+      <if test="yhlx != null">
+        yhlx,
+      </if>
+      <if test="yqztzs != null">
+        yqztzs,
+      </if>
+      <if test="cjrs != null">
+        cjrs,
+      </if>
+      <if test="cjsjs != null">
+        cjsjs,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jhbh != null">
+        #{jhbh,jdbcType=INTEGER},
+      </if>
+      <if test="dkbh != null">
+        #{dkbh,jdbcType=INTEGER},
+      </if>
+      <if test="hkrq != null">
+        #{hkrq,jdbcType=DATE},
+      </if>
+      <if test="qic != null">
+        #{qic,jdbcType=DECIMAL},
+      </if>
+      <if test="yhbj != null">
+        #{yhbj,jdbcType=DECIMAL},
+      </if>
+      <if test="yhlx != null">
+        #{yhlx,jdbcType=DECIMAL},
+      </if>
+      <if test="yqztzs != null">
+        #{yqztzs,jdbcType=VARCHAR},
+      </if>
+      <if test="cjrs != null">
+        #{cjrs,jdbcType=VARCHAR},
+      </if>
+      <if test="cjsjs != null">
+        #{cjsjs,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Repayplan">
+    update repayplan
+    <set>
+      <if test="dkbh != null">
+        dkbh = #{dkbh,jdbcType=INTEGER},
+      </if>
+      <if test="hkrq != null">
+        hkrq = #{hkrq,jdbcType=DATE},
+      </if>
+      <if test="qic != null">
+        qic = #{qic,jdbcType=DECIMAL},
+      </if>
+      <if test="yhbj != null">
+        yhbj = #{yhbj,jdbcType=DECIMAL},
+      </if>
+      <if test="yhlx != null">
+        yhlx = #{yhlx,jdbcType=DECIMAL},
+      </if>
+      <if test="yqztzs != null">
+        yqztzs = #{yqztzs,jdbcType=VARCHAR},
+      </if>
+      <if test="cjrs != null">
+        cjrs = #{cjrs,jdbcType=VARCHAR},
+      </if>
+      <if test="cjsjs != null">
+        cjsjs = #{cjsjs,jdbcType=DATE},
+      </if>
+    </set>
+    where jhbh = #{jhbh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Repayplan">
+    update repayplan
+    set dkbh = #{dkbh,jdbcType=INTEGER},
+      hkrq = #{hkrq,jdbcType=DATE},
+      qic = #{qic,jdbcType=DECIMAL},
+      yhbj = #{yhbj,jdbcType=DECIMAL},
+      yhlx = #{yhlx,jdbcType=DECIMAL},
+      yqztzs = #{yqztzs,jdbcType=VARCHAR},
+      cjrs = #{cjrs,jdbcType=VARCHAR},
+      cjsjs = #{cjsjs,jdbcType=DATE}
+    where jhbh = #{jhbh,jdbcType=INTEGER}
+  </update>
+</mapper>
