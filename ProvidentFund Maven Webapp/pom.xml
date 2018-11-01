@@ -201,6 +201,6 @@
 				<path>/ProvidentFund</path><!-- 应用的部署位置 -->
 				</configuration>
 			</plugin>
-		</plugins> 
+		</plugins>
 	</build>
 </project>
