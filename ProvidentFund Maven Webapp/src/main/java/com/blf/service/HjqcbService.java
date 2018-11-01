@@ -10,6 +10,7 @@ import com.entity.Unitsaccount;
 
 public interface HjqcbService {
 	public List<Map<String,Object>> queryHjceb(Integer unitinfoaccount);
+	public List<Map<String,Object>> queryUcOrUf(Integer unitinfoaccount);
 	public int selectSum(Integer unitinfoaccount);
 	public List<Map<String,Object>> selectBGjce(Integer unitinfoaccount);
 	public List<Map<String,Object>> queryUser();

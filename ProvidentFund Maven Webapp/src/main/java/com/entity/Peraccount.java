@@ -11,6 +11,10 @@ public class Peraccount {
 
     private Integer netinfoid;
 
+    private Integer unitinfoaccount;
+
+    private Integer grzhbhs;
+
     private String peracid;
 
     private String peracloginpw;
@@ -83,6 +87,22 @@ public class Peraccount {
 
     public void setNetinfoid(Integer netinfoid) {
         this.netinfoid = netinfoid;
+    }
+
+    public Integer getUnitinfoaccount() {
+        return unitinfoaccount;
+    }
+
+    public void setUnitinfoaccount(Integer unitinfoaccount) {
+        this.unitinfoaccount = unitinfoaccount;
+    }
+
+    public Integer getGrzhbhs() {
+        return grzhbhs;
+    }
+
+    public void setGrzhbhs(Integer grzhbhs) {
+        this.grzhbhs = grzhbhs;
     }
 
     public String getPeracid() {

@@ -7,6 +7,8 @@ public class Returnpay {
 
     private Integer grzhbhs;
 
+    private Integer grzhbh;
+
     private Long chje;
 
     private Long shjn;
@@ -27,6 +29,14 @@ public class Returnpay {
 
     public void setGrzhbhs(Integer grzhbhs) {
         this.grzhbhs = grzhbhs;
+    }
+
+    public Integer getGrzhbh() {
+        return grzhbh;
+    }
+
+    public void setGrzhbh(Integer grzhbh) {
+        this.grzhbh = grzhbh;
     }
 
     public Long getChje() {

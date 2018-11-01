@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.HjqcbMapper">
-  <!-- <resultMap type="map" id="queryHjceb1" autoMapping="true">
-     <association property="unitinfoaccount" column="unitinfoaccount" javaType="Unitsaccount" autoMapping="true"></association>
-     <association property="grzhbhs" column="grzhbhs" javaType="Individualpay" autoMapping="true"></association>
-     <association property="userid" column="userid" javaType="Sys_user" autoMapping="true"></association>
-  </resultMap> -->
-  <select id="queryHjceb" parameterType="Integer" resultType="map">
-    select h.*,uc.*,uf.UnitInfoName,uf.UnitInfoCredit,ip.*,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join individualpay ip on h.grzhbhs=ip.grzhbhs join sys_user us on h.userId=us.userId  
-    where h.UnitInfoAccount=#{unitinfoaccount}
-  </select>
+<select id="queryHjceb" parameterType="Integer" resultType="map">
+   <!--  select uc.*,uf.* from Unitsaccount uc join UnitInfo uf on uc.UnitInfoAccount=uf.UnitInfoAccount  where uc.UnitInfoAccount=#{unitinfoaccount} -->
+SELECT *, ABS(NOW() - h.bjjzrq)  AS diffTime FROM hjqcb h where h.UnitInfoAccount=#{unitinfoaccount} ORDER BY h.hjbh desc LIMIT 0,1 
+</select>
+<select id="queryUcOrUf" parameterType="Integer" resultType="map">
+   select uc.*,uf.* from Unitsaccount uc join UnitInfo uf on uc.UnitInfoAccount=uf.UnitInfoAccount  where uc.UnitInfoAccount=#{unitinfoaccount}
+</select>
    <select id="queryHj" parameterType="map"  resultType="map">
     select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId  
     <where>
@@ -57,14 +55,17 @@
     <result column="bchnrs" jdbcType="INTEGER" property="bchnrs" />
     <result column="bchnje" jdbcType="DECIMAL" property="bchnje" />
     <result column="ssje" jdbcType="DECIMAL" property="ssje" />
+    <result column="jedxzh" jdbcType="VARCHAR" property="jedxzh" />
     <result column="bjjkfs" jdbcType="VARCHAR" property="bjjkfs" />
     <result column="bjjkzt" jdbcType="VARCHAR" property="bjjkzt" />
     <result column="rzrq" jdbcType="DATE" property="rzrq" />
     <result column="hjywlx" jdbcType="VARCHAR" property="hjywlx" />
+    <result column="hjbz" jdbcType="VARCHAR" property="hjbz" />
   </resultMap>
   <sql id="Base_Column_List">
     hjbh, UnitInfoAccount, grzhbhs, userId, gjind, jnmy, nhyf, bjjzrq, bczjrs, bczjje, 
-    bcjsrs, bcjsje, scjnrs, scjnje, bchnrs, bchnje, ssje, bjjkfs, bjjkzt, rzrq, hjywlx
+    bcjsrs, bcjsje, scjnrs, scjnje, bchnrs, bchnje, ssje, jedxzh, bjjkfs, bjjkzt, rzrq, 
+    hjywlx, hjbz
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -76,10 +77,26 @@
     delete from hjqcb
     where hjbh = #{hjbh,jdbcType=INTEGER}
   </delete>
-  <!-- <insert id="insertHjqcb" parameterType="Hjqcb">
-      insert into hjqcb(UnitInfoAccount,userId,gjind,)
+  <!-- <insert id="insert" parameterType="com.entity.Hjqcb">
+    insert into hjqcb (hjbh, UnitInfoAccount, grzhbhs, 
+      userId, gjind, jnmy, nhyf, 
+      bjjzrq, bczjrs, bczjje, 
+      bcjsrs, bcjsje, scjnrs, 
+      scjnje, bchnrs, bchnje, 
+      ssje, jedxzh, bjjkfs, 
+      bjjkzt, rzrq, hjywlx, 
+      hjbz)
+    values (#{hjbh,jdbcType=INTEGER}, #{unitinfoaccount,jdbcType=INTEGER}, #{grzhbhs,jdbcType=INTEGER}, 
+      #{userid,jdbcType=INTEGER}, #{gjind,jdbcType=VARCHAR}, #{jnmy,jdbcType=DATE}, #{nhyf,jdbcType=INTEGER}, 
+      #{bjjzrq,jdbcType=DATE}, #{bczjrs,jdbcType=INTEGER}, #{bczjje,jdbcType=DECIMAL}, 
+      #{bcjsrs,jdbcType=INTEGER}, #{bcjsje,jdbcType=DECIMAL}, #{scjnrs,jdbcType=INTEGER}, 
+      #{scjnje,jdbcType=DECIMAL}, #{bchnrs,jdbcType=INTEGER}, #{bchnje,jdbcType=DECIMAL}, 
+      #{ssje,jdbcType=DECIMAL}, #{jedxzh,jdbcType=VARCHAR}, #{bjjkfs,jdbcType=VARCHAR}, 
+      #{bjjkzt,jdbcType=VARCHAR}, #{rzrq,jdbcType=DATE}, #{hjywlx,jdbcType=VARCHAR}, 
+      #{hjbz,jdbcType=VARCHAR})
   </insert> -->
-  <insert id="insert" parameterType="com.entity.Hjqcb">
+  <!--汇缴添加  -->
+  <insert id="insert" parameterType="com.entity.Hjqcb" resultType="int">
     insert into hjqcb (UnitInfoAccount,
       userId, gjind, jnmy, nhyf, 
       bjjzrq, bczjrs, bczjje, 
@@ -149,6 +166,9 @@
       <if test="ssje != null">
         ssje,
       </if>
+      <if test="jedxzh != null">
+        jedxzh,
+      </if>
       <if test="bjjkfs != null">
         bjjkfs,
       </if>
@@ -160,6 +180,9 @@
       </if>
       <if test="hjywlx != null">
         hjywlx,
+      </if>
+      <if test="hjbz != null">
+        hjbz,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -214,6 +237,9 @@
       <if test="ssje != null">
         #{ssje,jdbcType=DECIMAL},
       </if>
+      <if test="jedxzh != null">
+        #{jedxzh,jdbcType=VARCHAR},
+      </if>
       <if test="bjjkfs != null">
         #{bjjkfs,jdbcType=VARCHAR},
       </if>
@@ -225,6 +251,9 @@
       </if>
       <if test="hjywlx != null">
         #{hjywlx,jdbcType=VARCHAR},
+      </if>
+      <if test="hjbz != null">
+        #{hjbz,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -279,6 +308,9 @@
       <if test="ssje != null">
         ssje = #{ssje,jdbcType=DECIMAL},
       </if>
+      <if test="jedxzh != null">
+        jedxzh = #{jedxzh,jdbcType=VARCHAR},
+      </if>
       <if test="bjjkfs != null">
         bjjkfs = #{bjjkfs,jdbcType=VARCHAR},
       </if>
@@ -290,6 +322,9 @@
       </if>
       <if test="hjywlx != null">
         hjywlx = #{hjywlx,jdbcType=VARCHAR},
+      </if>
+      <if test="hjbz != null">
+        hjbz = #{hjbz,jdbcType=VARCHAR},
       </if>
     </set>
     where hjbh = #{hjbh,jdbcType=INTEGER}
@@ -312,10 +347,12 @@
       bchnrs = #{bchnrs,jdbcType=INTEGER},
       bchnje = #{bchnje,jdbcType=DECIMAL},
       ssje = #{ssje,jdbcType=DECIMAL},
+      jedxzh = #{jedxzh,jdbcType=VARCHAR},
       bjjkfs = #{bjjkfs,jdbcType=VARCHAR},
       bjjkzt = #{bjjkzt,jdbcType=VARCHAR},
       rzrq = #{rzrq,jdbcType=DATE},
-      hjywlx = #{hjywlx,jdbcType=VARCHAR}
+      hjywlx = #{hjywlx,jdbcType=VARCHAR},
+      hjbz = #{hjbz,jdbcType=VARCHAR}
     where hjbh = #{hjbh,jdbcType=INTEGER}
   </update>
 </mapper>

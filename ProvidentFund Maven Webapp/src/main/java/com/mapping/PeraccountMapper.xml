@@ -7,6 +7,8 @@
     <result column="UnitpositionId" jdbcType="INTEGER" property="unitpositionid" />
     <result column="UnitInfoId" jdbcType="INTEGER" property="unitinfoid" />
     <result column="netinfoId" jdbcType="INTEGER" property="netinfoid" />
+    <result column="UnitInfoAccount" jdbcType="INTEGER" property="unitinfoaccount" />
+    <result column="grzhbhs" jdbcType="INTEGER" property="grzhbhs" />
     <result column="peracId" jdbcType="VARCHAR" property="peracid" />
     <result column="peracloginpw" jdbcType="VARCHAR" property="peracloginpw" />
     <result column="peracTransactionpw" jdbcType="VARCHAR" property="peractransactionpw" />
@@ -26,9 +28,10 @@
     <result column="monthlyProfit" jdbcType="DECIMAL" property="monthlyprofit" />
   </resultMap>
   <sql id="Base_Column_List">
-    grzhbh, zhztbh, UnitpositionId, UnitInfoId, netinfoId, peracId, peracloginpw, peracTransactionpw, 
-    peracBalance, peracUpdatestatus, bkname, bksex, phoneNum, IdType, IdNumbers, birthday, 
-    marital, education, email, postcode, address, monthlyProfit
+    grzhbh, zhztbh, UnitpositionId, UnitInfoId, netinfoId, UnitInfoAccount, grzhbhs, 
+    peracId, peracloginpw, peracTransactionpw, peracBalance, peracUpdatestatus, bkname, 
+    bksex, phoneNum, IdType, IdNumbers, birthday, marital, education, email, postcode, 
+    address, monthlyProfit
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -42,23 +45,30 @@
   </delete>
   <insert id="insert" parameterType="com.entity.Peraccount">
     insert into peraccount (grzhbh, zhztbh, UnitpositionId, 
-      UnitInfoId, netinfoId, peracId, 
-      peracloginpw, peracTransactionpw, peracBalance, 
-      peracUpdatestatus, bkname, bksex, 
-      phoneNum, IdType, IdNumbers, 
-      birthday, marital, education, 
-      email, postcode, address, 
-      monthlyProfit)
+      UnitInfoId, netinfoId, UnitInfoAccount, 
+      grzhbhs, peracId, peracloginpw, 
+      peracTransactionpw, peracBalance, peracUpdatestatus, 
+      bkname, bksex, phoneNum, 
+      IdType, IdNumbers, birthday, 
+      marital, education, email, 
+      postcode, address, monthlyProfit
+      )
     values (#{grzhbh,jdbcType=INTEGER}, #{zhztbh,jdbcType=INTEGER}, #{unitpositionid,jdbcType=INTEGER}, 
-      #{unitinfoid,jdbcType=INTEGER}, #{netinfoid,jdbcType=INTEGER}, #{peracid,jdbcType=VARCHAR}, 
-      #{peracloginpw,jdbcType=VARCHAR}, #{peractransactionpw,jdbcType=VARCHAR}, #{peracbalance,jdbcType=DECIMAL}, 
-      #{peracupdatestatus,jdbcType=VARCHAR}, #{bkname,jdbcType=VARCHAR}, #{bksex,jdbcType=VARCHAR}, 
-      #{phonenum,jdbcType=VARCHAR}, #{idtype,jdbcType=VARCHAR}, #{idnumbers,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=VARCHAR}, #{marital,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{monthlyprofit,jdbcType=DECIMAL})
+      #{unitinfoid,jdbcType=INTEGER}, #{netinfoid,jdbcType=INTEGER}, #{unitinfoaccount,jdbcType=INTEGER}, 
+      #{grzhbhs,jdbcType=INTEGER}, #{peracid,jdbcType=VARCHAR}, #{peracloginpw,jdbcType=VARCHAR}, 
+      #{peractransactionpw,jdbcType=VARCHAR}, #{peracbalance,jdbcType=DECIMAL}, #{peracupdatestatus,jdbcType=VARCHAR}, 
+      #{bkname,jdbcType=VARCHAR}, #{bksex,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR}, 
+      #{idtype,jdbcType=VARCHAR}, #{idnumbers,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{marital,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{monthlyprofit,jdbcType=DECIMAL}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.Peraccount">
+  <!--添加人员  -->
+  <insert id="insertPercc" parameterType="map" resultType="int">
+    <!-- 拿到新增信息的表主键信息 自增主键order="after" 不自增 order="before"-->
+   <selectKey keyProperty="grzhbh" order="AFTER" resultType="int">
+      SELECT LAST_INSERT_ID()
+   </selectKey>
     insert into peraccount
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="grzhbh != null">
@@ -75,6 +85,12 @@
       </if>
       <if test="netinfoid != null">
         netinfoId,
+      </if>
+      <if test="unitinfoaccount != null">
+        UnitInfoAccount,
+      </if>
+      <if test="grzhbhs != null">
+        grzhbhs,
       </if>
       <if test="peracid != null">
         peracId,
@@ -144,6 +160,12 @@
       <if test="netinfoid != null">
         #{netinfoid,jdbcType=INTEGER},
       </if>
+      <if test="unitinfoaccount != null">
+        #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null">
+        #{grzhbhs,jdbcType=INTEGER},
+      </if>
       <if test="peracid != null">
         #{peracid,jdbcType=VARCHAR},
       </if>
@@ -212,6 +234,12 @@
       <if test="netinfoid != null">
         netinfoId = #{netinfoid,jdbcType=INTEGER},
       </if>
+      <if test="unitinfoaccount != null">
+        UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null">
+        grzhbhs = #{grzhbhs,jdbcType=INTEGER},
+      </if>
       <if test="peracid != null">
         peracId = #{peracid,jdbcType=VARCHAR},
       </if>
@@ -272,6 +300,8 @@
       UnitpositionId = #{unitpositionid,jdbcType=INTEGER},
       UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
       netinfoId = #{netinfoid,jdbcType=INTEGER},
+      UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      grzhbhs = #{grzhbhs,jdbcType=INTEGER},
       peracId = #{peracid,jdbcType=VARCHAR},
       peracloginpw = #{peracloginpw,jdbcType=VARCHAR},
       peracTransactionpw = #{peractransactionpw,jdbcType=VARCHAR},

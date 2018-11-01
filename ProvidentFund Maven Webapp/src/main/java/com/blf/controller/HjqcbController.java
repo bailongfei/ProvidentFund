@@ -60,9 +60,9 @@ public class HjqcbController{
  public void saveHjqcb(Hjqcb hq,HttpServletResponse response) throws IOException{
 	 System.out.println(hq);
 	response.setContentType("text/html;charset=utf-8");
-	//int i=hs.insertHjqcb(hq);
+	int i=hs.insertHjqcb(hq);
 	PrintWriter out=response.getWriter();
-	Message message=new Message(1,"操作成功!");
+	Message message=new Message(i,"操作成功!");
 	ObjectMapper mapper=new ObjectMapper();
 	String jsonStr=mapper.writeValueAsString(message);
 	out.print(jsonStr);
@@ -86,6 +86,12 @@ public Pager queryHj(String UnitInfoName,@RequestParam(required = false, default
 	p.setList(list);
 	System.out.println(list);
 	return p;
+}
+@RequestMapping("/queryUcbOrUf")
+@ResponseBody
+public List<Map<String, Object>> queryUcbOrUf(Integer unitinfoaccount){
+	List<Map<String, Object>> list=hs.queryUcOrUf(unitinfoaccount);
+	return list;
 }
 
 }

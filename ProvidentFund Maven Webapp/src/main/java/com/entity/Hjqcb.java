@@ -7,244 +7,236 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Hjqcb {
-	private Integer hjbh;
+    private Integer hjbh;
 
-	private Integer unitinfoaccount;
+    private Integer unitinfoaccount;
 
-	private Integer grzhbhs;
+    private Integer grzhbhs;
 
-	private Integer userid;
+    private Integer userid;
 
-	private String gjind;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-8")
-	private Date jnmy;
+    private String gjind;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-8")
+    private Date jnmy;
 
-	private Integer nhyf;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-8")
-	private Date bjjzrq;
+    private Integer nhyf;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-8")
+    private Date bjjzrq;
 
-	private Integer bczjrs;
+    private Integer bczjrs;
 
-	private Long bczjje;
+    private Long bczjje;
 
-	private Integer bcjsrs;
+    private Integer bcjsrs;
 
-	private Long bcjsje;
+    private Long bcjsje;
 
-	private Integer scjnrs;
+    private Integer scjnrs;
 
-	private Long scjnje;
+    private Long scjnje;
 
-	private Integer bchnrs;
+    private Integer bchnrs;
 
-	private Long bchnje;
+    private Long bchnje;
 
-	private Long ssje;
+    private Long ssje;
 
-	private String jedxzh;
+    private String jedxzh;
 
-	private String bjjkfs;
+    private String bjjkfs;
 
-	private String bjjkzt;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-8")
-	private Date rzrq;
+    private String bjjkzt;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-8")
+    private Date rzrq;
 
-	private String hjywlx;
+    private String hjywlx;
 
-	private String hjbz;
+    private String hjbz;
 
-	public Integer getHjbh() {
-		return hjbh;
-	}
+    public Integer getHjbh() {
+        return hjbh;
+    }
 
-	public void setHjbh(Integer hjbh) {
-		this.hjbh = hjbh;
-	}
+    public void setHjbh(Integer hjbh) {
+        this.hjbh = hjbh;
+    }
 
-	public Integer getUnitinfoaccount() {
-		return unitinfoaccount;
-	}
+    public Integer getUnitinfoaccount() {
+        return unitinfoaccount;
+    }
 
-	public void setUnitinfoaccount(Integer unitinfoaccount) {
-		this.unitinfoaccount = unitinfoaccount;
-	}
+    public void setUnitinfoaccount(Integer unitinfoaccount) {
+        this.unitinfoaccount = unitinfoaccount;
+    }
 
-	public Integer getGrzhbhs() {
-		return grzhbhs;
-	}
+    public Integer getGrzhbhs() {
+        return grzhbhs;
+    }
 
-	public void setGrzhbhs(Integer grzhbhs) {
-		this.grzhbhs = grzhbhs;
-	}
+    public void setGrzhbhs(Integer grzhbhs) {
+        this.grzhbhs = grzhbhs;
+    }
 
-	public Integer getUserid() {
-		return userid;
-	}
+    public Integer getUserid() {
+        return userid;
+    }
 
-	public void setUserid(Integer userid) {
-		this.userid = userid;
-	}
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
 
-	public String getGjind() {
-		return gjind;
-	}
+    public String getGjind() {
+        return gjind;
+    }
 
-	public void setGjind(String gjind) {
-		this.gjind = gjind == null ? null : gjind.trim();
-	}
+    public void setGjind(String gjind) {
+        this.gjind = gjind == null ? null : gjind.trim();
+    }
 
-	
+    public Date getJnmy() {
+        return jnmy;
+    }
 
-	public Integer getNhyf() {
-		return nhyf;
-	}
+    public void setJnmy(Date jnmy) {
+        this.jnmy = jnmy;
+    }
 
-	public void setNhyf(Integer nhyf) {
-		this.nhyf = nhyf;
-	}
+    public Integer getNhyf() {
+        return nhyf;
+    }
 
-	
-	public Integer getBczjrs() {
-		return bczjrs;
-	}
+    public void setNhyf(Integer nhyf) {
+        this.nhyf = nhyf;
+    }
 
-	public void setBczjrs(Integer bczjrs) {
-		this.bczjrs = bczjrs;
-	}
+    public Date getBjjzrq() {
+        return bjjzrq;
+    }
 
-	public Long getBczjje() {
-		return bczjje;
-	}
+    public void setBjjzrq(Date bjjzrq) {
+        this.bjjzrq = bjjzrq;
+    }
 
-	public void setBczjje(Long bczjje) {
-		this.bczjje = bczjje;
-	}
+    public Integer getBczjrs() {
+        return bczjrs;
+    }
 
-	public Integer getBcjsrs() {
-		return bcjsrs;
-	}
+    public void setBczjrs(Integer bczjrs) {
+        this.bczjrs = bczjrs;
+    }
 
-	public void setBcjsrs(Integer bcjsrs) {
-		this.bcjsrs = bcjsrs;
-	}
+    public Long getBczjje() {
+        return bczjje;
+    }
 
-	public Long getBcjsje() {
-		return bcjsje;
-	}
+    public void setBczjje(Long bczjje) {
+        this.bczjje = bczjje;
+    }
 
-	public void setBcjsje(Long bcjsje) {
-		this.bcjsje = bcjsje;
-	}
+    public Integer getBcjsrs() {
+        return bcjsrs;
+    }
 
-	public Integer getScjnrs() {
-		return scjnrs;
-	}
+    public void setBcjsrs(Integer bcjsrs) {
+        this.bcjsrs = bcjsrs;
+    }
 
-	public void setScjnrs(Integer scjnrs) {
-		this.scjnrs = scjnrs;
-	}
+    public Long getBcjsje() {
+        return bcjsje;
+    }
 
-	public Long getScjnje() {
-		return scjnje;
-	}
+    public void setBcjsje(Long bcjsje) {
+        this.bcjsje = bcjsje;
+    }
 
-	public void setScjnje(Long scjnje) {
-		this.scjnje = scjnje;
-	}
+    public Integer getScjnrs() {
+        return scjnrs;
+    }
 
-	public Integer getBchnrs() {
-		return bchnrs;
-	}
+    public void setScjnrs(Integer scjnrs) {
+        this.scjnrs = scjnrs;
+    }
 
-	public void setBchnrs(Integer bchnrs) {
-		this.bchnrs = bchnrs;
-	}
+    public Long getScjnje() {
+        return scjnje;
+    }
 
-	public Long getBchnje() {
-		return bchnje;
-	}
+    public void setScjnje(Long scjnje) {
+        this.scjnje = scjnje;
+    }
 
-	public void setBchnje(Long bchnje) {
-		this.bchnje = bchnje;
-	}
+    public Integer getBchnrs() {
+        return bchnrs;
+    }
 
-	public Long getSsje() {
-		return ssje;
-	}
+    public void setBchnrs(Integer bchnrs) {
+        this.bchnrs = bchnrs;
+    }
 
-	public void setSsje(Long ssje) {
-		this.ssje = ssje;
-	}
+    public Long getBchnje() {
+        return bchnje;
+    }
 
-	public String getBjjkfs() {
-		return bjjkfs;
-	}
+    public void setBchnje(Long bchnje) {
+        this.bchnje = bchnje;
+    }
 
-	public void setBjjkfs(String bjjkfs) {
-		this.bjjkfs = bjjkfs == null ? null : bjjkfs.trim();
-	}
+    public Long getSsje() {
+        return ssje;
+    }
 
-	public String getBjjkzt() {
-		return bjjkzt;
-	}
+    public void setSsje(Long ssje) {
+        this.ssje = ssje;
+    }
 
-	public void setBjjkzt(String bjjkzt) {
-		this.bjjkzt = bjjkzt == null ? null : bjjkzt.trim();
-	}
+    public String getJedxzh() {
+        return jedxzh;
+    }
 
+    public void setJedxzh(String jedxzh) {
+        this.jedxzh = jedxzh == null ? null : jedxzh.trim();
+    }
 
+    public String getBjjkfs() {
+        return bjjkfs;
+    }
 
-	public String getHjywlx() {
-		return hjywlx;
-	}
+    public void setBjjkfs(String bjjkfs) {
+        this.bjjkfs = bjjkfs == null ? null : bjjkfs.trim();
+    }
 
-	public void setHjywlx(String hjywlx) {
-		this.hjywlx = hjywlx == null ? null : hjywlx.trim();
-	}
+    public String getBjjkzt() {
+        return bjjkzt;
+    }
 
-	public String getHjbz() {
-		return hjbz;
-	}
+    public void setBjjkzt(String bjjkzt) {
+        this.bjjkzt = bjjkzt == null ? null : bjjkzt.trim();
+    }
 
-	public void setHjbz(String hjbz) {
-		this.hjbz = hjbz;
-	}
+    public Date getRzrq() {
+        return rzrq;
+    }
 
-	public String getJedxzh() {
-		return jedxzh;
-	}
+    public void setRzrq(Date rzrq) {
+        this.rzrq = rzrq;
+    }
 
-	public void setJedxzh(String jedxzh) {
-		this.jedxzh = jedxzh;
-	}
+    public String getHjywlx() {
+        return hjywlx;
+    }
 
-	public Date getJnmy() {
-		return jnmy;
-	}
+    public void setHjywlx(String hjywlx) {
+        this.hjywlx = hjywlx == null ? null : hjywlx.trim();
+    }
 
-	public Date getBjjzrq() {
-		return bjjzrq;
-	}
+    public String getHjbz() {
+        return hjbz;
+    }
 
-	public Date getRzrq() {
-		return rzrq;
-	}
-
-	public void setJnmy(Date jnmy) {
-		this.jnmy = jnmy;
-	}
-
-	public void setBjjzrq(Date bjjzrq) {
-		this.bjjzrq = bjjzrq;
-	}
-
-	public void setRzrq(Date rzrq) {
-		this.rzrq = rzrq;
-	}
-
-	
-  
+    public void setHjbz(String hjbz) {
+        this.hjbz = hjbz == null ? null : hjbz.trim();
+    }
 }

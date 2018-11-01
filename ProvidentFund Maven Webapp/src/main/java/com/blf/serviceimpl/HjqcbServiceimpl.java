@@ -57,5 +57,10 @@ public class HjqcbServiceimpl implements HjqcbService {
 		int i=dao.getCount(map);
 		return i;
 	}
+	@Override
+	public List<Map<String, Object>> queryUcOrUf(Integer unitinfoaccount) {
+		List<Map<String, Object>> list=dao.queryUcOrUf(unitinfoaccount);
+		return list;
+	}
 
 }

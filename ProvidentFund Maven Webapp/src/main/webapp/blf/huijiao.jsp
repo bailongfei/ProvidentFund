@@ -291,7 +291,7 @@
 	   getDate();
 		dwxxAnddwzh();
 	});
-	/* 查询商品表 */
+	/* 查询表 */
 	function dwxxAnddwzh() {
 		$.ajax({
 			url : "${pageContext.request.contextPath}/unfo/queryUnfoAndUncc",
@@ -320,6 +320,10 @@
 		});
 	}
 	$(document).on("click",".huijiaoSelect",function(){
+	  $("#bczjrs").val("0");
+	  $("#bczjje").val("0");
+	  $("#bcjsrs").val("0");
+	  $("#bcjsje").val("0");
 	 var id=this.id
 	    
 	     $.ajax({
@@ -360,21 +364,45 @@
 	          }
 	          
 	    });
-	    $.ajax({
-	       url:"${pageContext.request.contextPath}/hjqcb/queryHjqcb",
+	     $.ajax({
+	       url:"${pageContext.request.contextPath}/hjqcb/queryUcbOrUf",
 	       type:"post",
 	       data:{"unitinfoaccount":id},
 	       dataType:"json",
 	       success:function(data){
 	          $("#UnitInfoAccount").val(data[0].UnitInfoAccount);
 	          $("#UnitInfoName").val(data[0].UnitInfoName);
-	          $("#jnmy").val(data[0].jnmy);
+	          /* $("#jnmy").val(data[0].jnmy);
+	          $("#scrs").val(data[0].bchnrs);
+	          $("#srje").val(data[0].bchnje);
+	          $("#hjbz").val(data[0].hjbz);
+	          hjzjrsje(); */
+	       }
+	    });
+	    $.ajax({
+	       url:"${pageContext.request.contextPath}/hjqcb/queryHjqcb",
+	       type:"post",
+	       data:{"unitinfoaccount":id},
+	       dataType:"json",
+	       success:function(data){
+	       
+	          if(data.length>0){
+	             $("#jnmy").val(data[0].jnmy);
 	          $("#scrs").val(data[0].bchnrs);
 	          $("#srje").val(data[0].bchnje);
 	          $("#hjbz").val(data[0].hjbz);
 	          hjzjrsje();
+	          }else{
+	          //$("#jnmy").val("0");
+	          $("#scrs").val("0");
+	          $("#srje").val("0");
+	         // $("#hjbz").val(data[0].hjbz);
+	          hjzjrsje();
+	          }
+	         
 	       }
 	    });
+	    
 	    queryUser();
 	});
 	             //汇缴月数

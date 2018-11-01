@@ -8,6 +8,7 @@ import com.entity.Individualpay;
 public interface IndividualpayMapper {
 	public int selectSum(Integer unitinfoaccount);
 	public List<Map<String,Object>> selectBGjce(Integer unitinfoaccount);
+	public int insertIpayPer(Map<String,Object> map);
     int deleteByPrimaryKey(Integer grzhbhs);
 
     int insert(Individualpay record);

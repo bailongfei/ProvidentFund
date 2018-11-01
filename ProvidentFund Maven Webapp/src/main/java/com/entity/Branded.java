@@ -7,8 +7,6 @@ public class Branded {
 
     private Integer bankdetailsid;
 
-    private Integer personno;
-
     private String brandedid;
 
     private String password;
@@ -37,14 +35,6 @@ public class Branded {
 
     public void setBankdetailsid(Integer bankdetailsid) {
         this.bankdetailsid = bankdetailsid;
-    }
-
-    public Integer getPersonno() {
-        return personno;
-    }
-
-    public void setPersonno(Integer personno) {
-        this.personno = personno;
     }
 
     public String getBrandedid() {

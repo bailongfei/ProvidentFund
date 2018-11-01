@@ -3,8 +3,6 @@ package com.entity;
 public class Gslxb {
     private Integer gslxbh;
 
-    private Integer unitinfoid;
-
     private String gslxmc;
 
     public Integer getGslxbh() {
@@ -13,14 +11,6 @@ public class Gslxb {
 
     public void setGslxbh(Integer gslxbh) {
         this.gslxbh = gslxbh;
-    }
-
-    public Integer getUnitinfoid() {
-        return unitinfoid;
-    }
-
-    public void setUnitinfoid(Integer unitinfoid) {
-        this.unitinfoid = unitinfoid;
     }
 
     public String getGslxmc() {

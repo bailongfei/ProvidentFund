@@ -3,7 +3,9 @@ package com.entity;
 public class Individualpay {
     private Integer grzhbhs;
 
-    private Integer personno;
+    private Integer unitinfoaccount;
+
+    private Integer grzhbh;
 
     private String personalaccount;
 
@@ -16,7 +18,7 @@ public class Individualpay {
     private String unitratedeposit;
 
     private String percontributionrate;
-    
+
     private String openaccountstatus;
 
     private String openingdate;
@@ -67,12 +69,20 @@ public class Individualpay {
         this.grzhbhs = grzhbhs;
     }
 
-    public Integer getPersonno() {
-        return personno;
+    public Integer getUnitinfoaccount() {
+        return unitinfoaccount;
     }
 
-    public void setPersonno(Integer personno) {
-        this.personno = personno;
+    public void setUnitinfoaccount(Integer unitinfoaccount) {
+        this.unitinfoaccount = unitinfoaccount;
+    }
+
+    public Integer getGrzhbh() {
+        return grzhbh;
+    }
+
+    public void setGrzhbh(Integer grzhbh) {
+        this.grzhbh = grzhbh;
     }
 
     public String getPersonalaccount() {
@@ -290,7 +300,4 @@ public class Individualpay {
     public void setExtractthisyear(String extractthisyear) {
         this.extractthisyear = extractthisyear == null ? null : extractthisyear.trim();
     }
-
-	
-    
 }

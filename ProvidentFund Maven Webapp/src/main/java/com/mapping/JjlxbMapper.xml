@@ -3,11 +3,10 @@
 <mapper namespace="com.dao.JjlxbMapper">
   <resultMap id="BaseResultMap" type="com.entity.Jjlxb">
     <id column="jjlxbh" jdbcType="INTEGER" property="jjlxbh" />
-    <result column="UnitInfoId" jdbcType="INTEGER" property="unitinfoid" />
     <result column="jjlxmc" jdbcType="VARCHAR" property="jjlxmc" />
   </resultMap>
   <sql id="Base_Column_List">
-    jjlxbh, UnitInfoId, jjlxmc
+    jjlxbh, jjlxmc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,19 +19,14 @@
     where jjlxbh = #{jjlxbh,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.entity.Jjlxb">
-    insert into jjlxb (jjlxbh, UnitInfoId, jjlxmc
-      )
-    values (#{jjlxbh,jdbcType=INTEGER}, #{unitinfoid,jdbcType=INTEGER}, #{jjlxmc,jdbcType=VARCHAR}
-      )
+    insert into jjlxb (jjlxbh, jjlxmc)
+    values (#{jjlxbh,jdbcType=INTEGER}, #{jjlxmc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Jjlxb">
     insert into jjlxb
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="jjlxbh != null">
         jjlxbh,
-      </if>
-      <if test="unitinfoid != null">
-        UnitInfoId,
       </if>
       <if test="jjlxmc != null">
         jjlxmc,
@@ -42,9 +36,6 @@
       <if test="jjlxbh != null">
         #{jjlxbh,jdbcType=INTEGER},
       </if>
-      <if test="unitinfoid != null">
-        #{unitinfoid,jdbcType=INTEGER},
-      </if>
       <if test="jjlxmc != null">
         #{jjlxmc,jdbcType=VARCHAR},
       </if>
@@ -53,9 +44,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.Jjlxb">
     update jjlxb
     <set>
-      <if test="unitinfoid != null">
-        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
-      </if>
       <if test="jjlxmc != null">
         jjlxmc = #{jjlxmc,jdbcType=VARCHAR},
       </if>
@@ -64,8 +52,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.Jjlxb">
     update jjlxb
-    set UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
-      jjlxmc = #{jjlxmc,jdbcType=VARCHAR}
+    set jjlxmc = #{jjlxmc,jdbcType=VARCHAR}
     where jjlxbh = #{jjlxbh,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -5,11 +5,11 @@ import java.util.Date;
 public class Perbusiness {
     private Integer perbuid;
 
-    private Integer personno;
-
     private Integer grzhbhs;
 
     private Integer netinfoid;
+
+    private Integer grzhbh;
 
     private String grpersonids;
 
@@ -41,14 +41,6 @@ public class Perbusiness {
         this.perbuid = perbuid;
     }
 
-    public Integer getPersonno() {
-        return personno;
-    }
-
-    public void setPersonno(Integer personno) {
-        this.personno = personno;
-    }
-
     public Integer getGrzhbhs() {
         return grzhbhs;
     }
@@ -63,6 +55,14 @@ public class Perbusiness {
 
     public void setNetinfoid(Integer netinfoid) {
         this.netinfoid = netinfoid;
+    }
+
+    public Integer getGrzhbh() {
+        return grzhbh;
+    }
+
+    public void setGrzhbh(Integer grzhbh) {
+        this.grzhbh = grzhbh;
     }
 
     public String getGrpersonids() {

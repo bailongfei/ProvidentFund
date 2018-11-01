@@ -3,6 +3,9 @@
 <mapper namespace="com.dao.UnitinfoMapper">
   <resultMap id="BaseResultMap" type="com.entity.Unitinfo">
     <id column="UnitInfoId" jdbcType="INTEGER" property="unitinfoid" />
+    <result column="gslxbh" jdbcType="INTEGER" property="gslxbh" />
+    <result column="gshylxbh" jdbcType="INTEGER" property="gshylxbh" />
+    <result column="jjlxbh" jdbcType="INTEGER" property="jjlxbh" />
     <result column="UnitInfoAccount" jdbcType="INTEGER" property="unitinfoaccount" />
     <result column="UnitInfoName" jdbcType="VARCHAR" property="unitinfoname" />
     <result column="UnitInfoCredit" jdbcType="VARCHAR" property="unitinfocredit" />
@@ -31,12 +34,12 @@
     <result column="Fattype" jdbcType="VARCHAR" property="fattype" />
   </resultMap>
   <sql id="Base_Column_List">
-    UnitInfoId, UnitInfoAccount, UnitInfoName, UnitInfoCredit, UnitInfoProperty, UnitInfoAddress, 
-    UnitInfoFader, UnitInfoType, UnitInfoNumber, UnitInfoSubjection, UnitInfoEconomic, 
-    UnitInfoClass, UnitInfoPostcode, UnitInfoEmail, UnitInfoPayday, UnitInfoOperatorName, 
-    UnitInfoOperatorPhone, nitInfoOperatorType, UnitInfoOperatorNumber, UnitInfoBankName, 
-    UnitInfoSwiftCode, UnitInfoSocialAccount, UnitInfoSection, UnitInfoTissueCode, UnitInfoFoundLusd, 
-    UnitInfoAccountLusd, Fattype
+    UnitInfoId, gslxbh, gshylxbh, jjlxbh, UnitInfoAccount, UnitInfoName, UnitInfoCredit, 
+    UnitInfoProperty, UnitInfoAddress, UnitInfoFader, UnitInfoType, UnitInfoNumber, UnitInfoSubjection, 
+    UnitInfoEconomic, UnitInfoClass, UnitInfoPostcode, UnitInfoEmail, UnitInfoPayday, 
+    UnitInfoOperatorName, UnitInfoOperatorPhone, nitInfoOperatorType, UnitInfoOperatorNumber, 
+    UnitInfoBankName, UnitInfoSwiftCode, UnitInfoSocialAccount, UnitInfoSection, UnitInfoTissueCode, 
+    UnitInfoFoundLusd, UnitInfoAccountLusd, Fattype
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -49,7 +52,8 @@
     where UnitInfoId = #{unitinfoid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.entity.Unitinfo">
-    insert into unitinfo (UnitInfoId, UnitInfoAccount, UnitInfoName, 
+    insert into unitinfo (UnitInfoId, gslxbh, gshylxbh, 
+      jjlxbh, UnitInfoAccount, UnitInfoName, 
       UnitInfoCredit, UnitInfoProperty, UnitInfoAddress, 
       UnitInfoFader, UnitInfoType, UnitInfoNumber, 
       UnitInfoSubjection, UnitInfoEconomic, UnitInfoClass, 
@@ -59,7 +63,8 @@
       UnitInfoBankName, UnitInfoSwiftCode, UnitInfoSocialAccount, 
       UnitInfoSection, UnitInfoTissueCode, UnitInfoFoundLusd, 
       UnitInfoAccountLusd, Fattype)
-    values (#{unitinfoid,jdbcType=INTEGER}, #{unitinfoaccount,jdbcType=INTEGER}, #{unitinfoname,jdbcType=VARCHAR}, 
+    values (#{unitinfoid,jdbcType=INTEGER}, #{gslxbh,jdbcType=INTEGER}, #{gshylxbh,jdbcType=INTEGER}, 
+      #{jjlxbh,jdbcType=INTEGER}, #{unitinfoaccount,jdbcType=INTEGER}, #{unitinfoname,jdbcType=VARCHAR}, 
       #{unitinfocredit,jdbcType=VARCHAR}, #{unitinfoproperty,jdbcType=VARCHAR}, #{unitinfoaddress,jdbcType=VARCHAR}, 
       #{unitinfofader,jdbcType=VARCHAR}, #{unitinfotype,jdbcType=VARCHAR}, #{unitinfonumber,jdbcType=VARCHAR}, 
       #{unitinfosubjection,jdbcType=VARCHAR}, #{unitinfoeconomic,jdbcType=VARCHAR}, #{unitinfoclass,jdbcType=VARCHAR}, 
@@ -75,6 +80,15 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="unitinfoid != null">
         UnitInfoId,
+      </if>
+      <if test="gslxbh != null">
+        gslxbh,
+      </if>
+      <if test="gshylxbh != null">
+        gshylxbh,
+      </if>
+      <if test="jjlxbh != null">
+        jjlxbh,
       </if>
       <if test="unitinfoaccount != null">
         UnitInfoAccount,
@@ -159,6 +173,15 @@
       <if test="unitinfoid != null">
         #{unitinfoid,jdbcType=INTEGER},
       </if>
+      <if test="gslxbh != null">
+        #{gslxbh,jdbcType=INTEGER},
+      </if>
+      <if test="gshylxbh != null">
+        #{gshylxbh,jdbcType=INTEGER},
+      </if>
+      <if test="jjlxbh != null">
+        #{jjlxbh,jdbcType=INTEGER},
+      </if>
       <if test="unitinfoaccount != null">
         #{unitinfoaccount,jdbcType=INTEGER},
       </if>
@@ -242,6 +265,15 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.Unitinfo">
     update unitinfo
     <set>
+      <if test="gslxbh != null">
+        gslxbh = #{gslxbh,jdbcType=INTEGER},
+      </if>
+      <if test="gshylxbh != null">
+        gshylxbh = #{gshylxbh,jdbcType=INTEGER},
+      </if>
+      <if test="jjlxbh != null">
+        jjlxbh = #{jjlxbh,jdbcType=INTEGER},
+      </if>
       <if test="unitinfoaccount != null">
         UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
       </if>
@@ -325,7 +357,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.Unitinfo">
     update unitinfo
-    set UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+    set gslxbh = #{gslxbh,jdbcType=INTEGER},
+      gshylxbh = #{gshylxbh,jdbcType=INTEGER},
+      jjlxbh = #{jjlxbh,jdbcType=INTEGER},
+      UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
       UnitInfoName = #{unitinfoname,jdbcType=VARCHAR},
       UnitInfoCredit = #{unitinfocredit,jdbcType=VARCHAR},
       UnitInfoProperty = #{unitinfoproperty,jdbcType=VARCHAR},

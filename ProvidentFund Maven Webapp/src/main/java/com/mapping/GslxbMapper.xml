@@ -3,11 +3,10 @@
 <mapper namespace="com.dao.GslxbMapper">
   <resultMap id="BaseResultMap" type="com.entity.Gslxb">
     <id column="gslxbh" jdbcType="INTEGER" property="gslxbh" />
-    <result column="UnitInfoId" jdbcType="INTEGER" property="unitinfoid" />
     <result column="gslxmc" jdbcType="VARCHAR" property="gslxmc" />
   </resultMap>
   <sql id="Base_Column_List">
-    gslxbh, UnitInfoId, gslxmc
+    gslxbh, gslxmc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,19 +19,14 @@
     where gslxbh = #{gslxbh,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.entity.Gslxb">
-    insert into gslxb (gslxbh, UnitInfoId, gslxmc
-      )
-    values (#{gslxbh,jdbcType=INTEGER}, #{unitinfoid,jdbcType=INTEGER}, #{gslxmc,jdbcType=VARCHAR}
-      )
+    insert into gslxb (gslxbh, gslxmc)
+    values (#{gslxbh,jdbcType=INTEGER}, #{gslxmc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Gslxb">
     insert into gslxb
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="gslxbh != null">
         gslxbh,
-      </if>
-      <if test="unitinfoid != null">
-        UnitInfoId,
       </if>
       <if test="gslxmc != null">
         gslxmc,
@@ -42,9 +36,6 @@
       <if test="gslxbh != null">
         #{gslxbh,jdbcType=INTEGER},
       </if>
-      <if test="unitinfoid != null">
-        #{unitinfoid,jdbcType=INTEGER},
-      </if>
       <if test="gslxmc != null">
         #{gslxmc,jdbcType=VARCHAR},
       </if>
@@ -53,9 +44,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.Gslxb">
     update gslxb
     <set>
-      <if test="unitinfoid != null">
-        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
-      </if>
       <if test="gslxmc != null">
         gslxmc = #{gslxmc,jdbcType=VARCHAR},
       </if>
@@ -64,8 +52,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.Gslxb">
     update gslxb
-    set UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
-      gslxmc = #{gslxmc,jdbcType=VARCHAR}
+    set gslxmc = #{gslxmc,jdbcType=VARCHAR}
     where gslxbh = #{gslxbh,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -3,11 +3,10 @@
 <mapper namespace="com.dao.GshylxMapper">
   <resultMap id="BaseResultMap" type="com.entity.Gshylx">
     <id column="gshylxbh" jdbcType="INTEGER" property="gshylxbh" />
-    <result column="UnitInfoId" jdbcType="INTEGER" property="unitinfoid" />
     <result column="gshylxmc" jdbcType="VARCHAR" property="gshylxmc" />
   </resultMap>
   <sql id="Base_Column_List">
-    gshylxbh, UnitInfoId, gshylxmc
+    gshylxbh, gshylxmc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,19 +19,14 @@
     where gshylxbh = #{gshylxbh,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.entity.Gshylx">
-    insert into gshylx (gshylxbh, UnitInfoId, gshylxmc
-      )
-    values (#{gshylxbh,jdbcType=INTEGER}, #{unitinfoid,jdbcType=INTEGER}, #{gshylxmc,jdbcType=VARCHAR}
-      )
+    insert into gshylx (gshylxbh, gshylxmc)
+    values (#{gshylxbh,jdbcType=INTEGER}, #{gshylxmc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Gshylx">
     insert into gshylx
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="gshylxbh != null">
         gshylxbh,
-      </if>
-      <if test="unitinfoid != null">
-        UnitInfoId,
       </if>
       <if test="gshylxmc != null">
         gshylxmc,
@@ -42,9 +36,6 @@
       <if test="gshylxbh != null">
         #{gshylxbh,jdbcType=INTEGER},
       </if>
-      <if test="unitinfoid != null">
-        #{unitinfoid,jdbcType=INTEGER},
-      </if>
       <if test="gshylxmc != null">
         #{gshylxmc,jdbcType=VARCHAR},
       </if>
@@ -53,9 +44,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.Gshylx">
     update gshylx
     <set>
-      <if test="unitinfoid != null">
-        UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
-      </if>
       <if test="gshylxmc != null">
         gshylxmc = #{gshylxmc,jdbcType=VARCHAR},
       </if>
@@ -64,8 +52,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.Gshylx">
     update gshylx
-    set UnitInfoId = #{unitinfoid,jdbcType=INTEGER},
-      gshylxmc = #{gshylxmc,jdbcType=VARCHAR}
+    set gshylxmc = #{gshylxmc,jdbcType=VARCHAR}
     where gshylxbh = #{gshylxbh,jdbcType=INTEGER}
   </update>
 </mapper>

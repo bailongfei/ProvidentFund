@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.BrandedMapper">
+ <select id="queryLmk" resultType="map">
+   select b.*,bn.* from Branded b  join Bankdetails bn on b.Bankdetailsid=bn.Bankdetailsid
+ </select>
   <resultMap id="BaseResultMap" type="com.entity.Branded">
     <id column="lmkbh" jdbcType="INTEGER" property="lmkbh" />
     <result column="grzhbh" jdbcType="INTEGER" property="grzhbh" />
     <result column="Bankdetailsid" jdbcType="INTEGER" property="bankdetailsid" />
-    <result column="personNO" jdbcType="INTEGER" property="personno" />
     <result column="brandedId" jdbcType="VARCHAR" property="brandedid" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="balance" jdbcType="DECIMAL" property="balance" />
   </resultMap>
   <sql id="Base_Column_List">
-    lmkbh, grzhbh, Bankdetailsid, personNO, brandedId, password, balance
+    lmkbh, grzhbh, Bankdetailsid, brandedId, password, balance
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,11 +27,11 @@
   </delete>
   <insert id="insert" parameterType="com.entity.Branded">
     insert into branded (lmkbh, grzhbh, Bankdetailsid, 
-      personNO, brandedId, password, 
-      balance)
+      brandedId, password, balance
+      )
     values (#{lmkbh,jdbcType=INTEGER}, #{grzhbh,jdbcType=INTEGER}, #{bankdetailsid,jdbcType=INTEGER}, 
-      #{personno,jdbcType=INTEGER}, #{brandedid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{balance,jdbcType=DECIMAL})
+      #{brandedid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{balance,jdbcType=DECIMAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Branded">
     insert into branded
@@ -42,9 +44,6 @@
       </if>
       <if test="bankdetailsid != null">
         Bankdetailsid,
-      </if>
-      <if test="personno != null">
-        personNO,
       </if>
       <if test="brandedid != null">
         brandedId,
@@ -66,9 +65,6 @@
       <if test="bankdetailsid != null">
         #{bankdetailsid,jdbcType=INTEGER},
       </if>
-      <if test="personno != null">
-        #{personno,jdbcType=INTEGER},
-      </if>
       <if test="brandedid != null">
         #{brandedid,jdbcType=VARCHAR},
       </if>
@@ -89,9 +85,6 @@
       <if test="bankdetailsid != null">
         Bankdetailsid = #{bankdetailsid,jdbcType=INTEGER},
       </if>
-      <if test="personno != null">
-        personNO = #{personno,jdbcType=INTEGER},
-      </if>
       <if test="brandedid != null">
         brandedId = #{brandedid,jdbcType=VARCHAR},
       </if>
@@ -108,7 +101,6 @@
     update branded
     set grzhbh = #{grzhbh,jdbcType=INTEGER},
       Bankdetailsid = #{bankdetailsid,jdbcType=INTEGER},
-      personNO = #{personno,jdbcType=INTEGER},
       brandedId = #{brandedid,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       balance = #{balance,jdbcType=DECIMAL}

@@ -3,6 +3,12 @@ package com.entity;
 public class Unitinfo {
     private Integer unitinfoid;
 
+    private Integer gslxbh;
+
+    private Integer gshylxbh;
+
+    private Integer jjlxbh;
+
     private Integer unitinfoaccount;
 
     private String unitinfoname;
@@ -61,6 +67,30 @@ public class Unitinfo {
 
     public void setUnitinfoid(Integer unitinfoid) {
         this.unitinfoid = unitinfoid;
+    }
+
+    public Integer getGslxbh() {
+        return gslxbh;
+    }
+
+    public void setGslxbh(Integer gslxbh) {
+        this.gslxbh = gslxbh;
+    }
+
+    public Integer getGshylxbh() {
+        return gshylxbh;
+    }
+
+    public void setGshylxbh(Integer gshylxbh) {
+        this.gshylxbh = gshylxbh;
+    }
+
+    public Integer getJjlxbh() {
+        return jjlxbh;
+    }
+
+    public void setJjlxbh(Integer jjlxbh) {
+        this.jjlxbh = jjlxbh;
     }
 
     public Integer getUnitinfoaccount() {
