@@ -195,6 +195,13 @@
 				dblClickExpand : true,
 				expandSpeed : ""
 			},
+			drag : {
+				isCopy : true, //能够复制
+				isMove : false, //能够移动
+				prev : false, //不能拖拽到节点前
+				next : false, //不能拖拽到节点后
+				inner : true //只能拖拽到节点中
+			},
 			//异步加载
 			async : {
 				enable : true, //设置是否异步加载
@@ -202,7 +209,7 @@
 				otherParam : [ "rolesId", roleId ]
 			},
 			data : {
-				simpleData : {
+				simpleData : { 
 					enable : true,
 					pIdKey : "parentid",
 					idKey : "modulesId"
@@ -220,9 +227,9 @@
 		//初始化  
 		zTree = $.fn.zTree.init($("#tree"), setting);
 		zTree.expandAll(true);
-	/* // 展开全部节点
-var treeObj = $.fn.zTree.getZTreeObj("tree");
-treeObj.expandAll(true); */
+	// 展开全部节点
+	/* var treeObj = $.fn.zTree.getZTreeObj("tree");
+	treeObj.expandAll(true); */
 	}
 	/* 异步加载无法展开tree 默认展开一级菜单 */
 	var firstAsyncSuccessFlag = 0;
