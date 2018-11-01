@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.generator.codegen.ibatis2.dao.DAOGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +25,6 @@ import com.zhl.service.PerbusinessService;
 public class PerbusinessController {
 	@Autowired
 	private PerbusinessService service;
-	private Integer grzh;
-	@RequestMapping("/findbypage")
-	public String findbypage(Integer grzhbhs){
-		grzh=grzhbhs;
-		return "QueryPerbusiness";
-	}
 	/*@ResponseBody
 	@RequestMapping("/QuerybyId")
 	public Map<String, Object> QuerybyId(){
@@ -54,13 +50,15 @@ public class PerbusinessController {
 	
 	@ResponseBody
 	@RequestMapping("/findbycondition")
-	public Pager findbycondition(String grperbuType,@RequestParam(required = false, defaultValue = "1") Integer pageNum,String date1,String date2){
+	public Pager findbycondition(String grperbuType,@RequestParam(required = false, defaultValue = "1") Integer pageNum,String date1,String date2,HttpSession session){
+		//Peraccount pa=(Peraccount) session.getAttribute("Peraccount");
+		//Integer grzhbh=pa.getGrzhbh();
 		Pager p=new Pager();//分页对象
 		p.setCurPage(pageNum);//当前页
 		p.setPageSize(2);//每页条数
 		Map<String, Object> condition=new HashMap<String, Object>();
 		String date3 = null;
-		condition.put("grzhbhs", 1);//个人账号
+		condition.put("grzhbh", 1);//个人账号
 		condition.put("grperbuType", grperbuType);//业务类型
 		if(date1!=null && date1!="" && date2==""){
 			date3=date1;
@@ -77,12 +75,6 @@ public class PerbusinessController {
 		Integer totalCount=service.findcount(condition);//查询出结果总条数
 		p.setList(list);//设置list
 		p.setTotalCount(totalCount);//设置总条数
-		//PageHelper.startPage(pageNum, 2);
-		//PageInfo<Map<String, Object>> pInfo=new PageInfo<Map<String,Object>>(list);
-		//System.out.println(pInfo.toString());
-		//Map<String, Object> map=new HashMap<String, Object>();
-		//map.put("grzhbhs", grzh);
-		//map.put("pInfo", pInfo);
 		return p;
 	}
 }

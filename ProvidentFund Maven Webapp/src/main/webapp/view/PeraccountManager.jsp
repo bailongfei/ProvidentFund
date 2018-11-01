@@ -48,28 +48,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       });
       function getAll(pageNum){
          alert(pageNum);
-         var date1=$("#date1").val();
-         var date2=$("#date2").val();  
-         var grperbuType=$("#grperbuType").val();
+         var peracId=$("#peracId").val();
          $.ajax({
-            url:"Perbusiness/findbycondition",
+            url:"Peraccount/findbyPager",
             type:"post", 
-            data:{"pageNum":pageNum,
-            	  "grperbuType":grperbuType,
-            	  "date1":date1,
-            	  "date2":date2	
+            data:{"curPage":pageNum,
+            	  "peracId":peracId
             },
             dataType:'json',
             success:function(data){
             $("#tab").html("");
             var datalist=data.list;
                for(var i=0;i<datalist.length;i++){
+               	   var obj=datalist[i];
                    var tr="<tr>";
-				   tr+="<td>"+datalist[i].grperbuType+"</td>";
-                   tr+="<td>"+datalist[i].grperbuTime+"</td>";
-                   tr+="<td>"+datalist[i].perbuLimit+"</td>";
-                   tr+="<td>"+datalist[i].unitAdvancep+"</td>";
-                   tr+="<td>"+datalist[i].personAdvancep+"</td>";
+				   tr+="<td>"+obj.peracId+"</td>";
+                   tr+="<td>"+obj.bkname+"</td>";
+                   tr+="<td>"+obj.unitRateDeposit+"</td>";
+                   tr+="<td>"+obj.perContributionRate+"</td>";
+                   tr+="<td>"+obj.personalDepositBase+"</td>";
+                   tr+="<td>"+obj.peracBalance+"</td>";
+                   tr+="<td>"+obj.zhzt+"</td>";
+                   tr+="<td><button onclick='UpdateStates("+obj.grzhbh+",5)'>申请封存</button></td>";
+                   tr+="<td><button onclick='UpdateStates("+obj.grzhbh+",6)'>申请销户</button></td>";
 				   tr+="</tr>";
                    $("#tab").append(tr);
                }
@@ -100,35 +101,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	  	getAll(1);
       	  })
 	  });
-	      
-      
-       
+	  function UpdateStates(obj1,obj2){
+	  	$.ajax({
+	  		url:"Peraccount/UpdateStates",
+	  		type:"post",
+	  		data:{
+	  			"grzhbh":obj1,
+	  			"zhztbh":obj2
+	  		},
+	  		dataType:'text',
+	  		success:function(data){
+	  			if(data=='1'){
+		  			alert("申请已提交 请等待审批");
+		  			getAll(1);	  				
+	  			}
+	  		}
+	  	})
+	  }
 	</script>
   </head>
-  
   <body>
     <table>
     	<tr>
     		<td>
-    			<!-- <input type="hidden" name="grzhbhs" id="grzhbhs"> -->
-    			<select name="grperbuType" id="grperbuType">
-    				<option value="">--请选择--</option>
-    				<option value="汇缴">汇缴</option>
-    			</select>
+    			<input type="text" name="peracId" id="peracId">
     		</td>
     		<td>
-    			<input type="date" name="date1" id="date1">
-    		</td>
-    		<td>
-    			<input type="date" name="date2" id="date2">
+    			<input type="button" onclick="getAll(1)">
     		</td>
     	</tr>
     	<tr>
-    		<td>业务类型</td>
-    		<td>发生时间</td>
-    		<td>发生额度</td>
-    		<td>单位缴纳</td>
-    		<td>个人缴纳</td>
+    		<td>个人账号</td>
+    		<td>个人姓名</td>
+    		<td>单位缴存比例</td>
+    		<td>个人缴存比例</td>
+    		<td>缴存基数</td>
+    		<td>公积金金额</td>
+    		<td>账户状态</td>
+    		<td>操作</td>
     	</tr>
     	<tbody id="tab"></tbody>
     </table>

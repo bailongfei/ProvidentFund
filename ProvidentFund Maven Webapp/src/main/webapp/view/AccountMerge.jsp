@@ -33,13 +33,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			})
 		}
+		function findunitName(pid,obj){
+			$.ajax({
+				url:"Peraccount/findUnitName",
+				type:"post",
+				data:{
+					"peracId":pid
+				},
+				dataType:'json',
+				success:function(data){
+					if(obj=='1'){
+						$("#unit1").val(data.UnitInfoName);
+					}else{
+						$("#unit2").val(data.UnitInfoName);
+					}
+				}
+			})
+		}
+		$(document).ready(function(){
+	  	    $("#pid1").blur(function(){
+	  	    	var pid=$("#pid1").val();
+	  	    	alert(pid);
+	 			findunitName(pid,1);
+	  	    });
+	  	    $("#pid2").blur(function(){
+	  	    	var pid=$("#pid2").val();
+	  	    	alert(pid);
+	 			findunitName(pid,2)
+	  	    });
+	    });
 	</script>
   </head>
   
   <body>
     <form action="" id="fm">
-    	主账号:<input type="text" name="peracId1">密码:<input type="password" name="peracloginpw1"><br/>
-    	主账号:<input type="text" name="peracId2">密码:<input type="password" name="peracloginpw2"><br/>
+    	保留账号:<input type="text" name="peracId1" id="pid1">密码:<input type="password" name="peracloginpw1"><br/>
+    	保留账号单位:<input type="text" id="unit1"><br/>
+    	销户账号:<input type="text" name="peracId2" id="pid2">密码:<input type="password" name="peracloginpw2"><br/>
+    	销户账号单位:<input type="text" id="unit2"><br/>
     	<input type="button" value="合并账户" onclick="merge()">
     </form>
   </body>

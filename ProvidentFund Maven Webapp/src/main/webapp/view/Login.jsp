@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				success:function(data){
 					if(data=='1'){
 						alert("登录成功！");
-						window.location.href="Main.jsp";
+						window.location.href="view/Main.jsp";
 					}else{
 						alert("登录失败！");
 					}

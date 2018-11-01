@@ -10,6 +10,7 @@ import com.dao.PeraccountMapper;
 import com.dao.ZhhbjlMapper;
 import com.entity.Peraccount;
 import com.entity.Zhhbjl;
+import com.zhl.pager.Pager;
 @Service
 public class PeraccountServiceImpl implements PeraccountService {
 	@Autowired
@@ -54,6 +55,34 @@ public class PeraccountServiceImpl implements PeraccountService {
 		zhhbjl.setXhgrzh(peraccount2.getGrzhbh().toString());
 		zhhbjl.setGrzhbh(peraccount1.getGrzhbh());
 		hbdao.insertSelective(zhhbjl);
+	}
+
+	@Override
+	public Pager findbyPager(Map<String, Object> map,Pager p) {
+		// TODO Auto-generated method stub
+		String curPage=(String) map.get("curPage");//接收从前台传来的的当前页
+		p.setCurPage(Integer.parseInt(curPage));//设置当前页到pager对象
+		int totalCount=dao.findPagercount(map);
+		p.setTotalCount(totalCount);
+		map.put("startIndex", p.getStartIndex());//设置开始索引
+		map.put("pageSize", p.getPageSize());//设置每页条数
+		List<Map<String, Object>> list=dao.findbyPager(map);//查询分页的数据
+		System.out.println(list);
+		p.setList(list);//把分页的数据放到pager对象里面
+		return p;
+	}
+
+	@Override
+	public void UpdateStates(Integer zhztbh,Integer grzhbh) {
+		// TODO Auto-generated method stub
+		Peraccount account=new Peraccount(grzhbh, zhztbh);
+		dao.updateByPrimaryKeySelective(account);
+	}
+
+	@Override
+	public Map<String, Object> findUnitName(String peracId) {
+		// TODO Auto-generated method stub
+		return dao.findUnitName(peracId);
 	}
 	
 	

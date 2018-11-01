@@ -318,5 +318,25 @@
   </update>
   <select id="findbyaccount" parameterType="map" resultType="Peraccount">
   	select * from peraccount where peracid=#{peracid} and peracloginpw=#{peracloginpw}
+  </select>
+  <select id="findbyPager" parameterType="map" resultType="Map">
+  	select p.*,i.unitRateDeposit,i.perContributionRate,i.personalDepositBase,g.zhzt from peraccount p join individualpay i on p.grzhbh=i.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId join grzhztb g on p.zhztbh=g.zhztbh
+  	where p.zhztbh=1
+  	<if test="peracId !=null and peracId!=''">
+  		and peracId=#{peracId}
+  	</if>
+  	ORDER BY zhztbh DESC
+  	limit #{startIndex},#{pageSize}
+  </select>
+  <select id="findPagercount" parameterType="map" resultType="int">
+  	select count(*) from peraccount p join individualpay i on p.grzhbh=i.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId join grzhztb g on p.zhztbh=g.zhztbh
+  	where p.zhztbh=1
+  	<if test="peracId !=null and peracId!=''">
+  		and peracId=#{peracId}
+  	</if>
+  </select>
+  <select id="findUnitName" parameterType="String" resultType="map">
+  	select u.* from peraccount p  left join unitinfo u on p.UnitInfoId=u.UnitInfoId 
+  	where p.peracId=#{0}
   </select>  
 </mapper>

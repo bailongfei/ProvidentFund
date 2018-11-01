@@ -217,7 +217,7 @@
   	select count(*) from Perbusiness where grzhbhs=#{0}
   </select> -->
   <select id="findbycondition" resultType="Map" parameterType="Map">
-  	select * from Perbusiness where grzhbhs=#{grzhbhs}
+  	select * from Perbusiness where grzhbh=#{grzhbh}
   		<if test="grperbuType !=null and grperbuType!=''">
   			and grperbuType=#{grperbuType}
   		</if>
@@ -231,7 +231,7 @@
   	limit #{startIndex},#{pageSize}
   </select>  
   <select id="findcount" resultType="Integer" parameterType="Map">
-  	select count(*) from Perbusiness where grzhbhs=#{grzhbhs}
+  	select count(*) from Perbusiness where grzhbh=#{grzhbh}
   		<if test="grperbuType !=null and grperbuType!=''">
   			and grperbuType=#{grperbuType}
   		</if>
@@ -243,6 +243,6 @@
   		</if>
   </select>   
   <select id="queryAll" resultType="java.util.Map">
-  	select * from perbusiness
+  	select * from perbusiness 
   </select>  
 </mapper>

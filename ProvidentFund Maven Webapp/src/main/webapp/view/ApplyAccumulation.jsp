@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 	<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript">
-		$(function(){
+		function findtqyy(){
 			$.ajax({
 				url:"Accumulation/findtqyy",
 				type:"post",
@@ -36,7 +36,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$("#grapprovalstatuss").append(opt);
 				}
 			})
+		}
+		$(function(){
+			findtqyy();
 		});
+		$(document).ready(function(){
+	    	$("#grapprovalstatuss").change(function(){
+	    		var tqyyId=$("#grapprovalstatuss").val();
+	    		if(tqyyId=="1"){
+	    			$("#zf").hide();
+	    			$("#tx").hide();
+	    			$("#houseaddress").show();
+	    			$("#gf").show();
+	    			$("#gf2").show();
+	    			$("#gf3").show();
+	    		}if(tqyyId=="2"){
+	    			$("#zf").show();
+	    			$("#tx").hide();
+	    			$("#houseaddress").show();
+	    			$("#gf").hide();
+	    			$("#gf2").hide();
+	    			$("#gf3").hide();
+	    		}if(tqyyId=="3"){
+	    			$("#zf").hide();
+	    			$("#tx").show();
+	    			$("#houseaddress").hide();
+	    			$("#gf").hide();
+	    			$("#gf2").hide();
+	    			$("#gf3").hide();
+	    		}
+	    	});
+	    });
 	</script>
   </head>
   
@@ -45,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <table>
     	<tr>
     		<td>个人公积金账户:</td>
-    		<td><input type="text" name="grzhbh"></td>
+    		<td><input type="text" name="grzhbh" id="grzhbh"></td>
     		<td>单位账号:</td>
     		<td><input type="text" name="unitinfoid"></td>
     		<td>单位名称:</td>
@@ -61,9 +91,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</tr>
     	<tr id="houseaddress" style="display: none;">
     		<td>房屋地址:</td>
+    		<td><input type="text" name="fwdz"></td>
     	</tr>
     	<tr id="gf" style="display: none;">
-    		<td><input type="text" name="fwdz"></td>
     		<td>购房合同编号:</td>
     		<td><input type="text" name="gfhtxybh"></td>
     		<td>房屋面积:</td>
