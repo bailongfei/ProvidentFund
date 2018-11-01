@@ -28,7 +28,7 @@ public class Filter extends HttpServlet implements javax.servlet.Filter{
 	            String location = "/frame/views/user/login.jsp";  
 	            request.getRequestDispatcher(location).forward(request, response);  
 	  
-	            System.out.println("成功拦截到外星人企图入侵网站后台  :" + url);  
+	            System.out.println("成功拦截入侵---- :" + url);  
 	            response.setHeader("Cache-Control", "no-store");  
 	            response.setDateHeader("Expires", 0);  /*清除页面缓存*/
 	            response.setHeader("Pragma", "no-cache");  

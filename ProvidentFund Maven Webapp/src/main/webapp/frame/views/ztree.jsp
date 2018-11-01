@@ -22,7 +22,7 @@
 	-->
 <script
 	src="${pageContext.request.contextPath}/resources/jquery-1.11.3.min.js"></script>
-<script
+	<script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
@@ -94,6 +94,9 @@
 		</div>
 	</div>
 	</div>
+	<input type="button" value="为该角色添加功能" onclick="addFunction()">
+      <ul id="areaTree4" class="ztree"></ul>
+</div>
 </body>
 <script type="text/javascript">
 	$(function() {
@@ -118,6 +121,7 @@
 					tr += "<td>" + obj.rolesName + "</td>";
 					tr += "<td>" + obj.rolesdescribe + "</td>";
 					tr += "<td><input data-toggle='modal' data-target='#perModal'  type='button' value='分配权限' id=" + obj.rolesId + " class='grant btn btn-default'/></td></td>"
+
 					tr += "</tr>";
 					//#tbody为模态框的div
 					$("#tbody").append(tr); //追加行
@@ -178,24 +182,13 @@
 
 
 
-	/*分配功能*/
-	$("#tbody").on("click", ".grant", function() {
-		var roleId = this.id;
-		$("#hidRoleId").val(roleId);
-		createTree(roleId);
-	});
-	var zTree;
-	//创建树型结构
-	function createTree(roleId) {
-		var setting = {
-			check : {
-				enable : true
-			},
-			view : {
-				dblClickExpand : true,
-				expandSpeed : ""
-			},
-			//异步加载
+	
+ <script type="text/javascript">
+ var setting2 = {
+         check: {
+                enable: true
+            },
+         //异步加载
 			async : {
 				enable : true, //设置是否异步加载
 				url : "${pageContext.request.contextPath}/login/findAllModules", //设置异步获取节点的 URL 地址
@@ -212,59 +205,85 @@
 					name : "modulesText"
 				}
 			},
-			callback : {
-				onAsyncSuccess : zTreeOnAsyncSuccess
-			}
-		};
+           callback: {    //回调函数，实现展开功能
+                beforeAsync: beforeAsync,
+                onAsyncSuccess: onAsyncSuccess,
+                onAsyncError: onAsyncError
+            }
+           
+ }
+     function getUrl(treeId, treeNode){  //默认注入两个参数，第一个是当前树的名字，第二个是选中的节点
+         return "/roleProject/FunctionServlet?dir=getFunctionTree&functionId="+treeNode.functionId+"&roleNo="+key;
+     }
+     
+     function filter(treeId, parentNode, childNodes) {
+            if (!childNodes) return null;
+            for (var i=0, l=childNodes.length; i<l; i++) {
+                childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+            }
+            return childNodes;
+        }
+        function beforeAsync() {
+            curAsyncCount++;
+        }
+        
+        function onAsyncSuccess(event, treeId, treeNode, msg) {
+            curAsyncCount--;
+            if (curStatus == "expand") {
+                expandNodes(treeNode.children);
+            } else if (curStatus == "async") {
+                asyncNodes(treeNode.children);
+            }
+            if (curAsyncCount <= 0) {
+                if (curStatus != "init" && curStatus != "") {
+                    asyncForAll = true;
+                }
+                curStatus = "";
+            }
+        }
+        function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
+            curAsyncCount--;
+            if (curAsyncCount <= 0) {
+                curStatus = "";
+                if (treeNode!=null) asyncForAll = true;
+            }
+        }
+        var curStatus = "init", curAsyncCount = 0, asyncForAll = false,
+        goAsync = false;
+        function expandAll() {
+        
+            var zTree = $.fn.zTree.getZTreeObj("areaTree4");
+            if (asyncForAll) {
+                
+                zTree.expandAll(true);
+            } else {
+                expandNodes(zTree.getNodes());
+                if (!goAsync) {
+    
+                    curStatus = "";
+                }
+            }
+        }
+        function expandNodes(nodes) {
+            if (!nodes) return;
+            curStatus = "expand";
+            var zTree = $.fn.zTree.getZTreeObj("areaTree4");  
+            for (var i=0, l=nodes.length; i<l; i++) {
+                zTree.expandNode(nodes[i], true, false, false);
+                if (nodes[i].isParent && nodes[i].zAsync) {    
+                    expandNodes(nodes[i].children);
+                } else {
+                    goAsync = true;
+                }
+            }
+        }
+        
+        
+     
+     var zNodes2=[{functionId:0,functionName:"功能",pid:-1,isParent:true,checked:true}];  
+    $(document).ready(function(){
+              $.fn.zTree.init($("#areaTree4"), setting2, zNodes2);
+             expandAll();  //调用写好的展开全部节点方法
+        });
 
-		//初始化  
-		zTree = $.fn.zTree.init($("#tree"), setting);
-		zTree.expandAll(true);
-	/* // 展开全部节点
-var treeObj = $.fn.zTree.getZTreeObj("tree");
-treeObj.expandAll(true); */
-	}
-	/* 异步加载无法展开tree 默认展开一级菜单 */
-	var firstAsyncSuccessFlag = 0;
-	function zTreeOnAsyncSuccess(event, treeId, msg) {
-		if (firstAsyncSuccessFlag == 0) {
-			try {
-				//调用默认展开第一个结点 
-				var selectedNode = zTree.getSelectedNodes();
-				var nodes = zTree.getNodes();
-				zTree.expandNode(nodes[0], true);
-				var childNodes = zTree.transformToArray(nodes[0]);
-				zTree.expandNode(childNodes[1], true);
-				zTree.selectNode(childNodes[1]);
-				var childNodes1 = zTree.transformToArray(childNodes[1]);
-				zTree.checkNode(childNodes1[1], true, true);
-				firstAsyncSuccessFlag = 1;
-			} catch (err) {
-				console.log(err.message);
-			}
-		}
-	}
-
-	//保存修改后的权限数据
-	$("#saveRight").click(function() {
-		var nodes = zTree.getCheckedNodes(); //获取所有选中的节点集合
-		var ids = [];
-		for (var i = 0, l = nodes.length; i < l; i++) {
-			ids[ids.length] = nodes[i].modulesId; //存入菜单编号
-		}
-		var idstr = ids.join(","); //拼接成字符串
-		$.ajax({
-			url : "${pageContext.request.contextPath}/login/dropMenu",
-			data : {
-				"rolesId" : $("#hidRoleId").val(),
-				"menuIds" : idstr
-			},
-			dataType : "text",
-			type : "post",
-			success : function() {
-				//$("modal").close();
-				$("#perModal").modal('hide');
-			}
-		});
-	});
 </script>

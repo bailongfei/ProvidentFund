@@ -5,16 +5,16 @@
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 	
-	<!-- <filter>  
+	<filter>  
         <filter-name>loginFilter</filter-name>  
-   这里的filterclass是你创建的fitler类  
+   <!-- 这里的filterclass是你创建的fitler类   -->
         <filter-class>com.llt.util.Filter</filter-class>  
     </filter>  
     <filter-mapping>  
         <filter-name>loginFilter</filter-name>  
-  定义规则  
+ <!--  定义规则   -->
         <url-pattern>*.jsp</url-pattern>  
-    </filter-mapping>  -->
+    </filter-mapping> 
 	
        <!-- 解决工程编码过滤器  
         注意:请将此过滤器放在所有过滤器的前面，否则有可能出现乱码  -->

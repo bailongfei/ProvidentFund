@@ -40,11 +40,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <div class="layui-form-item">
           <div class="layui-row">
-            <div class="layui-col-xs7">
+            <!-- <div class="layui-col-xs7">
               <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
               <input type="text"  id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
-            </div>
-            <div class="layui-col-xs5">
+            </div> 
+             <div class="layui-col-xs5">
               <div style="margin-left: 10px;">
                 <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
               </div>
@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item" style="margin-bottom: 20px;">
           <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
           <a href="forget.html" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
-        </div>
+        </div> -->
         <div class="layui-form-item">
           <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit" onclick="login()">登 入</button>
         </div>
@@ -157,14 +157,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 function login(){
     var obj = $("#loginForm").serializeObject();
    $.ajax({
-      url:"${pageContext.request.contextPath}/login/logindo",
+      url:"${pageContext.request.contextPath}/login/login.action",
       contentType : "application/json;charset=utf-8",
       data:JSON.stringify(obj),
       dataType:"text",
       type:"post",
       success:function(data){
-      alert(data);
-       // window.location.href = "http://localhost:8080/ProvidentFund/frame/views/index.jsp";
+     
        if(data=='1'){
          window.location.href = "../index.jsp";
        }else{

@@ -46,14 +46,14 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Map findByIdRoles(Roles roles) {
+	public List<Map<String, Object>> findByIdRoles(Integer rolesId) {
 
-		return dao.findByIdRoles(roles);
+		return (List<Map<String, Object>>) dao.findByIdRoles(rolesId);
 	}
 
 	@Override
-	public void deleteRoles(Roles roles) {
-		dao.deleteRoles(roles);
+	public void deleteRoles(Integer rolesId) {
+		dao.deleteRoles(rolesId);
 
 	}
 
@@ -65,12 +65,13 @@ public class AdminServiceImpl implements AdminService {
 
 	@Transactional
 	@Override
-	public int addOrdeleteRolesModule(String menuIds, int rolesId) {
-		int result = -1;// 结果
+	public void addOrdeleteRolesModule(String menuIds, int rolesId) {
 		// 思路分析：先删除该角色id对应的中间 表中所有数据，再把需要录入的数据录入到中间表
 		if (menuIds != null && menuIds.length() > 0) {
 			dao.deleteRolesModule(rolesId);// 先删除
+			System.out.println("删除权限------------------------------");
 			String[] idAry = menuIds.split(",");// 分割
+			System.out.println(idAry.toString()+"++++++++++++++++++++++++++++++++++++"+idAry.length);
 			for (int i = 0; i < idAry.length; i++) {
 				// 菜单对象
 				Modules mo = new Modules();
@@ -83,11 +84,10 @@ public class AdminServiceImpl implements AdminService {
 				rm.setModules(mo);
 				rm.setRoles(ro);
 				// 插入中间表对象
+				System.out.println("执行添加----------------------------------------");
 				dao.saveRolesModule(rm);
-				result++;
 			}
 		}
-		return result;
 	}
 	//查询所有角色
     public List<Map<String, Object>> queryAllRoles(){
