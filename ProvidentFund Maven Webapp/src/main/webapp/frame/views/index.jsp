@@ -549,7 +549,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<a lay-href="${pageContext.request.contextPath}/blf/mingxicx.jsp">明细查询</a>
 								</dd>
 								<dd>
-									<a lay-href="index.jsp">变更记录</a>
+									<a lay-href="${pageContext.request.contextPath}/blf/layUi.jsp">变更记录</a>
 								</dd>
 							</dl>
 						</li>

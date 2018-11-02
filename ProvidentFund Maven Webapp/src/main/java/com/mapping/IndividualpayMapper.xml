@@ -84,190 +84,194 @@
   </insert>
   <!-- 个人开户 -->
   
-  <insert id="insertIpayPer" parameterType="map" resultType="int">
-   
+  <insert id="insertIpayPer" parameterType="map">
+   <!-- 拿到新增信息的表主键信息 自增主键order="after" 不自增 order="before"-->
+   	<selectKey keyProperty="grzhbhs" order="AFTER" resultType="Integer">
+      SELECT LAST_INSERT_ID()
+      <!-- select uuid() -->
+    </selectKey>
     insert into individualpay
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="grzhbhs != null">
+      <if test="grzhbhs != null and grzhbhs !=''">
         grzhbhs,
       </if>
-      <if test="unitinfoaccount != null">
+      <if test="unitinfoaccount != null and unitinfoaccount !=''">
         UnitInfoAccount,
       </if>
-      <if test="grzhbh != null">
+      <if test="grzhbh != null and grzhbh !=''">
         grzhbh,
       </if>
-      <if test="personalaccount != null">
+      <if test="personalaccount != null and personalaccount !=''">
         personalAccount,
       </if>
-      <if test="certificatetype != null">
+      <if test="certificatetype != null and certificatetype !=''">
         certificateType,
       </if>
-      <if test="idno != null">
+      <if test="idno != null and idno !=''">
         IdNo,
       </if>
-      <if test="personaldepositbase != null">
+      <if test="personaldepositbase != null and personaldepositbase !=''">
         personalDepositBase,
       </if>
-      <if test="unitratedeposit != null">
+      <if test="unitratedeposit != null and unitratedeposit !=''">
         unitRateDeposit,
       </if>
-      <if test="percontributionrate != null">
+      <if test="percontributionrate != null and percontributionrate !=''">
         perContributionRate,
       </if>
-      <if test="openaccountstatus != null">
+      <if test="openaccountstatus != null and openaccountstatus !=''">
         openAccountStatus,
       </if>
-      <if test="openingdate != null">
+      <if test="openingdate != null and openingdate !=''">
         openingDate,
       </if>
-      <if test="peraccountbalance != null">
+      <if test="peraccountbalance != null and peraccountbalance !=''">
         perAccountBalance,
       </if>
-      <if test="lastyearleftbalance != null">
+      <if test="lastyearleftbalance != null and lastyearleftbalance !=''">
         lastYearLeftBalance,
       </if>
-      <if test="thatyearleftbalance != null">
+      <if test="thatyearleftbalance != null and thatyearleftbalance !=''">
         thatYearLeftBalance,
       </if>
-      <if test="monpayamount != null">
+      <if test="monpayamount != null and monpayamount !=''">
         monPayAmount,
       </if>
-      <if test="unitmonpayamount != null">
+      <if test="unitmonpayamount != null and unitmonpayamount !=''">
         unitMonPayAmount,
       </if>
-      <if test="pinhouseholdsdate != null">
+      <if test="pinhouseholdsdate != null and pinhouseholdsdate !=''">
         pinHouseholdsDate,
       </if>
-      <if test="gfbankaccount != null">
+      <if test="gfbankaccount != null and gfbankaccount !=''">
         gfbankAccount,
       </if>
-      <if test="bankname != null">
+      <if test="bankname != null and bankname !=''">
         bankName,
       </if>
-      <if test="banknamenum != null">
+      <if test="banknamenum != null and banknamenum !=''">
         bankNameNum,
       </if>
-      <if test="frozentype != null">
+      <if test="frozentype != null and frozentype !=''">
         frozenType,
       </if>
-      <if test="accumulationregularly != null">
+      <if test="accumulationregularly != null and accumulationregularly !=''">
         AccumulationRegularly,
       </if>
-      <if test="currentaccumulation != null">
+      <if test="currentaccumulation != null and currentaccumulation !=''">
         currentAccumulation,
       </if>
-      <if test="lastyearaccumulationregularly != null">
+      <if test="lastyearaccumulationregularly != null and lastyearaccumulationregularly !=''">
         lastYearAccumulationRegularly,
       </if>
-      <if test="lastyearcurrentaccumulation != null">
+      <if test="lastyearcurrentaccumulation != null and lastyearcurrentaccumulation !=''">
         lastYearcurrentAccumulation,
       </if>
-      <if test="annualinterest != null">
+      <if test="annualinterest != null and annualinterest !=''">
         annualInterest,
       </if>
-      <if test="demandinterest != null">
+      <if test="demandinterest != null and demandinterest !=''">
         demandInterest,
       </if>
-      <if test="annualinterestand != null">
+      <if test="annualinterestand != null and annualinterestand !=''">
         annualInterestAnd,
       </if>
-      <if test="demandinterestand != null">
+      <if test="demandinterestand != null and demandinterestand !=''">
         demandInterestAnd,
       </if>
-      <if test="extractthisyear != null">
+      <if test="extractthisyear != null and extractthisyear !=''">
         extractThisYear,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="grzhbhs != null">
+      <if test="grzhbhs != null and grzhbhs !=''">
         #{grzhbhs,jdbcType=INTEGER},
       </if>
-      <if test="unitinfoaccount != null">
+      <if test="unitinfoaccount != null and unitinfoaccount !=''">
         #{unitinfoaccount,jdbcType=INTEGER},
       </if>
-      <if test="grzhbh != null">
+      <if test="grzhbh != null and grzhbh !=''">
         #{grzhbh,jdbcType=INTEGER},
       </if>
-      <if test="personalaccount != null">
+      <if test="personalaccount != null and personalaccount !=''">
         #{personalaccount,jdbcType=VARCHAR},
       </if>
-      <if test="certificatetype != null">
+      <if test="certificatetype != null and certificatetype !=''">
         #{certificatetype,jdbcType=VARCHAR},
       </if>
-      <if test="idno != null">
+      <if test="idno != null and idno !=''">
         #{idno,jdbcType=VARCHAR},
       </if>
-      <if test="personaldepositbase != null">
+      <if test="personaldepositbase != null and personaldepositbase !=''">
         #{personaldepositbase,jdbcType=VARCHAR},
       </if>
-      <if test="unitratedeposit != null">
+      <if test="unitratedeposit != null and unitratedeposit !=''">
         #{unitratedeposit,jdbcType=VARCHAR},
       </if>
-      <if test="percontributionrate != null">
+      <if test="percontributionrate != null and percontributionrate !=''">
         #{percontributionrate,jdbcType=VARCHAR},
       </if>
-      <if test="openaccountstatus != null">
+      <if test="openaccountstatus != null and openaccountstatus !=''">
         #{openaccountstatus,jdbcType=VARCHAR},
       </if>
-      <if test="openingdate != null">
+      <if test="openingdate != null and openingdate !=''">
         #{openingdate,jdbcType=VARCHAR},
       </if>
-      <if test="peraccountbalance != null">
+      <if test="peraccountbalance != null and peraccountbalance !=''">
         #{peraccountbalance,jdbcType=VARCHAR},
       </if>
-      <if test="lastyearleftbalance != null">
+      <if test="lastyearleftbalance != null and lastyearleftbalance !=''">
         #{lastyearleftbalance,jdbcType=VARCHAR},
       </if>
-      <if test="thatyearleftbalance != null">
+      <if test="thatyearleftbalance != null and thatyearleftbalance !=''">
         #{thatyearleftbalance,jdbcType=VARCHAR},
       </if>
-      <if test="monpayamount != null">
+      <if test="monpayamount != null and monpayamount !=''">
         #{monpayamount,jdbcType=VARCHAR},
       </if>
-      <if test="unitmonpayamount != null">
+      <if test="unitmonpayamount != null and unitmonpayamount !=''">
         #{unitmonpayamount,jdbcType=VARCHAR},
       </if>
-      <if test="pinhouseholdsdate != null">
+      <if test="pinhouseholdsdate != null and pinhouseholdsdate !=''">
         #{pinhouseholdsdate,jdbcType=VARCHAR},
       </if>
-      <if test="gfbankaccount != null">
+      <if test="gfbankaccount != null and gfbankaccount !=''">
         #{gfbankaccount,jdbcType=DECIMAL},
       </if>
-      <if test="bankname != null">
+      <if test="bankname != null and bankname !=''">
         #{bankname,jdbcType=VARCHAR},
       </if>
-      <if test="banknamenum != null">
+      <if test="banknamenum != null and banknamenum !=''">
         #{banknamenum,jdbcType=VARCHAR},
       </if>
-      <if test="frozentype != null">
+      <if test="frozentype != null and frozentype !=''">
         #{frozentype,jdbcType=VARCHAR},
       </if>
-      <if test="accumulationregularly != null">
+      <if test="accumulationregularly != null and accumulationregularly !=''">
         #{accumulationregularly,jdbcType=VARCHAR},
       </if>
-      <if test="currentaccumulation != null">
+      <if test="currentaccumulation != null and currentaccumulation !=''">
         #{currentaccumulation,jdbcType=VARCHAR},
       </if>
-      <if test="lastyearaccumulationregularly != null">
+      <if test="lastyearaccumulationregularly != null and lastyearaccumulationregularly !=''">
         #{lastyearaccumulationregularly,jdbcType=VARCHAR},
       </if>
-      <if test="lastyearcurrentaccumulation != null">
+      <if test="lastyearcurrentaccumulation != null and lastyearcurrentaccumulation !=''">
         #{lastyearcurrentaccumulation,jdbcType=VARCHAR},
       </if>
-      <if test="annualinterest != null">
+      <if test="annualinterest != null and annualinterest !=''">
         #{annualinterest,jdbcType=VARCHAR},
       </if>
-      <if test="demandinterest != null">
+      <if test="demandinterest != null and demandinterest !=''">
         #{demandinterest,jdbcType=VARCHAR},
       </if>
-      <if test="annualinterestand != null">
+      <if test="annualinterestand != null and annualinterestand !=''">
         #{annualinterestand,jdbcType=VARCHAR},
       </if>
-      <if test="demandinterestand != null">
+      <if test="demandinterestand != null and demandinterestand !=''">
         #{demandinterestand,jdbcType=VARCHAR},
       </if>
-      <if test="extractthisyear != null">
+      <if test="extractthisyear != null and extractthisyear !=''">
         #{extractthisyear,jdbcType=VARCHAR},
       </if>
     </trim>

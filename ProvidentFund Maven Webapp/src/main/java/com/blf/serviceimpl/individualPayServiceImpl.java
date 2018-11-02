@@ -15,10 +15,14 @@ public class individualPayServiceImpl implements individualPayService {
 private IndividualpayMapper ipay;
 @Autowired
 private PeraccountMapper percc;
-    @Transactional
-	@Override
+    
+	/*@Override
 	public int insertPercc(Map<String, Object> map) {
 		int i=percc.insertPercc(map);
+		Integer id=(Integer) map.get("grzhbh");
+		ipay.insertIpayPer(map);
+		
+		System.out.println(id);
 		return i;
 	}
     
@@ -26,14 +30,16 @@ private PeraccountMapper percc;
 	public int insertIparPer(Map<String, Object> map) {
 		int i=ipay.insertIpayPer(map);
 		return i;
-	}
+	}*/
 	
-/*@Transactional
+@Transactional
 @Override
 public int insertIparOrPercc(Map<String, Object> map) {
-	int i=ipay.insertIpayPer(map);
+	ipay.insertIpayPer(map);
+	Integer id=(Integer) map.get("grzhbh");
+	System.out.println("perccÖ÷¼ü"+id);
 	int t=percc.insertPercc(map);
-	return i+t;
-}*/
+	return t;
+}
 
 }

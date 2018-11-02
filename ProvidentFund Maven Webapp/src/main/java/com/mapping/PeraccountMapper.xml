@@ -64,157 +64,157 @@
       )
   </insert>
   <!--添加人员  -->
-  <insert id="insertPercc" parameterType="map" resultType="int">
+  <insert id="insertPercc" parameterType="map" >
     <!-- 拿到新增信息的表主键信息 自增主键order="after" 不自增 order="before"-->
-   <selectKey keyProperty="grzhbh" order="AFTER" resultType="int">
+   <selectKey keyProperty="grzhbh" order="AFTER" resultType="Integer">
       SELECT LAST_INSERT_ID()
    </selectKey>
     insert into peraccount
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="grzhbh != null">
+      <if test="grzhbh != null and grzhbh !=''">
         grzhbh,
       </if>
-      <if test="zhztbh != null">
+      <if test="zhztbh != null and zhztbh !=''">
         zhztbh,
       </if>
-      <if test="unitpositionid != null">
+      <if test="unitpositionid != null and unitpositionid !=''">
         UnitpositionId,
       </if>
-      <if test="unitinfoid != null">
+      <if test="unitinfoid != null and unitinfoid !=''">
         UnitInfoId,
       </if>
-      <if test="netinfoid != null">
+      <if test="netinfoid != null and netinfoid!=''">
         netinfoId,
       </if>
-      <if test="unitinfoaccount != null">
+      <if test="unitinfoaccount != null and unitinfoaccount !=''">
         UnitInfoAccount,
       </if>
-      <if test="grzhbhs != null">
+      <if test="grzhbhs != null and grzhbhs !=''">
         grzhbhs,
       </if>
-      <if test="peracid != null">
+      <if test="peracid != null and peracid !=''">
         peracId,
       </if>
-      <if test="peracloginpw != null">
+      <if test="peracloginpw != null and peracloginpw !=''">
         peracloginpw,
       </if>
-      <if test="peractransactionpw != null">
+      <if test="peractransactionpw != null and peractransactionpw !=''">
         peracTransactionpw,
       </if>
-      <if test="peracbalance != null">
+      <if test="peracbalance != null and peracbalance !=''">
         peracBalance,
       </if>
-      <if test="peracupdatestatus != null">
+      <if test="peracupdatestatus != null and peracupdatestatus !=''">
         peracUpdatestatus,
       </if>
-      <if test="bkname != null">
+      <if test="bkname != null and bkname !=''">
         bkname,
       </if>
-      <if test="bksex != null">
+      <if test="bksex != null and bksex !=''">
         bksex,
       </if>
-      <if test="phonenum != null">
+      <if test="phonenum != null and phonenum !=''">
         phoneNum,
       </if>
-      <if test="idtype != null">
+      <if test="idtype != null and idtype !=''">
         IdType,
       </if>
-      <if test="idnumbers != null">
+      <if test="idnumbers != null and idnumbers !=''">
         IdNumbers,
       </if>
-      <if test="birthday != null">
+      <if test="birthday != null and birthday !=''">
         birthday,
       </if>
-      <if test="marital != null">
+      <if test="marital != null and marital !=''">
         marital,
       </if>
-      <if test="education != null">
+      <if test="education != null and education !=''">
         education,
       </if>
-      <if test="email != null">
+      <if test="email != null and email !=''">
         email,
       </if>
-      <if test="postcode != null">
+      <if test="postcode != null and postcode !=''">
         postcode,
       </if>
-      <if test="address != null">
+      <if test="address != null and address !=''">
         address,
       </if>
-      <if test="monthlyprofit != null">
+      <if test="monthlyprofit != null and monthlyprofit !=''">
         monthlyProfit,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="grzhbh != null">
+      <if test="grzhbh != null and grzhbh !=''">
         #{grzhbh,jdbcType=INTEGER},
       </if>
-      <if test="zhztbh != null">
+      <if test="zhztbh != null and zhztbh !=''">
         #{zhztbh,jdbcType=INTEGER},
       </if>
-      <if test="unitpositionid != null">
+      <if test="unitpositionid != null and unitpositionid !=''">
         #{unitpositionid,jdbcType=INTEGER},
       </if>
-      <if test="unitinfoid != null">
+      <if test="unitinfoid != null and unitinfoid !=''">
         #{unitinfoid,jdbcType=INTEGER},
       </if>
-      <if test="netinfoid != null">
+      <if test="netinfoid != null and netinfoid !=''">
         #{netinfoid,jdbcType=INTEGER},
       </if>
-      <if test="unitinfoaccount != null">
+      <if test="unitinfoaccount != null and unitinfoaccount !=''">
         #{unitinfoaccount,jdbcType=INTEGER},
       </if>
-      <if test="grzhbhs != null">
+      <if test="grzhbhs != null and grzhbhs !=''">
         #{grzhbhs,jdbcType=INTEGER},
       </if>
-      <if test="peracid != null">
+      <if test="peracid != null and peracid !=''">
         #{peracid,jdbcType=VARCHAR},
       </if>
-      <if test="peracloginpw != null">
+      <if test="peracloginpw != null and peracloginpw !=''">
         #{peracloginpw,jdbcType=VARCHAR},
       </if>
-      <if test="peractransactionpw != null">
+      <if test="peractransactionpw != null and peractransactionpw !=''">
         #{peractransactionpw,jdbcType=VARCHAR},
       </if>
-      <if test="peracbalance != null">
+      <if test="peracbalance != null and peracbalance !=''">
         #{peracbalance,jdbcType=DECIMAL},
       </if>
-      <if test="peracupdatestatus != null">
+      <if test="peracupdatestatus != null and peracupdatestatus !=''">
         #{peracupdatestatus,jdbcType=VARCHAR},
       </if>
-      <if test="bkname != null">
+      <if test="bkname != null and bkname !=''">
         #{bkname,jdbcType=VARCHAR},
       </if>
-      <if test="bksex != null">
+      <if test="bksex != null and bksex !=''">
         #{bksex,jdbcType=VARCHAR},
       </if>
-      <if test="phonenum != null">
+      <if test="phonenum != null and phonenum !=''">
         #{phonenum,jdbcType=VARCHAR},
       </if>
-      <if test="idtype != null">
+      <if test="idtype != null and idtype !=''">
         #{idtype,jdbcType=VARCHAR},
       </if>
-      <if test="idnumbers != null">
+      <if test="idnumbers != null and idnumbers !=''">
         #{idnumbers,jdbcType=VARCHAR},
       </if>
-      <if test="birthday != null">
+      <if test="birthday != null and birthday !=''">
         #{birthday,jdbcType=VARCHAR},
       </if>
-      <if test="marital != null">
+      <if test="marital != null and marital !=''">
         #{marital,jdbcType=VARCHAR},
       </if>
-      <if test="education != null">
+      <if test="education != null and education !=''">
         #{education,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
+      <if test="email != null and email !=''">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="postcode != null">
+      <if test="postcode != null and postcode !=''">
         #{postcode,jdbcType=VARCHAR},
       </if>
-      <if test="address != null">
+      <if test="address != null and address !=''">
         #{address,jdbcType=VARCHAR},
       </if>
-      <if test="monthlyprofit != null">
+      <if test="monthlyprofit != null and monthlyprofit !=''">
         #{monthlyprofit,jdbcType=DECIMAL},
       </if>
     </trim>

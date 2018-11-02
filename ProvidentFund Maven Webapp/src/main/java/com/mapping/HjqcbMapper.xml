@@ -96,7 +96,7 @@ SELECT *, ABS(NOW() - h.bjjzrq)  AS diffTime FROM hjqcb h where h.UnitInfoAccoun
       #{hjbz,jdbcType=VARCHAR})
   </insert> -->
   <!--汇缴添加  -->
-  <insert id="insert" parameterType="com.entity.Hjqcb" resultType="int">
+  <insert id="insert" parameterType="com.entity.Hjqcb" >
     insert into hjqcb (UnitInfoAccount,
       userId, gjind, jnmy, nhyf, 
       bjjzrq, bczjrs, bczjje, 

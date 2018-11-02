@@ -25,12 +25,11 @@ public class individualPayController {
   public void queryIpayPer(@RequestParam Map map,HttpServletResponse response) throws IOException{
 	  System.out.println(map);  
 	  response.setContentType("text/html;charset=utf-8");
-	  
-		int t=ipsc.insertPercc(map);
-		System.out.println("主键"+t);
-		map.put("grzhbh",t);
-		int i=ipsc.insertIparPer(map);
-	    /*int i=ipsc.insertIparOrPercc(map);*/
+	   map.put("zhztbh",1);//1账户状态正常
+	   map.put("openaccountstatus", 1);
+		/*int t=ipsc.insertPercc(map);
+		int i=ipsc.insertIparPer(map);*/
+	    int i=ipsc.insertIparOrPercc(map);
 		PrintWriter out=response.getWriter();
 		Message message=new Message(i,"操作成功!");
 		ObjectMapper mapper=new ObjectMapper();

@@ -31,7 +31,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jqueryExt.js"></script>
 <!-- 上传文件js -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery.form.js"></script>
-  </head>
+  
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/frame/layuiadmin/layui/css/layui.css">
+  
+<%-- <script src="${pageContext.request.contextPath}/frame/layuiadmin/layui/layui.js"></script>
+<script src="${pageContext.request.contextPath}/frame/layuiadmin/layui/layui.all.js"></script> --%>
+ 
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	
+</head>
   
   <body>
       <div class="container">
@@ -81,11 +90,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label for="description" class="col-sm-1 control-label">单位账户</label>
 				<div class="col-md-2 column">
 				   <!--单位编号  -->
-				    <input type="hidden" id="netinfoid" class="form-control" name="netinfoid" placeholder="请输入">
+				    <input type="hidden" id="UnitInfoId" class="form-control" name="unitinfoid" placeholder="请输入">
 				     <!--个人登陆账号  -->
 				     <input type="hidden" id="peracid" class="form-control" name="peracid" placeholder="请输入">
+				     <!-- 登录密码 -->
 				     <input type="hidden" id="peracloginpw" class="form-control" name="peracloginpw" placeholder="请输入">
+				     <!--交易密码  -->
 				      <input type="hidden" id="peracTransactionpw" class="form-control" name="peracTransactionpw" placeholder="请输入">
+				      <!--网点信息表(主键)  -->
+				      <input type="hidden" id="" class="form-control" name="netinfoid" placeholder="请输入">
 					<input type="text" id="UnitInfoAccount" class="form-control" name="unitinfoaccount" placeholder="请输入">	              
 				</div>
 			<label for="description" class="col-sm-1 control-label">单位名称</label>
@@ -94,7 +107,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			<label for="description" class="col-sm-1 control-label">员工姓名</label>
 				<div class="col-md-2 column">
-				    <input type="text" id="bkname" class="form-control" name="bkname" placeholder="请输入">
+				    <input type="text" id="bkname" class="form-control" data-toggle="popover" data-placement="right" data-content="" name="bkname" >
+				     <span class="required" id="sp1">*</span>
 				</div>
 			<label for="description" class="col-sm-1 control-label">员工性别</label>
 				<div class="col-md-2 column">
@@ -111,7 +125,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="form-group">	
 				<label for="description" class="col-sm-1 control-label">员工电话</label>
 				<div class="col-md-2 column">
-					<input type="text" id="" class="form-control" name="phoneNum" placeholder="请输入">	              
+					<input type="text" id="phoneNum" class="form-control" name="phoneNum" placeholder="请输入">	              
+				    <span class="required" id="sp3">*</span>
 				</div>
 			<label for="description" class="col-sm-1 control-label">证件类型</label>
 				<div class="col-md-2 column">
@@ -125,7 +140,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			<label for="description" class="col-sm-1 control-label">证件号码</label>
 				<div class="col-md-2 column">
-				    <input type="text" id="" class="form-control" name="IdNumbers" placeholder="请输入">
+				    <input type="text" id="IdNumbers" onblur="getAge()" class="form-control" name="IdNumbers" placeholder="请输入">
+				    <input type="text" id="idno"  class="form-control" name="idno" placeholder="请输入">
+				   <span class="required" id="sp2">*</span>
 				</div>
 			<label for="description" class="col-sm-1 control-label">员工学历</label>
 				<div class="col-md-2 column">
@@ -159,7 +176,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			<label for="description" class="col-sm-1 control-label">出生日期</label>
 				<div class="col-md-2 column">
-				    <input type="text" id="" class="form-control" name="birthday" placeholder="请输入">
+				    <input type="text" id="birthday" readonly="readonly" class="form-control" name="birthday" placeholder="请输入">
 				</div>
 				</div>
 			</div>
@@ -169,17 +186,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<label for="description" class="col-sm-1 control-label">婚姻状态</label>
 				<div class="col-md-2 column">
 					<!-- <input type="text" id="" class="form-control" name="marital" placeholder="请输入"> -->	
-					<select class="form-control" id="" name="marital">
+					<select class="form-control" id="maritals" name="marital">
 					  
 				      <option value="未婚">未婚</option>
-				      <option value="已婚">已婚</option>
+				      <option  value="已婚">已婚</option>
 				    </select>              
 				</div>
 			<label for="description" class="col-sm-1 control-label">缴存基数</label>
 				<div class="col-md-2 column">
 				   <!-- 个人账户 -->
 				    <input type="hidden" id="personalaccount" class="form-control" name="personalaccount" placeholder="请输入">
-					<input type="text" id="" class="form-control" name="personaldepositbase" placeholder="请输入">	              
+					<input type="text" id="personaldepositbase" class="form-control" name="personaldepositbase" placeholder="请输入">	              
+				   <span class="required" id="sp4">*</span>
 				</div>
 			<label for="description" class="col-sm-1 control-label">开户银行名称</label>
 				<div class="col-md-2 column">
@@ -194,7 +212,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label for="description" class="col-sm-1 control-label">开户银行账号</label>
 				<div class="col-md-2 column">
 				   <!--  <input type="text" id="" class="form-control" name="brandedId" placeholder="请输入"> -->
-				    <input type="text" id="" class="form-control" name="bankNameNum" placeholder="请输入">
+				    <input type="text" id="yhzh" class="form-control" name="bankNameNum" placeholder="请输入">
 				</div>
 			</div>
 			</div>
@@ -271,13 +289,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        data:{"unitinfoaccount":obj},
        dataType:"json",
        success:function(data){
-         
-         
          if(data.length>0){
            $("#UnitInfoName").val(data[0].UnitInfoName);
+           $("#UnitInfoId").val(data[0].UnitInfoId);
            $("#UnitsDepositRatio").val(data[0].UnitsDepositRatio);
            $("#UnitsIndividua").val(data[0].UnitsIndividua);
            $("#progress").css("width","16%");
+           suiji();
+           
          }else{
             alert("单位账户不存在,请输入正确的账户编号!");
             $("#progress").css("width","0%");
@@ -289,6 +308,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    $(function(){
      queryZub();
      queryLmk();
+     
    });
    /*职位  */
    function queryZub(){
@@ -324,17 +344,134 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    }
    /* 开户 */
    $(document).on("click","#saveKH",function(){
-      alert($("#form1").serialize());
-      $.ajax({
+     var check=aaa()&&bbb()&&ddd()&&eee();
+     if(check){
+     $("#progress").css("width","100%");
+          $.ajax({
          url:"${pageContext.request.contextPath}/ipay/saveIpayPer",
          type:"post",
          data:$("#form1").serialize(),
          dataType:"json",
          success:function(data){
             if(data.state>0){
-              alert(data.message);
+             alert(data.message);
             }
+            
          }
       });
+     }else{
+        alert("提交失败!");
+     }
+      
+      
    });
+//随机获取登记号
+		function suiji(){
+		var t=randomPassword(9);
+            $("#peracid").val(t); 
+             $("#personalaccount").val(t);
+		}
+		
+   function randomPassword(size){
+  var seed = new Array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E');//数组
+  seedlength = seed.length;//数组长度
+  var createPassword = '';
+  for (i=0;i<size;i++) {
+    j = Math.floor(Math.random()*seedlength);
+    createPassword += seed[j];
+  }
+  return createPassword;
+}
+//计算生日年龄
+ function getAge(){
+    var card=$("#IdNumbers").val();
+    $("#idno").val(card);
+    /* if(card==""||card.length!=18){
+      alert('请输入18位正确身份证号');
+      return false;
+    }  */
+    var date=new Date();
+    var year=date.getFullYear();
+    /* var birthday_year=parseInt(card.substr(6,4));
+    var userage=(year-birthday_year); */
+     var birthday_year=parseInt(card.substr(6,8));
+     $("#birthday").val(birthday_year);
+    return false;
+    
+ };
+ //表单验证
+
+ $("#bkname").blur(function(){
+    aaa();
+ });
+ function aaa(){
+    var name=$("#bkname").val();
+    var reg=/^[\u4E00-\u9FA5A-Za-z0-9_]+$/;
+    if(reg.test(name)){
+    $("#progress").css("width","25%");
+      $("#sp1").html("√").css("color","green");
+      return true;
+    }else{
+      $("#progress").css("width","16%");
+      $("#sp1").html("必须填写!").css("color","red");
+      return false;
+    }
+ }
+ $("#IdNumbers").blur(function(){
+    bbb();
+ });
+ function bbb(){
+   var card=$("#IdNumbers").val();
+    var sp=/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+    if(sp.test(card)){
+    $("#progress").css("width","65%");
+       $("#sp2").html("√").css("color","green");
+       return true;
+    }else{
+    $("#progress").css("width","35%");
+      $("#sp2").html("证件格式错误").css("color","red");
+       return false;
+    }
+ }
+ $("#phoneNum").blur(function(){
+    ddd();
+ });
+ function ddd(){
+     var phone=$("#phoneNum").val();
+    /* var sp=/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/; */
+    var sp=/^1[3|4|5|7|8][0-9]{9}$/;
+    if(sp.test(phone)){
+    $("#progress").css("width","35%");
+       $("#sp3").html("√").css("color","green");
+       return true;
+    }else{
+    $("#progress").css("width","25%");
+       $("#sp3").html("手机号必须为11位").css("color","red");
+       return false;
+    }
+ }
+ $("#personaldepositbase").blur(function(){
+    eee();
+ });
+ function eee(){
+    var age=$("#personaldepositbase").val();
+    var sp=/^[1-9]{1}[\d]*$/;
+    if(sp.test(age)){
+    $("#progress").css("width","95%");
+       $("#sp4").html("√").css("color","green");
+       return true;
+    }else{
+    $("#progress").css("width","65%");
+       $("#sp4").html("请输入数字").css("color","red");
+       return false;
+    }
+ }
+ $("#yhzh").change(function(){
+    $("#progress").css("width","100%");
+ });
+   $("#maritals").change(function(){
+      $("#progress").css("width","85%");
+   }
+   );
+   
 </script>
