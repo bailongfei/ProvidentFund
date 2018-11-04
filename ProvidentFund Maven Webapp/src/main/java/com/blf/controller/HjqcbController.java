@@ -58,9 +58,9 @@ public class HjqcbController{
  }
 @RequestMapping("/saveHjqcb")
  public void saveHjqcb(Hjqcb hq,HttpServletResponse response) throws IOException{
-	 System.out.println(hq);
+	 System.out.println(hq.getUnitinfoaccount()+"汇缴参数"+hq.getNhyf());
 	response.setContentType("text/html;charset=utf-8");
-	int i=hs.insertHjqcb(hq);
+	int i=hs.insertHjqcbOrUpdateIparOrqueryIperOrsavepercc(hq);
 	PrintWriter out=response.getWriter();
 	Message message=new Message(i,"操作成功!");
 	ObjectMapper mapper=new ObjectMapper();

@@ -14,7 +14,7 @@ public interface HjqcbService {
 	public int selectSum(Integer unitinfoaccount);
 	public List<Map<String,Object>> selectBGjce(Integer unitinfoaccount);
 	public List<Map<String,Object>> queryUser();
-	public int insertHjqcb(Hjqcb record);
+	public int insertHjqcbOrUpdateIparOrqueryIperOrsavepercc(Hjqcb record);
 	public List<Map<String,Object>> queryHj(Map<String,Object> map);
 	public int getCount(Map<String, Object> map);
 }

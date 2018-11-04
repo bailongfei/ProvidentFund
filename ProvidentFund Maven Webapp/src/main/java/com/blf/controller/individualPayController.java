@@ -23,13 +23,14 @@ public class individualPayController {
 	private individualPayService ipsc;
   @RequestMapping("/saveIpayPer")
   public void queryIpayPer(@RequestParam Map map,HttpServletResponse response) throws IOException{
-	  System.out.println(map);  
+	  System.out.println(map.get("unitratedeposit"));  
 	  response.setContentType("text/html;charset=utf-8");
 	   map.put("zhztbh",1);//1账户状态正常
-	   map.put("openaccountstatus", 1);
+	   map.put("openaccountstatus",1);
+	   //map.put("peraccountbalance",0);//开户账额
 		/*int t=ipsc.insertPercc(map);
 		int i=ipsc.insertIparPer(map);*/
-	    int i=ipsc.insertIparOrPercc(map);
+	    int i=ipsc.insertIparOrPerccOrUpdatePercc(map);
 		PrintWriter out=response.getWriter();
 		Message message=new Message(i,"操作成功!");
 		ObjectMapper mapper=new ObjectMapper();

@@ -6,6 +6,8 @@ import com.entity.Peraccount;
 
 public interface PeraccountMapper {
 	public int insertPercc(Map<String,Object> map);
+	public int updatePercc(Map<String,Object> map);
+	public int savePercc(Peraccount per);
     int deleteByPrimaryKey(Integer grzhbh);
 
     int insert(Peraccount record);

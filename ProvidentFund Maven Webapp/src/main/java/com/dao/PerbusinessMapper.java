@@ -7,7 +7,7 @@ public interface PerbusinessMapper {
 
     int insert(Perbusiness record);
 
-    int insertSelective(Perbusiness record);
+   public int insertSelective(Perbusiness record);
 
     Perbusiness selectByPrimaryKey(Integer perbuid);
 

@@ -94,9 +94,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				     <!--个人登陆账号  -->
 				     <input type="hidden" id="peracid" class="form-control" name="peracid" placeholder="请输入">
 				     <!-- 登录密码 -->
-				     <input type="hidden" id="peracloginpw" class="form-control" name="peracloginpw" placeholder="请输入">
+				     <input type="hidden" id="peracloginpw" class="peracloginpw form-control" name="peracloginpw" placeholder="请输入">
 				     <!--交易密码  -->
-				      <input type="hidden" id="peracTransactionpw" class="form-control" name="peracTransactionpw" placeholder="请输入">
+				      <input type="hidden" id="peracTransactionpw" class="peracloginpw form-control" name="peractransactionpw" placeholder="请输入">
 				      <!--网点信息表(主键)  -->
 				      <input type="hidden" id="" class="form-control" name="netinfoid" placeholder="请输入">
 					<input type="text" id="UnitInfoAccount" class="form-control" name="unitinfoaccount" placeholder="请输入">	              
@@ -125,13 +125,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="form-group">	
 				<label for="description" class="col-sm-1 control-label">员工电话</label>
 				<div class="col-md-2 column">
-					<input type="text" id="phoneNum" class="form-control" name="phoneNum" placeholder="请输入">	              
+					<input type="text" id="phoneNum" class="form-control" name="phonenum" placeholder="请输入">	              
 				    <span class="required" id="sp3">*</span>
 				</div>
 			<label for="description" class="col-sm-1 control-label">证件类型</label>
 				<div class="col-md-2 column">
 					<!-- <input type="text" id="" class="form-control" name="" placeholder="请输入"> -->
-					<select class="form-control" name="IdType">
+					<select class="form-control" name="idtype">
 					  
 					  <option value="身份证">身份证</option>
 					  <option value="军人证">军人证</option>
@@ -140,8 +140,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			<label for="description" class="col-sm-1 control-label">证件号码</label>
 				<div class="col-md-2 column">
-				    <input type="text" id="IdNumbers" onblur="getAge()" class="form-control" name="IdNumbers" placeholder="请输入">
-				    <input type="text" id="idno"  class="form-control" name="idno" placeholder="请输入">
+				    <input type="text" id="IdNumbers" onblur="getAge()" class="form-control" name="idnumbers" placeholder="请输入">
+				    <input type="hidden" id="idno"  class="form-control" name="idno" placeholder="请输入">
 				   <span class="required" id="sp2">*</span>
 				</div>
 			<label for="description" class="col-sm-1 control-label">员工学历</label>
@@ -196,6 +196,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="col-md-2 column">
 				   <!-- 个人账户 -->
 				    <input type="hidden" id="personalaccount" class="form-control" name="personalaccount" placeholder="请输入">
+				    <!--开户日期  -->
+				    <input type="hidden" id="openingdate" class="form-control" name="openingdate" placeholder="请输入">
+				   <!-- 余额 -->
+				    <input type="hidden" value="0" class="form-control" name="peraccountbalance" placeholder="请输入">
 					<input type="text" id="personaldepositbase" class="form-control" name="personaldepositbase" placeholder="请输入">	              
 				   <span class="required" id="sp4">*</span>
 				</div>
@@ -220,15 +224,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="form-group">	
 				<label for="description" class="col-sm-1 control-label">单位缴存比例</label>
 				<div class="col-md-2 column">
-					<input type="text" id="UnitsDepositRatio" disabled class="form-control" name="unitratedeposit" placeholder="请输入">	              
+					<input type="text" id="UnitsDepositRatio" readonly="readonly" class="form-control" name="unitratedeposit" >	              
 				</div>
 			<label for="description" class="col-sm-1 control-label">个人缴存比例</label>
 				<div class="col-md-2 column">
-					<input type="text" id="UnitsIndividua" disabled class="form-control" name="percontributionrate" placeholder="请输入">	              
+					<input type="text" id="UnitsIndividua" readonly="readonly" class="form-control" name="percontributionrate" >	              
 				</div>
 			<label for="description" class="col-sm-1 control-label">经办人员</label>
 				<div class="col-md-2 column">
-				    <input type="text" id="" class="form-control" disabled name="" placeholder="请输入">
+				    <input type="text" id="" class="form-control" readonly="readonly"  name="" placeholder="请输入"><!-- disabled -->
 				</div>
 			
 			</div>
@@ -249,13 +253,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						
 							
 						<div class="progress progress-striped active">
-						    <div class="progress-bar progress-bar-success" role="progressbar"
+						    <div id="jdt2" class="progress-bar progress-bar-success" role="progressbar"
 						         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-						         style="width: 60%;">
+						         style="width:0%;">
 						        <span class="sr-only">40% 完成</span>
 						    </div>
 						 </div>
-						 <button type="button"  class="btn btn-info ">按钮</button>
+						 <!-- <div>1.通过简单的form表单提交方式，进行文件的上</br> 2.通过jquery.form.js插件提供的form表单一步提交功能 </div></br>  --> 
+        <form method="POST"  enctype="multipart/form-data" id="form2" action="uploadExcel/upload.do">  
+             <table>  
+             <tr>  
+                <td>上传文件:</td>  
+                <td> <input class="btn btn-default" id="upfile" type="file" name="upfile"></td>  
+             </tr>  
+            <tr>  
+                <!-- <td><input type="submit" value="提交" onclick="return checkData()"></td>   -->
+                <td><input type="button" value="批量开户提交" class="btn btn-primary" id="btn" name="btn" ></td>  
+             </tr>  
+            </table>  
+                      <!-- <div class="form-group">
+							<label for="description" class="col-sm-2 control-label">上传文件:</label>
+							<div class="col-sm-4">
+								
+                               <input  id="upfile" type="file" name="upfile">
+							</div>
+						</div>
+						<input type="button" value="批量开户提交" class="btn btn-primary" id="btn" name="btn" > -->
+        </form> 
+						 <!-- <button type="button"  class="btn btn-info ">按钮</button> -->
 						
 					</div>
 				</div>
@@ -308,7 +333,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    $(function(){
      queryZub();
      queryLmk();
-     
+     getDate();
    });
    /*职位  */
    function queryZub(){
@@ -355,6 +380,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          success:function(data){
             if(data.state>0){
              alert(data.message);
+             $("#form1 input[type=text],input[text=hidden]").val("");
+             $("#progress").css("width","0%");
             }
             
          }
@@ -385,6 +412,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 //计算生日年龄
  function getAge(){
     var card=$("#IdNumbers").val();
+    var peracloginpw=parseFloat(card.substring(12,18));
+    
+    $(".peracloginpw").val(peracloginpw);
     $("#idno").val(card);
     /* if(card==""||card.length!=18){
       alert('请输入18位正确身份证号');
@@ -396,6 +426,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var userage=(year-birthday_year); */
      var birthday_year=parseInt(card.substr(6,8));
      $("#birthday").val(birthday_year);
+     
+     
     return false;
     
  };
@@ -473,5 +505,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       $("#progress").css("width","85%");
    }
    );
+   //获取日期
+   function getDate(){
+    var d=new Date();
+    var day=d.getDate();
+    var month=d.getMonth()+1;
+    var year=d.getFullYear();
+    var rq=(year+"-"+month+"-"+day); 
+    $("#openingdate").val(rq);
+    };
    
 </script>
+<script type="text/javascript">  
+                //ajax 方式上传文件操作  
+                 $(document).ready(function(){  
+                    $('#btn').click(function(){  
+                        if(checkData()){  
+                          $("#jdt2").css("width","100%");
+                            $('#form2').ajaxSubmit({    
+                                url:'uploadExcel/ajaxUpload.do',  
+                                dataType: 'text',  
+                                success: resutlMsg,  
+                                error: errorMsg  
+                            });   
+                            function resutlMsg(msg){  
+                              
+                               alert(msg); 
+                               $("#jdt2").css("width","0%");     
+                                $("#upfile").val("");  
+                            }  
+                            function errorMsg(){   
+                                alert("导入excel出错！");      
+                            }  
+                        }  
+                    });  
+                 });  
+
+                 //JS校验form表单信息  
+                 function checkData(){  
+                    var fileDir = $("#upfile").val();  
+                    var suffix = fileDir.substr(fileDir.lastIndexOf("."));  
+                    if("" == fileDir){  
+                        alert("选择需要导入的Excel文件！");  
+                        return false;  
+                    }  
+                    if(".xls" != suffix && ".xlsx" != suffix ){  
+                        alert("选择Excel格式的文件导入！");  
+                        return false;  
+                    }  
+                    return true;  
+                 }  
+</script> 

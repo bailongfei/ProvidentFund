@@ -155,7 +155,7 @@
 												   
 												</td>
 												<td colspan="2">汇缴日期</td>
-												<td ><input type="date" id="dates"
+												<td ><input type="date" id="datess"
 													name="bjjzrq" ></td>
 											</tr>
 											<tr >
@@ -288,7 +288,7 @@
 <script>
 	/* 页面加载函数 */
 	$(function() {
-	   getDate();
+	    getDate();
 		dwxxAnddwzh();
 	});
 	/* 查询表 */
@@ -346,12 +346,14 @@
 	           var dwce=0;
 	            for (var i = 0; i < data.length; i++) {
 					var obj = data[i];
-					 var js=obj.personalDepositBase;
-					 var grbl=obj.perContributionRate;
-					 var dwbl=obj.unitRateDeposit;
+					var grid=obj.grzhbhs;//个人id
+					 var js=obj.personalDepositBase;//基数
+					 var grbl=obj.perContributionRate;//个人
+					 var dwbl=obj.unitRateDeposit;//单位
 					  grzjs+=parseFloat(js);
 					  grce+=parseFloat(js)*parseFloat(grbl);
 					   dwce+=parseFloat(js)*parseFloat(dwbl);
+					   //insertGrmx(grid,js,grbl,dwbl);
 					}
 					var jcze=grce+dwce;
 					$("#grjnjszh").val(grzjs);
@@ -387,7 +389,7 @@
 	       success:function(data){
 	       
 	          if(data.length>0){
-	             $("#jnmy").val(data[0].jnmy);
+	             $("#jnmy").val(data[0].gjind);
 	          $("#scrs").val(data[0].bchnrs);
 	          $("#srje").val(data[0].bchnje);
 	          $("#hjbz").val(data[0].hjbz);
@@ -424,7 +426,7 @@
     var month=d.getMonth()+1;
     var year=d.getFullYear();
     var rq=(year+"-"+month+"-"+day); 
-    $("#dates").val(rq);
+    $("#datess").val(rq);
     $("#gjind").val(rq);
     };
     //汇缴增减人数金额
@@ -581,5 +583,9 @@
          }
        });   
     });
- 
+ //个人明细
+  /* function insertGrmx(grid,js,grbl,dwbl){
+    alert(grid+js+grbl+dwbl);
+    
+ }  */
 </script>

@@ -47,6 +47,7 @@
       #{unitadvancep,jdbcType=DECIMAL}, #{personadvancep,jdbcType=DECIMAL}, #{bglx,jdbcType=VARCHAR}
       )
   </insert>
+  <!--添加明细  -->
   <insert id="insertSelective" parameterType="com.entity.Perbusiness">
     insert into perbusiness
     <trim prefix="(" suffix=")" suffixOverrides=",">

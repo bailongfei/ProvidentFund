@@ -13,25 +13,25 @@ public class Individualpay {
 
     private String idno;
 
-    private String personaldepositbase;
+    private Integer personaldepositbase;
 
-    private String unitratedeposit;
+    private Integer unitratedeposit;
 
-    private String percontributionrate;
+    private Integer percontributionrate;
 
     private String openaccountstatus;
 
     private String openingdate;
 
-    private String peraccountbalance;
+    private Integer peraccountbalance;
 
     private String lastyearleftbalance;
 
     private String thatyearleftbalance;
 
-    private String monpayamount;
+    private Integer monpayamount;
 
-    private String unitmonpayamount;
+    private Integer unitmonpayamount;
 
     private String pinhouseholdsdate;
 
@@ -109,29 +109,9 @@ public class Individualpay {
         this.idno = idno == null ? null : idno.trim();
     }
 
-    public String getPersonaldepositbase() {
-        return personaldepositbase;
-    }
+   
 
-    public void setPersonaldepositbase(String personaldepositbase) {
-        this.personaldepositbase = personaldepositbase == null ? null : personaldepositbase.trim();
-    }
-
-    public String getUnitratedeposit() {
-        return unitratedeposit;
-    }
-
-    public void setUnitratedeposit(String unitratedeposit) {
-        this.unitratedeposit = unitratedeposit == null ? null : unitratedeposit.trim();
-    }
-
-    public String getPercontributionrate() {
-        return percontributionrate;
-    }
-
-    public void setPercontributionrate(String percontributionrate) {
-        this.percontributionrate = percontributionrate == null ? null : percontributionrate.trim();
-    }
+   
 
     public String getOpenaccountstatus() {
         return openaccountstatus;
@@ -149,13 +129,7 @@ public class Individualpay {
         this.openingdate = openingdate == null ? null : openingdate.trim();
     }
 
-    public String getPeraccountbalance() {
-        return peraccountbalance;
-    }
-
-    public void setPeraccountbalance(String peraccountbalance) {
-        this.peraccountbalance = peraccountbalance == null ? null : peraccountbalance.trim();
-    }
+   
 
     public String getLastyearleftbalance() {
         return lastyearleftbalance;
@@ -173,21 +147,8 @@ public class Individualpay {
         this.thatyearleftbalance = thatyearleftbalance == null ? null : thatyearleftbalance.trim();
     }
 
-    public String getMonpayamount() {
-        return monpayamount;
-    }
-
-    public void setMonpayamount(String monpayamount) {
-        this.monpayamount = monpayamount == null ? null : monpayamount.trim();
-    }
-
-    public String getUnitmonpayamount() {
-        return unitmonpayamount;
-    }
-
-    public void setUnitmonpayamount(String unitmonpayamount) {
-        this.unitmonpayamount = unitmonpayamount == null ? null : unitmonpayamount.trim();
-    }
+    
+   
 
     public String getPinhouseholdsdate() {
         return pinhouseholdsdate;
@@ -300,4 +261,53 @@ public class Individualpay {
     public void setExtractthisyear(String extractthisyear) {
         this.extractthisyear = extractthisyear == null ? null : extractthisyear.trim();
     }
+
+	public Integer getPersonaldepositbase() {
+		return personaldepositbase;
+	}
+
+	public void setPersonaldepositbase(Integer personaldepositbase) {
+		this.personaldepositbase = personaldepositbase;
+	}
+
+	public Integer getUnitratedeposit() {
+		return unitratedeposit;
+	}
+
+	public void setUnitratedeposit(Integer unitratedeposit) {
+		this.unitratedeposit = unitratedeposit;
+	}
+
+	public Integer getPercontributionrate() {
+		return percontributionrate;
+	}
+
+	public void setPercontributionrate(Integer percontributionrate) {
+		this.percontributionrate = percontributionrate;
+	}
+
+	public Integer getPeraccountbalance() {
+		return peraccountbalance;
+	}
+
+	public void setPeraccountbalance(Integer peraccountbalance) {
+		this.peraccountbalance = peraccountbalance;
+	}
+
+	public Integer getMonpayamount() {
+		return monpayamount;
+	}
+
+	public void setMonpayamount(Integer monpayamount) {
+		this.monpayamount = monpayamount;
+	}
+
+	public Integer getUnitmonpayamount() {
+		return unitmonpayamount;
+	}
+
+	public void setUnitmonpayamount(Integer unitmonpayamount) {
+		this.unitmonpayamount = unitmonpayamount;
+	}
+    
 }
