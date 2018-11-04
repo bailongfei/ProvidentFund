@@ -1,0 +1,3093 @@
+/************************************************************************************************
+ * 华信永道平台公共脚本库（YongDao Library）
+ * YDPX页面支持库
+ ************************************************************************************************/
+'use strict';
+if (typeof ydl === 'undefined') alert('ydl.ydpx.js必须在ydl.base.js之后加载');
+ 
+/**
+ * 全局pageTabs对象
+ */
+var pageTabs = new function () {
+	this.length = 0;
+	this.count = 0;
+	this.pageOnload = $.Callbacks();
+	this.add = function (caption, page, html, scripts, removable, fromSubPage) {
+		var index = this.length;
+		var active = index === 0 ? ' active' : '';
+		var removeButton = removable ? '<button type="button" class="page-tab-close" data-index="' + index + '">×</button>' : '';
+		$('#page_tabs>ul').append('<li class="' + active + '"><a data-toggle="tab" href="#page_tab_' + index + '">' + caption + '</a>' + removeButton + '</li>');
+		var dom;
+		if (html instanceof Element) dom = html;
+		else {
+			$('<div class="tab-pane fade' + active + '" data-pageid="' + page + '" data-pagename="' + page + '" id="page_tab_' + index + '"></div>').html(html).appendTo($('#page_tabs>div'));
+			dom = document.getElementById('page_tab_' + index);
+		}
+		this[index] = {
+			dom: dom,
+			index: index,
+			page: page,
+			remove: function () {
+				pageTabs.remove(index);
+			},
+			hide: function () {
+				pageTabs.hide(index);
+			},
+			show: function () {
+				pageTabs.show(index);
+			},
+			open: function () {
+				pageTabs.open(index);
+			},
+			isHidden: function () {
+				return pageTabs.isHidden(index);
+			}
+		};
+		var $pageTab = $('#page_tab_' + index);
+		var tabHidden = $pageTab.is(':hidden');
+		if (tabHidden) $pageTab.addClass('show-block');
+		scripts(this[index]);
+		this.count++;
+		this.length++;
+		$('a[href="#page_tab_' + index + '"]').on('show.bs.tab', function (e) {
+			if ($(dom).triggerHandler('tabshow', [e.target, e.relatedTarget]) === false) return e.preventDefault();
+			else if ($('#page_tabs').triggerHandler('tabshow', [e.target, e.relatedTarget]) === false) return e.preventDefault();
+		}).on('shown.bs.tab', function (e) {
+			if ($(dom).triggerHandler('tabshown', [e.target, e.relatedTarget]) !== false)
+					$('#page_tabs').triggerHandler('tabshown', [e.target, e.relatedTarget]);
+		}).on('hide.bs.tab', function (e) {
+			if ($(dom).triggerHandler('tabhide', [e.target, e.relatedTarget]) === false) return e.preventDefault();
+			else if ($('#page_tabs').triggerHandler('tabhide', [e.target, e.relatedTarget]) === false) return e.preventDefault();
+		}).on('hidden.bs.tab', function (e) {
+			if ($(dom).triggerHandler('tabhidden', [e.target, e.relatedTarget]) !== false)
+					$('#page_tabs').triggerHandler('tabhidden', [e.target, e.relatedTarget]);
+		});
+		var pageOnloadFunc = this[index].pageOnload;
+		if ($.isFunction(pageOnloadFunc)) {
+			if (fromSubPage) {
+				if (tabHidden) $pageTab.removeClass('show-block');
+				pageOnloadFunc();
+			}
+			else this.pageOnload.add(function () {
+				pageOnloadFunc();
+				if (tabHidden) $pageTab.removeClass('show-block');
+			});
+		}
+		$('#page_tabs').trigger('pageTabs.add');
+		return index;
+	};
+	this.remove = function (index) {
+		var $a = $('a[href="#page_tab_' + index + '"]');
+		if (confirm('请确认是否要关闭【' + $a.text() + '】？'))
+		$a.parent().remove();
+		$('#page_tab_' + index).remove();
+		this[index] = null;
+		this.count--;
+		$('#page_tabs').trigger('pageTabs.remove');
+	};
+	this.hide = function (index) {
+		$('a[href="#page_tab_' + index + '"]').addClass('hide');
+		$('#page_tab_' + index).addClass('hide');
+		$('#page_tabs').trigger('pageTabs.hide');
+	};
+	this.show = function (index) {
+		$('a[href="#page_tab_' + index + '"]').removeClass('hide');
+		$('#page_tab_' + index).removeClass('hide');
+		$('#page_tabs').trigger('pageTabs.show');
+	};
+	this.open = function (index) {
+		$('a[href="#page_tab_' + index + '"]').tab('show');
+	};
+	this.isHidden = function (index) {
+		return $('a[href="#page_tab_' + index + '"]').hasClass('hide');
+	};
+};
+
+//页签关闭按钮
+$('#page_tabs').on('click', '.page-tab-close', function () {
+	pageTabs[$(this).data('index')].remove();
+});
+
+(function(ydl, $, undefined) {
+	if (typeof ydl.init === 'undefined') ydl.init = {};
+
+//流程提交提示信息
+var message = {
+	'不同意': '请确认是否要拒绝以上内容？',
+	'撤销': '请确认是否要撤销此笔业务？',
+	'继续提交': '请确认是否要继续提交此笔业务？',
+	'def': '请确认是否同意以上内容并继续提交？'
+};
+
+/**
+ * 流程提交
+ */
+function doSubmit(applyValue, $button, $formButtons) {
+ 
+	var tjMain = function () {		
+		//表单数据
+		var formData = ydl.getInputs(true);
+		//附加审批意见
+		formData['_APPLY'] = applyValue;
+		//附加自定义数据
+		formData['_ATTRIBUTES'] = JSON.stringify(ydl.attribute.data);
+		//提交
+		ydl.ajax(ydl.contexPath + '/flow/submit/' + poolSelect['_WF'], {
+		    instanceid: poolSelect['_IS'],
+			form: formData,
+			pool: $('#form_datapool').val()			
+		}, function (data) {
+			if ($(document).triggerHandler('submitSuccess', [data]) !== false) {
+				if (data.message){
+					ydl.alert(data.message , function(){
+						if (data.url) window.location.replace(ydl.contexPath + '/' + data.url);
+					});
+				}
+				else if (data.url) window.location.replace(ydl.contexPath + '/' + data.url);
+			}
+			
+		}, {
+			contentType: 'application/json',
+			processData: false,
+			handleError: function (data, returnCode, message) {
+				var isHasError = ydl.showBatchData(data, returnCode, message);
+				if (!isHasError && message) ydl.alert({'icon':'error' , 'message':'提交未成功。' , 'desc':message , 'code':returnCode});
+				$formButtons.reset();
+				$("#page_tabs  iframe,object").show();
+			}
+		});
+	};
+   
+	$("#page_tabs  iframe,object").hide();
+	 
+	 
+	if ($button.data('confirm') === false) tjMain();
+	else {
+		ydl.customDialog({
+			text: message[$button.text().trim()] || message.def,
+			callback: function (button) {
+				if (button == 0) tjMain();
+				else{
+					$formButtons.reset();
+					$("#page_tabs  iframe,object").show();
+				}
+			}
+    	});
+	}
+}
+
+//显示动态列表的批量错误
+ydl.showBatchData = function (data, returnCode, message) {
+	var isHasError = false;
+	//列表批量错误
+	if (data && data.locationKey) {
+		showListError({ locationKey: data.locationKey, batchNo: data.batchNo});
+		isHasError = true;
+	}
+	//普通批量错误
+	if (data && data.batchData) {
+		if (data.batchData.data) {
+			isHasError = true;
+			if (message) ydl.alert(returnCode + ' ' + message);
+
+			var errList = '<div class="panel panel-danger"><div class="panel-heading">您提交的数据存在以下错误，请更正后重新提交</div><div class="panel-body"><table class="table" id="flow_batch_error_list"><thead><tr><th>记录号</th><th>错误字段名</th><th>错误值</th><th>出错原因</th></tr></thead><tbody>' +
+				$.map(data.batchData.data, function (r) {
+					if ($('#' + r.locationKey).length != 0) $('#' + r.locationKey).addClass('has-error');
+					return '<tr data-key="' + r.locationKey + '"><td>' + r.seqno + '</td><td>' + r.item + '</td><td>' + r.content + '</td><td>' + r.reason + '</td></tr>';
+				}).join('') + '</tbody></table></div></div>';
+			var $errList = $(errList);
+			$errList.on('click', 'tr:gt(0)', function () {
+				$errList.find('tr').removeClass('selected');
+				$(this).addClass('selected');
+				var key = $(this).data('key');
+				var $input = $('#' + key);
+				if ($input.length != 0) {
+					var $input = $('#' + key);
+					//ydpx页签（外层）和页面页签（内层）自动切换后显示校验信息
+					$('#page_tabs').one('tabshown', function () {
+						$input.focus().trigger('mouseenter');
+					});
+					$('.tab').one('shown.bs.tab', function () {
+						$input.focus().trigger('mouseenter');
+					});
+					//判断内层页签是否需要切换
+					if (!$input.closest('.tab-pane').is('.active')) {
+						$input.closest('.container-tabs').find('.tab:eq(' + $input.closest('.tab-pane').index() + ')').tab('show');
+					}
+					//判断外层页签是否需要切换
+					if (!$input.parents('.tab-pane').last().is('.active')) {
+						if ($input.parents('.tab-pane').last().index() >= 0)
+							pageTabs[$input.parents('.tab-pane').last().index()].open();
+					}
+					$input.focus().trigger('mouseenter');
+				}
+			});
+			$('#flow_batch_error').html($errList);
+		}
+		else $('#flow_batch_error').html('');
+	}
+	return isHasError;
+	//显示列表批量错误
+	function showListError(batchErrorInfo) {
+		var locationKeys = batchErrorInfo.locationKey;
+		//设置显示列表ID的情况
+		if (locationKeys.length > 0 && locationKeys[0].id != '' && locationKeys[0].id != null) {
+			$.each(locationKeys, function (i, ele){
+				ydl.init.dataList({id: ele.id, batchErrorInfo: {
+					batchNo: batchErrorInfo.batchNo,
+					locationKey: ele.key,
+					batchList: true
+				}}, 'batcherror', ydl.data.dataList[ele.id].thisTab);
+			});
+		}
+		//只有一个列表显示批量错误的情况
+		else {
+			if (ydl.data.dataList) {
+				//显示批量错误的列表ID
+				var batchListId = '';
+				for (var listId in ydl.data.dataList) {
+					if (batchListId == '') batchListId = listId;
+					//若有多个列表，使用特殊样式设置显示的列表
+					if ($('#'+listId).hasClass('batch-error-list')) {
+						batchListId = listId;
+						break;
+					}
+				}
+				if (batchListId != '') {
+					ydl.init.dataList({id: listId, batchErrorInfo: {
+						batchNo: batchErrorInfo.batchNo,
+						locationKey: locationKeys[0].key
+					}}, 'batcherror', ydl.data.dataList[batchListId].thisTab);
+				}
+			}
+		}
+	}
+}
+
+/**
+ * YDPX页面初始化
+ * @param {Function} initComponents 容器组件初始化脚本
+ */
+ydl.ydpxInit = function () {
+
+	//显示正在运行动画，显示遮罩时禁止点击页面
+	/*
+	$(document).ajaxSend(function (event, xhr, options) {
+		//ajax开始时显示
+		var height = $(window).height();
+		var width = $(document).width();
+		if (!$$('ajax-running-overlay')) $('<div id="ajax-running-overlay"></div>').height(height).width(width).appendTo('body');
+	}).ajaxStop(function () {
+		//所有ajax都结束后清除
+		$('#ajax-running-overlay').remove();
+	});
+	*/
+	
+	//加载自定义数据
+	if (window.poolSelect) ydl.attribute.data = JSON.parse(poolSelect['_ATTRIBUTES'] || '{}');
+
+	//多值组件-复选框全选
+	$('.checkbox-check-all').click(function () {
+		$(this).closest('.checkbox-container').find('[type="checkbox"]').not(this).prop('checked', this.checked);
+	});
+
+	//格式化容器标题中的括号内容
+	$('.ydpx-container>.panel-heading>span,.datalist-button-bar>h5').each(function () {
+		$(this).html($(this).html().replace(/^(.*?)([(（].*[）)])(.*?)$/g, '$1<small>$2</small>$3'));
+	});
+
+	//过渡代码：将appflg迁移到buttons，appflg不再使用以后将此段代码删除
+	if (window.pageConfig && $.isNumeric(pageConfig.approve) && (!pageConfig.buttons || pageConfig.buttons.length === 0)) {
+		pageConfig.buttons = $.map((['ah', 'bch', 'deh', 'fgh', 'i'])[pageConfig.approve].split(''), function (b) {
+			return {id: b};
+		});
+	}
+
+	//初始化流程按钮
+	(function (buttons) {
+		var standardButtons = {
+			'a': '<button type="button" id="b_flow_a" class="btn btn-primary submit-button" data-apply="0" data-validate="true" data-submit-text="提交中..."><span></span>提交</button>',
+			'b': '<button type="button" id="b_flow_b" class="btn btn-primary submit-button" data-apply="0" data-validate="true" ><span></span>同意</button>',
+			'c': '<button type="button" id="b_flow_c" class="btn btn-primary submit-button" data-apply="1" data-validate="false" ><span></span>不同意</button>',
+			'd': '<button type="button" id="b_flow_d" class="btn btn-primary submit-button" data-apply="0" data-validate="true" data-submit-text="提交中..."><span></span>继续提交</button>',
+			'e': '<button type="button" id="b_flow_e" class="btn btn-primary submit-button" data-apply="2" data-validate="false" ><span></span>撤销</button>',
+			'f': '<button type="button" id="b_flow_f" class="btn btn-primary submit-button" data-apply="1" data-validate="false" data-confirm="false" ><span class="glyphicon glyphicon-chevron-left"></span>上一步</button>',
+			'g': '<button type="button" id="b_flow_g" class="btn btn-primary submit-button" data-apply="0" data-validate="true" data-confirm="false" >下一步 <span class="glyphicon glyphicon-chevron-right"></span></button>',
+			'h': '<button type="button" id="b_flow_h" class="btn btn-primary flow-button" data-apply="4"><span></span>暂存</button>',
+			'i': '<button type="button" id="b_flow_i" class="btn btn-primary flow-button"><span class="glyphicon glyphicon-backward"></span>返回</button>',
+			'j': '<button type="button" id="b_flow_j" class="btn btn-primary submit-button" data-apply="0" data-validate="true" ><span class="glyphicon glyphicon-print"></span>打印</button>',
+			'k': '<button type="button" id="b_flow_k" class="btn btn-primary flow-button" data-apply="0" data-validate="true" ><span class="glyphicon glyphicon-print"></span>打印</button>',
+			'l': '<button type="button" id="b_flow_l" class="btn btn-primary submit-button" data-apply="0" data-validate="true" data-confirm="false" >下一步 <span class="glyphicon glyphicon-chevron-right"></span></button>',
+			'm': '<button type="button" id="b_flow_m" class="btn btn-primary flow-button" data-apply="0"><span class="glyphicon glyphicon-retweet"></span>再做一笔</button>',
+			'n': '<button type="button" id="b_flow_n" class="btn btn-success btn-sm end-button">重新登录</button>',
+			'o': '<button type="button" id="b_flow_o" class="btn btn-success btn-sm end-button">返回首页</button>',
+			'p': '<button type="button" id="b_flow_p" class="btn btn-default result-copy btn-sm end-button">复制到剪贴板</button>',
+			'r': '<button type="button" id="b_flow_r" class="btn btn-primary flow-button" data-apply="0" data-validate="true" ><span class="glyphicon glyphicon-home"></span>关闭</button>'
+	 
+		};
+		var $buttons = $('#page_flow_buttons');
+		$.each(buttons, function (i, button) {
+			var $button;
+			if (/^[a-z]$/.test(button.id)) {
+				var buttonHtml = standardButtons[button.id] || '';
+				if (button.text) buttonHtml = buttonHtml.replace(/(<\/span>).+?(<\/button>)$|(>).+?( <span)/, '$1$3' + button.text + '$2$4');
+				if (button.icon) buttonHtml = buttonHtml.replace(/<span( class=".+?")?>/, '<span class="glyphicon glyphicon-' + button.icon + '">');
+				$button = $(buttonHtml).data('config', button);
+			}
+			else {
+				var apply = button.appvalue ? 'class="btn btn-primary submit-button" data-apply="' + button.appvalue + '" data-validate="true" ' : 'class="btn btn-primary flow-button"';
+				var icon = button.icon ? '<span class="glyphicon glyphicon-' + button.icon + '"></span>' : '';
+				var strDisabled = button.enable == 'false' ? 'disabled' : '';
+				$button = $('<button type="button" id="b_flow_' + button.id + '" ' + apply +' '+ strDisabled + '>' + icon + button.text + '</button>').data('config', button);
+			}
+			if (button.url) $button.click(function () {
+				ydl.go(ydl.contexPath + button.url);
+			});
+			$buttons.append($button);
+		});
+	})(window.pageConfig && pageConfig.buttons || []);
+
+	//流程按钮栏中的自定义按钮
+	var $flowButtons = $('.flow-buttons');
+	if ($flowButtons.length > 0) {
+		$('#page_flow_buttons').append($flowButtons.children('.panel-body').children().removeClass('btn-sm btn-default').addClass('flow-button'));
+		$flowButtons.remove();
+	}
+    
+	//流程返回按钮
+	$('#b_flow_i').click(function () {
+		history.back();
+	});
+	
+	//打印
+	$('#b_flow_j').click(function () {
+	    if(window.frames[0] && window.frames[0].printPdf)
+	          window.frames[0].printPdf();
+	    else if(window.frames[0]) 
+	          window.frames[0].print();
+		 else
+	          window.print();
+	});
+	
+	//打印
+	$('#b_flow_k').click(function () {
+       if(window.frames[0] && window.frames[0].printPdf)
+	          window.frames[0].printPdf();
+	    else if(window.frames[0]) 
+	          window.frames[0].print();
+		 else
+	          window.print();
+	});
+
+	//重做本交易
+	$('#b_flow_m').click(function () {
+		ydl.go(ydl.contexPath + '/flow/menu/' + poolSelect['_WF']);
+	});
+	
+	$('#b_flow_r').click(function () {
+		ydl.go($$('page_home').href);
+	});
+	
+	
+
+	//所有流程按钮
+	$('#page_flow_buttons').on('click', 'button', function () {
+		var config = $(this).data('config');
+		if (config && config.cmdtask) {
+			ydl.sendCommand(config.cmdtask, {}, function(data, code, message) {
+				if (code != '00000000') ydl.alert(message);
+				else if (config.succmsg != '') ydl.alert(config.succmsg);
+			});
+		}
+	})
+
+	//提交按钮
+	.on('click', '.submit-button', function () {
+		//流程按钮栏中的所有按钮
+		var $formButtons = $('#page_flow_buttons button').prop('disabled', true).filter('.submit-button').button('submit').end();
+		$formButtons.reset = function () {
+			this.prop('disabled', false).filter('.submit-button').button('reset');
+		};
+		//当前点击的按钮
+		var $button = $(this);
+		//提交的审批意见值
+		var applyValue = '' + $button.data('apply');
+		//校验提交必要数据
+		if (!window.poolSelect || !poolSelect['_WF']) {
+			alert('无法获取流程号（_WF）');
+			$formButtons.reset();
+			return;
+		}
+		//如果选择了不同意或撤销流程，不校验表单，只校验审批意见
+		var needValidate = $button.data('validate');
+		var deferreds = [];
+		if (!needValidate && $$('_APPLYMEMO')) {
+			deferreds.push(ydl.validator('_APPLYMEMO', {required: true, desc: '审批意见'}));
+		}
+		else {
+			//自动保存各tab中的动态列表
+			if (ydl.data.dataList) for (var listId in ydl.data.dataList) {
+				if (ydl.data.dataList[listId].allowUpdate || ydl.data.dataList[listId].allowInsert) {
+					deferreds.push(ydl.init.dataList({id: listId}, 'save', ydl.data.dataList[listId].thisTab));
+				}
+			}
+			if (needValidate) {
+				//异步执行各页签校验方法
+				for (var i = 0; i < pageTabs.length; i++) {
+					if (pageTabs[i] === null) continue;
+					//校验输入域属性
+					ydl.log('ydl.formValidate(pageTabs[' + i + ']) start');
+					deferreds.push(ydl.formValidate(pageTabs[i].dom, false));
+					//执行自定义校验代码
+					if ($.isFunction(pageTabs[i].form_validate)) {
+						ydl.log('pageTabs[' + i + '].form_validate() start');
+						var tdf = pageTabs[i].form_validate.call($button);
+						//返回布尔值
+						if (typeof tdf === 'boolean' || tdf === undefined) {
+							ydl.log('pageTabs[' + i + '].form_validate() return ' + tdf);
+							if (tdf === undefined) tdf = true;	//允许不返回值，当作成功处理
+							if (tdf) deferreds.push($.Deferred().resolve());
+							else deferreds.push($.Deferred().reject());
+						}
+						//返回deferred对象
+						else if (tdf && $.isFunction(tdf.promise)) {
+							ydl.log('pageTabs[' + i + '].form_validate() return deferred ' + tdf.state());
+							deferreds.push(tdf);
+						}
+						else {
+							deferreds.push($.Deferred().reject('pageTabs[' + i + '].form_validate()返回值类型不正确！'));
+						}
+					}
+				}
+			}
+			else deferreds.push(true);
+		}
+		ydl.deferred(deferreds).then(function () {
+			doSubmit(applyValue, $button, $formButtons);
+		}, function (message) {
+			var $input = $('.has-error:first');
+			
+			//判断是否存在$input
+			if ($input.length != 0) {
+				
+				//ydpx页签（外层）和页面页签（内层）自动切换后显示校验信息
+				$('#page_tabs').one('tabshown', function () {
+					$input.focus().trigger('mouseenter');
+				});
+				$('.tab').one('shown.bs.tab', function () {
+					$input.focus().trigger('mouseenter');
+				});
+				
+				if ($input.parents('.tab-pane').length == 1) {
+					//判断页签是否需要切换
+					if (!$input.closest('.tab-pane').is('.active')) {
+						pageTabs[$input.closest('.tab-pane').index()].open();
+					}
+					//不需要切换(单层页签已经是显示状态或无页签)的时候设置焦点显示校验信息
+					$input.focus().trigger('mouseenter');
+				}
+				//双层页签
+				else {
+					//判断内层页签是否需要切换
+					if (!$input.closest('.tab-pane').is('.active')) {
+						$input.closest('.container-tabs').find('.tab:eq(' + $input.closest('.tab-pane').index() + ')').tab('show');
+					}
+					//判断外层页签是否需要切换
+					if (!$input.parents('.tab-pane').last().is('.active')) {
+					   if($input.parents('.tab-pane').last().index()>=0)
+						   pageTabs[$input.parents('.tab-pane').last().index()].open();
+					}
+					//都不需要切换的时候设置焦点显示校验信息
+					$input.focus().trigger('mouseenter');
+				}				
+			
+			}
+			$formButtons.reset();
+		});
+
+	});
+
+	//暂存按钮
+	$('#b_flow_h').click(function () {
+		ydl.ajax(ydl.contexPath + '/flow/save/' + poolSelect['_WF'], {
+			form: ydl.getInputs(true),//document.forms[0] 解决暂存不住东西的bug
+			pool: $('#form_datapool').val()
+		}, function (data) {
+			ydl.alert('暂存成功！');
+		}, {
+			contentType: 'application/json',
+			processData: false
+		});
+	});
+
+	//限制不同数据类型可输入的字符
+	$('body').on('keypress', 'input[type!="button"]', function(event) {
+		var which = event.which;
+		if (which != 0 && which != ydl.common.keys.Backspace && which != ydl.common.keys.Enter) {
+			var dataType = $(this).attr('data-type');
+			var negative = $(this).attr('data-negative');
+			var validChar = '';
+			if (dataType) {
+				switch (dataType) {
+				case 'date': validChar = '0123456789-'; break;
+				case 'time': validChar = '0123456789:'; break;
+				case 'month': case 'longmonth': case 'day': case 'longday': case 'yyyymm':
+				case 'number': case 'zipcode': case 'encnumber': validChar = '0123456789'; break;
+				case 'int': validChar = negative == 'true' ? '0123456789-' : '0123456789'; break;
+				case 'float': case 'ipv4': validChar = '0123456789.'; break;
+				case 'money': validChar = negative == 'true' ? '0123456789.-' : '0123456789.'; break;
+				case 'phone': validChar = '0123456789()-'; break;
+				case 'phones': validChar = '0123456789()- ;,'; break;
+				case 'idcard': validChar = '0123456789Xx'; break;
+				}
+				var pressChar = event.char || String.fromCharCode(event.which);
+				if (validChar && pressChar && validChar.indexOf(pressChar) == -1) return false;
+			}
+		}
+	});
+
+	//多个模态框显示层级管理
+	$('body').on('show.bs.modal', '.modal', function () {
+		//获取页面上第一个（最下层）时间控件的z-index，如果不存在，则获取页面上元素z-index的最大值+10
+		if ($('.datetimepicker').length < 1) {
+			 var indexHighest = 0;
+		     $('div:not(.modal , #ajax-running-overlay)').each(function () {
+		     	var indexCurrent = parseInt($(this).css('zIndex'), 10);
+		     	if (indexCurrent > indexHighest) indexHighest = indexCurrent;
+		     });
+		     ydl.data.modalIndexHighest = indexHighest + 10;
+		}
+		else ydl.data.modalIndexHighest = parseInt($('.datetimepicker').eq(0).css('z-index'));
+		
+        //开启新模态框前先将已经开启的模态框放到下层
+        $('.modal').css({'z-index' : ydl.data.modalIndexHighest - 8 });
+        
+        //由于在已经开启的模态框中点击时间控件会再次触发事件，为了避免背景层位置出错，所以判断页面暂时同时存在几个背景层，并将之前开启的移动到最下层
+        if ($('.modal-backdrop').length <= 1) $('.modal-backdrop').css({'z-index': ydl.data.modalIndexHighest - 9});
+        else $('.modal-backdrop:not(:last)').css({'z-index': ydl.data.modalIndexHighest - 9});
+        
+        //将新开启的模态框移到上层
+        $(this).css({'z-index': ydl.data.modalIndexHighest - 5 });
+        
+	}).on('shown.bs.modal', '.modal', function () {
+		
+		//将新开启的模态框的背景层移到上层模态框的下方
+		$('body').find('.modal-backdrop:last').css({'z-index': ydl.data.modalIndexHighest - 6});
+	});
+	
+	//页面滚动时隐藏日期框
+	$('#page_main').on('scroll',function(){
+		$('.datetimepicker').hide();
+	});
+
+};
+
+
+//------------------隐式提交相关代码开始--------------------
+
+/**
+ * 保存已初始化的隐式定义信息
+ */
+var ajaxDefine = {};
+
+/**
+ * 初始化隐式提交
+ * 给触发点字段绑定change事件自动触发查询
+ * @param {String} ajaxId 隐式提交ID
+ * @param {String} [triggerId] 自动触发组件ID，不设置则不自动触发，只能通过ydl.init.ajax()触发
+ * @param {Array} [target] 自动填充目标组件，[{id:'组件id或name', label:'显示值字段', value:'数据值字段'}]
+ * @param {Object} thisTab 当前页签对象
+ * @return undefined
+ */
+function ajaxInit(ajaxId, triggerId, target, thisTab) {
+	if (!ydl.data.ajax) ydl.data.ajax = {};
+	ydl.data.ajax[ajaxId] = true;
+	ajaxDefine[ajaxId] = {target: target, tab: thisTab};
+	if (triggerId) {
+		var $trigger;
+		if (document.getElementById(triggerId)) $trigger = $('#' + triggerId);
+		else if (document.getElementById('group_' + triggerId)) $trigger = $('[name="' + triggerId + '"]');
+		if ($trigger && $trigger.length > 0) $trigger.change(function() {
+			if (checkFieldAttr($(this), false)) ajaxTrigger(ajaxId);
+		});
+	}
+}
+
+/**
+ * 触发隐式提交查询
+ * @param {String} ajaxId 隐式提交ID
+ * @param {String} [extraParas] 附加参数
+ * @param {Function} [callback(data)] 成功或失败都会调用的回调函数，返回布尔值来决定resolve还是reject
+ * @return {Object} deferred promise对象
+ */
+function ajaxTrigger(ajaxId, extraParas, callback) {
+	if (!ajaxDefine[ajaxId]) {
+		alert('隐式提交' + ajaxId + '未初始化，无法执行！');
+		return;
+	}
+	//回调函数
+	var thisTab = ajaxDefine[ajaxId].tab;
+	var beforeAjax = thisTab['ajax_before_' + ajaxId];
+	var afterAjax = thisTab['ajax_after_' + ajaxId];
+	var ajaxComplete = thisTab['ajax_complete_' + ajaxId];
+
+	//提交的数据，包含页面中所有字段值
+	var paras = $.extend(ydl.getInputs(true), {
+ 		'$page': thisTab.page,
+		'ajax_query_id': ajaxId,
+		'_POOLKEY': poolSelect['_POOLKEY'] || '-'
+	});
+	//附加提交数据
+	if (extraParas) {
+		if ($.isArray(extraParas)) $.extend(paras, ydl.arr2obj(extraParas, 'name', 'value'));
+		else if ($.isPlainObject(extraParas)) $.extend(paras, extraParas);
+	}
+
+	//执行提交前回调，可用于校验
+	if ($.isFunction(beforeAjax) && beforeAjax() === false) return;
+
+	//提交请求
+	var dtd = $.Deferred();
+	ydl.ajax(ydl.contexPath + '/ydpx/ajax', paras, function(data, oriData) {
+		var isFilled = false;
+		//查询返回后回调
+		if (!$.isFunction(afterAjax) || afterAjax(data, oriData) !== false) {
+			ajaxFiller(ajaxId, data);
+			isFilled = true;
+		}
+		//填充后回调
+		if ($.isFunction(ajaxComplete)) ajaxComplete(isFilled);
+		//最终回调
+		if ($.isFunction(callback)) {
+			var r = callback(data, oriData);
+			if (r === undefined || r) dtd.resolve(data, oriData);
+			else dtd.reject(data);
+		}
+		else dtd.resolve(data, oriData);
+	},
+	{
+		handleError: function(oriData) {
+			//如果设置了最终回调，则需要自己处理提示消息，否则自动提示
+			if ($.isFunction(callback)) {
+				if (callback(null)) dtd.resolve(oriData.data, oriData);
+				else dtd.reject(oriData);
+			}
+			else {
+				if (oriData.message) ydl.alert(oriData.message , function(){ dtd.reject(oriData); });
+				else dtd.reject(oriData);
+			}
+		},
+		beforeSend: function(){
+			//ajax开始时显示
+			ydl.displayRunning(true);
+		},
+		complete : function(){
+			//ajax结束后清除
+			ydl.displayRunning(false);
+		}
+	});
+	return dtd.promise();
+}
+
+/**
+ * 根据隐式提交查询结果填充表单输入域
+ * 如果同时设置了目标组件的显示值和数据值，将用查询结果创建下拉选项、单选框、复选框。
+ * 如果只设置了目标组件的数据值，将用查询结果的第一条记录设置目标组件的值，或选中对应的元素；
+ * 如果是复选框，可使用查询结果的多条记录选中多个元素。
+ * @param {String} ajaxId 隐式提交ID
+ * @param {Object} data 隐式提交查询返回的数据
+ */
+function ajaxFiller(ajaxId, data) {
+	var target = ajaxDefine[ajaxId].target;
+	for (var i = 0, il = target.length; i < il; i++) {
+		var t = target[i];
+		ydl.log('target[' + i + '] = ' + ydl.getMember(t));
+		var ele;
+		//赋值或选中
+		if (!t.label) {
+			ele = document.getElementById(t.id);
+			//唯一组件（文本框、下拉列表）
+			if (ele) {
+				//select列表-单选
+				if (ele.type === 'select-one') {
+					ydl.selectByValue(ele, data[0][t.value]);
+				}
+				//select列表-多选
+				else if (ele.type === 'select-multiple') {
+					var selectedOptionValues = {};
+					for (var di = 0; di < data.length; di++) selectedOptionValues[data[di][t.value]] = true;
+					for (var op = 0, opl = ele.options.length; op < opl; op++) {
+						if (selectedOptionValues[ele.options[op].value]) ele.options[op].selected = true;
+					}
+				}
+				//文本框
+				else {
+					//金额框
+					if ($(ele).data('type') == 'money') $(ele).setValue(data[0][t.value]);
+					//其他文本框
+					else ele.value = data[0][t.value] === '1899-12-31' ? '' : data[0][t.value];
+				}
+			}
+			//一组单选或复选框
+			else {
+				ele = document.getElementsByName(t.id);
+				if (ele.length > 0) {
+					if (ele[0].type === 'checkbox') {
+						//如果第一条记录值包含逗号，按逗号分隔的多个值进行选择，忽略其他记录
+						//否则按每一条记录的对应值进行选择
+						var fv = data[0][t.value];
+						ydl.setCheckedCheckbox(ele[0].name, fv.indexOf(',') > 0 ? fv : $.map(data, function (r, i) {
+							return r[t.value];
+						}));
+					}
+					else if (ele[0].type === 'radio') {
+						ydl.setCheckedRadio(ele[0].name, data[0][t.value]);
+					}
+				}
+				else ydl.log('ydl.init.ajax出错：找不到目标组件' + t.id, 'red');
+			}
+		}
+		//创建选项
+		else {
+			ele = document.getElementById(t.id);
+			if (ele) {
+				//select列表
+				if (ele.type.indexOf('select-') === 0) {
+					$(ele).html(ydl.common.blankOption + ydl.createOptions(data, t.label, t.value));
+				}
+			}
+			else {
+				ele = document.getElementById('group_');
+				if (ele) {
+					var $ele = $(ele);
+					if ($ele.hasClass('radio-container')) {
+						$ele.html(ydl.createRadios(data, t.label, t.value, t.id, $ele.hasClass('multivalue-v')));
+					}
+					else if ($ele.hasClass('checkbox-container')) {
+						$ele.html(ydl.createCheckboxes(data, t.label, t.value, t.id, $ele.hasClass('multivalue-v')));
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
+ * 初始化隐式提交
+ * ydl.init.ajax(ajaxId, triggerId, target, thisTab)
+ * 手动触发隐式提交（需已初始化）
+ * ydl.init.ajax(ajaxId, extraParas, callback)
+ */
+ydl.init.ajax = function(ajaxId, arg2, arg3, thisTab) {
+	if (thisTab) ajaxInit(ajaxId, arg2, arg3, thisTab);
+	else return ajaxTrigger(ajaxId, arg2, arg3);
+};
+
+/**
+ * 显示正在运行动画，并禁止点击页面
+ * @param {Boolean} isRunning 显示或隐藏动画（true：显示；false：隐藏），缺省情况下为显示
+ */
+ydl.displayRunning = function(isRunning) {
+	if(isRunning == false) {
+		//ajax结束后清除
+		if($('body').hasClass('has-running-overlay')) {
+			$('body').removeClass('has-running-overlay');
+			$('#ajax-running-overlay').remove();
+		}
+	}
+	else {
+		//ajax开始时显示
+		if($('body').hasClass('has-running-overlay') == false) {
+			var height = $(window).height();
+			var width = $(document).width();
+			$('body').addClass('has-running-overlay');
+			if (!$$('ajax-running-overlay')) $('<div id="ajax-running-overlay"></div>').height(height).width(width).appendTo('body');
+		}
+	}
+};
+
+//------------------隐式提交相关代码结束--------------------
+
+
+
+/**
+ * 根据字段属性检查输入值是否符合要求，不符合则显示提示
+ * @param {Object} $ele 字段的jQuery对象
+ * @param {Boolean} [setFocus] 校验后是否设置焦点，缺省为false
+ * @returns {Boolean} 符合要求返回true，否则返回false
+ */
+function checkFieldAttr($ele, setFocus) {
+	if (!$ele.hasClass('_nocheck')) {	//不检查标志，例如对比修改容器中的修改前字段
+		//检查具有required属性的字段是否为空
+		if ($ele.attr('required') === 'required' && !ydl.validator($ele, {required: true, focus: setFocus})) return false;
+		//检查字段类型
+		if ($ele.attr('data-type') && !ydl.validator($ele, {type: $ele.attr('data-type'), declen: $ele.attr('data-declen'), negative: $ele.attr('data-negative'), intlen: $ele.attr('data-intlen'), focus: setFocus, keepcomma: true})) return false;
+		//按半角字符检查最大长度,考虑小数点位数1。
+		//if ($ele.attr('maxlength') && !ydl.validator($ele, {length2: [0, parseInt($ele.attr('maxlength'))], focus: setFocus})) return false;
+		if ($ele.attr('maxlength') && !ydl.validator($ele, {length2: [0, ($ele.attr('data-intlen') ? parseInt($ele.attr('maxlength')) : parseInt($ele.attr('maxlength')) + ($ele.attr('data-declen') ? 1 : 0) )], focus: setFocus})) return false;
+	}
+	return true;
+}
+
+//------------------对比修改相关代码开始--------------------
+
+//对比修改
+ydl.init.compare = function (containerId) {
+	/**
+	 * 标记更改过的列
+	 * @param {Object} input 输入组件的DOM对象
+	 * @returns undefined
+	 */
+	function markChanged(input) {
+		var $tr = $(input).closest('tr');
+		var id = input.id;
+		if (input.type == 'radio' || input.type == 'checkbox') id = input.name;
+		var value1 = ydl.getValue(id).trim();
+		var value2 = ydl.getValue('o_' + id).trim();
+		$tr[value1 == value2 ? 'removeClass' : 'addClass']('bg-warning');
+	}
+	var container = $$(containerId);
+	//修改前设置只读、不校验，如果总线中有修改前值，赋值
+	$('tbody td:nth-child(2n) [name]', container).each(function () {
+		ydl.attr(this, 'readonly', true);
+		$(this).addClass('_nocheck');
+		if (window.poolSelect && poolSelect[this.name] !== undefined) ydl.setValue(this, poolSelect[this.name]);
+	});
+	//绑定事件并初始化标记
+	$('tbody td:nth-child(3n) [name]', container).each(function() {
+		markChanged(this);
+	}).change(function() {
+		markChanged(this);
+	});
+};
+
+ydl.compare = {};
+/**
+ * 填充隐式提交或隐式报文返回数据
+ * @param {String} id 组件ID
+ * @param {String} value 组件需要填充的数值
+ * @returns undefined
+ */
+ydl.compare.setValue = function (id, value) {
+	//修改前列
+	var $before = $('[name="o_' + id + '"]');
+	//修改后列
+	var $after = $('[name="' + id + '"]');
+	//赋值
+	$before.setValue(value);
+	$after.setValue(value)
+	//除去修改行样式
+	.closest('tr').removeClass('bg-warning');
+};
+
+/**
+ * 检查对比修改字段值是否被更改
+ * @param {String} [id] 字段id，缺省为检查所有对比修改容器中的字段
+ * @returns {Boolean} 是否更改
+ */
+ydl.compare.isChanged = function (id) {
+	var $fields = id ? $(ydl.getDom(id)) : $('.compare-container td:nth-child(3n) [name]');
+	var changed = false;
+	var namesMap = {};
+	$fields.each(function (index, field) {
+		var name = field.name;
+		if (name in namesMap) return;	//忽略重复name（单选、复选）
+		var oldValue = ll('compare-old-' + name, ydl.getValue('o_' + name));
+		var newValue = ll('compare-new-' + name, ydl.getValue(name));
+		var dataType = $(field).data('type');
+		if ((dataType === 'float' || dataType === 'money') && parseFloat(oldValue) != parseFloat(newValue) || oldValue != newValue) {
+			changed = true;
+			return;
+		}
+		namesMap[name] = true;
+	});
+	return ll('compare-changed', changed);
+};
+
+/**
+ * 提交前调用，由第三个参数决定是否显示提交前对话框
+ * @param {Function} [callback(changedNames)] 回调方法，参数为有更改的字段名数组，如果数组为空则代表无更改；可根据需要返回布尔型或Deferred对象
+ * @param {Boolean} [showConfirm=true] 是否显示确认对话框，缺省为true；如果设置为false，不显示确认对话框
+ * @param {Deferred} 由回调方法的返回值决定，如果没有设置回调方法，则根据确认对话框的选择结果决定
+ */
+ydl.compare.check = function (callback, showConfirm) {
+	var dtd = $.Deferred();
+	if ($('.compare-container .has-error').length > 0) {
+		ydl.customDialog({
+			text: '存在未通过校验的数据，请修改正确后重新提交！',
+			buttons: '确定',
+			callback: function () {
+				dtd.reject();
+			}
+		});
+	}
+	else {
+		var changedData = {};
+		var changedNames = [];
+		$('.compare-container td:nth-child(3n) [name]').each(function (index, field) {
+			var name = field.name;
+			if (ydl.compare.isChanged(field) && !(name in changedData)) {
+				changedNames.push(name);
+				changedData[name] = {
+					label: $(field).closest('tr').children(':first').text().replace(/[:：]\s*$/, ''),
+					oldValue: ydl.getValue('o_' + name, true),
+					newValue: ydl.getValue(name, true)
+				};
+			}
+		});
+		if (showConfirm === undefined || showConfirm) {
+			var text = changedNames.length == 0 ? '没有任何变更，请确认是否继续提交？' :
+					'<p>请确认以下变更内容是否正确：</p><table class="table"><tr><th>字段名</th><th>修改前</th><th>修改后</th></tr>' +
+					$.map(changedNames, function (name) {
+				var data = changedData[name];
+				return '<tr><td>' + data.label + '</td><td>' + data.oldValue + '</td><td>' + data.newValue + '</td></tr>';
+			}).join('') + '</table>';
+			ydl.customDialog({
+				title: '确认变更',
+				text: text,
+				buttons: [{text: '确认无误，继续提交', theme: 'primary'}, '取消'],
+				callback: function (button) {
+					if (button == 0) {
+						if ($.isFunction(callback) ? callback(changedNames) : true) dtd.resolve();
+						else dtd.reject();
+					}
+					else dtd.reject();
+				}
+			});
+		}
+		else {
+			if ($.isFunction(callback) ? callback(changedNames) : true) dtd.resolve();
+			else dtd.reject();
+		}
+	}
+	return dtd.promise();
+};
+
+//------------------对比修改相关代码结束--------------------
+
+
+/**
+ * 使用对话框向用户显示需要确认的数据
+ * @param {String|Array} inputIds 页面输入组件ID，多个ID之间用半角逗号分隔，或是字符串数组
+ * @param {String} [message] 确认提示信息
+ * @param {Object} [options] 确认对话框参数
+ * @param {Function} callback 回调方法，参数为返回值 {Boolean} 用户确认的结果
+ */
+ydl.confirmData = function(inputIds, message, options, callback) {
+	var inputList = [];
+	$.each($.isArray(inputIds) ? inputIds : inputIds.split(','), function(index, id) {
+		inputList.push({
+			label: ydl.getLabel(id),
+			value: ydl.getValue(id, true)
+		});
+	});
+	if (inputList.length > 0) {
+		ydl.dialog.open(ydl.contexPath + '/common/html/commonDialog.jsp', {
+			title: message || '请确认以下信息',
+			init: function($dialog) {
+				$dialog.append('<table class="panel panel-default table"><tr><th width="30%">项目</th><th width="70%">内容</th></tr>' +
+				$.map(inputList, function(item) {
+					return '<tr><td><label>' + item.label + '：</label></td><td>' + item.value + '</td></tr>';
+				}).join('') + '</table>');
+			},
+			buttons: {
+				'确定': function() {
+					this.ydl.dialog.close(true);
+				},
+				'取消': function() {
+					this.ydl.dialog.close(false);
+				}
+			}
+		}, function(data) {
+			callback(data);
+		}, options);
+	}
+	else callback(true);
+};
+
+/**
+ * 发送隐式报文
+ * @param {String} cmd 命令代码
+ * @param {Object} [paras] 上传参数
+ * @param {Function} [callback(data, code, message)] 回调函数(下传数据,错误码,错误信息)，
+ * 如果返回true，可以resolve返回的promise对象，false则reject，不返回（undefiend）默认由ajax返回值决定
+ * @return {Object} deferred promise对象
+ */
+ydl.sendCommand = function (cmd, paras, callback, options) {
+	var url = ydl.contexPath + '/flow/command/' + poolSelect['_WF'] + '/' + poolSelect['_ST'] +
+			'/' + cmd + '/' + poolSelect['_POOLKEY'];
+//	var url = ydl.contexPath + '/test.jsp?cmd=' + cmd;
+	var dtd = $.Deferred();
+	ydl.ajax(url, $.extend(ydl.getInputs(true), paras), function (data, oriData) {
+		if ($.isFunction(callback)) {
+			var r = callback(data, oriData.returnCode, oriData.message, oriData);
+			if (r === undefined || r) dtd.resolve(data);
+			else dtd.reject(data, oriData.returnCode, oriData.message, oriData);
+		}
+		else dtd.resolve(oriData.data);
+	}, {
+		silent: options && options.silent,
+		handleError: function (oriData, code, message) {
+			ydl.showBatchData(oriData, code, message);
+			if ($.isFunction(callback)) {
+				var r = callback(null, code, message, oriData);
+				if (r) dtd.resolve(oriData.data);
+				else dtd.reject(message);
+			}
+			else {
+				alert('错误信息：' + message + '\n错误编码：' + code);
+				dtd.reject(message);
+			}
+		},
+		beforeSend: function(){
+			//ajax开始时显示
+			ydl.displayRunning(true);
+		},
+		complete : function(){
+			//ajax结束后清除
+			ydl.displayRunning(false);
+		}
+	});
+	return dtd.promise();
+};
+
+/**
+ * 加载子页面
+ */
+ydl.subPage = function (subPageId, poolParas, jsParas) {
+	var isDiyPath = /^(\/|http)/.test(subPageId);
+	//获取加载子页面前ydl.data.dataList和ydl.data.listParameter里已经存在的列表和动态列表
+	var beforeListParameter = {} , beforeDataList = {};
+	if (ydl.data.dataList) $.each(ydl.data.dataList, function (k) {
+		beforeDataList[k] = this;
+	});
+	if (ydl.data.listParameter) $.each(ydl.data.listParameter, function (k) {
+		beforeListParameter[k] = this;
+	});
+	var rootPath = location.protocol + '//' + location.host + (ydl.contexPath.replace(location.protocol + '//' + location.host,""));
+	var flag = /\?/.test(subPageId) ? '&' : '?';
+	var url = isDiyPath ? ((/^\//.test(subPageId) ? rootPath : '') + subPageId + flag +'callback=?') : 
+		(rootPath + '/flow/subpage/' + poolSelect['_WF'] + '/' + subPageId + '/' + poolSelect['_POOLKEY'] + '?callback=?');			
+	return $.ajax({
+		url: url,
+		//url: location.protocol + '//' + location.host + ydl.contexPath + '/flow/subpage/' + poolSelect['_WF'] + '/' + subPageId + '/' + poolSelect['_POOLKEY'] + '?callback=?',
+		//url: location.protocol + '//' + location.host + ydl.contexPath + '/ydpx/parsepage?$page=' + subPageId + '&callback=?',
+		data: poolParas,
+		type: isDiyPath ? 'GET' : 'POST',
+		dataType: 'jsonp',
+		jsonp: 'callback'
+	}).done(function (subPageData) {
+		subPageData.listId = [];
+		var subPage = {close: function () {
+			$dialog.dialog('close');
+		}};
+		var $dialog = $('<div class="subpage-container"></div>').append(subPageData.html).appendTo($('body')).dialog({
+			title: subPageData.title,
+			close: true,
+			size: 'lg', 
+			shown: function () {
+			    subPageData.script.call($dialog, subPage);
+			    if (subPage.subPageButtons) {
+			    	var btnHtml = '';
+			    	$.each(subPage.subPageButtons, function () {
+			    		btnHtml += '<button class="btn ' + (this.theme || 'btn-default') + '" type="button" id=' + this.id + '>' + this.text + '</button>';
+			    		if (this.close) $dialog.on('click', '#' + this.id, function () {
+			    			$dialog.dialog('close');
+			    		});
+			    	});
+			    	$dialog.find('.modal-footer').append(btnHtml);
+			    }
+			    
+				if ($.isFunction(subPage.pageOnload)) subPage.pageOnload(jsParas);
+
+				//通过与加载子页面之前ydl.data.dataList和ydl.data.listParameter内表格的对比，判断出新增列表和动态列表，并将其记录在subPageData.listId中
+				if (ydl.data.dataList) $.each(ydl.data.dataList, function (k) {
+					if (!beforeDataList.hasOwnProperty(k)) subPageData.listId.push({'type': 'datalist', 'id': k});
+				});
+				if (ydl.data.listParameter) $.each(ydl.data.listParameter, function (k) {
+					if (!beforeListParameter.hasOwnProperty(k)) subPageData.listId.push({'type': 'list', 'id': k});
+				});
+			},
+			hidden: function () {
+				//判断子页面列表是动态列表还是静态列表
+				$.each(subPageData.listId , function () {
+					if (this['type'] == 'datalist') {
+						delete ydl.data.dataList[this['id']];
+						//TODO:删除时间插件和列表编辑框(暂未完全实现)
+						$('#' + this['id'] + '_editor').closest('.modal').next('.datetimepicker').addBack().remove();
+					}
+					else if (this['type'] == 'list') {
+						delete ydl.data.listParameter[this['id']];
+					}
+				});
+				$dialog.remove();
+			}
+		});
+		$dialog.dialog('open');
+	});
+};
+
+/**
+ * 添加页签
+ */
+ydl.addPage = function (subPageId, poolParas, removable, callback) {
+	$.ajax({
+		url: location.protocol + '//' + location.host + ydl.contexPath + '/flow/subpage/' +
+				poolSelect['_WF'] + '/' + subPageId + '/' + poolSelect['_POOLKEY'] + '?callback=?',
+		data: poolParas,
+		type: 'POST',
+		dataType: 'jsonp',
+		jsonp: 'callback'
+	}).done(function (subPageData) {
+		var pageTabId = 'page_tab_' + pageTabs.length;
+		$('#page_tabs .tab-content').append('<div class="tab-pane fade in" id="' + pageTabId +
+				'" data-pageid="" data-pagename="' + subPageData.page + '">' + subPageData.html + '</div>');
+		var tabId = pageTabs.add(subPageData.title, subPageData.page, document.getElementById(pageTabId), subPageData.script, removable, true);
+		if ($.isFunction(callback)) callback(tabId);
+	});
+};
+
+/**
+ * 初始化自动完成功能
+ * @param {String} input 定义触发自动完成的文本输入组件ID，或DOM对象，或jQuery对象
+ * @param {String} ajaxId 定义查询语句的隐式提交ID，如果带有“common/”前缀为公共查询
+ * @param {Object} [paras] {
+ * 		{Number} [col=0] 查询返回多个字段时，指定选择哪个字段值，从0开始，缺省为0
+ * 		{Array|String} colName 必须与sql中一致，查询2个及以上字段时，必须设置此项
+ * 		{Array} [colWidth] 定义各列显示宽度的数组，数组元素个数应与查询语句返回字段数相同，单位像素px
+ * 		{Number} [minLength=2] 触发查询需要输入的字符串最小长度
+ * 		//{Boolean} [autoSelect] 决定是否光标离开时自动选择第一个,缺省从数据库中查询
+ * 		{Function} [onChange] change事件处理函数
+ * 		{Function} [validate] 提交查询前的校验函数，return false可阻止提交
+ * }
+ * @returns undefined
+ 
+ydl.autoComplete = function(input, ajaxId, paras) {
+	//防止没有写paras属性出错
+	if (!paras) paras = {};
+	input = ydl.getDom(input);
+	var $input = $(input);
+	var thisValue, otherValues;
+	//初始化自动完成相关参数
+	$input.typeahead({
+		hint: true,
+		highlight: true,
+		minLength: paras.minLength || 2
+	},
+	{
+		displayKey: '_autoshow', //默认填充参数值
+		//自动完成下拉面板 数据源
+		source: function (q,cb){
+			var source = [];
+			//发送请求，提交表单内所有字段，不包括列表容器和datalist中的字段
+			//提交的数据，包含页面中所有字段值
+			var ajaxParas = $.extend(ydl.getInputs(true), {
+		 		'$page': poolSelect['$page'],
+				'ajax_query_id': ajaxId,
+				'term': q,
+				'_POOLKEY': poolSelect['_POOLKEY'] || '-'
+			});
+			ydl.ajax(ydl.contexPath + '/ydpx/ajax', ajaxParas, function(data,oridata) {
+				//将{'字段名':'字段值'}转换为{}
+				var colarr = oridata.colName;
+				var col = colarr[(paras.col || 0)];
+				source = $.map(data, function(record, index) {
+					var obj = {
+						_otherValues:record, 				//每条数据的所有参数值，格式为{'字段名':'字段值'}
+						colname:colarr, 					//每条数据的所有参数名数组，按此顺序显示设置 ['字段名0','字段名1']
+						_autoshow: record[col], 			//每条数据需要选择显示的值
+						colWidth: paras.colWidth || false, //字段列宽度，顺序应与colname一致
+						templates: paras.templates || false//每条数据显示的html结构模板
+					};
+					return obj;
+				});
+			}, {async: false, silent: true});
+			 cb(source);
+		},
+		//自动完成下拉选项html结构
+		templates: {
+			empty: '<div class="empty-message">没有找到相关数据</div>',
+			suggestion: function (ele){
+				var record = ele._otherValues;
+				var isSetW = ele.colWidth ? true : false;
+				var isTemplates = ele.templates ? true : false;
+				var reHtml = '';
+				//自定义显示项html结构
+				if (isTemplates) {
+					reHtml = ele.templates;
+					$.each(ele._otherValues,function (key,value){
+						//reHtml.replace('{{'+key+'}}',value);
+						var regex = new RegExp('\\{\\{'+ key+'\\}\\}','gi');
+						if (regex.test(reHtml)) {
+							reHtml = reHtml.replace(regex, value);
+						}
+					});
+				}
+				//默认显示项html结构
+				else {
+					reHtml = '<div>' + $.map(ele.colname, function (value,index){
+						if (isSetW) {
+							return '<span class="default" style="width:' + (ele.colWidth)[index] + 'px">' + record[value] + '</span>';
+						}
+						else return record[value];
+					}).join(' ') + '</div>';
+				}
+				return reHtml;
+			}
+		}
+	}).bind('typeahead:render', function(event, curValue) {
+		return !paras.validate || paras.validate && paras.validate(input);
+	}).bind('typeahead:select', function(event, suggestion) {
+		thisValue = suggestion._autoshow || this.value;
+		otherValues = suggestion._otherValues || {};
+	}).bind('typeahead:change', function(event, suggestion) {
+		if (paras.onChange) paras.onChange(event, thisValue, otherValues);
+	});
+};
+*/
+
+/**
+ * 初始化自动完成功能
+ * @param {String} input 定义触发自动完成的文本输入组件ID，或DOM对象，或jQuery对象
+ * @param {String} ajaxId 定义查询语句的隐式提交ID，如果带有“common/”前缀为公共查询
+ * @param {Object} [paras] {
+ * 		{Number|String} [col=0] 查询返回多个字段时，指定选择哪个字段值，从0开始，缺省为0
+ * 		{Array} [colWidth] 定义各列显示宽度的数组，数组元素个数应与查询语句返回字段数相同，单位像素px
+ * 		{Number} [minLength=2] 触发查询需要输入的字符串最小长度
+ * 		{Number} [showRows=5] 默认显示多少条，和高度有关
+ * 		//{Boolean} [autoSelect] 决定是否光标离开时自动选择第一个,缺省从数据库中查询
+ * 		{Function} [onChange] change事件处理函数
+ * 		{Function} [onSelect] 选中项时处理函数，返回true/false 是否可选中此项
+ * 		{Function} [templateSelection] 选择显示模板
+ * 		//{Function} [templateAutoList] 自动完成下拉列表格式
+ * 		{Function} [validate] 提交查询前的校验函数，return false可阻止提交
+ * 		{object} [term] 自定义需要提交到后台的参数，格式如{key1:value1,key2:value2 …,keyN:valueN}
+ *		{Boolean} [hideNoInfo] 是否隐藏“为查询到数据”结果提示，默认显示
+ * }
+ * @returns undefined
+ */
+ydl.autoComplete = function(input, ajaxId, paras) {
+	//防止没有写paras属性出错
+	if (!paras) paras = {};
+	input = ydl.getDom(input);
+	var $input = $(input);
+	//自动完成配置
+	var options = $.extend({
+		highlight: true,
+		minLength: 2,
+		showRows: 5,
+		col: 0
+	},paras);
+	//注册事件
+	$input.on('keyup paste',function(event){
+		if (event.which == ydl.common.keys.Up){
+			upDown(this, 'up');
+		}
+		else if (event.which == ydl.common.keys.Down){
+			upDown(this, 'down');
+		}
+		else if (event.which == ydl.common.keys.Enter){
+			return false;
+		}
+		else {
+			if (options.validate && options.validate.call(this,this.value) === false) return false;
+			else queryAutoData(this.value);
+		}
+	})
+	.on('keydown',function(event){
+		if (event.which == ydl.common.keys.Enter){
+			if ($('div.yd-ac-row.hover').length > 0) selectedRow($input,$('div.yd-ac-row.hover'), event);
+			else if ($('div.yd-ac-row.row-selected').length > 0) selectedRow($input,$('div.yd-ac-row.row-selected'), event);
+			//event.stopPropagation();
+		}
+	})
+	.on('focus',function(){
+		//queryAutoData(this.value);
+		var qdata = $(this).data('qdata');
+		if (qdata) {
+			dataShow(qdata.q, qdata.oridata);
+		}
+	})
+	.on('blur',function(){
+		if ($(this).data('isblur') != false) {
+			//如果没回车和点击选择
+			if ($('div.yd-ac').length > 0 && $('div.yd-ac-row.hover').length > 0) {
+				if ($(this).data('selected')) {
+					if ($(this).data('tplvalue')) this.value = $(this).data('tplvalue');
+					else this.value = $(this).data('selected');
+				}
+			}
+			clearAuto($input);
+		} else if (!$(this).data('qdata').oridata) clearAuto($input);
+	})
+	.on('change',function(event){
+		if ($(this).data('change') == true || $(this).data('isblur') == false) return false;
+		else if (options.onChange) options.onChange.call(this, event, this.value, {});
+	})
+	//查询数据
+	function queryAutoData(q){
+		if (q.length >= options.minLength) {
+			//隐式提交
+			if (ajaxDefine[ajaxId]) {
+				//发送请求，提交表单内所有字段，不包括列表容器和datalist中的字段
+				ydl.init.ajax(ajaxId, $.extend(paras.term , {'term': q}), function(data,oridata) {
+					dataShow(q, oridata);
+					$input.data('qdata',{oridata: oridata, q: q});
+				});
+			}
+			//隐式报文
+			else {
+				ydl.sendCommand(ajaxId, $.extend(paras.term , {'term': q}), function(data, code, message, oridata){
+					if (code == 0) {
+						dataShow(q, oridata);
+						$input.data('qdata',{oridata: oridata, q: q});
+					}
+					else ydl.alert(message);
+				});
+			}
+		}
+	}
+	//显示根据关键字查到的数据列表
+	function dataShow(q, oridata){
+		clearAuto($input);
+		if (!oridata || !oridata.data || oridata.data.length == 0) {
+			if(!paras.hideNoInfo) $('<div class="yd-ac">未查询到数据</div>').appendTo($('body'));
+			showAutoList($input);
+			autoEvent($input);
+			return;
+		}
+		var source = [];
+		//每条数据的所有参数名数组，按此顺序显示设置 ['字段名0','字段名1']
+		var colarr = oridata.colName || [];
+		var col = options.col;
+		if (colarr.length == 0) {
+			$.each(oridata.data[0],function(key,value){
+				colarr.push(key);
+			});
+		}
+		else {
+			col = (typeof options.col == 'string') ? options.col :  colarr[options.col];
+		}
+		if (!oridata.data[0][col]) {
+			$.each(oridata.data[0],function(key, value){
+				col = key;
+				return false;
+			});
+		}
+		$.each(oridata.data, function(index,record){
+			if (index == options.showRows) return false;
+			var addRecord = {
+				_otherValues: record, 				//每条数据的所有参数值，格式为{'字段名':'字段值'}
+				_value: record[col]					//每条数据需要选择显示的值
+			};
+			if (options.templateSelection) addRecord._tplValue = options.templateSelection(record);
+			source.push(addRecord);
+		});
+		var sData = $input.data('selected') || '';
+		$(data2Html(source, colarr, sData, q)).appendTo($('body'));
+		showAutoList($input);
+		autoEvent($input);
+	}
+
+	//自动完成Html结构
+	function data2Html(source, colarr, sData, q){
+		var $reShow = $('<div class="yd-ac"></div>');
+		$.each(source, function(ri, row){
+			var $row = $('<div class="yd-ac-row'+ (sData != '' && row._value == sData ? ' row-selected' : '') +'"'+
+			' data-value="'+ row._value +'"' + (row._tplValue ? ' data-tplvalue="'+row._tplValue+'"': '') +
+			'>'+ $.map(colarr, function(col,ci){
+				var colWidth = options.colWidth ? 'width:'+options.colWidth[ci]+'px;' : '';
+				return '<div class="yd-ac-col" style="'+(colWidth == '' ? '' : colWidth)+'"><span>'+
+				row._otherValues[col].replace(new RegExp('('+q+')', 'g'),'<b>$1</b>')+'</span></div>';
+			}).join('')+'</div>');
+			$row.data('row',row);
+			$reShow.append($row);
+		})
+		return $reShow;
+	}
+	//定位自动完成下拉框
+	function showAutoList($input){
+		$('div.yd-ac').data('field',$input);
+		var inputOffset = $input.offset();
+		var pHeight = parseInt($input.css('padding-top')) + parseInt($input.css('padding-bottom'));
+		var pWidth = parseInt($input.css('padding-left')) + parseInt($input.css('padding-right'));
+		$('div.yd-ac').css({
+			top: inputOffset.top + $input.height() + pHeight + 4,
+			left: inputOffset.left ,
+			'min-width': $input.width() + pWidth
+		});
+	}
+	//绑定事件
+	function autoEvent($input) {
+	    //单击每行数据项
+	    $('div.yd-ac').on('click', '.yd-ac-row', function(crowEvent) {
+	        selectedRow($input,$(this), crowEvent);
+	    })
+		.on('mouseenter',function(){
+			$input.data('isblur',false);
+		})
+		.on('mouseleave',function(){
+			$input.data('isblur',true);
+		})
+		//滚动事件，清除查询列表
+		$('body,div:not(.yd-ac)').on('scroll',scrollClear);
+	}
+	//清除下拉框元素及相关事件
+	function clearAuto($input){
+		$input.data('isblur',true);
+		$('div.yd-ac').remove();
+		$('body,div').off('scroll',scrollClear);
+	}
+	function scrollClear(){
+		var $input = $('div.yd-ac').data('field');
+		if ($input.length > 0) showAutoList($input);
+		//$('div.yd-ac').remove();
+		//$('body,div').off('scroll',scrollClear);
+	}
+	//选择某项
+	function selectedRow($input, $sRow, crowEvent){
+		var rowObj = $sRow.data('row');
+		var oldValue = $input.data('selected') ||  '';
+		var newValue = rowObj._value;
+		if (options.onSelect && options.onSelect.call($input[0], rowObj._value, rowObj._otherValues) === false) {
+			clearAuto($input);
+			return;
+		}
+		var curValue = $input.val();
+		if (options.templateSelection) {
+			$input.val(rowObj._tplValue)
+			.data('selected',rowObj._value)
+			.data('tplvalue',rowObj._tplValue);
+		}
+		else $input.val(rowObj._value).data('selected',rowObj._value);
+		if (oldValue != newValue || (curValue == '' && newValue != '')) {
+			$input.data('change',true);//不执行在ydl.autoComplete方法change注册事件
+			if (options.onChange) options.onChange.call($input[0], crowEvent, rowObj._value, rowObj._otherValues);
+			$input.change();
+			$input.data('change',false);//恢复执行
+		}
+		clearAuto($input);
+	}
+	//up/down键
+	function upDown(input, flag){
+		$('div.yd-ac-row').removeClass('hover');
+		var $nextRow;
+		var sFlag = flag == 'down' ? 'first' : 'last';
+		if (input.value == '') $nextRow = $('div.yd-ac-row:'+sFlag);
+		else {
+			var dattr = options.templateSelection ? 'tplvalue' : 'value';
+			var $curRow = $('div.yd-ac-row[data-'+dattr+'='+input.value+']');
+			var $snRow = flag == 'down' ? $curRow.next() : $curRow.prev();
+			if ($snRow.length > 0) $nextRow = $snRow;
+			else $nextRow = $('div.yd-ac-row:'+sFlag);
+		}
+		$nextRow.addClass('hover');
+		input.value = $nextRow.data(dattr)||'';
+		$('.yd-ac').scrollTop($nextRow.height()*$nextRow.index());
+	}
+};
+
+/**
+ * 将文本框转为金额输入框
+ */
+$.fn.moneyinput = function() {
+	//用于编辑金额的原始文本框
+	var $input = this;
+	if ($input.is('[type="hidden"]')) return $input;
+	//小数位数
+	var declen = $input.attr('data-declen');
+	declen = declen === undefined || declen === '' ? 2 : parseInt(declen);
+	
+	//对用户输入的内容进行判断，避免转换格式时发生错误
+	$input.on('keydown',function(e){
+ 
+		var inputText = $input.val();
+		var inputTextChanged = '';
+		var keyChar = '';
+		var cursurPosition=0, cursurStart=0 , cursurEnd=0;
+		
+		keyChar = ( !isNaN(e.key) || e.key == '.' || e.key == 'Decimal') ? ( e.key== 'Decimal' ? '.' : e.key ) : '' ;
+		
+		//这里是专门为IE8准备的
+		if(!keyChar){
+			var keyCodeDic = {
+								48	:'0',
+								49	:'1',
+								50	:'2',
+								51	:'3',
+								52	:'4',
+								53	:'5',
+								54	:'6',
+								55	:'7',
+								56	:'8',
+								57	:'9',
+								96	:'0',
+								97	:'1',
+								98	:'2',
+								99	:'3',
+								100	:'4',
+								101	:'5',
+								102	:'6',
+								103	:'7',
+								104	:'8',
+								105	:'9',
+								110	:'.',
+								190 :'.'
+							};
+			keyChar = keyCodeDic[e.keyCode] == undefined ? '' : keyCodeDic[e.keyCode];
+		}
+		
+        if(this.selectionStart || this.selectionStart == 0 ){
+        	//非IE(这里指的是IE8什么的，最新的IE还是支持的)
+        	
+        	//光标当前位置
+            cursurPosition = this.selectionStart;
+            //光标选区起始位置
+            cursurStart = this.selectionStart;
+            //光标选区结束位置
+    		cursurEnd = this.selectionEnd;
+    		
+        }else{
+        	//这里是专门为IE8准备的
+            try{
+            	
+            	var range = document.selection.createRange();
+            	var textLength = range.text.length;
+	            range.moveStart("character",-this.value.length);
+	            textLengthChanged=range.text.length;
+	            
+	            //光标当前位置
+	            cursurPosition = textLengthChanged-textLength;
+	            //光标选区起始位置
+	            cursurStart = textLengthChanged-textLength;
+	            //光标选区结束位置
+	    		cursurEnd = textLengthChanged;
+	            
+            }catch(e){
+            	cursurPosition=0;
+            	cursurStart=0;
+            	cursurEnd=0
+            }
+        }
+        
+        //插入
+        if(cursurStart >= cursurEnd) inputTextChanged = inputText.substr(0 , cursurPosition) + keyChar +
+        	inputText.substring(cursurPosition , inputText.length);
+        
+        //选中	declen
+        else inputTextChanged = inputText.substr(0 , cursurStart) + keyChar +
+        	inputText.substring(cursurEnd , inputText.length);
+        	
+        if(keyChar != ''){
+        	
+        	var testRul1 = new RegExp( "^(-?\\d{0,"+ (17-declen-1) +"})$"); 
+        	
+        	if( !testRul1.test(inputTextChanged) || inputTextChanged == '9999999999999999'){
+        		
+        		var testRul2 = new RegExp( "^-?\\d{1,"+ (17-declen-1) +"}\\.-?\\d{0,"+ declen +"}$");
+        		
+        		if( !testRul2.test(inputTextChanged) || declen == '0') return false;
+            	
+        	}
+        	
+        }
+        
+	});
+	
+	//添加用于显示金额格式的文本框，只读
+	var readOnly = $input.prop('readonly') ? ' readonly' : '';
+	var $money = $('<input type="text" class="form-control input-sm money-display"' + readOnly + ' />');
+	$input.after($money).hide().blur(function() {
+		if (!$(this).hasClass('has-error')) {
+			$(this).hide();
+			$money.val(addComma(this.value)).show();
+		}
+	});
+	$money.val(addComma($input.val())).focus(function() {
+		$(this).hide();
+		$input.show().focus();
+	});
+	function addComma(value) {
+		if (value !== '' && value.indexOf(',') < 0) {
+			value = ydl.addComma(parseFloat(value).toFixed(declen));
+			if (value == 'NaN') value = '';
+			return value;
+		}
+	}
+	return $input;
+};
+
+/**
+ * 日期控件
+ */
+$.fn.datepicker = function (options, ext) {
+	this.each(function () {
+		var input = this;
+		var $input = $(input);
+		var inList = $input.closest('table').hasClass('ydpx-datalist');
+		var $dateComp = inList ? $input : $input.parent();
+		if (typeof options === 'string') {
+			if ($.isFunction(ext)) {
+				//事件
+				$dateComp.on(options, function (ev) {
+					var d1 = ev.date;
+					var d2 = new Date(d1.getFullYear(), d1.getMonth(), d1.getDate(), d1.getUTCHours(), d1.getMinutes(), d1.getSeconds());
+					ext.call(input, d2);
+				});
+			}
+			else {
+				//方法
+				$dateComp.datetimepicker(options, ext);
+			}
+			return;
+		}
+		//如果没有设置自定义属性，根据最大长度推断日期格式
+		if (!options) options = $dateComp.data('date-options');
+		if (!options) {
+			options = ({
+				'19': { format: 'yyyy-mm-dd hh:ii:ss', minView: 'hour' },
+				'16': { format: 'yyyy-mm-dd hh:ii', minView: 'hour' },
+				'8': $input.data('type') === 'time' ? { format: 'hh:ii:ss', minView: 'hour', maxView: 'day', startView: 'day' } : { format: 'yyyymmdd', minView: 'month', startView: 'month' },
+				'7': { format: 'yyyy-mm', minView: 'year', startView: 'year', forceParse: false },
+				'6': { format: 'yyyymm', minView: 'year', startView: 'year', forceParse: false },
+				'5': { format: 'hh:ii', minView: 'hour', maxView: 'day', startView: 'day'},
+				'4': { format: 'yyyy', minView: 'decade', startView: 'decade'}
+			})[this.maxLength] || {};
+		}
+		//如果设置了自定义属性，销毁日期控件以便重新初始化
+		else {
+			$dateComp.datetimepicker('remove');
+		}
+		//如果是只读的，销毁日期控件，否则初始化
+		if (this.readOnly) $dateComp.datetimepicker('remove');
+		else {
+			options = $.extend({
+				format: 'yyyy-mm-dd',
+				autoclose: true,
+				minView: 'month',
+				minuteStep: 1,
+				todayBtn: true,
+				todayHighlight: true,
+				language: 'zh-CN',
+				pickerPosition: inList ? 'bottom-right' : 'bottom-left',
+				forceParse: false
+			}, options);	
+			if($.isFunction($.fn.datetimepicker.customOptions)) $.fn.datetimepicker.customOptions(options);
+			$dateComp.data('date-options', options);
+			$dateComp.datetimepicker(options);
+		}
+	});
+	return this;
+};
+
+/**
+ * getMask by hzy 获得多级字典的面具值
+ */
+ydl.mudic = {
+	getMask: function (dickey) {
+		if (pageConfig.mudics && pageConfig.mudics.mask) {
+			if (pageConfig.mudics.mask[dickey]) {
+				return pageConfig.mudics.mask[dickey];
+			}
+			else {
+				//alert('dickey=' + dickey + ' 没有找到对应mask');
+				return dickey;
+			}
+		}
+		else {
+			alert('开发人员没有在流程配置文件中配置mudics节点');
+			return dickey;
+		}
+	},
+	getValByMask: function (name, mask) {
+		if (pageConfig.mudics && pageConfig.mudics.mask) {
+			var mudics = pageConfig.mudics.mask;
+			var val = null;
+			for (var key in mudics) {
+				if (key.indexOf(name) > -1 && mudics[key] == mask) {
+					var keys = key.split('\.');
+					if (keys.length > 0) val = keys[keys.length - 1];
+				}
+			}
+			return val;
+		}
+		else {
+			alert('开发人员没有在流程配置文件中配置mudics节点');
+			return null;
+		}
+	},
+	getName: function (dickey) {
+		if (pageConfig.mudics && pageConfig.mudics.name) {
+			if (pageConfig.mudics.name[dickey]) {
+				return pageConfig.mudics.name[dickey];
+			}
+			else {
+				//alert('dickey=' + dickey + ' 没有找到对应name');
+				return "";
+			}
+		}
+		else {
+			alert('开发人员没有在流程配置文件中配置mudics节点');
+			return "";
+		}
+	},
+	getListCache: {},
+	getList: function(dickey, callback) {
+		//mudic/{dickey}/{poolkey}
+		var dtd = $.Deferred();
+		var url = ydl.contexPath + '/flow/mudic/' + dickey  + '/' + poolSelect['_POOLKEY'];
+		var dictData = ydl.mudic.getListCache[dickey];
+		if (dictData) {
+			if ($.isFunction(callback)) callback(dictData);
+			dtd.resolve(dictData);
+		}
+		else {
+			ydl.ajax(url, {}, function (data, oriData) {
+				ydl.mudic.getListCache[dickey] = data;
+				if ($.isFunction(callback)) callback(data);
+				dtd.resolve(data);
+			}).fail(function (errmsg, errcode) {
+				dtd.reject(errmsg, errcode);
+			});
+		}
+		return dtd.promise();
+	}
+};
+
+/**
+ * 自定义数据，可提交到总线（自动序列化）
+ */
+ydl.attribute = {
+	data: {},
+	set: function (name, value) {
+		ydl.attribute.data[name] = value;
+	},
+	get: function (name) {
+		return ydl.attribute.data[name];
+	}
+};
+
+
+
+/**
+ * 设置表格容器行的可见性
+ * @param {Object|String} start 开始行中包含的组件DOM对象、jQuery对象或ID属性
+ * @param {Object|String} end 结束行中包含的组件DOM对象、jQuery对象或ID属性
+ * @param {Boolean} [visible] 是否可见，可省略，缺省为true，即显示
+ * @returns {Object} 包含所有操作行(tr)的jQuery对象，没有选择行时返回null
+ * 北京bootstrap
+ */
+ydl.setRowsVisible = function(start, end, visible) {
+	var start = ydl.getDom(start) || document.getElementById(start);
+	var end = ydl.getDom(end) || document.getElementById(end);
+	if (!start) {
+		ydl.log('ydl.setRowsVisible出错：找不到指定的开始组件', 'red');
+		return null;
+	}
+    var	$start = start.className == 'form-group' ? $(start) : $(start).closest('.form-group');
+    var	$end = end ? (end.className == 'form-group' ? $(end).next() : $(end).closest('.form-group').next()) : null;
+	return $start.nextUntil($end).addBack().each(function() {
+		if (visible || visible === undefined) $(this).show();
+		else $(this).hide();
+	});
+};
+
+
+/**
+ * 初始化标题行折叠功能
+ * @param {String} containerId 表格容器id
+ * @param {Boolean} foldOnInit 初始化时是否折叠状态
+ * @returns {Object} 该容器中所有标题行的jQuery对象集合
+ * @author 孙一宁 2016-4
+ */
+ydl.foldHeader = function(containerId, foldOnInit) {
+	var $headers = $('#' + containerId + ' div.table-caption');
+	if ($headers.eq(0).hasClass('foldable')) return $headers;	//防止重复初始化
+	else return $headers.each(function (i) {
+		var $icon = $('<span class="glyphicon glyphicon-triangle-bottom" style="float:left;"></span>');
+		var $nextHeaderRow = $headers.eq(i + 1).parent();
+		var $thisHeader = $(this).prepend($icon).addClass('foldable').on('click', function() {
+			if ($thisHeader.hasClass('folded')) {
+				$thisHeader.removeClass('folded').parent().nextUntil($nextHeaderRow).removeClass('hide');
+				$icon.removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+			}
+			else {
+				$thisHeader.addClass('folded').parent().nextUntil($nextHeaderRow).addClass('hide');
+				$icon.removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
+			}
+		});
+		if (foldOnInit) $thisHeader.click();
+    });
+};
+
+/**
+ * 给按钮添加自定义图标
+ */
+$.fn.addIcon = function (iconName) {
+	if (!this.is(':button')) return this;
+	else return this.prepend('<span class="glyphicon glyphicon-' + iconName + '" />');
+};
+
+/**
+ * 根据json数据生成流程图
+ * @example $(container).append(flowChart(data));
+ * @param {Object} data 流程图步骤数据
+ * @param {String[]} [data.prev] 历史流程步骤名
+ * @param {String} [data.current] 当前流程步骤名
+ * @param {(String|String[])} [data.next] 后续流程步骤名，问号?代表分支
+ * @param {Number} [maxStep] 最多显示步骤数，大于此数的步骤折叠，0=不折叠，正数=从左侧折叠，负数=从右侧折叠，缺省=由内部常量确定
+ * @return {Object} 流程图的jQuery对象
+ */
+ydl.flowChart = function (data, maxStep) {
+	/**
+	 * 获取流程步骤HTML
+	 * @param {String} stepType 步骤类型
+	 * @param {String|Object} step 步骤名称字符串，或包含步骤标识(id)和名称(text)的对象
+	 * @return {String} 流程步骤HTML
+	 */
+	function getStep(stepType, step) {
+		if ($.isPlainObject(step)) return '<li data-id="' + step.id + '" class="flow-chart-' + stepType + '"><div></div><span>' + step.text + '</span></li>'
+		else return '<li class="flow-chart-' + stepType + '"><div></div><span>' + step + '</span></li>'
+	}
+
+	//===============第一部分：画流程图======================
+	//流程图的容器
+	var $container = $('<ul class="flow-chart"></ul>');
+	//插入开始步骤
+	$container.append(getStep('start', '业务流程开始'));
+	//插入历史步骤
+	$.each(data.prev || [], function () {
+		$container.append(getStep('prev', this));
+	});
+	//插入当前步骤
+	if (data.current) $container.append(getStep('current', data.current));
+	//插入后续步骤
+	if ($.isArray(data.next)) {
+		//多个后续步骤
+		$.each(data.next, function () {
+			$container.append(getStep('nextall', this));
+		});
+		$container.append(getStep('end', '业务流程结束'));
+	}
+	else if (data.next === '?') {
+		//下一步骤是分支
+		$container.append(getStep('branch', '业务流程分支'));
+	}
+	else if (!data.next) {
+		//没有下一步骤，直接结束
+		$container.append(getStep('end', '业务流程结束'));
+	}
+	else {
+		//正常的下一步骤
+		$container.append(getStep('next', data.next));
+	}
+
+	//===============第二部分：处理步骤折叠======================
+	//定义缺省最多可显示的步骤个数
+	var DEFAULT_MAX_STEP = 7;
+	if (maxStep === undefined) maxStep = DEFAULT_MAX_STEP;
+	//所有步骤
+	var $allSteps = $container.children();
+	//如果步骤数超过了最大限制
+	if (maxStep !== 0 && $allSteps.length > Math.abs(maxStep)) {
+		//展开方法
+		var expandFunc = function () {
+			$(this).siblings().show().end().remove();
+		};
+		//折叠前面的步骤
+		if (maxStep > 0) {
+			$allSteps.slice(0, $allSteps.length - maxStep).hide();
+			$(getStep('expand-l', '点击这里<br />展开所有步骤')).on('click', expandFunc).prependTo($container);
+		}
+		//折叠后面的步骤
+		else {
+			$allSteps.slice(-maxStep).hide();
+			$(getStep('expand-r', '点击这里<br />展开所有步骤')).on('click', expandFunc).appendTo($container);
+		}
+	}
+
+	//返回流程图容器
+	return $container;
+};
+
+/**
+ * 生成进度条
+ * @param {Number|Object|Object[]} bars 进度条数据
+ * @param {Number} bar.value 进度值
+ * @param {String} [bar.text] 显示文字
+ * @param {Object} [options] 选项
+ * @param {Boolean} [options.text] 显示的文本，设为空串则不显示文本
+ * @param {String} [options.style] 预定义样式（success、info、warning、danger）
+ * @param {String} [options.color] 自定义样式（与style不能同时使用）
+ * @param {Boolean} [options.animation] 是否显示动画
+ * @return {String} 进度条HTML
+ */
+ydl.progressBar = function (bars, options) {
+	options = $.extend({
+		animation: false
+	}, options);
+	if (!$.isArray(bars)) bars = [bars];
+	var html = $.map(bars, function (bar) {
+		if (!$.isPlainObject(bar)) bar = {value: bar};
+		bar = $.extend({}, options, bar);
+		var text = bar.text === '' ? '' : bar.text || bar.value + '%';
+		return '<div class="progress-bar' + (bar.animation ? ' progress-bar-striped active' : '') +
+			(bar.style ? ' progress-bar-' + bar.style : '') + '" role="progressbar" style="width: ' + bar.value + '%;' +
+			(bar.color ? 'background-color:' + bar.color : '') + '">' + (text ? '' : '<span class="sr-only">') +
+			text + (text ? '' : '</span>') + '</div>';
+	}).join('');
+	return '<div class="progress">' + html + '</div>';
+};
+
+
+/**
+ * 根据服务器配置信息生成自定义查询表单
+ * @param {String|Object} configId 服务器端配置的自定义查询ID 或者 查询条件json
+ * @param {String} containerId 生成查询表单所在的容器ID
+ * @param {Function} queryFunc(terms) 点击执行查询按钮时的回调函数，参数为查询条件json数据序列化后的字符串
+ * @return undefined
+ */
+ydl.diyQuery = function (configId, containerId, queryFunc) {
+
+	//常量定义
+	var REL_AND = '<i>并且</i>';
+	var REL_OR = '<i>或者</i>';
+	var OP_MAP = {
+		'EQ': '等于',
+		'NEQ': '不等于',
+		'GT': '大于',
+		'LT': '小于',
+		'GTE': '大于或等于',
+		'LTE': '小于或等于',
+		'%LIKE': '以...结尾',
+		'LIKE%': '以...开头',
+		'%LIKE%': '包含文字',
+		'BETWEEN': '在...之间',
+		'IN': '包含',
+		'NOTIN': '不包含'
+	};
+
+	var isShow = false;
+	var diyQueryConfig = [];
+	//显示查询条件时
+	if (typeof configId == "object" ) {
+		diyQueryConfig = pageConfig.diyQuery[configId.id];
+		isShow = true;
+	}
+	//初始化查询条件时
+	else {
+		//根据自定义查询ID取配置信息
+		diyQueryConfig = pageConfig.diyQuery[configId];
+	}
+
+	//字段名对应的配置信息索引
+	var configMap = {};
+
+	//字段名对应的操作符列表HTML
+	var opSelectMap = {};
+	$.each(diyQueryConfig, function (fi, fv) {
+		opSelectMap[fv.name] = ydl.common.blankOption + ydl.createOptions($.map(fv.op.split(','), function (op) {
+			return {text: OP_MAP[op.toUpperCase()], value: op};
+		}));
+		configMap[fv.name] = fi;
+	});
+
+	//字段名列表HTML
+	var fieldNameSelect = ydl.common.blankOption + ydl.createOptions($.map(diyQueryConfig, function (fv) {
+		return {text: fv.desc, value: fv.name};
+	}));
+
+	//创建自定义查询模块结构
+	$('#' + containerId + ' .panel-body').append('<div class="diy-qry">' +
+			'<div class="container-fluid diy-qry-trm"></div>' +
+				'<div class="text-center diy-qry-btn">' +
+					'<button class="btn btn-success btn-sm" data-func="add" type="button"><span class="glyphicon glyphicon-plus"></span>添加条件</button> ' +
+					'<button class="btn btn-primary btn-sm" data-func="run" type="button"><span class="glyphicon glyphicon-search"></span>执行查询</button> ' +
+					'<div class="btn-group">' +
+						'<button class="btn btn-default btn-sm" data-func="exp" type="button"><span class="glyphicon glyphicon-edit"></span>编辑表达式</button> ' +
+						'<button class="btn btn-default btn-sm hide" data-func="and" type="button">并且</button>' +
+						'<button class="btn btn-default btn-sm hide" data-func="or" type="button">或者</button>' +
+						'<button class="btn btn-default btn-sm hide" data-func="sla" type="button">全选</button>' +
+						'<button class="btn btn-default btn-sm hide" data-func="sln" type="button">取消选择</button>' +
+						'<button class="btn btn-default btn-sm hide" data-func="rmv" type="button">移除</button>' +
+						'<button class="btn btn-default btn-sm hide" data-func="prv" type="button">预览</button>' +
+						'<button class="btn btn-default btn-sm hide" data-func="hlp" type="button">帮助</button>' +
+					'</div>' +
+				'</div>' +
+				'<div class="diy-qry-exp hide" data-rel="and"></div>' +
+			'</div>');
+
+	//各个部分的jQuery对象
+	var $diy = $('#' + containerId + ' .diy-qry');		//最外层容器
+	var $diyForm = $diy.children('.diy-qry-trm');		//查询条件录入表单
+	var $diyButtons = $diy.children('.diy-qry-btn');	//按钮栏
+	var $diyExp = $diy.children('.diy-qry-exp');		//表达式编辑区
+
+	//初始化已有行的标签拖拽
+	createDragable($diyForm.find('b'));
+
+	//当前最大序号
+	var rowCount = $diyForm.children().length;
+
+	//注册按钮事件
+	$diyButtons.on('click', 'button', function () {
+		switch ($(this).data('func')) {
+			//添加查询条件
+			case 'add': addField(); break;
+			//执行查询
+			case 'run': run(); break;
+			//编辑条件表达式
+			case 'exp': editExp(this); break;
+			//设为“并且”
+			case 'and': setGroup('and'); break;
+			//设为“或者”
+			case 'or': setGroup('or'); break;
+			//移除条件
+			case 'rmv': removeTerms(); break;
+			//全部选择
+			case 'sla': selectAll(); break;
+			//取消选择
+			case 'sln': $diyExp.find('div,b').addBack().removeClass('selected'); break;
+			//预览
+			case 'prv': showPreview(); break;
+			//帮助
+			case 'hlp': showHelp(); break;
+		}
+	});
+
+    //选择字段名改变操作符，并清空字段值
+    $diyForm.on('change', '.diy-qry-trm-name', function () {
+        $(this).closest('.row').find('.diy-qry-trm-op').html(opSelectMap[this.value])
+        		.end().find('.diy-qry-trm-value').empty();
+    });
+
+    //选择操作符改变字段值
+    $diyForm.on('change', '.diy-qry-trm-op', function () {
+    	var $row = $(this).closest('.row');
+        setFieldValue(diyQueryConfig[configMap[$row.find('.diy-qry-trm-name').val()]], this.value, $row.find('.diy-qry-trm-value'));
+    });
+
+	//显示查询条件时,显示查询条件和表达式
+	var tagList = configId.tagList;
+	if (isShow) {
+		editExp($diyButtons.find('button[data-func=exp]')[0]);
+		showTermExp(configId.query.term,$diyExp);
+	}
+	//初始化查询条件时，默认添加一行查询条件
+	else addField();
+
+	//显示查询条件和表达式
+	function showTermExp(terms,$diyExpDiv,rel){
+		$.each(terms, function(index,ele){
+			if (ele.rel) {
+				var $div = $('<div data-rel="' + ele.rel + '"></div>');
+				$diyExpDiv.append(index === 0 ? '': REL_AND).append($div);
+				showTermExp(ele.term,$div,ele.rel === 'and' ? REL_AND : REL_OR);
+			}
+			else {
+				if ($.inArray(ele.tag, tagList) > -1) {
+					tagList.splice($.inArray(ele.tag, tagList), 1);
+					addField(ele);
+				}
+				$diyExpDiv.append((index === 0 ? '' : (rel || REL_AND)) + '<b data-tag="'+ele.tag+'">'+ele.tag+'</b>');
+			}
+		});
+	}
+
+    //点击删除按钮删除一条
+    $diyForm.on('click', 'button', function () {
+		var tag = $(this).closest('.row').children().eq(0).text();
+        $(this).closest('.row').remove();
+		$diyExp.find('b[data-tag='+tag+']').addClass('selected');
+		removeTerms();
+    });
+
+	//点击条件标签选择或取消选择一个条件，点击关系文字选择或取消选择整组
+	$diyExp.on('click', 'b, i', function () {
+		var $this = $(this);
+		if (this.tagName === 'B') {
+			$this.toggleClass('selected');
+			if ($this.siblings().length === $this.siblings().filter('.selected').length) $this.parent().addClass('.selected');
+			if ($this.siblings().addBack().filter('.selected').length === 0) $this.parent().removeClass('selected');
+		}
+		else {
+			$this.parent().toggleClass('selected');
+			selectChildren($this.parent(), $this.parent().hasClass('selected'));
+		}
+	});
+
+	//递归选中或取消选中
+	function selectChildren($group, select) {
+		var method = select ? 'addClass' : 'removeClass';
+		$group[method]('selected').children('div,b').each(function () {
+			if (this.tagName === 'DIV') selectChildren($(this), select);
+			else $(this)[method]('selected');
+		});
+	}
+
+	//点击编辑表达式按钮
+	function editExp(button) {
+		//如果已经添加了条件，但表达式编辑区为空时，自动生成所有条件and的表达式
+		var $ids = $diyForm.find('b');
+		if ($diyForm.children().length > 0 && $diyExp.children().length === 0) {
+			$diyExp.data('rel', 'and').append($ids.map(function (i, el) {
+				return (i === 0 ? '' : REL_AND) + '<b data-tag="' + this.innerHTML + '">' + this.innerHTML + '</b>';
+			}).get().join(''));
+		}
+		//显示隐藏表达式编辑按钮
+		$(button).nextAll().toggleClass('hide');
+		//显示隐藏表达式编辑区
+		$diyExp.toggleClass('hide');
+		//启用或禁用条件标签拖拽
+		if ($diyExp.hasClass('hide')) {
+			$ids.draggable('disable');
+			$(button).removeClass('active');
+		}
+		else {
+			$ids.draggable('enable');
+			$(button).addClass('active');
+		}
+	}
+
+	//全部选择
+	function selectAll() {
+		$diyExp.find('div,b').addClass('selected');
+		$diyExp.find('div.selected b').addClass('selected');
+	}
+
+	//给已选中的条件标签设置分组
+	function setGroup(rel) {
+		var $selected = $diyExp.find('b.selected,div.selected b');
+		var $first = $selected.eq(0);
+		$selected.not($first).prev('i').remove().end().before(rel === 'and' ? REL_AND : REL_OR).prev().addBack()
+				.appendTo($first.wrap('<div data-rel="' + rel + '"></div>').parent().droppable(droppableOptions));
+		if ($first.parent().parent().data('rel') === rel) $first.unwrap();
+		cleanTags();
+	}
+
+	//返回组中关系标签
+	function getRel(group, isTmp)  {
+		if ($(group).children().length === 0) return '';
+		else return '<i' + (isTmp ? ' class="diy-qry-tmp"' : '') + '>' + ($(group).data('rel') === 'and' ? '并且' : '或者') + '</i>';
+	}
+
+	//拖放目标参数
+	var droppableOptions = {
+		greedy: true,
+		intersect: 'pointer',
+		over: function (event, ui) {
+			$(this).append(getRel(this, true) + '<b class="diy-qry-tmp">&nbsp;</b>');
+			$(this).addClass('hover');
+		},
+		out: function (event, ui) {
+			$(this).children('.diy-qry-tmp').remove();
+			$(this).removeClass('hover');
+		},
+		drop: function (event, ui) {
+			$('div.diy-qry-exp .diy-qry-tmp').remove();
+			$(this).append(getRel(this, false) + '<b data-tag="'+$(ui.draggable).text()+'">' + $(ui.draggable).text() + '</b>');
+			$(this).removeClass('hover');
+		}
+	};
+
+	//拖放到分组空白处
+    $diyExp.find('div').addBack().droppable(droppableOptions);
+
+	//从表达式编辑区中移除选中的条件
+	function removeTerms() {
+		$diyExp.find('.selected').prev('i').addBack().remove();
+		cleanTags();
+	}
+
+	//清理标签
+	function cleanTags() {
+		for (var i = 0; i < 3; i++) {
+			$diyExp.find('i:nth-child(1),i:nth-last-child(1)').remove();
+			$diyExp.find('div:empty').remove();
+			$diyExp.find('div').each(function () {
+				var $children = $(this).children();
+				if ($children.length === 1) $children.unwrap();
+			});
+			$diyExp.find('div').each(function () {
+				var $this = $(this);
+				if ($this.data('rel') === $this.parent().data('rel')) $this.children().unwrap();
+			});
+		}
+		$diyExp.find('.selected').addBack().removeClass('selected');
+	}
+
+	//初始化拖拽对象
+	function createDragable($el) {
+		$el.draggable({
+			opacity: 0.7,
+			helper: 'clone'
+		});
+		if ($diyExp.hasClass('hide')) $el.draggable('disable');
+	}
+
+    //新增一行查询条件
+    function addField(queryTerm) {
+        //序号规则A-Z，A1-Z1，A2-Z2……
+        var sequenceNumber = String.fromCharCode('A'.charCodeAt(0) + rowCount % 26) + (parseInt(rowCount / 26) || '');
+		if (queryTerm) sequenceNumber = queryTerm.tag;
+        var $newRow = $('<div class="row">' +
+				'<div class="col-md-1 col-xs-2"><b>' + sequenceNumber + '</b></div>' +
+				'<div class="col-md-3 col-xs-5">' +
+					'<select class="form-control input-sm diy-qry-trm-name">' + fieldNameSelect + '</select>' +
+				'</div>' +
+				'<div class="col-md-2 col-xs-5">' +
+					'<select class = "form-control input-sm diy-qry-trm-op">' +
+						'<option value="">请选择...</option>' +
+					'</select>' +
+				'</div>' +
+				'<div class="col-md-5 col-xs-10 col-md-push-0 col-xs-push-2 diy-qry-trm-value"></div>' +
+				'<div class="col-md-1 col-xs-2 col-md-pull-0 col-xs-pull-10">' +
+					'<button type="button" class="btn btn-sm btn-default" title="删除">×</button>' +
+				'</div>' +
+			'</div>');
+        $diyForm.append($newRow);
+		//设置查询条件内容
+		if (queryTerm) {
+			$newRow.find('.diy-qry-trm-name').val(queryTerm.name).change();
+			$newRow.find('.diy-qry-trm-op').val(queryTerm.op).change();
+			if ( typeof queryTerm.value == "string" ) {
+				$newRow.find('.diy-qry-trm-value input').val(queryTerm.value);
+			}
+			else {
+				var $inputs = $newRow.find('.diy-qry-trm-value input:visible');
+				if ($inputs.length > 0 && ($inputs[0].type === 'radio' || $inputs[0].type === 'checkbox')) {
+					ydl.setValue($inputs,queryTerm.value.join(','));
+				}
+				else {
+					$inputs.each(function(index,ele){
+						if ($(ele).hasClass('money-display')) ele = $(ele).prev();
+						ydl.setValue(ele,queryTerm.value[index]);
+					});
+				}
+			}
+		}
+        createDragable($newRow.find('b'));
+        rowCount++;
+    }
+
+    //生成字段值表单元素
+    function setFieldValue(config, op, $value) {
+    	//有字典
+    	if (config.mudic) {
+    		//包含、不包含，输出一组复选框
+    		if (op === 'in' || op === 'notin') {
+				$value.html(ydl.createCheckboxes(config.mudic));
+    		}
+    		//其他，输出下拉列表
+    		else {
+    			$value.html('<select class="form-control input-sm">' + ydl.createOptions(config.mudic) + '</select>');
+    		}
+    	}
+    	else {
+    		//在...之间，输出两个文本框
+	    	if (op === 'between') {
+	    		$value.html('<div class="input-group"><div><input type="text" class="form-control input-sm"></div>' +
+						'<div class="input-group-addon">至</div>' +
+						'<div><input type="text" class="form-control input-sm"></div></div>');
+	    	}
+	    	//其他，输出一个文本框
+	    	else {
+	    		$value.html('<input type="text" class="form-control input-sm">');
+	    	}
+	    	//处理金额和日期类型
+	    	if (config.datatype === 'money') {
+	    		$value.find('input').addClass('money').each(function () {
+	    			$(this).moneyinput();
+	    		});
+	    	}
+			else if (config.datatype === 'date') {
+				$value.find('input').addClass('date').wrap('<div class="input-group input-group-sm date"></div>')
+						.parent().append('<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>')
+						.end().datepicker();
+			}
+	    }
+    }
+
+	//生成最终要提交的查询条件json并执行查询
+	function run() {
+		//清除上次校验错误信息
+		ydl.validator.clear($diyForm.find('.has-error'));
+		//包含所有要提交的查询条件（{条件序号: {name: 字段名, op: 操作符, value: 字段值}}）
+		var terms = {};
+		//字段名数组，用于在生成默认表达式时保持条件顺序与表单一致
+		var termIndex = [];
+		//遍历表单每一行，将查询条件数据放入上面的对象和数组
+		$diyForm.children().each(function () {
+			var $cols = $(this).children();
+			var id = $cols.eq(0).text();
+			termIndex.push(id);
+			var name = $cols.eq(1).children('select').val();
+			var op = $cols.eq(2).children('select').val();
+			if (name === '' || op === '') return;
+			var inputs = [];
+			var value = $cols.eq(3).find('input[type="text"]:not(.money-display),select,input[type="checkbox"]:checked').map(function (i, input) {
+				inputs[i] = input;
+				return this.value;
+			}).get();
+			terms[id] = valid({
+				inputs: inputs,
+				tag: id,
+				name: name,
+				op: op,
+				value: value.length === 1 && op !== 'in' && op !== 'notin' ? value[0] : value
+			});
+		});
+		//返回最终条件json
+		var json = {
+			id: isShow ? configId.id : configId,
+			wf: poolSelect['_WF'] || '',
+			tagList: termIndex,
+			//没有显示表达式，全部按and处理
+			query: $diyExp.hasClass('hide') ? {
+				rel: 'and',
+				term: $.map(termIndex, function (v) {
+					return terms[v];
+				})
+			} :
+			//根据表达式生成json
+			getJson($diyExp)
+		};
+		//执行查询
+		if ($.isFunction(queryFunc) && $diyForm.has('.has-error').length == 0 ) queryFunc(JSON.stringify(json));
+		
+		//递归解析表达式
+		function getJson($group) {
+			return {
+				rel: $group.data('rel'),
+				term: $group.children().map(function () {
+					if (this.tagName === 'DIV') return getJson($(this));
+					else if (this.tagName === 'B') return terms[this.innerHTML];
+				}).get()
+			};
+		}
+	    
+		//校验填写的内容
+	    function valid(term) {
+	    	var config = diyQueryConfig[configMap[term.name]];
+	    	var value = term.value;
+	    	
+	    	$.each(term.inputs,function(){
+	
+	    		switch(config.type){
+					case "TIME":
+						break;
+					case "TIMESTAMP":
+						break;
+					case "DATE":
+						ydl.validator(this,{type: 'date', required: true , desc: config.desc});
+						break;
+					case "INTEGER":
+						ydl.validator(this,{type: 'int', required: true , desc: config.desc});
+						break;
+					case "NUMERIC":
+					case "DOUBLE":
+					case "FLOAT":
+					case "DECIMAL":
+						ydl.validator(this,{type: 'float', required: true , desc: config.desc});
+						break;
+					case "VARCHAR":
+					case "CHAR":
+						ydl.validator(this,{type: 'validchar', required: true , desc: config.desc});
+						break;
+					default:
+						break;
+	    		}
+	    			
+	    	});
+	    	 
+	    	return term;
+	    }
+	}
+
+	//预览
+	function showPreview() {
+		var result = preview($diyExp);
+		ydl.alert('<b>表达式预览：</b><br><div class="diy-qry-prv">' + result.replace(/^（|）$/g, '') + '</div>');
+	}
+
+	//递归解析表达式生成预览文本
+	function preview($group) {
+		var map = {};
+		$diyForm.find('b').each(function () {
+			map[this.innerHTML] = $(this).closest('.row');
+		});
+
+		var result = $group.children('div,b').map(function () {
+			return this.tagName === 'DIV' ? preview($(this)) : previewField(map[this.innerHTML]);
+		}).get().join($group.data('rel') === 'and' ? ' <b>并且</b> ' : ' <b>或者</b> ');
+		return result.length > 0 ? '（' + result + '）' : '';
+	}
+
+	//为预览解析字段值
+	function previewField($row) {
+		//当前行字段名的value
+		var fieldName = $row.find('.diy-qry-trm-name').val();
+		//当前行操作符的value
+		var op = $row.find('.diy-qry-trm-op').val();
+		//字段名或操作符为空时直接忽略此字段
+		if (fieldName === '' || op === '') return null;
+		//当前行字段名的text
+		var fieldNameText = $row.find('.diy-qry-trm-name>:selected').text();
+		//当前行操作符的text
+		var opText = $row.find('.diy-qry-trm-op>:selected').text();
+		//当前行字段值列
+		var $trmValue = $row.children('.diy-qry-trm-value');
+		//当前行字段值的text
+		var value;
+
+		//获取选中复选框的text
+        if (op === 'in' || op === 'notin') {
+            value = '<em>' + $trmValue.find(':checkbox:checked').map(function () {
+            	return $(this).parent().text();
+            }).get().join('、') + '</em>';
+        }
+        else {
+        	var $inputs = $trmValue.find(':input:not(.money)');
+        	//在...之间（两个文本框）
+        	if (op === 'between') {
+	        	value = '<em>' + $inputs.first().val() + '</em>至<em>' + $inputs.last().val() + '</em>';
+	        }
+	        //获取输入框和下拉框的text
+	        else {
+	        	value = '<em>' + ydl.getValue($inputs, true) + '</em>';
+	        }
+        }
+
+        //如果操作符的text中存在“...”，就将“...”替换成字段值的text
+        if (opText.indexOf('...') > 0) {
+        	opText = opText.replace('...', value);
+        	value = '';
+        }
+		return '<span><em class="fn">' + fieldNameText + '</em>' + opText + value + '</span>';
+	}
+
+	//显示帮助
+	function showHelp() {
+		ydl.alert('<p><b>自定义查询-编辑条件表达式-使用说明</b></p><ol><li>您可以将查询条件左侧的序号标签拖拽到表达式编辑区；</li>' +
+				'<li>点击表达式编辑区里的查询条件标签，可以将它们选中；</li>' +
+				'<li>点击查询条件标签之间的关系说明文字，可以将整组选中；</li>' +
+				'<li>选中查询条件后，可以点击“并且”或“或者”按钮，将它们用括号组合成一组；</li>' +
+				'<li>选中查询条件后，点击“移除”按钮，可以将它们从表达式编辑区移除，但不会删除上面表单中的条件；</li>' +
+				'<li>通过点击“全选”或“取消选择”按钮，可以同时对所有查询条件标签操作；</li>' +
+				'<li>当显示表达式编辑区时，按表达式提交查询；未显示表达式编辑区时，将全部条件按“并且”提交查询。</li></ol>');
+	}
+
+};
+
+
+//流程附件相关方法
+ydl.attachment = {};
+
+/**
+ * 设置必传材料
+ * @param {String|Object} itemIds 半角逗号分隔的材料号，或{材料号:最小数量}对象
+ * @param {Boolean} [hideOther=false] 是否隐藏非必扫材料
+ */
+ydl.attachment.setRequired = function (itemIds, hideOther) {
+	var config = $.isPlainObject(itemIds) ? itemIds : {};
+	if (typeof itemIds === 'string') {
+		$.each(itemIds.split(','), function (i, v) {
+			config[v] = 1;
+		});
+	}
+	var $items = $('#flow_attachment .nav-tabs a');
+	$items.show().children('em').remove();
+	$items.each(function () {
+		var $item = $(this);
+		var min = config[$item.data('itemid')];
+		if (min) $item.append('<em data-min="' + min + '">*</em>');
+		else if (hideOther) $item.hide();
+	});
+};
+
+/**
+ * 检查必传
+ * @return {Object} 必传项是否满足要求以及不满足的材料信息
+ */
+ydl.attachment.checkRequired = function () {
+	var $items = $('#flow_attachment .nav-tabs a');
+	var data = [];
+	$items.each(function () {
+		var $item = $(this);
+		var itemid = $item.data('itemid');
+		var min = $item.children('em').data('min') || 0;
+		var count = parseInt($item.children('.badge').text()) || 0;
+		if (count < min) data.push({
+			id: itemid,
+			name: $item.children(':first').text(),
+			min: min,
+			count: count
+		});
+	});
+	return {ok: data.length === 0, data: data};
+};
+
+
+/**
+ * 将多个页面容器组合为多标签
+ * @param {(String|Object[])} options 半角分号分隔的页面容器ID（如：'ct1,ct2,ct3'），或者详细选项
+ * @param {String} options[].id 页面容器ID，可以是半角逗号分隔的多个ID，将放到同一个标签中
+ * @param {String} [options[].title] 标签标题，如果省略，将自动取容器标题
+ * @param {Function} [options[].show] 标签开始显示时的回调函数，return false可阻止标签切换，参数为event对象
+ * @param {Function} [options[].shown] 标签显示完成后的回调函数，参数为event对象
+ * @param {Function} [options[].hide] 标签开始隐藏时的回调函数，return false可阻止标签切换，参数为event对象
+ * @param {Function} [options[].hidden] 标签隐藏完成时的回调函数，参数为event对象
+ * @return {jQuery} $tabs 多页签对象
+ */
+ydl.tabs = function (options) {
+	//将简写模式转为详细选项
+	if (typeof options === 'string') {
+		options = $.map(options.split(','), function (id) {
+			return {id: id};
+		});
+	}
+	//按顺序取第一个ID的位置作为标签位置
+	var $tabContent = $('#' + options[0].id.split(',')[0]).wrap('<div class="tab-content"></div>').parent();
+	var $tabNav = $tabContent.before('<ul class="nav nav-tabs"></ul>').prev();
+	var $tabs = $tabContent.add($tabNav).wrapAll('<div class="container-tabs"></div>').parent();
+
+	//循环生成标签内容的html结构
+	$.each(options, function(index, option) {
+		//半角分号分隔的页面容器ID（如：'ct1,ct2,ct3'）
+		var optionId = option.id;
+		//根据容器ID生成标签内容ID（如：'tabs_ct1_ct2'）
+		var tabContentId = 'tab_' + optionId.replace(/,/g, '_');
+		//取容器标题
+		var wrapperTitle = [];
+		//添加页签内容
+		$tabContent.append('<div class="tab-pane fade' + (index == 0 ? ' in active' : '') + '" id="' + tabContentId + '"></div>');
+
+		//生成页面容器html结构
+		var $title;
+		$.each(optionId.split(','), function(index, tabId) {
+			//取容器标题
+			var title = getTitle(tabId);
+			if (title[0]) {
+				wrapperTitle.push(title[0]);
+				$title = title[1];
+			}
+			//将原页面容器移动到tab中
+			$('#' + tabId).appendTo('#' + tabContentId);
+		});
+		//生成标签标题
+		var title = option.title || wrapperTitle.join('') || tabContentId;
+		//如果同一个页签的容器中只有一个带标题的，并且没有手动设置标题，将其隐藏
+		if (!option.title && wrapperTitle.length == 1 && $title) $title.hide();
+
+		var $thisTab = $('<a href="#' + tabContentId + '" class="tab" data-toggle="tab">' + title + '</a>');
+		$thisTab.wrap('<li' + (index == 0 ? ' class="active"' : '') + '></li>').parent().appendTo($tabNav);
+
+		//该事件在标签开始展示时（尚未渲染完之前）触发。 event.target 指向要激活的标签，event.relatedTarget 提向之前已激活的标签（如果有的话）。
+		$thisTab.on('show.bs.tab hide.bs.tab', function (event) {
+			var $thisContent = $($(event.target).attr('href'));
+			if ($.isFunction(option[event.type])) {
+				var ret = option[event.type].call($thisContent, event, event.target, event.relatedTarget);
+				if (ret === false) event.preventDefault();
+			};
+		});
+		//该事件在标签已经呈现后（已渲染完成）触发。event.target 指向要激活的标签，event.relatedTarget 提向之前已激活的标签（如果有的话）。
+		$thisTab.on('shown.bs.tab hidden.bs.tab', function (event) {
+			var $thisContent = $($(event.target).attr('href'));
+			if ($.isFunction(option[event.type])) {
+				option[event.type].call($thisContent, event, event.target, event.relatedTarget);
+			}
+		});
+	});
+
+	//取一个容器的标题文本和标题对象
+	function getTitle(containerId) {
+		var $container = $('#' + containerId);
+		var $title;
+		if ($container.hasClass('list-container') || $container.hasClass('box-container')) {
+			//列表容器
+			$title = $container.find('.datalist-button-bar h5');
+		}
+		else {
+			//其他容器（表格容器、盒子容器）
+			$title = $container.children('.panel-heading');
+		}
+		return [$title.text().trim(), $title];
+	};
+
+	return $tabs;
+};
+
+
+/**
+ * 用户自定义设置
+ */
+ydl.userConfig = {
+	/**
+	 * 保存自定义设置到服务器
+	 * @param {String} name 参数名
+	 * @param {String} value 参数值
+	 * @return {Deferred} ajax返回的deferred对象
+	 */
+	set: function (name, value) {
+		return ydl.ajax(ydl.contexPath + '/saveConfig/' + name, value, null, {
+			processData: false,
+			contentType: 'text/plain'
+		}).done(function () {
+			userConfig[name] = value;
+		});
+	},
+	/**
+	 * 获取自定义设置值
+	 * @param {String} name 参数名
+	 * @return {String} 参数值
+	 */
+	get: function (name) {
+		var value = userConfig[name];
+		return value;
+	}
+};
+
+ydl.frame = {};
+/**
+* 从标签页打开
+* @param {String} tabUrl  [页签地址]
+* @param {String} tabName [页签名]
+* @return {Number} 新打开页签ID
+*/
+ydl.frame.add = function (tabUrl,tabName) {
+	if (window.tpl && tpl.addTab && $.isFunction(tpl.addTab)) return tpl.addTab(tabUrl, tabName);
+	else return $.Deferred().promise().reject();
+};
+/**
+* 显示指定标签页
+* @param {Number} id  [页签唯一标识]
+*/
+ydl.frame.open = function (id){
+	if (window.tpl && tpl.isInFrame && tpl.isInFrame()) {
+		top.showMenuTab(id);
+	}
+};
+/**
+* 删除指定标签页
+* @param {Number} id  [页签唯一标识]
+*/
+ydl.frame.close = function (id){
+	if (window.tpl && tpl.isInFrame && tpl.isInFrame()) {
+		top.delMenuTab(id);
+	}
+};
+
+/**
+ * 信息提示插件
+ */
+(function () {
+	var _tipDiyFunc = {
+		'page': function(field, options, positionIcon, $addWrap){
+			if ($(field).hasClass('tab-pane')) {
+				$(field).prepend($addWrap);
+				//添加图标并绑定事件
+				//$(this).parent().append(positionIcon.call(this, options));
+				return true;
+			}
+			else return false;
+		},
+		'container': function(field, options, positionIcon, $addWrap){
+			if ($(field).hasClass('ydpx-container')) {
+				$(field).find('.panel-body').before($addWrap);
+				//添加图标并绑定事件
+				if (options.hide == true) $(field).find('.panel-heading span').append(positionIcon.call(field, options, false));
+				return true;
+			}
+			else return false;
+		},
+		'list': function(field, options, positionIcon, $addWrap){
+			if ($(field).hasClass('datalist-table-body')) {
+				$(field).closest('.fixtable-box').before($addWrap);
+				//添加图标并绑定事件
+				if (options.hide == true) $(field).closest('.datalist-box').find('.datalist-button-bar>h5').append(positionIcon.call(field, options, false));
+				return true;
+			}
+			else return false;
+		},
+		'money': function(field, options, positionIcon){
+			if ($(field).is(':input') && $(field).hasClass('money')) {
+				$(field).data('inputField',true);//输入元素
+				var $posiEle = $(field).parent().find(':input');
+				var $icon = positionIcon.call(field, options, true);
+				$posiEle.closest('.col').addClass('input-hastip');
+				$(field).data('position-ele', $posiEle);
+				if ($(field).parent().hasClass('input-group')) {			
+					var spanWidth = $(field).parent().find('span:last').width();
+					$icon.css({'right': 22 + spanWidth, 'z-index': 2});
+					//添加图标并绑定事件
+					$(field).parent().addClass('tip-parent').find('span:last').before($icon);
+				}
+				else {
+					//添加图标并绑定事件
+					$(field).parent().addClass('tip-parent').append($icon);
+				}
+				return true;
+			}
+			else return false;
+		},
+		'select': function(field, options, positionIcon){
+			if (field.tagName == 'SELECT' && $(field).is(':visible')) {
+				$(field).data('inputField',true);//输入元素
+				$(field).closest('.col').addClass('select-hastip');
+				if ($(field).closest('td').length > 0) $(field).parent().addClass('select-hastip');
+				$(field).data('position-ele', $(field));
+				//添加图标并绑定事件
+				$(field).parent().addClass('tip-parent').append(positionIcon.call(field, options, true));
+				return true;
+			}
+			else return false;
+		},
+		'combobox': function(field, options, positionIcon){
+			if (field.tagName == 'SELECT' && $(field).parent().find('.combobox-container').length > 0) {
+				$(field).data('inputField',true);//输入元素
+				var $posiEle = $(field).parent().find('.combobox');
+				$posiEle.closest('.col').addClass('combo-hastip');
+				$(field).data('position-ele', $posiEle);
+				//添加图标并绑定事件
+				$(field).parent().addClass('tip-parent').append(positionIcon.call(field, options, true));
+				return true;
+			}
+			else return false;
+		},
+		'fieldset': function(field, options, positionIcon){
+			if (field.tagName == 'FIELDSET' || field.type == 'radio' || field.type == 'checkbox') {
+				$(field).data('inputField',true);//输入元素
+				var $posiEle = $(field).closest('fieldset');
+				$posiEle.closest('.col').addClass('input-hastip');
+				$(field).data('position-ele', $posiEle);
+				//添加图标并绑定事件
+				$(field).parent().addClass('tip-parent').append(positionIcon.call(field, options, true));
+				return true;
+			}
+			else return false;
+		},
+		'input': function(field, options, positionIcon){
+			if (field.tagName == 'INPUT' && !$(field).hasClass('money')) {
+				$(field).data('inputField',true);//输入元素
+				$(field).data('position-ele', $(field));
+				if ($(field).parent().hasClass('input-group')) {
+					$(field).wrap('<div class="tip-group-wrap"></div>');
+				}
+				$(field).closest('.col').addClass('input-hastip');
+				//添加图标并绑定事件
+				$(field).parent().addClass('tip-parent').append(positionIcon.call(field, options, true));
+				return true;
+			}
+			else return false;
+		}
+	};
+	//注册点击空白处移除已生成提示框
+	$(document).click(function(){
+		if (!$(this).data('stop')) $('.tip-input').remove();
+	});
+	//插件提供方法
+	var widgetMethod = {
+		//初始化
+		init: function (options) {
+			if (typeof options == 'string') options = {type:'info', tip: options};
+			else options = $.extend({type:'info'},options);
+			//如果未初始化过，创建提示容器，注册事件
+			var $field = $(this);
+			//是否已初始化
+			var isInit = $field.data('tip-init');
+			if (!isInit) {
+				$field.data('tip-init',true);
+				addTip.call(this, options);
+			}
+			//如果key不存在，生成本条提示，添加到提示容器
+			//否则，替换key对应的提示信息
+			else {
+				var tipsInfoPrev = $.extend({},$(this).data('tips') || {});
+				//更新图标状态
+				updateIconStyle.call(this,options.type);
+				var $newTip = renderTip.call(this,options);
+				if (options.key){
+					var key = options.key == true ? (options.type + '-key') : options.key;
+					//覆盖
+					if (tipsInfoPrev[key]) {
+						tipsInfoPrev[key].dom = $newTip;
+						$(this).data('tips',tipsInfoPrev);
+					}
+					//追加
+					else {
+						$(this).data('tip-wrap').append($newTip);
+					}
+				}
+				else {
+					$(this).data('tip-wrap').append($newTip);
+				}
+			}
+		},
+		//删除一条提示
+		remove: function (key) {
+			var tipsInfo = $(this).data('tips') || {};
+			var isInputField = $(this).data('inputField') || false;
+			if (!isInputField) tipsInfo[key].dom.remove();
+			delete tipsInfo[key];
+			if (!isInputField && $.isEmptyObject(tipsInfo)) $(this).data('tip-wrap').remove();
+			checkAndClean.call(this,tipsInfo);
+		},
+		//删除一类下全部提示
+		removeAll: function (type) {
+			var tipsInfo = $(this).data('tips') || {};
+			$.each(tipsInfo, function(key,ele){
+				if (type == ele.type) delete tipsInfo[key];
+			})
+			checkAndClean.call(this, tipsInfo);
+		}
+	};
+	//消息类型对应样式
+	var typeInfo = {
+		'info':{wrap: 'tip-warning', icon: 'glyphicon-info-sign'},
+		'warn':{wrap: 'tip-danger', icon: 'glyphicon-alert'},
+		'error':{wrap: 'tip-error', icon: 'glyphicon-remove-sign'}
+	};
+	//添加提示
+	function addTip(options) {
+		var $addWrap = $('<div class="tip-box-wrap"></div>').append(renderTip.call(this, options));
+		$(this).data('tip-wrap', $addWrap);
+		var field = this;
+		//循环判断容器/组件类型
+		var isDefault = true;
+		$.each(_tipDiyFunc, function (key, diyFunc){
+			if (diyFunc(field, options, positionIcon, $addWrap)) {
+				isDefault = false;
+				return false;
+			}
+		});
+		if (isDefault && !$(field).data('hover')) $(field).prepend($addWrap);
+		
+		//注册事件
+		addEvent.call(this, options, $addWrap);
+	};
+	//添加消息图标
+	function positionIcon(options, isInput){
+		var $field = $(this);
+		var iconStyle = isInput ? 'tip-input-icon' : 'tip-field-icon';
+		//输入元素显示图标
+		var $icon = $('<span class="'+iconStyle+' glyphicon '+typeInfo[options.type].icon+' '+typeInfo[options.type].wrap+'"></span>').data('type',options.type);
+		$field.data('icon', $icon);
+		//点击事件
+		$icon.click(function(event){
+			if (isInput) showInputTip($field,true);
+			//显示提示信息
+			else {
+				var $addWrap = $field.data('tip-wrap').removeClass('hidden');
+				var tipsInfo = $field.data('tips') || {};
+				$.each(tipsInfo, function (key, ele) {
+					$addWrap.append(ele.dom);
+				});
+				$field.data('tip-wrap', $addWrap);
+			}
+			event.stopPropagation();
+		});
+		return $icon;
+	};
+	//更新消息图标样式
+	function updateIconStyle(type){
+		var typeLevel = {'info': 0, 'warn': 1, 'error':2};
+		var $field = $(this);
+		var $icon = $field.data('icon');
+		if ($icon) {
+			var curType = $icon.data('type');
+			if (type) {
+				if (typeLevel[type] > typeLevel[curType]) {
+					setIcon(curType, type);
+				}
+			}
+			//删除后更新
+			else {
+				var tipsInfo = $field.data('tips') || {};
+				var newType = 'info';
+				$.each(tipsInfo, function (key, ele) {
+					if (typeLevel[ele.type] > typeLevel[newType]) newType = ele.type;
+				});
+				setIcon(curType, newType);
+			}
+		}
+		function setIcon(oldType, newType){
+			$icon.data('type', newType);
+			$field.data('icon', $icon);
+			$icon.removeClass(typeInfo[oldType].icon + ' ' + typeInfo[oldType].wrap)
+				.addClass(typeInfo[newType].icon + ' ' + typeInfo[newType].wrap);
+		}
+	};
+	//显示输入字段提示框
+	function showInputTip($field,ignoreHide){
+		//清除已生成提示框
+		removeInputTip();
+		//重新生成提示框
+		var $addWrap =  $('<div class="tip-box-wrap tip-input'+($field.data('hover') ? ' tip-hover-show' : '')+'"></div>');
+		var tipsInfo = $field.data('tips') || {};
+		$.each(tipsInfo, function(key,ele){
+			if (!ele.hide || ignoreHide) $addWrap.append(ele.dom);
+		});
+		$field.data('tip-wrap',$addWrap);
+		$('body').append($addWrap);
+		//绑定事件
+		$addWrap.on('mouseenter','.tip-del',function(){
+			$field.data('isBlur',false);
+		})
+		.on('mouseleave','.tip-del',function(){
+			$field.data('isBlur',true);
+		});
+		addDelEvent($field, $addWrap);
+		$('body,div').on('scroll',removeInputTip);
+		//定位
+		positionTip($field);
+	};
+	//删除提示框
+	function removeInputTip(){
+		$('.tip-input').remove();
+		$('body,div').off('scroll',removeInputTip);
+	};
+	//定位浮动面板
+	function positionTip($field) {
+		var $posiEle = $field.data('position-ele') ? $field.data('position-ele').filter(':visible') : $field;
+		var inputOffset = $posiEle.offset();
+		var inputWidth = $field.parent().width();
+		var $tipWrap = $field.data('tip-wrap');
+		if (!$field.data('hover')) $tipWrap.css('width',inputWidth);
+		$tipWrap.css({
+			top: inputOffset.top - $tipWrap.height(),
+			left: inputOffset.left
+		});
+	};
+	//生成一条提示信息页面元素
+	function renderTip(options) {
+		//删除/收缩/展开图标
+		var tipIcon = '';
+		if (options.hide) {
+			if (options.hide == 'fold') tipIcon = '<span class="tip-fold glyphicon glyphicon-chevron-up"></span>';
+			else tipIcon = '<span class="tip-del glyphicon glyphicon-remove"></span>';
+		}
+		var tipHtml = '<div class="tip-box ' + typeInfo[options.type].wrap + '">' +
+			'<span class="glyphicon ' + typeInfo[options.type].icon + '"></span>' +
+			'<div class="tip-data '+(tipIcon == '' ? 'tip-data-noicon' : '')+'">' + options.tip + '</div>' + tipIcon + '</div>';
+		var $tip = $(tipHtml);
+		$tip.find('.tip-data').data('tip', options.tip);
+		//存储数据
+		var tipsInfo = $(this).data('tips') || {};
+		if (options.key && options.key != true) {
+			$tip.attr('data-key', options.key);
+			tipsInfo[options.key] = { dom: $tip, hide: false, type: options.type };
+		}
+		else {
+			$tip.attr('data-key', options.type + '-key');
+			tipsInfo[options.type + '-key'] = { dom: $tip, hide: false, type: options.type };
+		}
+		$(this).data('tips', tipsInfo);
+		return $tip;
+	};
+	//注册事件
+	function addEvent(options, $addWrap) {
+		var $field = $(this);
+		//折叠-收缩/展开
+		$addWrap.on('click', '.tip-fold', function () {
+			var $tipData = $(this).closest('.tip-box').find('.tip-data');
+			$tipData.toggleClass('shrink');
+			if ($tipData.hasClass('shrink')) {
+				$tipData.html($tipData.text());
+				$(this).removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+			}
+			else {
+				$tipData.html($tipData.data('tip'));
+				$(this).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+			}
+		});
+		//删除事件
+		addDelEvent($field, $addWrap);
+		//输入元素
+		if ($(this).is(':input') && !$(this).data('hover')) {
+			var $eventEle = $(this).data('position-ele') || $(this);
+			var eventName = 'focus';
+			$eventEle.on('focus',function (event) {
+				$(document).data('stop',true);
+				showInputTip($field);
+				event.stopPropagation();
+			}).on('blur',function () {
+				$(document).data('stop',false);
+				if ($(this).data('isBlur') != false) removeInputTip();
+				$(this).data('isBlur', true);
+			}).on('click',function(event){
+				event.stopPropagation();
+			});
+		}
+		//单选/复选框
+		else if (this.tagName == 'FIELDSET' || $(this).data('hover')) {
+			var $eventEle = $(this).data('position-ele') || $(this);
+			$eventEle.mouseenter(function(event){
+				$(document).data('stop',true);
+				showInputTip($field);
+				event.stopPropagation();
+			}).mouseleave(function(){
+				$(document).data('stop',false);
+				if ($(this).data('isBlur') != false) removeInputTip();
+				$(this).data('isBlur', true);
+			});
+		}
+	};
+	//注册删除事件
+	function addDelEvent($field, $addWrap) {
+		$addWrap.on('click','.tip-del',function(event){
+			//设置隐藏属性
+			var $tipBox = $(this).closest('.tip-box');
+			var tipsInfo = $field.data('tips') || {};
+			tipsInfo[$tipBox.data('key')].hide = true;
+			$field.data('tips',tipsInfo);
+			//删除当前显示框
+			$tipBox.remove();
+			positionTip($field);
+			if ($addWrap.children().length == 0) $addWrap.addClass('hidden');
+			event.stopPropagation();
+		});
+	}
+	//检查如果已删除全部提示,清存储数据,反注册事件
+	function checkAndClean(tipsInfo) {
+		var $field = $(this);
+		if ($.isEmptyObject(tipsInfo)) {
+			$('.tip-input').remove();
+			var $icon = $field.data('icon');
+			if ($icon) {
+				$field.data('icon').remove();
+				$field.data('icon',null);
+			}
+			$field.data('tip-init',null);
+			$field.data('tips',null);
+			$field.data('tip-wrap',null);
+			var $posiEle = $field.data('position-ele');
+			if ($posiEle) {
+				$posiEle.off('focus');
+				$posiEle.off('blur');
+			}
+			$field.data('position-ele',null);
+			$field.closest('.col').removeClass('select-hastip input-hastip combo-hastip');
+		}
+		else {
+			updateIconStyle.call(this);
+		}
+	};
+	//插件入口
+	$.fn.tips = function (options) {
+		if (arguments.length === 1) {
+			//支持对多个元素同时调用
+			return this.each(function () {
+				widgetMethod.init.call(this, options);
+			});
+		}
+		else {
+			widgetMethod[arguments[0]].call(this, Array.prototype.slice.call(arguments, 1));
+			return this;
+		}
+	};
+	$.fn.tips.set = function (diyKey, diyFunc) {
+		_tipDiyFunc[diyKey] = diyFunc;
+	};
+})();
+
+})(ydl, jQuery);

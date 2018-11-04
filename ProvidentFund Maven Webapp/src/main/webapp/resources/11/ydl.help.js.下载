@@ -1,0 +1,100 @@
+/******************************************\
+ * Description: 页面帮助向导功能           *  
+ * Author: malei						  *
+ * Date: 2017-03-09						  *
+\******************************************/
+'use strict';
+if(typeof ydl === "undefined") alert("ydl.help.js必须在ydl.base.js之后加载");
+
+(function($jqObj){
+	
+	ydl.help = function(){
+	
+		var helpStatus = "Disable";		// 组件状态  Enable|Disable
+		var helpUrl = null;				// 帮助文档地址
+		var intro = null;				// 向导组件引用
+		var options = {					// 向导组件选项
+			prevLabel : "&larr; 上一步",
+			nextLabel : "下一步 &rarr;",
+			skipLabel : "跳过",
+			doneLabel : "完成",
+			scrollToElement : true
+		};
+		
+		// 初始化向导组件
+		function initial(){
+			intro = introJs();
+			intro.setOptions(options);
+			intro.oncomplete(function(){
+				helpStatus = "Disable";
+			});
+		}
+		
+		// 获取系统帮助文件路径
+		function getHelpDocUrl(){
+			var ydpxPage = poolSelect["$page"];
+			ydpxPage = ydpxPage.replace(/\.ydpx/ig, "");
+			var arry = ydpxPage.match(/[a-z\d]+/ig);
+			helpUrl = $("meta[name=contexPath]").attr("content") + "/help/script";
+			for(var i = 0; i < arry.length - 1; i ++){
+				helpUrl += "/" + arry[i];
+			}
+			helpUrl = helpUrl + "/" + ydpxPage + ".help.js";
+		}
+		
+		// 绑定页面组件开启关闭事件
+		function bindComponent(){
+			
+			if($jqObj && $jqObj.length == 1){
+				$jqObj.click(function(){
+						helpStatus = "Enable";
+						launch();
+				});
+			}
+		}
+		
+		// 获取系统帮助文件并启动向导组件
+		function launch(){
+			if(helpStatus && helpStatus == "Enable"){
+				getHelpDocUrl();
+				initial();
+				$.getScript(helpUrl, function(){
+					
+					if(typeof yd_help_guide_ != "undefined" && yd_help_guide_.length > 0){
+						
+						var rg = /[\#\[\]\=\.\:]/;
+						
+						// 设置 jq selector
+						for(var i = 0; i < yd_help_guide_.length; i ++) {
+							if(yd_help_guide_[i]["element"].match(rg) == null || yd_help_guide_[i]["element"].match(rg).length == 0) {
+								yd_help_guide_[i]["element"] = "#" + yd_help_guide_[i]["element"];
+							}
+							if(yd_help_guide_[i]["inputs"] && yd_help_guide_[i]["inputs"].length) {
+								for (var j = 0; j < yd_help_guide_[i]["inputs"].length; j ++ ) {
+									if(yd_help_guide_[i]["inputs"][j].element.match(rg) == null || yd_help_guide_[i]["inputs"][j].element.match(rg).length == 0) {
+										yd_help_guide_[i]["inputs"][j].element = "#" + yd_help_guide_[i]["inputs"][j].element;
+									}
+								}
+							}
+						}
+						
+						try{
+							intro.setOptions({
+								steps: yd_help_guide_
+							});
+							intro.start();
+						}catch(e){
+							// nothing to do ... 
+							console.log(e.message);
+						}
+					}
+					
+				});
+			}
+		}
+		bindComponent();
+	}
+	
+	ydl.help();
+	
+})($("#ico_help"));
