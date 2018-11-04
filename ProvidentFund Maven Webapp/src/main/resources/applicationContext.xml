@@ -31,7 +31,9 @@
 	<bean id="sqlSessionFaction" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property><!-- 注入数据源 -->
 		<property name="mapperLocations" value="classpath:com/mapping/*.xml"></property><!--自动扫描dao映射文件 -->
-		<property name="typeAliasesPackage" value="com.entity"></property><!--类型别名 
+		<property name="typeAliasesPackage" value="com.entity"></property>
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<!--类型别名 
 			dao映射可以直接返回实体对象 -->
 	</bean>
 	<!-- 配置扫描dao接口 -->
