@@ -10023,3 +10023,118 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 99; columnNumber: 73; 必须
 [DEBUG][2018-11-04 17:45|:33][com.dao.PeraccountMapper.updatePercc]==>  Preparing: update peraccount set grzhbhs=? where grzhbh=? 
 [DEBUG][2018-11-04 17:45|:33][com.dao.PeraccountMapper.updatePercc]==> Parameters: 19(Integer), 17(Integer)
 [DEBUG][2018-11-04 17:45|:33][com.dao.PeraccountMapper.updatePercc]<==    Updates: 1
+[INFO][2018-11-04 19:22|:46][org.springframework.web.context.ContextLoader]Root WebApplicationContext: initialization started
+[INFO][2018-11-04 19:22|:46][org.springframework.web.context.support.XmlWebApplicationContext]Refreshing Root WebApplicationContext: startup date [Sun Nov 04 19:22:46 CST 2018]; root of context hierarchy
+[INFO][2018-11-04 19:22|:46][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [applicationContext.xml]
+[INFO][2018-11-04 19:22|:49][org.springframework.beans.factory.config.PropertyPlaceholderConfigurer]Loading properties file from class path resource [jdbc.properties]
+[INFO][2018-11-04 19:22|:49][org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor]JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+[INFO][2018-11-04 19:22|:52][org.springframework.web.context.ContextLoader]Root WebApplicationContext: initialization completed in 5577 ms
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.DispatcherServlet]FrameworkServlet 'spring': initialization started
+[INFO][2018-11-04 19:22|:52][org.springframework.web.context.support.XmlWebApplicationContext]Refreshing WebApplicationContext for namespace 'spring-servlet': startup date [Sun Nov 04 19:22:52 CST 2018]; parent: Root WebApplicationContext
+[INFO][2018-11-04 19:22|:52][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [springmvc-servlet.xml]
+[INFO][2018-11-04 19:22|:52][org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor]JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/queryHjqcb],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.HjqcbController.queryHjqcb(java.lang.Integer)
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/saveHjqcb],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.blf.controller.HjqcbController.saveHjqcb(com.entity.Hjqcb,javax.servlet.http.HttpServletResponse) throws java.io.IOException
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/queryUser],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.HjqcbController.queryUser()
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/selectBGjce],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.HjqcbController.selectBGjce(java.lang.Integer)
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/selectSum],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public int com.blf.controller.HjqcbController.querySum(java.lang.Integer)
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/queryHj],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.util.Pager com.blf.controller.HjqcbController.queryHj(java.lang.String,java.lang.Integer)
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/queryUcbOrUf],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.HjqcbController.queryUcbOrUf(java.lang.Integer)
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/ipay/saveIpayPer],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.blf.controller.individualPayController.queryIpayPer(java.util.Map,javax.servlet.http.HttpServletResponse) throws java.io.IOException
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/utzw/queryZw],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.UnitpositionController.queryZw()
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/utzw/queryLmk],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.UnitpositionController.queryLmk()
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/unfo/queryUnfoAndUncc],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.UnitsaccountController.query()
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/unfo/queryUnfo],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.UnitsaccountController.queryUnfo(com.entity.Unitsaccount)
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/uploadExcel/upload.do],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.blf.controller.UploadExcelControl.uploadExcel(javax.servlet.http.HttpServletRequest) throws java.lang.Exception
+[INFO][2018-11-04 19:22|:52][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/uploadExcel/ajaxUpload.do],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.blf.controller.UploadExcelControl.ajaxUploadExcel(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws java.lang.Exception
+[INFO][2018-11-04 19:22|:53][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]Looking for @ControllerAdvice: WebApplicationContext for namespace 'spring-servlet': startup date [Sun Nov 04 19:22:52 CST 2018]; parent: Root WebApplicationContext
+[INFO][2018-11-04 19:22|:53][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]Looking for @ControllerAdvice: WebApplicationContext for namespace 'spring-servlet': startup date [Sun Nov 04 19:22:52 CST 2018]; parent: Root WebApplicationContext
+[INFO][2018-11-04 19:22|:53][org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
+[INFO][2018-11-04 19:22|:53][org.springframework.web.servlet.DispatcherServlet]FrameworkServlet 'spring': initialization completed in 1543 ms
+[DEBUG][2018-11-04 19:24|:01][com.dao.BrandedMapper.queryLmk]==>  Preparing: select b.*,bn.* from Branded b join Bankdetails bn on b.Bankdetailsid=bn.Bankdetailsid 
+[DEBUG][2018-11-04 19:24|:01][com.dao.UnitpositionMapper.queryZw]==>  Preparing: select * from Unitposition 
+[DEBUG][2018-11-04 19:24|:01][com.dao.UnitpositionMapper.queryZw]==> Parameters: 
+[DEBUG][2018-11-04 19:24|:01][com.dao.BrandedMapper.queryLmk]==> Parameters: 
+[DEBUG][2018-11-04 19:24|:01][com.dao.UnitpositionMapper.queryZw]<==      Total: 1
+[DEBUG][2018-11-04 19:24|:01][com.dao.BrandedMapper.queryLmk]<==      Total: 2
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc]==>  Preparing: insert into peraccount ( zhztbh, UnitpositionId, UnitInfoId, UnitInfoAccount, peracId, peracloginpw, peracTransactionpw, bkname, bksex, phoneNum, IdType, IdNumbers, birthday, marital, education, email, postcode, address ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc]==> Parameters: 1(Integer), 1(Integer), 1(Integer), 201810001(Integer), 25184600(String), 123456(String), 123456(String), 张山(String), 男(String), 17632154869(String), 身份证(String), 11(String), 19960518(String), 未婚(String), 大专(String), 2965846987@qqcom(String), 486800(String), 河南新乡(String)
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc]<==    Updates: 1
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc!selectKey]==>  Preparing: SELECT LAST_INSERT_ID() 
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc!selectKey]==> Parameters: 
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc!selectKey]<==      Total: 1
+[DEBUG][2018-11-04 19:24|:25][com.dao.IndividualpayMapper.saveIpaer]==>  Preparing: insert into individualpay ( UnitInfoAccount, personalAccount, personalDepositBase, openAccountStatus, openingDate ) values ( ?, ?, ?, ?, ? ) 
+[DEBUG][2018-11-04 19:24|:25][com.dao.IndividualpayMapper.saveIpaer]==> Parameters: 201810001(Integer), 25184600(String), 6000(Integer), 1(String), 20181105(String)
+[DEBUG][2018-11-04 19:24|:25][com.dao.IndividualpayMapper.saveIpaer]<==    Updates: 1
+[DEBUG][2018-11-04 19:24|:25][com.dao.IndividualpayMapper.saveIpaer!selectKey]==>  Preparing: SELECT LAST_INSERT_ID() 
+[DEBUG][2018-11-04 19:24|:25][com.dao.IndividualpayMapper.saveIpaer!selectKey]==> Parameters: 
+[DEBUG][2018-11-04 19:24|:25][com.dao.IndividualpayMapper.saveIpaer!selectKey]<==      Total: 1
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.updatePercc]==>  Preparing: update peraccount set grzhbhs=? where grzhbh=? 
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.updatePercc]==> Parameters: 20(Integer), 18(Integer)
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.updatePercc]<==    Updates: 1
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc]==>  Preparing: insert into peraccount ( zhztbh, UnitpositionId, UnitInfoId, UnitInfoAccount, peracId, peracloginpw, peracTransactionpw, bkname, bksex, phoneNum, IdType, IdNumbers, birthday, marital, education, email, postcode, address ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc]==> Parameters: 1(Integer), 1(Integer), 1(Integer), 201810002(Integer), 23516854(String), 123456(String), 123456(String), 夏侯(String), 男(String), 17564589658(String), 身份证(String), 11(String), 19961208(String), 未婚(String), 大专(String), 1548698758@qq.com(String), 485690(String), 河南郑州(String)
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc]<==    Updates: 1
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc!selectKey]==>  Preparing: SELECT LAST_INSERT_ID() 
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc!selectKey]==> Parameters: 
+[DEBUG][2018-11-04 19:24|:25][com.dao.PeraccountMapper.savePercc!selectKey]<==      Total: 1
+[DEBUG][2018-11-04 19:24|:26][com.dao.IndividualpayMapper.saveIpaer]==>  Preparing: insert into individualpay ( UnitInfoAccount, personalAccount, personalDepositBase, openAccountStatus, openingDate ) values ( ?, ?, ?, ?, ? ) 
+[DEBUG][2018-11-04 19:24|:26][com.dao.IndividualpayMapper.saveIpaer]==> Parameters: 201810002(Integer), 23516854(String), 8000(Integer), 1(String), 20181106(String)
+[DEBUG][2018-11-04 19:24|:28][com.dao.IndividualpayMapper.saveIpaer]<==    Updates: 1
+[DEBUG][2018-11-04 19:24|:28][com.dao.IndividualpayMapper.saveIpaer!selectKey]==>  Preparing: SELECT LAST_INSERT_ID() 
+[DEBUG][2018-11-04 19:24|:28][com.dao.IndividualpayMapper.saveIpaer!selectKey]==> Parameters: 
+[DEBUG][2018-11-04 19:24|:28][com.dao.IndividualpayMapper.saveIpaer!selectKey]<==      Total: 1
+[DEBUG][2018-11-04 19:24|:28][com.dao.PeraccountMapper.updatePercc]==>  Preparing: update peraccount set grzhbhs=? where grzhbh=? 
+[DEBUG][2018-11-04 19:24|:28][com.dao.PeraccountMapper.updatePercc]==> Parameters: 21(Integer), 19(Integer)
+[DEBUG][2018-11-04 19:24|:28][com.dao.PeraccountMapper.updatePercc]<==    Updates: 1
+[DEBUG][2018-11-04 19:24|:53][com.dao.UnitsaccountMapper.queryUnfo]==>  Preparing: select ua.*,uf.* from unitsaccount ua join unitinfo uf on ua.UnitInfoId=uf.UnitInfoId where ua.UnitInfoAccount=? 
+[DEBUG][2018-11-04 19:24|:53][com.dao.UnitsaccountMapper.queryUnfo]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-04 19:24|:53][com.dao.UnitsaccountMapper.queryUnfo]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:26][com.dao.HjqcbMapper.queryHj]==>  Preparing: select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc limit ?,? 
+[DEBUG][2018-11-04 19:26|:26][com.dao.HjqcbMapper.queryHj]==> Parameters: 0(Integer), 1(Integer)
+[DEBUG][2018-11-04 19:26|:27][com.dao.HjqcbMapper.queryHj]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:27][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
+[DEBUG][2018-11-04 19:26|:27][com.dao.HjqcbMapper.getCount]==> Parameters: 
+[DEBUG][2018-11-04 19:26|:27][com.dao.HjqcbMapper.getCount]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:34][com.dao.HjqcbMapper.queryHj]==>  Preparing: select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc limit ?,? 
+[DEBUG][2018-11-04 19:26|:34][com.dao.HjqcbMapper.queryHj]==> Parameters: 5(Integer), 1(Integer)
+[DEBUG][2018-11-04 19:26|:34][com.dao.HjqcbMapper.queryHj]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:34][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
+[DEBUG][2018-11-04 19:26|:34][com.dao.HjqcbMapper.getCount]==> Parameters: 
+[DEBUG][2018-11-04 19:26|:34][com.dao.HjqcbMapper.getCount]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:35][com.dao.HjqcbMapper.queryHj]==>  Preparing: select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc limit ?,? 
+[DEBUG][2018-11-04 19:26|:35][com.dao.HjqcbMapper.queryHj]==> Parameters: 5(Integer), 1(Integer)
+[DEBUG][2018-11-04 19:26|:35][com.dao.HjqcbMapper.queryHj]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:35][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
+[DEBUG][2018-11-04 19:26|:35][com.dao.HjqcbMapper.getCount]==> Parameters: 
+[DEBUG][2018-11-04 19:26|:35][com.dao.HjqcbMapper.getCount]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]==>  Preparing: select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc limit ?,? 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]==> Parameters: 0(Integer), 1(Integer)
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]==> Parameters: 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]==>  Preparing: select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc limit ?,? 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]==> Parameters: 0(Integer), 1(Integer)
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]==> Parameters: 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]==>  Preparing: select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc limit ?,? 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]==> Parameters: 0(Integer), 1(Integer)
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.queryHj]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]==> Parameters: 
+[DEBUG][2018-11-04 19:26|:36][com.dao.HjqcbMapper.getCount]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:37][com.dao.HjqcbMapper.queryHj]==>  Preparing: select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc limit ?,? 
+[DEBUG][2018-11-04 19:26|:37][com.dao.HjqcbMapper.queryHj]==> Parameters: 0(Integer), 1(Integer)
+[DEBUG][2018-11-04 19:26|:37][com.dao.HjqcbMapper.queryHj]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:37][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
+[DEBUG][2018-11-04 19:26|:37][com.dao.HjqcbMapper.getCount]==> Parameters: 
+[DEBUG][2018-11-04 19:26|:37][com.dao.HjqcbMapper.getCount]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.queryHj]==>  Preparing: select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc limit ?,? 
+[DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.queryHj]==> Parameters: 0(Integer), 1(Integer)
+[DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.queryHj]<==      Total: 1
+[DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
+[DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.getCount]==> Parameters: 
+[DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.getCount]<==      Total: 1
