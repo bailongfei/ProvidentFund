@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.entity.Peraccount;
+import com.entity.Unitinfo;
 
 public interface PeraccountMapper {
     int deleteByPrimaryKey(Integer grzhbh);
@@ -24,5 +25,9 @@ public interface PeraccountMapper {
     //查询总条数
     public int findPagercount(Map<String, Object> map);
     //根据公积金账号查询员工所属单位信息
-    public Map<String, Object> findUnitName(String peracId);	
+    public Map<String, Object> findUnitName(String peracId);
+    //根据贷款编号查询贷款信息和购房信息
+    public Map<String, Object> finddkInfo(Integer dkxxbh);
+    //查询所有单位
+    public List<Unitinfo> queryUnitinfos();
 }

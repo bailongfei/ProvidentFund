@@ -266,4 +266,10 @@
       txpwwh = #{txpwwh,jdbcType=VARCHAR}
     where accumulation = #{accumulation,jdbcType=INTEGER}
   </update>
+  <select id="findbyperaccount" resultType="map" parameterType="String">
+  	select a.*,p.peracId,p.bkname,u.UnitInfoName from accumulation  a join peraccount p on a.grzhbh=p.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId 
+  	<if test="peracId !=null and peracId !=''">
+  		where p.peracId=#{peracId}
+  	</if>
+  </select>
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.entity.Peraccount;
+import com.entity.Unitinfo;
 import com.zhl.pager.Pager;
 import com.zhl.service.PeraccountService;
 
@@ -74,4 +75,23 @@ public class PeraccountController {
     	Map<String, Object> map=service.findUnitName(peracId);
     	return map;
     }
+	//根据贷款编号查询贷款信息和购房信息
+	@ResponseBody
+	@RequestMapping("/finddkInfo")
+    public Map<String, Object> finddkInfo(Integer dkxxbh){
+    	Map<String, Object> map=service.finddkInfo(dkxxbh);
+    	return map;
+    }
+	@ResponseBody
+	@RequestMapping("/queryUnitinfos")
+	public List<Unitinfo> queryUnitinfos(){
+		List<Unitinfo> list=service.queryUnitinfos();
+		return list;
+	}
+	@ResponseBody
+	@RequestMapping("/PeopleTransfer")
+	public String PeopleTransfer(Peraccount account){
+		service.PeopleTransfer(account);
+		return "1";
+	}
 }

@@ -19,61 +19,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
+	
 	<script type="text/javascript">
-		/* $(function(){
-			$.ajax({
-				url:"Perbusiness/findbycondition",
-				type:"post",
-				data:$("#condition").serialize(),
-				dataType:'json',
-				success:function(data){
-					if(data!=null){
-						for(var i=0;i<data.length;i++){
-							var obj=data[i];
-							var tr="<tr>";
-							tr+="<td>"+obj.grperbutype+"</td>";
-							tr+="<td>"+obj.grperbutime+"</td>";
-							tr+="<td>"+obj.perbulimit+"</td>";
-							tr+="<td>"+obj.unitadvancep+"</td>";
-							tr+="<td>"+obj.personadvancep+"</td>";
-					}	
-					}
-				}
-			})
-		}); */
-		
 	  $(function(){
          getAll(1);
       });
       function getAll(pageNum){
-         var date1=$("#date1").val();
-         var date2=$("#date2").val();  
-         var grperbuType=$("#grperbuType").val();
-         var bkname=$("#bkname").val();
+         alert(pageNum);
+         var peracId=$("#peracId").val();
          $.ajax({
-            url:"Perbusiness/findbycondition",
+            url:"Returnpay/findbyPager",
             type:"post", 
-            data:{"pageNum":pageNum,
-            	  "grperbuType":grperbuType,
-            	  "date1":date1,
-            	  "date2":date2,
-            	  "bkname":bkname	
+            data:{"curPage":pageNum,
+            	  "peracId":peracId
             },
             dataType:'json',
             success:function(data){
             $("#tab").html("");
             var datalist=data.list;
                for(var i=0;i<datalist.length;i++){
+               	   var obj=datalist[i];
                    var tr="<tr>";
-                   tr+="<td>"+datalist[i].peracId+"</td>";
-                   tr+="<td>"+datalist[i].bkname+"</td>";
-                   tr+="<td>"+datalist[i].UnitInfoName+"</td>";
-				   tr+="<td>"+datalist[i].grperbuType+"</td>";
-                   tr+="<td>"+datalist[i].grperbuTime+"</td>";
-                   tr+="<td>"+datalist[i].perbuLimit+"</td>";
-                   tr+="<td>"+datalist[i].unitAdvancep+"</td>";
-                   tr+="<td>"+datalist[i].personAdvancep+"</td>";
+				   tr+="<td>"+obj.peracId+"</td>";
+                   tr+="<td>"+obj.bkname+"</td>";
+                   tr+="<td>"+obj.UnitInfoName+"</td>";
+                   tr+="<td>"+obj.chje+"</td>";
+                   tr+="<td>"+obj.chsj+"</td>";
 				   tr+="</tr>";
                    $("#tab").append(tr);
                }
@@ -103,48 +78,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	  $("#grperbuType").change(function(){
       	  	getAll(1);
       	  })
-      	  $("#bkname").keyup(function(){
-      	  	getAll(1);
-      	  })
 	  });
-	      
-      
-       
+	  /* function UpdateStates(obj1,obj2){
+	  	$.ajax({
+	  		url:"Peraccount/UpdateStates",
+	  		type:"post",
+	  		data:{
+	  			"grzhbh":obj1,
+	  			"zhztbh":obj2
+	  		},
+	  		dataType:'text',
+	  		success:function(data){
+	  			if(data=='1'){
+		  			alert("申请已提交 请等待审批");
+		  			getAll(1);	  				
+	  			}
+	  		}
+	  	})
+	  } */
 	</script>
   </head>
-  
   <body>
-    <table>
+    <table class="table">
     	<tr>
-    		<td>
-    			<input type="text" name="bkname" id="bkname">
-    			<select name="grperbuType" id="grperbuType">
-    				<option value="">--请选择--</option>
-    				<option value="汇缴">汇缴</option>
-    			</select>
+    		<td colspan="4">
+    			<input type="text" name="peracId" id="peracId" class="form-control" style="width: 20%;float: left;">
+    		
+    			<input type="button"   class="btn btn-primary"  value="搜索" onclick="getAll(1)">
     		</td>
-    		<td>
-    			<input type="date" name="date1" id="date1">
-    		</td>
-    		<td>
-    			<input type="date" name="date2" id="date2">
-    		</td>
+    		
     	</tr>
     	<tr>
     		<td>个人账号</td>
     		<td>员工姓名</td>
     		<td>所在单位</td>
-    		<td>业务类型</td>
+    		<td>冲回金额</td>
     		<td>创建时间</td>
-    		<td>发生额度</td>
-    		<td>单位缴纳</td>
-    		<td>个人缴纳</td>
     	</tr>
     	<tbody id="tab"></tbody>
     </table>
-    	<button id="prepage">上一页</button>
+    
+    
+
+    	<button id="prepage" class="btn btn-default  btn-sm">&laquo;</button>
 		当前是第<span id="nowPage"></span>页 
-    	<button id="nextpage">下一页</button>&nbsp;&nbsp;
+    	<button id="nextpage"  class="btn btn-default  btn-sm">&raquo;</button>&nbsp;&nbsp;
     	共<span id="countPage"></span>页
   </body>
 </html>

@@ -47,18 +47,16 @@ public class PerbusinessController {
 		PageInfo<Map> Info=new PageInfo<Map>(list);
 		return Info;
 	}*/
-	
+	//分页查询个人明细
 	@ResponseBody
 	@RequestMapping("/findbycondition")
-	public Pager findbycondition(String grperbuType,@RequestParam(required = false, defaultValue = "1") Integer pageNum,String date1,String date2,HttpSession session){
-		//Peraccount pa=(Peraccount) session.getAttribute("Peraccount");
-		//Integer grzhbh=pa.getGrzhbh();
+	public Pager findbycondition(String grperbuType,@RequestParam(required = false, defaultValue = "1") Integer pageNum,String date1,String date2,String bkname){
 		Pager p=new Pager();//分页对象
 		p.setCurPage(pageNum);//当前页
 		p.setPageSize(2);//每页条数
 		Map<String, Object> condition=new HashMap<String, Object>();
 		String date3 = null;
-		condition.put("grzhbh", 1);//个人账号
+		condition.put("bkname", bkname);
 		condition.put("grperbuType", grperbuType);//业务类型
 		if(date1!=null && date1!="" && date2==""){
 			date3=date1;
@@ -69,12 +67,7 @@ public class PerbusinessController {
 		condition.put("date1", date1);
 		condition.put("date2", date2);
 		condition.put("date3", date3);
-		condition.put("startIndex", p.getStartIndex());//设置开始索引
-		condition.put("pageSize", p.getPageSize());//设置每页条数
-		List<Map<String, Object>> list=service.findbycondition(condition);//获取list
-		Integer totalCount=service.findcount(condition);//查询出结果总条数
-		p.setList(list);//设置list
-		p.setTotalCount(totalCount);//设置总条数
-		return p;
+		Pager pager=service.findbycondition(condition, p);
+		return pager;
 	}
 }

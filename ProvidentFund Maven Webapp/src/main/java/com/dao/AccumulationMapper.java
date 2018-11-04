@@ -1,5 +1,8 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Accumulation;
 
 public interface AccumulationMapper {
@@ -14,4 +17,5 @@ public interface AccumulationMapper {
     int updateByPrimaryKeySelective(Accumulation record);
 
     int updateByPrimaryKey(Accumulation record);
+    public List<Map<String, Object>> findbyperaccount(String peracId);
 }

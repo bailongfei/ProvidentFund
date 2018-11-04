@@ -3,7 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -47,33 +47,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          getAll(1);
       });
       function getAll(pageNum){
-         var date1=$("#date1").val();
-         var date2=$("#date2").val();  
-         var grperbuType=$("#grperbuType").val();
-         var bkname=$("#bkname").val();
+         alert(pageNum);
+         var peracId=$("#peracId").val();
          $.ajax({
-            url:"Perbusiness/findbycondition",
+            url:"Peraccount/findbyPager",
             type:"post", 
-            data:{"pageNum":pageNum,
-            	  "grperbuType":grperbuType,
-            	  "date1":date1,
-            	  "date2":date2,
-            	  "bkname":bkname	
+            data:{"curPage":pageNum,
+            	  "peracId":peracId
             },
             dataType:'json',
             success:function(data){
             $("#tab").html("");
             var datalist=data.list;
                for(var i=0;i<datalist.length;i++){
+               	   var obj=datalist[i];
                    var tr="<tr>";
-                   tr+="<td>"+datalist[i].peracId+"</td>";
-                   tr+="<td>"+datalist[i].bkname+"</td>";
-                   tr+="<td>"+datalist[i].UnitInfoName+"</td>";
-				   tr+="<td>"+datalist[i].grperbuType+"</td>";
-                   tr+="<td>"+datalist[i].grperbuTime+"</td>";
-                   tr+="<td>"+datalist[i].perbuLimit+"</td>";
-                   tr+="<td>"+datalist[i].unitAdvancep+"</td>";
-                   tr+="<td>"+datalist[i].personAdvancep+"</td>";
+				   tr+="<td>"+obj.peracId+"</td>";
+                   tr+="<td>"+obj.bkname+"</td>";
+                   tr+="<td>"+obj.unitRateDeposit+"</td>";
+                   tr+="<td>"+obj.perContributionRate+"</td>";
+                   tr+="<td>"+obj.personalDepositBase+"</td>";
+                   tr+="<td>"+obj.peracBalance+"</td>";
+                   tr+="<td>"+obj.zhzt+"</td>";
+                   tr+="<td><button onclick='UpdateStates("+obj.grzhbh+",5)'>申请封存</button></td>";
+                   tr+="<td><button onclick='UpdateStates("+obj.grzhbh+",6)'>申请销户</button></td>";
 				   tr+="</tr>";
                    $("#tab").append(tr);
                }
@@ -103,44 +100,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	  $("#grperbuType").change(function(){
       	  	getAll(1);
       	  })
-      	  $("#bkname").keyup(function(){
-      	  	getAll(1);
-      	  })
 	  });
-	      
-      
-       
+	  function UpdateStates(obj1,obj2){
+	  	$.ajax({
+	  		url:"Peraccount/UpdateStates",
+	  		type:"post",
+	  		data:{
+	  			"grzhbh":obj1,
+	  			"zhztbh":obj2
+	  		},
+	  		dataType:'text',
+	  		success:function(data){
+	  			if(data=='1'){
+		  			alert("申请已提交 请等待审批");
+		  			getAll(1);	  				
+	  			}
+	  		}
+	  	})
+	  }
 	</script>
   </head>
-  
   <body>
     <table>
     	<tr>
-    		<td>
-    			<input type="text" name="bkname" id="bkname">
-    			<select name="grperbuType" id="grperbuType">
-    				<option value="">--请选择--</option>
-    				<option value="汇缴">汇缴</option>
-    			</select>
-    		</td>
-    		<td>
-    			<input type="date" name="date1" id="date1">
-    		</td>
-    		<td>
-    			<input type="date" name="date2" id="date2">
-    		</td>
-    	</tr>
-    	<tr>
     		<td>个人账号</td>
-    		<td>员工姓名</td>
-    		<td>所在单位</td>
-    		<td>业务类型</td>
-    		<td>创建时间</td>
-    		<td>发生额度</td>
-    		<td>单位缴纳</td>
-    		<td>个人缴纳</td>
+    		<td>个人姓名</td>
+    		<td>所在单位名称</td>
+    		<td>申请金额</td>
+    		<td>申请原因</td>
+    		<td>申请时间</td>
+    		<td>申请状态</td>
+    		<td>审批时间</td>
     	</tr>
-    	<tbody id="tab"></tbody>
+    	<tbody id="tab">
+    		<c:forEach items="${list}" var="l">
+    			<tr>
+    				<td>${l.peracId }</td>
+    				<td>${l.bkname }</td>
+    				<td>${l.UnitInfoName }</td>
+    				<td>${l.ExtractingAmount }</td>
+    				<td>${l.UnitInfoName }</td>
+    				<td>${l.UnitInfoName }</td>
+    				<td>${l.UnitInfoName }</td>
+    				<td>${l.UnitInfoName }</td>
+    			</tr>
+    		</c:forEach>
+    	</tbody>
     </table>
     	<button id="prepage">上一页</button>
 		当前是第<span id="nowPage"></span>页 

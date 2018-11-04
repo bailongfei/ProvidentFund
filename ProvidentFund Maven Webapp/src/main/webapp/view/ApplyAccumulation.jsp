@@ -19,8 +19,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript">
+		//查询提取原因输出到下拉框
 		function findtqyy(){
 			$.ajax({
 				url:"Accumulation/findtqyy",
@@ -37,8 +41,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			})
 		}
+		//查询单位信息
+		function findunitName(pid){
+			$.ajax({
+				url:"Peraccount/findUnitName",
+				type:"post",
+				data:{
+					"peracId":pid
+				},
+				dataType:'json',
+				success:function(data){
+					$("#unitinfoid").val(data.UnitInfoId);
+					$("#unitname").val(data.UnitInfoName);
+					$("#pname").val(data.bkname);
+					$("#grzhbh").val(data.grzhbh);
+				}
+			})
+		}
 		$(function(){
 			findtqyy();
+			$(":text").val('');
 		});
 		$(document).ready(function(){
 	    	$("#grapprovalstatuss").change(function(){
@@ -66,20 +88,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			$("#gf3").hide();
 	    		}
 	    	});
+	    	//失去焦点去查询
+	    	$("#peracid").blur(function(){
+	    		var pid=$("#peracid").val();
+	    		findunitName(pid);
+	    	});
+	    	//根据贷款编号查询贷款信息和购房信息
+	    	$("#dkxxbh").blur(function(){
+	    		alert(111);
+	    		$.ajax({
+	    			url:"Peraccount/finddkInfo",
+	    			type:"post",
+	    			data:{
+	    				"dkxxbh":$("#dkxxbh").val()
+	    			},
+	    			dataType:'json',
+	    			success:function(data){
+	    				$("#fwdz").val(data.belocated);
+	    				$("#gfhtxybh").val(data.gfxxbh);
+	    				$("#fwmj").val(data.acreage);
+	    				$("#fwzj").val(data.housePrice);
+	    				$("#dkzje").val(data.dkje);
+	    				$("#bkname").val(data.bkname);
+	    				$("#idNumber").val(data.idNumber);
+	    			}
+	    		});
+	    	});
+	    	$("#apply").click(function(){
+	    		$.ajax({
+	    			url:"Accumulation/ApplyAccumulation",
+	    			type:"post",
+	    			data:$("#fm").serialize(),
+	    			dataType:'json',
+	    			success:function(data){
+	    				alert(data);
+	    			}
+	    		})
+	    	})
 	    });
 	</script>
   </head>
   
   <body>
   <form action="" id="fm">
-    <table>
+    <table class="table">
     	<tr>
     		<td>个人公积金账户:</td>
-    		<td><input type="text" name="grzhbh" id="grzhbh"></td>
-    		<td>单位账号:</td>
-    		<td><input type="text" name="unitinfoid"></td>
+    		<td>
+    			<input type="hidden" name="grzhbh" id="grzhbh">
+    			<input type="text" id="peracid">
+    		</td>
+    		<td>姓名:</td>
+    		<td><input type="text" id="pname" readonly="readonly"></td>
+    		<td><input type="hidden" name="unitinfoid" id="unitinfoid"></td>
     		<td>单位名称:</td>
-    		<td><input type="text" id="unitname"></td>
+    		<td><input type="text" id="unitname" readonly="readonly"></td>
     	</tr>
     	<tr>
     		<td>提取金额:</td>
@@ -91,31 +154,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</tr>
     	<tr id="houseaddress" style="display: none;">
     		<td>房屋地址:</td>
-    		<td><input type="text" name="fwdz"></td>
+    		<td><input type="text" name="fwdz" id="fwdz"></td>
     	</tr>
     	<tr id="gf" style="display: none;">
     		<td>购房合同编号:</td>
-    		<td><input type="text" name="gfhtxybh"></td>
+    		<td><input type="text" name="gfhtxybh" id="gfhtxybh"></td>
     		<td>房屋面积:</td>
-    		<td><input type="text" name="fwmj"></td>
+    		<td><input type="text" name="fwmj" id="fwmj"></td>
     	</tr>
     	<tr id="gf2" style="display: none;">
-    		<td>房屋单价:</td>
-    		<td><input type="text" name="fwdj"></td>
+    		<!-- <td>房屋单价:</td>
+    		<td><input type="text" name="fwdj"></td> -->
     		<td>房屋总价:</td>
-    		<td><input type="text" name="fwzj"></td>
+    		<td><input type="text" name="fwzj" id="fwzj"></td>
     		<td>贷款总金额</td>
     		<td>
-    			<input type="text" name="dkzje">
+    			<input type="text" name="dkzje" id="dkzje">
     		</td>
     	</tr>
     	<tr id="gf3" style="display: none;">
     		<td>贷款合同编号:</td>
-    		<td><input type="text" name="fwdj"></td>
-    		<td>贷款总金额</td>
-    		<td>
-    			<input type="text" name="dkzje">
-    		</td>
+    		<td><input type="text" name="dkxxbh" id="dkxxbh"></td>
+    		<td>贷款人姓名</td>
+    		<td><input type="text" id="bkname"></td>
+    		<td>贷款人身份证号</td>
+    		<td><input type="text" id="idNumber"></td>
     	</tr>
     	<tr id="zf" style="display: none;">
     		<td>租房合同编号:</td>
@@ -128,6 +191,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<tr id="tx" style="display: none;">
     		<td>退休批文文号:</td>
     		<td><input type="text" name="zfhth"></td>
+    	</tr>
+    	<tr>
+    		<td><button type="button" id="apply">申请</button></td>
     	</tr>
     </table>
   </form>  

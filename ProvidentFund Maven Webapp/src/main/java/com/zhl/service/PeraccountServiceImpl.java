@@ -5,10 +5,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dao.PeraccountMapper;
 import com.dao.ZhhbjlMapper;
 import com.entity.Peraccount;
+import com.entity.Unitinfo;
 import com.entity.Zhhbjl;
 import com.zhl.pager.Pager;
 @Service
@@ -17,6 +19,7 @@ public class PeraccountServiceImpl implements PeraccountService {
 	private PeraccountMapper dao;
 	@Autowired
 	private ZhhbjlMapper hbdao;
+	@Transactional
 	@Override
 	public int insert(Peraccount peraccount) {
 		// TODO Auto-generated method stub
@@ -28,7 +31,7 @@ public class PeraccountServiceImpl implements PeraccountService {
 		// TODO Auto-generated method stub
 		return dao.findbyaccount(map);
 	}
-
+	@Transactional
 	@Override
 	public void AccountMerge(Map<String, Object> account1, Map<String, Object> account2) {
 		// TODO Auto-generated method stub
@@ -56,7 +59,6 @@ public class PeraccountServiceImpl implements PeraccountService {
 		zhhbjl.setGrzhbh(peraccount1.getGrzhbh());
 		hbdao.insertSelective(zhhbjl);
 	}
-
 	@Override
 	public Pager findbyPager(Map<String, Object> map,Pager p) {
 		// TODO Auto-generated method stub
@@ -71,18 +73,37 @@ public class PeraccountServiceImpl implements PeraccountService {
 		p.setList(list);//把分页的数据放到pager对象里面
 		return p;
 	}
-
+	@Transactional
 	@Override
 	public void UpdateStates(Integer zhztbh,Integer grzhbh) {
 		// TODO Auto-generated method stub
 		Peraccount account=new Peraccount(grzhbh, zhztbh);
 		dao.updateByPrimaryKeySelective(account);
 	}
-
+	@Transactional
 	@Override
 	public Map<String, Object> findUnitName(String peracId) {
 		// TODO Auto-generated method stub
 		return dao.findUnitName(peracId);
+	}
+	@Transactional
+	@Override
+	public Map<String, Object> finddkInfo(Integer dkxxbh) {
+		// TODO Auto-generated method stub
+		return dao.finddkInfo(dkxxbh);
+	}
+	@Transactional
+	@Override
+	public List<Unitinfo> queryUnitinfos() {
+		// TODO Auto-generated method stub
+		return dao.queryUnitinfos();
+	}
+	@Transactional
+	@Override
+	public int PeopleTransfer(Peraccount account) {
+		// TODO Auto-generated method stub
+		int result=dao.updateByPrimaryKeySelective(account);
+		return result;
 	}
 	
 	

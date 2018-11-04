@@ -101,7 +101,18 @@
       chsj = #{chsj,jdbcType=DATE}
     where chbh = #{chbh,jdbcType=INTEGER}
   </update>
-  <select id="findbypager" resultType="map">
-  	
+  <select id="findbypager" resultType="map" parameterType="map">
+  	select r.*,p.bkname,p.peracId,u.UnitInfoName from returnpay r left join peraccount p on r.grzhbh=p.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId
+    <if test="peracId !=null and peracId !=''">
+    	where p.peracId=#{peracId} 
+    </if>
+    ORDER BY chsj DESC
+    limit #{startIndex},#{pageSize}
+  </select>
+  <select id="findcount" resultType="int" parameterType="map">
+  	select count(*) from returnpay r left join peraccount p on r.grzhbh=p.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId
+     <if test="peracId !=null and peracId !=''">
+    	where p.peracId=#{peracId} 
+    </if>
   </select>  
 </mapper>
