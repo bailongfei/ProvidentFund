@@ -25,6 +25,14 @@
     -->
     jhbh, dkbh, hkrq, qic, yhbj, yhlx, yqztzs, cjrs, cjsjs
   </sql>
+  
+  
+	<select id="queryDyhtxx" resultType="map">
+		 select * from repayplan  where dkbh=#{dkbh}
+	</select>
+	
+  
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated

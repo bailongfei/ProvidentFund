@@ -54,12 +54,14 @@
        <if test="grdkqs!=null">grdkqs=#{grdkqs},</if>
        <if test="dqjhhkje!=null">dqjhhkje=#{dqjhhkje},</if>
        <if test="grdqjhghbj!=null">grdqjhghbj=#{grdqjhghbj},</if>
-       <if test="dqjhghlxs!=null">dqjhghlxs=#{dqjhghlxs}</if>
+       <if test="dqjhghlxs!=null">dqjhghlxs=#{dqjhghlxs},</if>
+       <if test="dksyqs!=null">dksyqs=#{dksyqs},</if>
+       <if test="hsbjze!=null">hsbjze=#{hsbjze}</if>
     </set>
     where dkbh=#{dkbh}
   </update>
   
-	<select id="queryGrzgId" resultType="map">
+	<select id="queryGrzgId" resultType="map" parameterType="int">
 		select * from  Grzfbkzhxx where dkbh=#{dkbh}
 	</select>
   

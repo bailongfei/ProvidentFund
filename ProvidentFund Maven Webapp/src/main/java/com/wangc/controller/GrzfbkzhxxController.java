@@ -3,6 +3,7 @@ package com.wangc.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,13 +20,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.entity.Grzfbkzhxx;
 import com.entity.Loaninfo;
+import com.entity.Repayplan;
 import com.wangc.service.GrzfbkzhxxService;
+import com.wangc.service.RepaylanService;
 
 
 @Controller
 @RequestMapping("/Grzfbk")
 public class GrzfbkzhxxController {
-
+@Autowired
+	private RepaylanService rs;
 	@Autowired
 			private GrzfbkzhxxService gf;
 	
@@ -58,8 +62,13 @@ public class GrzfbkzhxxController {
 	@RequestMapping("/updatee")
 	@ResponseBody
 	 public void Grzfb(@RequestParam Map<String, Object> map,HttpServletResponse response) throws IOException {
+		 DecimalFormat df = new DecimalFormat("#.0");
+		 Date date=new Date();
 		 response.setContentType("text/html;charset=utf-8");
 		 PrintWriter out=response.getWriter();
+		 Double dksyqs=Double.parseDouble((String) map.get("dksyqs"));//剩余期数
+		 dksyqs=dksyqs-1;
+		 
 		 Integer dkbh=Integer.valueOf((String) map.get("dkbh"));
 		 Double dkffe=Double.parseDouble((String) map.get("dkffe")) ;
 		 Double zxll=Double.parseDouble((String) map.get("zxll"));
@@ -67,6 +76,10 @@ public class GrzfbkzhxxController {
 		 Double dqjhhkje=Double.parseDouble((String) map.get("dqjhhkje"));
 		 Double grdqjhghbj=Double.parseDouble((String) map.get("grdqjhghbj"));
 		 Double dqjhghlxs=Double.parseDouble((String) map.get("dqjhghlxs"));
+		 Double hsbjze=Double.parseDouble((String) map.get("hsbjze"));//已还款本金
+		 //回收总金额 = 回收总金额+当前还款本金	
+		 hsbjze=hsbjze+grdqjhghbj;
+		 hsbjze=Double.parseDouble(df.format(hsbjze));
 		 map.put("dkffe", dkffe);
 		 map.put("zxll", zxll);
 		 map.put("grdkqs", grdkqs);
@@ -74,8 +87,20 @@ public class GrzfbkzhxxController {
 		 map.put("grdqjhghbj", grdqjhghbj);
 		 map.put("dqjhghlxs", dqjhghlxs);
 		 map.put("dkbh", dkbh);
+		 map.put("dksyqs", dksyqs);
+		 map.put("hsbjze", hsbjze);
+		 //实体类
+		 Repayplan repayplan=new Repayplan();
+		 repayplan.setDkbh(dkbh);
+		 repayplan.setHkrq(date);
+		 repayplan.setYhbj(grdqjhghbj.intValue());
+		 repayplan.setYhlx(dqjhghlxs.intValue());
+		 repayplan.setYqztzs("1");
+		 int qic=grdkqs.intValue()-dksyqs.intValue();
+		 repayplan.setQic(qic);
 		 System.out.println(map);
 		 int i=gf.updateGrzfb(map);
+		 gf.Saverepayplan(repayplan);
 		 if(i>0){
 			 out.print("还款成功!");//往前台打印text文本格式
 		 }else{
@@ -83,4 +108,15 @@ public class GrzfbkzhxxController {
 		 }
 		
 	 }
+	//查询还款明细
+	@RequestMapping("/Repayid")
+	@ResponseBody
+	 public List<Map<String, Object>> queryDyhtxx(int dkbh){
+		System.out.println(dkbh);
+		 List<Map<String, Object>> list1=rs.queryDyhtxx(dkbh);
+		 System.out.println(list1);
+		return list1;
+		 
+	 }
+	
 }

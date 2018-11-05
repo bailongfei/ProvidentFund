@@ -26,6 +26,10 @@
     dbhtbh, dkxxbh, dbgsbh, dywfwzl, dywpgjz, bzhtbh, ddbzt, dyrxm, sfzh
   </sql>
   
+  
+  
+	
+  
  <insert id="Dyhtxxsave" parameterType="Dyhtxx">
     insert into dyhtxx(dywfwzl,dkxxbh,dywpgjz,ddbzt,dyrxm,sfzh) values(#{dywfwzl},#{dkxxbh},#{dywpgjz},#{ddbzt},#{dyrxm},#{sfzh})
   </insert>

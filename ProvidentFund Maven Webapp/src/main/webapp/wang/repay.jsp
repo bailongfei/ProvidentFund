@@ -37,10 +37,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        	 <th>还款编号</th>
        	  <th>个人姓名</th>
          <th>贷款账号</th>
-        
          <th>贷款总额</th>
          <th>执行利率</th>
          <th>贷款期数信息</th>
+         <th>剩余贷款期数</th>
+         <th>已还款</th>
          
            </tr>	
      </thead>
@@ -95,6 +96,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										placeholder="请输入"> 
 										
 								</div>
+								<label for="description" class="col-sm-2 control-label">贷款剩余期数</label>
+								<div class="col-sm-4">
+									 <input type="text" id="dksyqs" class="form-control" name="dksyqs"
+										placeholder="请输入"> 
+										
+								</div>
 								
 							</div>
 							<div class="form-group">
@@ -118,6 +125,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										placeholder="请输入"> 
 										
 								</div>
+								<label for="description" class="col-sm-2 control-label">已还款</label>
+								<div class="col-sm-4">
+									 <input type="text" id="hsbjze" class="form-control" name="hsbjze"
+										placeholder="请输入"> 
+										
+								</div>
+								
 								
 							</div>
 							
@@ -138,6 +152,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
   		
   		
+  		
+  		
+  			 <!-- 模态框弹出录入内容 -->
+		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+			aria-labelledby="modalTitle1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">
+							&times;
+							<!-- 关闭按钮 -->
+						</button>
+						<h4 class="modal-title" id="modalTitle1">还款信息明细</h4>
+					</div>
+					<div class="modal-body">
+					  <!--form提交表单  -->
+						<form class="form-horizontal"  enctype="multipart/form-data">
+							<table class="table table-bordered">
+								<caption>边框表格布局</caption>
+								<thead>
+									<tr>
+										<th>还款编号</th>
+										<th>还款日期</th>
+										<th>还款期次</th>
+										<th>还款本金</th>
+										<th>还款利息</th>
+									</tr>
+								</thead>
+								<tbody id="tbody1">
+
+								</tbody>
+							</table>
+							
+							
+							<input type="button"   id="abcdef" data-toggle='modal' data-target='#myModal' class="btn btn-primary" value="保存">
+						</form>
+
+					</div>
+					<div class="modal-footer">
+						
+						<button type="button"  class="up btn btn-default" data-dismiss="modal">关闭
+						</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+  		
+  		
+  		
+  		
+  		
+  		
+  		
   </body>
 </html>
 
@@ -146,7 +216,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    $(function(){
      queryTbGoodsType();
   });
-  /* 查询商品表 */
+  /* 查询 */
   function queryTbGoodsType(){
     $.ajax({
        url:"Grzfbk/Grzquery",
@@ -161,10 +231,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              	 tr+="<td>"+obj.name+"</td>";
                  tr+="<td>"+obj.dkzh+"</td>";
                  tr+="<td>"+obj.dkffe+"</td>";
-                 
                  tr+="<td>"+obj.zxll+"</td>";
                  tr+="<td>"+obj.grdkqs+"</td>";
-                 tr+="<td><input type='button' value='还款详情' onclick='findbyid("+obj.dkbh+")' data-toggle='modal' data-target='#myModal' class='person btn btn-default'></td>";
+                 tr+="<td>"+obj.dksyqs+"</td>";
+                 tr+="<td>"+obj.hsbjze+"</td>";
+                 tr+="<td><input type='button' value='还款' onclick='findbyid("+obj.dkbh+")' data-toggle='modal' data-target='#myModal' class='person btn btn-default'></td>";
+              	 tr+="<td><input type='button' value='还款详情' onclick='findbyi("+obj.dkbh+")' data-toggle='modal' data-target='#myModal1' class='person btn btn-default'></td>";
                	 tr+="</tr>";
                  $("#tbody").append(tr);
           }
@@ -180,7 +252,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          data:{"dkbh":dkbh},
          dataType:"json",
          success:function(data){
-        		 
         	 $("#dkbh").val(data.dkbh);
            $("#dkzh").val(data.dkzh);
            $("#name").val(data.name);
@@ -190,6 +261,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            $("#grdqjhghbj").val(data.grdqjhghbj);
            $("#dqjhghlxs").val(data.dqjhghlxs);
            $("#dqjhhkje").val(data.dqjhhkje);
+           $("#dksyqs").val(data.dksyqs);
+             $("#hsbjze").val(data.hsbjze);
          }
          
       });
@@ -203,15 +276,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	queryTbGoodsType();
         }
    	   });
-     /*  $("#form2").ajaxSubmit({
-        url:"Grzfbk/updatee",
-        type:"post",
-        contentType:"application/x-www-form-urlencoded; charset=utf-8",
-        dataType:"text",
-        success:function(data){
-           alert(data);
-           queryTbGoodsType();
-        }
-      }); */
+  
    });
+
+  function findbyi(obj){
+  	var dkbh=obj;
+  	alert(dkbh);
+   	 $.ajax({
+   	     url:"Grzfbk/Repayid",
+         type:"post",
+         data:{"dkbh":dkbh},
+         dataType:"json",
+         success:function(data){
+         $("#tbody1").empty();
+         for(var i=0;i<data.length;i++){
+         	var obj=data[i];
+         	var tr="<tr>";
+         		tr+="<td>"+obj.dkbh+"</td>";
+         		tr+="<td>"+obj.hkrq+"</td>";
+         		tr+="<td>"+obj.qic+"</td>";
+         		tr+="<td>"+obj.yhbj+"</td>";
+         		tr+="<td>"+obj.yhlx+"</td>";
+         		tr+="</tr>";
+                $("#tbody1").append(tr);
+         }
+			        
+         }
+         
+      });
+  	}
+
+ 
 </script>

@@ -241,12 +241,7 @@ public class Grzfbkzhxx {
     private String dksyqs;
     
  
-	public Grzfbkzhxx(String name, String dksyqs) {
-		super();
-		this.name = name;
-		this.dksyqs = dksyqs;
-	}
-
+    
 	public String getName() {
 		return name;
 	}
