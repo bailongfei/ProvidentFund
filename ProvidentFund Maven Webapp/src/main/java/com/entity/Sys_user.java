@@ -3,73 +3,89 @@ package com.entity;
 import java.util.Date;
 
 public class Sys_user {
-    private Integer userid;
+	private Integer userid;
+	private Integer ygbh;
 
-    private Integer ygbh;
+	private String userAccount;
 
-    private String userAccount;
+	private String userPwd;
 
-    private String userPwd;
+	private String userPhone;
+	private Date registerTime;
 
-    private String userPhone;
+	private Integer userState;
 
-    private Date registerTime;
+	public Integer getUserid() {
+		return userid;
+	}
 
-    private Integer userState;
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
 
-    public Integer getUserid() {
-        return userid;
-    }
+	public Integer getYgbh() {
+		return ygbh;
+	}
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
+	public void setYgbh(Integer ygbh) {
+		this.ygbh = ygbh;
+	}
 
-    public Integer getYgbh() {
-        return ygbh;
-    }
+	public String getUserAccount() {
+		return userAccount;
+	}
 
-    public void setYgbh(Integer ygbh) {
-        this.ygbh = ygbh;
-    }
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
 
-    public String getUserAccount() {
-        return userAccount;
-    }
+	public String getUserPwd() {
+		return userPwd;
+	}
 
-    public void setUserAccount(String userAccount) {
-        this.userAccount = userAccount == null ? null : userAccount.trim();
-    }
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd;
+	}
 
-    public String getUserPwd() {
-        return userPwd;
-    }
+	public String getUserPhone() {
+		return userPhone;
+	}
 
-    public void setUserPwd(String userPwd) {
-        this.userPwd = userPwd == null ? null : userPwd.trim();
-    }
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
 
-    public String getUserPhone() {
-        return userPhone;
-    }
+	public Date getRegisterTime() {
+		return registerTime;
+	}
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone == null ? null : userPhone.trim();
-    }
+	public void setRegisterTime(Date registerTime) {
+		this.registerTime = registerTime;
+	}
 
-    public Date getRegisterTime() {
-        return registerTime;
-    }
+	public Integer getUserState() {
+		return userState;
+	}
 
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
-    }
+	public void setUserState(Integer userState) {
+		this.userState = userState;
+	}
 
-    public Integer getUserState() {
-        return userState;
-    }
+	public Sys_user(Integer userid, Integer ygbh, String userAccount, String userPwd, String userPhone,
+			Date registerTime, Integer userState) {
+		super();
+		this.userid = userid;
+		this.ygbh = ygbh;
+		this.userAccount = userAccount;
+		this.userPwd = userPwd;
+		this.userPhone = userPhone;
+		this.registerTime = registerTime;
+		this.userState = userState;
+	}
 
-    public void setUserState(Integer userState) {
-        this.userState = userState;
-    }
+	public Sys_user() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }

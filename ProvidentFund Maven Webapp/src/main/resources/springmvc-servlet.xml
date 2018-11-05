@@ -37,9 +37,9 @@
 		<property name="maxUploadSize" value="10485760000"></property>
 	</bean>
 	<!-- 视图解析器 --><!--异步不用 -->
-	<bean
+	  <bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/view/"></property>
+		<property name="prefix" value="/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 </beans>

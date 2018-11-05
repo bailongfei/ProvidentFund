@@ -1,7 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +18,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css"
 	media="all">
 <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
-
+<script type="text/javascript"
+	src="../../resources/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../resources/jqueryExt.js"></script>
 <script>
 /*  /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问'); */
 </script>
@@ -66,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							class="layui-icon layui-icon-screen-full"></i>
 					</a></li>
 					<li class="layui-nav-item" lay-unselect><a href="javascript:;">
-							<cite>贤心</cite>
+							<cite id="username" style="font-style:oblique;color:blue"></cite>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -90,13 +95,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</ul>
 			</div>
 
-			<!-- 侧边菜单 -->
 			<div class="layui-side layui-side-menu">
 				<div class="layui-side-scroll">
 					<div class="layui-logo" lay-href="home/console.html">
 						<span><h3>住房公积金</h3></span>
 					</div>
-
 					<ul class="layui-nav layui-nav-tree" lay-shrink="all"
 						id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 						<li data-name="home" class="layui-nav-item layui-nav-itemed">
@@ -683,5 +686,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
 </body>
 </html>
+<script>
+	$(function() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/login/queryMenu",
+			dataType : "json",
+			type : "post",
+			success : function(data) {
+			$("#username").html(data[0].userName);
+				for(var i=0;i<data.length;i++){
+					var obj=data[i];
+					if(obj.parentid=='ROOT'){
+						var li="<li data-name='' class='layui-nav-item'><a href='javascript:;' lay-tips='主页' lay-direction='2'> <i class='layui-icon layui-icon-app'></i> <cite>"+obj.modulesText+"</cite></a><dl class='layui-nav-child'>";
+						
+						for(var j=0;j<data.length;j++){
+							var obj2=data[j];
+							if(obj2.parentid==obj.modulesId){
+							/* ************************************路径待更改************************************************* */
+								li+="<dd><a lay-href='${pageContext.request.contextPath}/"+obj2.modulesUrl+"'>"+obj2.modulesText+"</a></dd>";
+							}
+						};
+						li+="</dl></li>";
+						$("#LAY-system-side-menu").append(li);
+					}
+				
+				}
+			}
+		})
+	}
+
+	)
+</script>
 
 
