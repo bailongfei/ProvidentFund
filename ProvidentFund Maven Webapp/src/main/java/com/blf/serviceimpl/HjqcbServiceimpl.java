@@ -41,7 +41,7 @@ public class HjqcbServiceimpl implements HjqcbService {
 	}
 	@Override
 	public List<Map<String, Object>> queryUser() {
-		List<Map<String, Object>> list=userdao.queryUser();
+		List<Map<String, Object>> list=userdao.queryUserss();
 		return list;
 	}
 	@Transactional
