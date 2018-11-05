@@ -5,4 +5,16 @@
 		parameterType="java.lang.String">
 		select u.userId, u.userName,u.password from usertable u where u.userName=#{userName}
 	</select>
+	<select id="findUsersById" parameterType="integer" resultType="map">
+	  select * from usertable where userId=#{userId}
+	</select>
+	<select id="findUsertables" resultType="map">
+	     select u.userId,u.userName,r.rolesName from usertable u ,roles r where u.rolesId = r.rolesId 
+	</select>
+	<delete id="deleteUsers" parameterType="integer">
+	  delete from usertable where userId=#{userId}
+	</delete>
+	<update id="updateUsertable" parameterType="integer">
+	   update usertable set userName =#{userName},roles.rolesId=#{roles.userId} where userId=#{userId}
+	</update>
 </mapper>

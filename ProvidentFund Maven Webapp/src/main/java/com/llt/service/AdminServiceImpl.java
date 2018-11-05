@@ -11,6 +11,7 @@ import com.dao.AdminDao;
 import com.entity.Modules;
 import com.entity.Roles;
 import com.entity.Rolesmodule;
+import com.entity.Usertable;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -93,5 +94,33 @@ public class AdminServiceImpl implements AdminService {
     public List<Map<String, Object>> queryAllRoles(){
     	return dao.queryAllRoles();
     }
+
+	@Override
+	public List<Map<String, Object>> findUsertables() {
+		// TODO Auto-generated method stub
+		return dao.findUsertables();
+	}
+
+	@Override
+	public void saveOrUpdateUsers(Usertable usertable) {
+		// TODO Auto-generated method stub
+		if (usertable.getUserId()!=null && usertable.getUserId()>0) {
+			dao.updateUsertable(usertable);
+		}else {
+			dao.saveUsers(usertable);
+		}
+	}
+
+	@Override
+	public List<Map<String, Object>> findUsersById(Integer userId) {
+		// TODO Auto-generated method stub
+		return dao.findUsersById(userId);
+	}
+
+	@Override
+	public void deleteUsers(Integer userId) {
+		// TODO Auto-generated method stub
+		dao.deleteUsers(userId);
+	}
 
 }

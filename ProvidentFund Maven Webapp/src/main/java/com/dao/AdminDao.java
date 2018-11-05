@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.entity.Roles;
 import com.entity.Rolesmodule;
+import com.entity.Usertable;
 
 public interface AdminDao {
 	// 验证登陆
@@ -28,6 +29,21 @@ public interface AdminDao {
 	// 删除
 	public void deleteRoles(Integer rolesId);
 
+	// 查询所有员工
+	public List<Map<String, Object>> findUsertables();
+
+	// 添加员工
+	public void saveUsers(Usertable usertable);
+
+	// 修改前的的查询
+	public List<Map<String, Object>> findUsersById(Integer userId);
+
+	// 修改员工信息
+	public void updateUsertable(Usertable usertable);
+
+	// 删除员工
+	public void deleteUsers(Integer userId);
+
 	// 查询所有菜单项，并获取到对应角色编号的菜单
 	public List<Map<String, Object>> findAllMenusByRoleId(int rolesId);
 
@@ -41,5 +57,4 @@ public interface AdminDao {
 	public List<Map<String, Object>> queryAllRoles();
 	// public String getStuId();
 
-	// public void addStuffAndUsers(List<Stuff> list,List<Usertable> list2);
 }
