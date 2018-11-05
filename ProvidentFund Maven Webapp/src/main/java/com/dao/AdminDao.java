@@ -33,13 +33,13 @@ public interface AdminDao {
 	public List<Map<String, Object>> findUsertables();
 
 	// 添加员工
-	public void saveUsers(Usertable usertable);
+	public void saveUsers(Map<String, Object> map);
 
 	// 修改前的的查询
 	public List<Map<String, Object>> findUsersById(Integer userId);
 
 	// 修改员工信息
-	public void updateUsertable(Usertable usertable);
+	public void updateUsertable(Map<String, Object> map);
 
 	// 删除员工
 	public void deleteUsers(Integer userId);

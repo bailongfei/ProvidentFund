@@ -38,7 +38,7 @@ public interface AdminService {
 	public List<Map<String, Object>> findUsertables();
 
 	// 添加或者修改员工
-	public void saveOrUpdateUsers(Usertable usertable);
+	public void saveOrUpdateUsers(Map<String, Object> map);
 
 	// 修改前的的查询
 	public List<Map<String, Object>> findUsersById(Integer userId);

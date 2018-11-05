@@ -136,10 +136,11 @@ public class AdminController {
 	}
 
 	// 修改或者保存
-	@ResponseBody
 	@RequestMapping("/saveOrUpdateUsers")
-	public void saveOrUpdateUsers(@RequestBody Usertable usertable) {
-		adminService.saveOrUpdateUsers(usertable);
+	@ResponseBody
+	public void saveOrUpdateUsers(@RequestBody Map<String, Object> map) {
+		System.out.println(map+"修改----------------------------");
+		adminService.saveOrUpdateUsers(map);
 	}
 
 	// 修改前的查询
@@ -147,6 +148,14 @@ public class AdminController {
 	@RequestMapping("/updateBeforeQueryUsers")
 	public List<Map<String, Object>> updateBeforeQueryUsers(Integer userId) {
 		List<Map<String, Object>> list = adminService.findUsersById(userId);
+		return list;
+	}
+	//查询角色
+	@ResponseBody
+	@RequestMapping("/queryRoles")
+	public List<Map<String, Object>> queryRoles(){
+		List<Map<String, Object>> list=adminService.queryAllRoles();
+		System.out.println(list.toString()+"------------------------------------------------角色查询");
 		return list;
 	}
 

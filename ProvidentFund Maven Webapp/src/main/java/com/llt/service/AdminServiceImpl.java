@@ -102,12 +102,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void saveOrUpdateUsers(Usertable usertable) {
+	public void saveOrUpdateUsers(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		if (usertable.getUserId()!=null && usertable.getUserId()>0) {
-			dao.updateUsertable(usertable);
+		if (!map.get("userId").equals("")) {
+			dao.updateUsertable(map);
 		}else {
-			dao.saveUsers(usertable);
+			dao.saveUsers(map);
 		}
 	}
 
