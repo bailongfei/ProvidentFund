@@ -19,7 +19,7 @@ import com.zhl.service.PeraccountService;
 
 @Controller
 @RequestMapping("/Peraccount")
-public class PeraccountController {
+public class PeraccountControllers {
 	@Autowired
 	private PeraccountService service;
 	//µÇÂ½

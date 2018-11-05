@@ -1,21 +1,22 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-<base href="<%=basePath%>">
-
-<title>My JSP 'index.jsp' starting page</title>
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-<!--
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'login.jsp' starting page</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 <!-- 使用模态窗口引入bootstrap ${pageContext.request.contextPath}-->
@@ -31,13 +32,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="resources/jqueryExt.js"></script>
 <!-- 上传文件js -->
 <script type="text/javascript" src="resources/jquery.form.js"></script>
-</head>
-
-<body>
- <a href="Hjqcb.jsp">汇缴变更清册历史信息</a><br>
-  <a href="Bjqcb.jsp">补缴清册历史信息</a><br>
-  <a href="Hjqcb.jsp">跨年清册历史信息</a><br>
-  <a href="Individualpay.jsp">单位职工账户信息查询</a><br>
-</body>
-
+  </head>
+  
+  <body>
+    <div class="container">
+    <div><a href="selectUser.jsp">忘记用户名</a></div>
+     <div><a href="selectPwd.jsp">忘记密码</a></div>
+    </div>
+   
+  </body>
 </html>
