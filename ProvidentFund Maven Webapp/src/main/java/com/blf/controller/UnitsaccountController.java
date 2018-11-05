@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.blf.service.UnitsaccountService;
-import com.entity.Hjqcb;
+
 import com.entity.Unitsaccount;
 @Controller
 @RequestMapping("/unfo")

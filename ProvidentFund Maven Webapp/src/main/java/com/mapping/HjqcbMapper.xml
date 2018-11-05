@@ -37,6 +37,7 @@ SELECT *, ABS(NOW() - h.bjjzrq)  AS diffTime FROM hjqcb h where h.UnitInfoAccoun
        </where>
          order by hjbh desc 
   </select>
+
   <resultMap id="BaseResultMap" type="com.entity.Hjqcb">
     <id column="hjbh" jdbcType="INTEGER" property="hjbh" />
     <result column="UnitInfoAccount" jdbcType="INTEGER" property="unitinfoaccount" />
@@ -95,6 +96,7 @@ SELECT *, ABS(NOW() - h.bjjzrq)  AS diffTime FROM hjqcb h where h.UnitInfoAccoun
       #{bjjkzt,jdbcType=VARCHAR}, #{rzrq,jdbcType=DATE}, #{hjywlx,jdbcType=VARCHAR}, 
       #{hjbz,jdbcType=VARCHAR})
   </insert> -->
+  
   <!--汇缴添加  -->
   <insert id="insert" parameterType="com.entity.Hjqcb" >
     insert into hjqcb (UnitInfoAccount,
@@ -111,6 +113,7 @@ SELECT *, ABS(NOW() - h.bjjzrq)  AS diffTime FROM hjqcb h where h.UnitInfoAccoun
       #{scjnje,jdbcType=DECIMAL}, #{bchnrs,jdbcType=INTEGER}, #{bchnje,jdbcType=DECIMAL}, 
       #{ssje,jdbcType=DECIMAL},#{jedxzh,jdbcType=VARCHAR}, #{bjjkfs,jdbcType=VARCHAR}, #{bjjkzt,jdbcType=VARCHAR}, 
       #{rzrq,jdbcType=DATE},#{hjywlx,jdbcType=VARCHAR},#{hjbz,jdbcType=VARCHAR})
+
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Hjqcb">
     insert into hjqcb

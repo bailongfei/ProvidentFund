@@ -211,4 +211,47 @@
       bglx = #{bglx,jdbcType=VARCHAR}
     where perbuid = #{perbuid,jdbcType=INTEGER}
   </update>
+  <select id="findpage" resultType="Perbusiness" parameterType="Integer">
+  	select * from Perbusiness where grzhbhs=#{0}
+  </select>
+  <!-- <select id="findcount" resultType="int">
+  	select count(*) from Perbusiness where grzhbhs=#{0}
+  </select> -->
+  <!-- 根据条件分页查询个人明细 -->
+  <select id="findbycondition" resultType="Map" parameterType="Map">
+  	select pa.peracId,pa.bkname,u.UnitInfoName,pb.* from Perbusiness pb left join peraccount pa on pb.grzhbh=pa.grzhbh join unitinfo u on pa.UnitInfoId=u.UnitInfoId
+  		<if test="grperbuType !=null and grperbuType!=''">
+  			and pb.grperbuType=#{grperbuType}
+  		</if>
+  		<if test="date1 !=null and date1!='' and date2 !=null and date2!=''">
+  			and pb.grperbuTime between #{date1} and #{date2}
+  		</if>
+  		<if test="date3 !=null and date3!=''">
+  			and pb.grperbuTime=#{date3}
+  		</if>
+  		<if test="bkname !=null and bkname!=''">
+  			and pa.bkname like concat('%',#{bkname},'%')
+  		</if>
+  		ORDER BY grperbuTime DESC
+  	limit #{startIndex},#{pageSize}
+  </select>  
+  <!-- 根据条件查询出个人明细总条数 -->
+  <select id="findcount" resultType="Integer" parameterType="Map">
+  	select count(*) from Perbusiness pb left join peraccount pa on pb.grzhbh=pa.grzhbh join unitinfo u on pa.UnitInfoId=u.UnitInfoId
+  		<if test="grperbuType !=null and grperbuType!=''">
+  			and pb.grperbuType=#{grperbuType}
+  		</if>
+  		<if test="date1 !=null and date1!='' and date2 !=null and date2!=''">
+  			and pb.grperbuTime between #{date1} and #{date2}
+  		</if>
+  		<if test="date3 !=null and date3!=''">
+  			and pb.grperbuTime=#{date3}
+  		</if>
+  		<if test="bkname !=null and bkname!=''">
+  			and pa.bkname like concat('%',#{bkname},'%')
+  		</if>
+  </select>   
+  <select id="queryAll" resultType="java.util.Map">
+  	select * from perbusiness 
+  </select>  
 </mapper>

@@ -240,4 +240,47 @@ public class Peraccount {
     public void setMonthlyprofit(Integer monthlyprofit) {
         this.monthlyprofit = monthlyprofit;
     }
+
+	public Peraccount(Integer grzhbh, Integer zhztbh, Integer unitpositionid, Integer unitinfoid, Integer netinfoid,
+			Integer unitinfoaccount, Integer grzhbhs, String peracid, String peracloginpw, String peractransactionpw,
+			Integer peracbalance, String peracupdatestatus, String bkname, String bksex, String phonenum, String idtype,
+			String idnumbers, String birthday, String marital, String education, String email, String postcode,
+			String address, Integer monthlyprofit) {
+		super();
+		this.grzhbh = grzhbh;
+		this.zhztbh = zhztbh;
+		this.unitpositionid = unitpositionid;
+		this.unitinfoid = unitinfoid;
+		this.netinfoid = netinfoid;
+		this.unitinfoaccount = unitinfoaccount;
+		this.grzhbhs = grzhbhs;
+		this.peracid = peracid;
+		this.peracloginpw = peracloginpw;
+		this.peractransactionpw = peractransactionpw;
+		this.peracbalance = peracbalance;
+		this.peracupdatestatus = peracupdatestatus;
+		this.bkname = bkname;
+		this.bksex = bksex;
+		this.phonenum = phonenum;
+		this.idtype = idtype;
+		this.idnumbers = idnumbers;
+		this.birthday = birthday;
+		this.marital = marital;
+		this.education = education;
+		this.email = email;
+		this.postcode = postcode;
+		this.address = address;
+		this.monthlyprofit = monthlyprofit;
+	}
+
+	public Peraccount() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Peraccount(Integer grzhbh, Integer zhztbh) {
+		super();
+		this.grzhbh = grzhbh;
+		this.zhztbh = zhztbh;
+	}
 }

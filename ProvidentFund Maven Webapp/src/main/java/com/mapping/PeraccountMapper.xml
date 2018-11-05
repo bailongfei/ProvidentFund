@@ -400,6 +400,7 @@
       <if test="grzhbhs != null">
         grzhbhs = #{grzhbhs,jdbcType=INTEGER},
       </if>
+      
       <if test="peracid != null">
         peracId = #{peracid,jdbcType=VARCHAR},
       </if>
@@ -481,4 +482,39 @@
       monthlyProfit = #{monthlyprofit,jdbcType=DECIMAL}
     where grzhbh = #{grzhbh,jdbcType=INTEGER}
   </update>
+  <select id="findbyaccount" parameterType="map" resultType="Peraccount">
+  	select * from peraccount where peracid=#{peracid} and peracloginpw=#{peracloginpw}
+  </select>
+  	<!-- 根据个人账号分页查询个人及单位信息 -->
+  <select id="findbyPager" parameterType="map" resultType="Map">
+  	select p.*,i.unitRateDeposit,i.perContributionRate,i.personalDepositBase,g.zhzt from peraccount p join individualpay i on p.grzhbh=i.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId join grzhztb g on p.zhztbh=g.zhztbh
+  	where p.zhztbh=1
+  	<if test="peracId !=null and peracId!=''">
+  		and peracId=#{peracId}
+  	</if>
+  	ORDER BY zhztbh DESC
+  	limit #{startIndex},#{pageSize}
+  </select>
+    <!-- 根据个人账号查询个人及单位信息总条数 -->
+  <select id="findPagercount" parameterType="map" resultType="int">
+  	select count(*) from peraccount p join individualpay i on p.grzhbh=i.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId join grzhztb g on p.zhztbh=g.zhztbh
+  	where p.zhztbh=1
+  	<if test="peracId !=null and peracId!=''">
+  		and peracId=#{peracId}
+  	</if>
+  </select>
+  <!-- 根据个人账号查询单位信息 -->
+  <select id="findUnitName" parameterType="String" resultType="map">
+  	select * from peraccount p  left join unitinfo u on p.UnitInfoId=u.UnitInfoId 
+  	where p.peracId=#{0}
+  </select>
+  <!-- 根据贷款编号查询贷款信息 -->  
+  <select id="finddkInfo" parameterType="Integer" resultType="map">
+  	select * from loaninfo l left join purchase p on l.dkxxbh=p.dkxxbh
+  	where l.dkxxbh=#{0}
+  </select>
+  <!-- 查询所有单位信息 -->
+  <select id="queryUnitinfos" resultType="Unitinfo">
+  	select * from unitinfo
+  </select>
 </mapper>

@@ -10138,3 +10138,305 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 99; columnNumber: 73; ±ØÐë
 [DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.getCount]==>  Preparing: select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId order by hjbh desc 
 [DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.getCount]==> Parameters: 
 [DEBUG][2018-11-04 19:26|:45][com.dao.HjqcbMapper.getCount]<==      Total: 1
+[INFO][2018-11-05 09:59|:22][org.springframework.web.context.ContextLoader]Root WebApplicationContext: initialization started
+[INFO][2018-11-05 09:59|:22][org.springframework.web.context.support.XmlWebApplicationContext]Refreshing Root WebApplicationContext: startup date [Mon Nov 05 09:59:22 CST 2018]; root of context hierarchy
+[INFO][2018-11-05 09:59|:23][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [applicationContext.xml]
+[INFO][2018-11-05 09:59|:26][org.springframework.beans.factory.config.PropertyPlaceholderConfigurer]Loading properties file from class path resource [jdbc.properties]
+[INFO][2018-11-05 09:59|:26][org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor]JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+[INFO][2018-11-05 09:59|:30][org.springframework.web.context.ContextLoader]Root WebApplicationContext: initialization completed in 7940 ms
+[INFO][2018-11-05 09:59|:30][org.springframework.web.servlet.DispatcherServlet]FrameworkServlet 'spring': initialization started
+[INFO][2018-11-05 09:59|:30][org.springframework.web.context.support.XmlWebApplicationContext]Refreshing WebApplicationContext for namespace 'spring-servlet': startup date [Mon Nov 05 09:59:30 CST 2018]; parent: Root WebApplicationContext
+[INFO][2018-11-05 09:59|:30][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [springmvc-servlet.xml]
+[INFO][2018-11-05 09:59|:30][org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor]JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/queryHjqcb],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.HjqcbController.queryHjqcb(java.lang.Integer)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/selectSum],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public int com.blf.controller.HjqcbController.querySum(java.lang.Integer)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/saveHjqcb],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.blf.controller.HjqcbController.saveHjqcb(com.entity.Hjqcb,javax.servlet.http.HttpServletResponse) throws java.io.IOException
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/queryHj],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.util.Pager com.blf.controller.HjqcbController.queryHj(java.lang.String,java.lang.Integer)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/queryUser],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.HjqcbController.queryUser()
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/queryUcbOrUf],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.HjqcbController.queryUcbOrUf(java.lang.Integer)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/hjqcb/selectBGjce],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.HjqcbController.selectBGjce(java.lang.Integer)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/ipay/saveIpayPer],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.blf.controller.individualPayController.queryIpayPer(java.util.Map,javax.servlet.http.HttpServletResponse) throws java.io.IOException
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/utzw/queryZw],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.UnitpositionController.queryZw()
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/utzw/queryLmk],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.UnitpositionController.queryLmk()
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/unfo/queryUnfoAndUncc],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.UnitsaccountController.query()
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/unfo/queryUnfo],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> com.blf.controller.UnitsaccountController.queryUnfo(com.entity.Unitsaccount)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/uploadExcel/ajaxUpload.do],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.blf.controller.UploadExcelControl.ajaxUploadExcel(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws java.lang.Exception
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/uploadExcel/upload.do],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.blf.controller.UploadExcelControl.uploadExcel(javax.servlet.http.HttpServletRequest) throws java.lang.Exception
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Accumulation/findtqyy],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<com.entity.Gjjtqyyb> com.zhl.controller.AccumulationController.findtqyy()
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Accumulation/findbyperaccount],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.zhl.controller.AccumulationController.findbyperaccount(java.lang.String,java.util.Map<java.lang.String, java.lang.Object>)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Accumulation/ApplyAccumulation],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.zhl.controller.AccumulationController.ApplyAccumulation(com.entity.Accumulation)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Peraccount/queryUnitinfos],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<com.entity.Unitinfo> com.zhl.controller.PeraccountController.queryUnitinfos()
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Peraccount/PeopleTransfer],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.zhl.controller.PeraccountController.PeopleTransfer(com.entity.Peraccount)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Peraccount/AccountMerge],methods=[],params=[],headers=[],consumes=[],produces=[text/html;charset=UTF-8],custom=[]}" onto public java.lang.String com.zhl.controller.PeraccountController.AccountMerge(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Peraccount/findbyPager],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.zhl.pager.Pager com.zhl.controller.PeraccountController.findbyPager(java.util.Map<java.lang.String, java.lang.Object>)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Peraccount/findUnitName],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.Map<java.lang.String, java.lang.Object> com.zhl.controller.PeraccountController.findUnitName(java.lang.String)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Peraccount/finddkInfo],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.Map<java.lang.String, java.lang.Object> com.zhl.controller.PeraccountController.finddkInfo(java.lang.Integer)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Peraccount/UpdateStates],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.zhl.controller.PeraccountController.UpdateStates(java.lang.Integer,java.lang.Integer)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Peraccount/login],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.zhl.controller.PeraccountController.login(java.lang.String,java.lang.String,javax.servlet.http.HttpSession)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Perbusiness/findbycondition],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.zhl.pager.Pager com.zhl.controller.PerbusinessController.findbycondition(java.lang.String,java.lang.Integer,java.lang.String,java.lang.String,java.lang.String)
+[INFO][2018-11-05 09:59|:31][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]Mapped "{[/Returnpay/findbyPager],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.zhl.pager.Pager com.zhl.controller.ReturnpayController.findbyPager(java.lang.String,int)
+[INFO][2018-11-05 09:59|:32][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]Looking for @ControllerAdvice: WebApplicationContext for namespace 'spring-servlet': startup date [Mon Nov 05 09:59:30 CST 2018]; parent: Root WebApplicationContext
+[INFO][2018-11-05 09:59|:32][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]Looking for @ControllerAdvice: WebApplicationContext for namespace 'spring-servlet': startup date [Mon Nov 05 09:59:30 CST 2018]; parent: Root WebApplicationContext
+[INFO][2018-11-05 09:59|:32][org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
+[INFO][2018-11-05 09:59|:32][org.springframework.web.servlet.DispatcherServlet]FrameworkServlet 'spring': initialization completed in 1808 ms
+[DEBUG][2018-11-05 10:01|:04][com.dao.BrandedMapper.queryLmk]==>  Preparing: select b.*,bn.* from Branded b join Bankdetails bn on b.Bankdetailsid=bn.Bankdetailsid 
+[DEBUG][2018-11-05 10:01|:04][com.dao.UnitsaccountMapper.queryUnccfo]==>  Preparing: select uc.*,uf.* from unitsaccount uc join Unitinfo uf on uc.unitinfoaccount=uf.unitinfoaccount 
+[DEBUG][2018-11-05 10:01|:04][com.dao.UnitpositionMapper.queryZw]==>  Preparing: select * from Unitposition 
+[DEBUG][2018-11-05 10:01|:04][com.dao.BrandedMapper.queryLmk]==> Parameters: 
+[DEBUG][2018-11-05 10:01|:04][com.dao.UnitpositionMapper.queryZw]==> Parameters: 
+[DEBUG][2018-11-05 10:01|:04][com.dao.UnitsaccountMapper.queryUnccfo]==> Parameters: 
+[DEBUG][2018-11-05 10:01|:05][com.dao.UnitpositionMapper.queryZw]<==      Total: 1
+[DEBUG][2018-11-05 10:01|:05][com.dao.UnitsaccountMapper.queryUnccfo]<==      Total: 2
+[DEBUG][2018-11-05 10:01|:05][com.dao.BrandedMapper.queryLmk]<==      Total: 2
+[DEBUG][2018-11-05 10:01|:10][com.dao.Sys_userMapper.queryUser]==>  Preparing: select * from sys_user 
+[DEBUG][2018-11-05 10:01|:10][com.dao.Sys_userMapper.queryUser]==> Parameters: 
+[DEBUG][2018-11-05 10:01|:10][com.dao.Sys_userMapper.queryUser]<==      Total: 1
+[DEBUG][2018-11-05 10:01|:10][com.dao.IndividualpayMapper.selectBGjce]==>  Preparing: select ip.* from individualpay ip left join unitinfo uf on ip.UnitInfoAccount=uf.UnitInfoAccount where uf.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:01|:10][com.dao.IndividualpayMapper.selectSum]==>  Preparing: select COUNT(*) as grjnjszh from individualpay ip join unitinfo uf on ip.UnitInfoAccount=uf.UnitInfoAccount where uf.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:01|:10][com.dao.IndividualpayMapper.selectBGjce]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-05 10:01|:10][com.dao.IndividualpayMapper.selectSum]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-05 10:01|:10][com.dao.HjqcbMapper.queryUcOrUf]==>  Preparing: select uc.*,uf.* from Unitsaccount uc join UnitInfo uf on uc.UnitInfoAccount=uf.UnitInfoAccount where uc.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:01|:10][com.dao.HjqcbMapper.queryHjceb]==>  Preparing: SELECT *, ABS(NOW() - h.bjjzrq) AS diffTime FROM hjqcb h where h.UnitInfoAccount=? ORDER BY h.hjbh desc LIMIT 0,1 
+[DEBUG][2018-11-05 10:01|:10][com.dao.HjqcbMapper.queryUcOrUf]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-05 10:01|:10][com.dao.HjqcbMapper.queryHjceb]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-05 10:01|:10][com.dao.HjqcbMapper.queryUcOrUf]<==      Total: 1
+[DEBUG][2018-11-05 10:01|:10][com.dao.IndividualpayMapper.selectBGjce]<==      Total: 6
+[DEBUG][2018-11-05 10:01|:10][com.dao.HjqcbMapper.queryHjceb]<==      Total: 1
+[DEBUG][2018-11-05 10:01|:10][com.dao.IndividualpayMapper.selectSum]<==      Total: 1
+[DEBUG][2018-11-05 10:01|:21][com.dao.IndividualpayMapper.selectSum]==>  Preparing: select COUNT(*) as grjnjszh from individualpay ip join unitinfo uf on ip.UnitInfoAccount=uf.UnitInfoAccount where uf.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:01|:21][com.dao.IndividualpayMapper.selectSum]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-05 10:01|:21][com.dao.IndividualpayMapper.selectSum]<==      Total: 1
+[DEBUG][2018-11-05 10:01|:21][com.dao.IndividualpayMapper.selectBGjce]==>  Preparing: select ip.* from individualpay ip left join unitinfo uf on ip.UnitInfoAccount=uf.UnitInfoAccount where uf.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:01|:21][com.dao.IndividualpayMapper.selectBGjce]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-05 10:01|:21][com.dao.HjqcbMapper.queryUcOrUf]==>  Preparing: select uc.*,uf.* from Unitsaccount uc join UnitInfo uf on uc.UnitInfoAccount=uf.UnitInfoAccount where uc.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:01|:21][com.dao.HjqcbMapper.queryUcOrUf]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-05 10:01|:21][com.dao.IndividualpayMapper.selectBGjce]<==      Total: 6
+[DEBUG][2018-11-05 10:01|:21][com.dao.Sys_userMapper.queryUser]==>  Preparing: select * from sys_user 
+[DEBUG][2018-11-05 10:01|:21][com.dao.Sys_userMapper.queryUser]==> Parameters: 
+[DEBUG][2018-11-05 10:01|:21][com.dao.HjqcbMapper.queryHjceb]==>  Preparing: SELECT *, ABS(NOW() - h.bjjzrq) AS diffTime FROM hjqcb h where h.UnitInfoAccount=? ORDER BY h.hjbh desc LIMIT 0,1 
+[DEBUG][2018-11-05 10:01|:21][com.dao.Sys_userMapper.queryUser]<==      Total: 1
+[DEBUG][2018-11-05 10:01|:21][com.dao.HjqcbMapper.queryHjceb]==> Parameters: 201810002(Integer)
+[DEBUG][2018-11-05 10:01|:21][com.dao.HjqcbMapper.queryUcOrUf]<==      Total: 1
+[DEBUG][2018-11-05 10:01|:21][com.dao.HjqcbMapper.queryHjceb]<==      Total: 1
+[DEBUG][2018-11-05 10:02|:11][com.dao.UnitsaccountMapper.queryUnccfo]==>  Preparing: select uc.*,uf.* from unitsaccount uc join Unitinfo uf on uc.unitinfoaccount=uf.unitinfoaccount 
+[DEBUG][2018-11-05 10:02|:11][com.dao.UnitsaccountMapper.queryUnccfo]==> Parameters: 
+[DEBUG][2018-11-05 10:02|:11][com.dao.UnitsaccountMapper.queryUnccfo]<==      Total: 2
+[DEBUG][2018-11-05 10:02|:14][com.dao.IndividualpayMapper.selectSum]==>  Preparing: select COUNT(*) as grjnjszh from individualpay ip join unitinfo uf on ip.UnitInfoAccount=uf.UnitInfoAccount where uf.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:02|:14][com.dao.IndividualpayMapper.selectSum]==> Parameters: 201810001(Integer)
+[DEBUG][2018-11-05 10:02|:14][com.dao.IndividualpayMapper.selectSum]<==      Total: 1
+[DEBUG][2018-11-05 10:02|:14][com.dao.IndividualpayMapper.selectBGjce]==>  Preparing: select ip.* from individualpay ip left join unitinfo uf on ip.UnitInfoAccount=uf.UnitInfoAccount where uf.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:02|:14][com.dao.IndividualpayMapper.selectBGjce]==> Parameters: 201810001(Integer)
+[DEBUG][2018-11-05 10:02|:14][com.dao.HjqcbMapper.queryUcOrUf]==>  Preparing: select uc.*,uf.* from Unitsaccount uc join UnitInfo uf on uc.UnitInfoAccount=uf.UnitInfoAccount where uc.UnitInfoAccount=? 
+[DEBUG][2018-11-05 10:02|:14][com.dao.HjqcbMapper.queryUcOrUf]==> Parameters: 201810001(Integer)
+[DEBUG][2018-11-05 10:02|:14][com.dao.HjqcbMapper.queryHjceb]==>  Preparing: SELECT *, ABS(NOW() - h.bjjzrq) AS diffTime FROM hjqcb h where h.UnitInfoAccount=? ORDER BY h.hjbh desc LIMIT 0,1 
+[DEBUG][2018-11-05 10:02|:14][com.dao.HjqcbMapper.queryHjceb]==> Parameters: 201810001(Integer)
+[DEBUG][2018-11-05 10:02|:14][com.dao.Sys_userMapper.queryUser]==>  Preparing: select * from sys_user 
+[DEBUG][2018-11-05 10:02|:14][com.dao.Sys_userMapper.queryUser]==> Parameters: 
+[DEBUG][2018-11-05 10:02|:14][com.dao.IndividualpayMapper.selectBGjce]<==      Total: 9
+[DEBUG][2018-11-05 10:02|:14][com.dao.Sys_userMapper.queryUser]<==      Total: 1
+[DEBUG][2018-11-05 10:02|:14][com.dao.HjqcbMapper.queryHjceb]<==      Total: 1
+[DEBUG][2018-11-05 10:02|:14][com.dao.HjqcbMapper.queryUcOrUf]<==      Total: 1
+[DEBUG][2018-11-05 10:23|:09][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:23|:09][com.dao.PeraccountMapper.findUnitName]==> Parameters: (String)
+[DEBUG][2018-11-05 10:23|:09][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:23|:12][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:23|:12][com.dao.PeraccountMapper.findUnitName]==> Parameters: (String)
+[DEBUG][2018-11-05 10:23|:12][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:23|:16][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:23|:16][com.dao.PeraccountMapper.findUnitName]==> Parameters: (String)
+[DEBUG][2018-11-05 10:23|:16][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:24|:39][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:24|:39][com.dao.PeraccountMapper.findUnitName]==> Parameters: (String)
+[DEBUG][2018-11-05 10:24|:39][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:24|:46][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:24|:46][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:24|:46][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:25|:41][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:25|:41][com.dao.PeraccountMapper.findUnitName]==> Parameters: (String)
+[DEBUG][2018-11-05 10:25|:41][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:25][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:25][com.dao.PeraccountMapper.findUnitName]==> Parameters: (String)
+[DEBUG][2018-11-05 10:26|:25][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:26][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:26][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:26][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:28][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:29][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:30][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:31][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:31][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:31][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:31][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:31][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:31][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:32][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:41][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:41][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:41][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:43][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:43][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:43][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:44][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:45][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:46][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:46][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:46][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:47][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:49][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:50][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:50][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:50][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:26|:50][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:26|:50][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:26|:50][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:02][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:02][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:02][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:02][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:02][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:02][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:03][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:04][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:05][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:06][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:47][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:47][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:47][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:27|:49][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:27|:49][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:27|:49][com.dao.PeraccountMapper.findUnitName]<==      Total: 1
+[DEBUG][2018-11-05 10:29|:57][com.dao.PeraccountMapper.findUnitName]==>  Preparing: select * from peraccount p left join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.peracId=? 
+[DEBUG][2018-11-05 10:29|:57][com.dao.PeraccountMapper.findUnitName]==> Parameters: 23516854(String)
+[DEBUG][2018-11-05 10:29|:57][com.dao.PeraccountMapper.findUnitName]<==      Total: 1

@@ -5,7 +5,7 @@ public class Shzt {
 
     private String shxq;
 
-    private String bhyy;
+    private String 驳回原因;
 
     public Integer getShbh() {
         return shbh;
@@ -23,11 +23,11 @@ public class Shzt {
         this.shxq = shxq == null ? null : shxq.trim();
     }
 
-    public String getBhyy() {
-        return bhyy;
+    public String get驳回原因() {
+        return 驳回原因;
     }
 
-    public void setBhyy(String bhyy) {
-        this.bhyy = bhyy == null ? null : bhyy.trim();
+    public void set驳回原因(String 驳回原因) {
+        this.驳回原因 = 驳回原因 == null ? null : 驳回原因.trim();
     }
 }

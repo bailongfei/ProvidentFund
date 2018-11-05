@@ -14,7 +14,6 @@
 	<filter><!-- 编码过滤器 -->
 		<filter-name>Encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>utf-8</param-value>

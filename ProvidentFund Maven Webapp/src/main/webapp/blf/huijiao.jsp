@@ -98,9 +98,6 @@
 							<th>暂存款余额</th>
 							<th>单位账户状态</th>
 							<th>单位缴至年月</th>
-							<!-- <th colspan="6">
-				搜索:<input type="text" class="goodsName" id="goodsNames" placeholder="请输入名称" name="goodsName"> 
-				</th> -->
 							<th>操作</th>
 						</tr>
 					</thead>
