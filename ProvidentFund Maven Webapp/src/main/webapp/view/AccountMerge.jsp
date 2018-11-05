@@ -73,5 +73,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	销户账号单位:<input type="text" id="unit2"><br/>
     	<input type="button" value="合并账户" onclick="merge()">
     </form>
+    <!-- 1105:1203 -->
   </body>
 </html>
