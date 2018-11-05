@@ -1,0 +1,250 @@
+﻿var cst = {};
+
+(function (cst) {
+	$.fn.ydPageBar.setDefaults({showPageSize: [5, 10, 20, 50, 100]});
+
+	//回车跳转
+	//var $inputs = $('form :input:visible:not(:disabled,[readonly=readonly],[tabindex=-1],._device_button),form :input:visible._device_input');
+	//if (ydl.localData('operconfig_changeFocus') == 'enter') {
+
+	if (1) {
+		//回车自动跳转到下一个输入域，直到提交按钮
+		//$('form').on('keyup', ':input:visible:not(:disabled,[readonly=readonly],[tabindex=-1])', function(event) {
+		//$('form').on('keyup', ':input:visible:not(:disabled,[readonly=readonly],[tabindex=-1],._device_button),:input:visible._device_input', function(event) {
+		
+		var inputs = ":input:not([tabindex=-1],._device_button),:input:visible._device_input";
+	
+		$('body').on('keypress', inputs, function(event) {
+			if (event.which == ydl.common.keys.Enter) {
+				var $thisInput = $(this);
+				if ($thisInput.is(':hidden,:disabled,[readonly=readonly]') || $thisInput.closest('table.datalist-editor-dialog').length > 0) return false;
+				if ($thisInput[0].type == 'submit') {
+					$thisInput.click();
+					return false;
+				}
+				//多行文本框中回车不跳转
+				else if ($thisInput[0].tagName != 'TEXTAREA') {
+					//var $allInputs = $('form :input:visible:not(:disabled,[readonly=readonly],[tabindex=-1])');
+					var $allInputs = $('body :input:visible:not(:disabled,[readonly=readonly],[tabindex=-1],._device_button,button),form :input:visible._device_input');
+					var $nextInput = $allInputs.eq($allInputs.index($thisInput) + 1);
+					if ($nextInput.length > 0) {
+						$nextInput.focus();
+					}
+					/*
+					else {
+						if (parent.document.title == 'Flw_waittaskNew') {
+							//跳转到流程控制页的提交按钮
+							//$thisInput.blur().change();
+							parent.document.getElementById('b_submit').focus();
+						}
+						else {
+							//跳转到本页中的提交按钮
+							$('form [type=submit]').focus();
+						}
+					}
+					*/
+					if($thisInput.hasClass('date')){
+						$thisInput.datepicker('hide');
+					}
+					return false;
+				}
+			}
+		});
+	}	
+     var baseURL = ydl.contexPath+'/common/script/';
+	 document.write('<script type="text/javascript" src="'+ baseURL  +'cst_file_tool.js"></script>');
+	 document.write('<script type="text/javascript" src="'+ baseURL  +'cst_file_preview.js"></script>');
+     document.write('<script type="text/javascript" src="'+ baseURL  +'cst_phone_verification.js"></script>');
+     document.write('<script type="text/javascript" src="'+ baseURL  +'cst_phone_number_mask.js"></script>');
+     document.write('<script type="text/javascript" src="'+ baseURL  +'cst_flow_viewer.js"></script>');
+     document.write('<script type="text/javascript" src="'+ baseURL  +'cst_base64.js"></script>');
+     document.write('<script type="text/javascript" src="'+ baseURL  +'cst_icon_selecter.js"></script>');
+     
+     $('#ico_tasks, #ico_message').hide();//隐藏页头的2个小图标
+     $('#page_header_buttons').css('background-image', 'none');//隐藏页头的2个小图标前面的竖线
+     //判断logo
+	 $(function(){
+		 
+		 var loginType = poolSelect._LONGINTYPE || ydl.sessionData('loginType');
+		 
+		 if(loginType == 'person' || loginType == 'card' || loginType == 'account' ){
+			 
+			 //个人logo
+			 //$('#page_header .logo img').attr('src', ydl.contexPath+'/image/logo1.png').css({'width':'auto'});
+			 $('#page_header .logo img', window.parent.document).addClass('logo_geren');
+			 ydl.sessionData('loginType',loginType);
+			 
+		 }else if(loginType == 'auth' || loginType == 'cert' || loginType == 'temp' ){
+			 
+			 //单位logo
+			 //$('#page_header .logo img').attr('src', ydl.contexPath+'/image/logo2.png').css({'width':'auto'});
+			 
+		
+			 $('#page_header .logo img', window.parent.document).addClass('logo_danwei');
+			 ydl.sessionData('loginType',loginType);
+			 
+		 }
+		 
+		 $('#page_header .logo img', window.parent.document).css('display','block');
+		 
+	 });
+     
+    //根据项目需求重新设置的特殊字符校验
+     ydl.validator.set('validchar', function(fieldValue, options){
+     	return {result: !/['"\\\|~&$\^<>]/.test(fieldValue), message: '%f中不能含有以下字符！\n（单引号、双引号、反斜线、竖线、波浪线、＆符号、$符号、^符号、<符号、>符号）'};
+     });
+     
+     $(window).resize(searchWidthEdit).resize();
+     
+     // 日期控件不可以输入
+     $('body').on('keydown','input.form-control.date',function(e){
+    	    
+		var keyCode = e.keyCode;
+		
+		//除回车与tab键之外禁止其他按键
+		//if(keyCode != '9' && keyCode != '13' ) return false;
+		
+	 });
+     
+})(cst);
+
+function searchWidthEdit(){
+	var $searchInfo = $('#search-info');
+	var $window = $(window);
+	if($window.width() <= 1170 && !$searchInfo.hasClass('search-info-sm')) {
+		$searchInfo.addClass('search-info-sm');
+	}else if($window.width() > 1170 && $searchInfo.hasClass('search-info-sm')){
+		$searchInfo.removeClass('search-info-sm');
+	}
+}
+
+function addCustomCard(options){
+
+	if(options.rows.length > 4){
+		alert("卡片行数超过4行");
+		return;
+	}
+		
+	var rows = '';
+	
+	$.each(options.rows , function(k){
+		
+		//文字行
+		if(this.type == 'textRow'){
+			
+			rows += '<div class = "cus-card-row cus-card-row-first "><label class="'+(this.isShow ? '':'hide')+'">'
+					+this.label+'：'+'</label><span class="'+(this.isRed == true ? 'custom-card-text-red' : '')+ (this.isShow ? '':' hide ') +'">'+this.text+'</span></div>';
+				
+		//空行	
+		}else if(this.type == 'nullRow'){
+			
+			rows += '<div class = "cus-card-row"></div>';
+			
+		//按钮行
+		}else if(this.type == 'buttonRow'){
+			
+			var btnRow = '';
+			
+			$.each(this.btns , function(){
+				
+				btnRow += '<button type="button" class = "btn '+(this.isShow ? '':'hide')+' " id="'+this.id+'" ><span class="glyphicon glyphicon-play"></span>'
+							+this.text+'</button>';
+				
+				var btn = this;
+				
+				$('#'+options.id).on('click',"#"+this.id,function(){
+					btn.onClick();
+				});
+			});
+			
+			rows += '<div class = "cus-card-row">'+btnRow+'</div>';
+			
+		}
+	
+	});
+	
+	$('#'+options.id).addClass('custom-card').append('<div class="panel panel-default ydpx-container" ><img src="'+options.img+'" />'+rows+'</div>');
+	
+}
+	//ydl.validator.setDefault({idcardlength: 18});
+/**
+ * 提示信息框
+ * @param {(String|Object)} options 提示信息，可直接使用包含提示信息的字符串，或使用包含下述信息的对象
+ * @param {String} [options.icon] 图标：info=提示，warn=警告，error=错误，可省略，指定了错误码时缺省为error，否则缺省为info
+ * @param {String} [options.message] 对话框标题，支持html
+ * @param {String} [options.code] 错误码，可省略
+ * @param {String} [options.desc] 详细信息，可省略
+ * @param {Function} [callback] 点击确定按钮后的回调函数，可省略
+ * @return {Undefined}
+ */
+ydl.alert = function (options, callback) {
+	//var html;
+	var message = '', desc = '', icon = ''; 
+	if (typeof options === 'string' || typeof options === 'number') {
+		//html = '<span class="info"></span><h2>' + options + '</h2>';
+		icon = 'info';
+		message = options;
+	}
+	else {
+		//var icon = '<span class="' + (options.icon || (options.code !== undefined ? 'error' : 'info')) + '"></span>';	//info、warn、error
+		//var message = '<h2>' + (options.message || '') + '</h2>';
+		//var code = options.code ? '<b>错误码：</b>' + options.code + '<br>' : '';
+		//var desc = options.desc ? '<b>详细信息：</b>' + options.desc : '';
+		//html = icon + message + (code || desc ? '<div>' + code + desc + '</div>' : '');
+		icon = options.icon || (options.code !== undefined ? 'error' : 'info');
+		message = options.message || '';
+		desc = (options.code ? '<b>错误码：</b>' + options.code + '<br>' : '') + (options.desc ? '<b>详细信息：</b>' + options.desc : '');
+	}
+	ydl.customDialog({
+		//text: '<div class="yd-alert">' + html + '</div>',
+		text: '',
+		message: message,
+		desc: desc,
+		icon: icon,
+		buttons: '确定',
+		focus: 1,
+		callback: function (button) {
+			//if (button == 0) return false;
+			//else 
+			if ($.isFunction(callback)) callback();
+		},
+		open: function ($dialogBody) {
+			//复制信息
+			var copyInfo = [];
+			copyInfo.push('标题：' + $dialogBody.find('h2').text());
+			$.each($dialogBody.find('p'),function(){
+				copyInfo.push($(this).text());
+			});
+			if (window.poolSelect && poolSelect['_OPERID'] && poolSelect['_OPERNAME']) copyInfo.push('操作人：'+poolSelect['_OPERID']+'-'+poolSelect['_OPERNAME']);
+			copyInfo.push('操作日期：'+ ydl.formatDate(new Date()));
+			/*
+			//初始化复制信息到剪贴板按钮
+			var button = $(this).find('.modal-footer button[value="0"]').attr('data-clipboard-text', copyInfo.join('\n'))[0];
+			//如果不是ie8则加载插件
+			if(!/MSIE 8/.test(navigator.userAgent)){
+				
+				//如果是其他ie浏览器则在弹出框上面再弹出一个弹出框，避免复制错误信息按钮无法使用
+				if(/Trident/.test(navigator.userAgent)){
+					$(button).click(function () {
+						$('<div></div>').dialog('open').dialog('close').remove();
+					});
+				}
+				
+				//获取剪贴板插件js文件
+				$.getScript(ydl.contexPath +'/common/script/clipboard.min.js',function(){
+					//初始化复制信息到剪贴板按钮
+					new Clipboard(button).on('success', function(e) {
+					    $(e.trigger).text('已复制到剪贴板');
+					});
+				});
+			}else{
+			//如果是ie8则单独处理
+				$(button).click(function () {
+					alert($(this).data('clipboard-text') + '\n\n请按Ctrl+C复制');
+				});
+			}
+			*/
+		},
+		closeOnEscape: true
+	});
+};

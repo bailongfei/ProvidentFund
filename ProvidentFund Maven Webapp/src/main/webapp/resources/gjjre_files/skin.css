@@ -1,0 +1,330 @@
+.wrapper1 {
+	background: rgb(249, 249, 248); margin: 0px auto; width: 100%;
+}
+.wrapper2 {
+	background: rgb(249, 249, 248); margin: 0px auto; width: 100%;
+}
+#adv_slider {
+	margin: 0px auto; width: 1200px;
+}
+#adv_slider_04 {
+	margin: 0px auto; width: 1200px;
+}
+#adv_slider_06 {
+	margin: 0px auto; width: 1200px;
+}
+.gjj_firm {
+	margin: 0px auto; width: 1200px;
+}
+.news {
+	margin: 0px auto; width: 1200px;
+}
+#fangbian {
+	margin: 0px auto; width: 1200px;
+}
+.gov_info {
+	margin: 0px auto; width: 1200px;
+}
+.other_centers {
+	margin: 0px auto; width: 1200px;
+}
+.wrapper1 {
+	height: 582px;
+}
+.wrapper1 {
+	padding: 5px 0px;
+}
+#adv_anounce {
+	left: 77px; top: -60px; width: 590px; height: 40px; margin-top: 5px; position: relative;
+}
+.gjj_firm {
+	padding-top: 5px;
+}
+#gjj_ser {
+	width: 850px; position: relative;
+}
+.gjj .lef {
+	background: white;
+}
+.gjj .lef a {
+	font-size: 13px;
+}
+#firm_sys {
+	width: 320px;
+}
+.news {
+	padding: 20px 0px;
+}
+#slider {
+	width: 700px; height: 230px;
+}
+#dynamic {
+	width: 470px;
+}
+.news_dongtai_list {
+	border-width: 1px 1px 2px; border-style: solid; border-color: rgb(212, 209, 204) rgb(212, 209, 204) rgb(83, 83, 79); border-image: none; height: 36px;
+}
+.news_dongtai {
+	width: 88px; height: 36px; text-align: center; line-height: 36px; font-size: 16px; border-right-color: rgb(212, 209, 204); border-bottom-color: rgb(83, 182, 214); border-right-width: 1px; border-bottom-width: 2px; border-right-style: solid; border-bottom-style: solid; float: left;
+}
+.news_list {
+	height: 36px; line-height: 36px; float: right;
+}
+.news_list li a {
+	font-size: 14px;
+}
+.news_list li {
+	padding-right: 7px; padding-left: 30px; font-size: 14px; float: left;
+}
+.news_list li a:hover {
+	color: rgb(0, 91, 178);
+}
+.news2 {
+	padding-top: 15px;
+}
+.news2 a {
+	font-size: 13px;
+}
+.news2 li a:hover {
+	color: rgb(0, 91, 178);
+}
+.news2 li {
+	font: 13px/normal "Microsoft YaHei"; height: 32px; font-size-adjust: none; font-stretch: normal;
+}
+.news2 li:last-child {
+	padding-bottom: 0px;
+}
+.news2 li span {
+	
+}
+.dynamic {
+	float: right;
+}
+.wrapper2 {
+	height: 220px; padding-top: 20px;
+}
+.gov_info {
+	padding-top: 20px;
+}
+#public {
+	width: 490px; height: 252px;
+}
+#file {
+	width: 680px;
+}
+.zhengce {
+	border-width: 1px 1px 2px; border-style: solid; border-color: rgb(212, 209, 204) rgb(212, 209, 204) rgb(83, 83, 79); border-image: none; width: 100%; height: 35px; line-height: 35px;
+}
+.zhengcefagui {
+	padding: 0px 10px; height: 35px; line-height: 35px; font-size: 16px; border-right-color: rgb(212, 209, 204); border-bottom-color: rgb(83, 182, 214); border-right-width: 1px; border-bottom-width: 2px; border-right-style: solid; border-bottom-style: solid; float: left;
+}
+.zhengce_list {
+	float: right;
+}
+.zhengce_list li {
+	list-style: none; padding: 0px 6px; float: left;
+}
+.zhengce_list li a:hover {
+	color: rgb(0, 92, 182);
+}
+.zhengce_list li a {
+	font-size: 13px;
+}
+.other_centers {
+	padding: 10px 0px 0px;
+}
+#channel {
+	width: 74%;
+}
+#fen {
+	width: 22%;
+}
+#others {
+	width: 220px;
+}
+.gjj {
+	margin: 0px auto; border: 1px solid rgb(225, 225, 225); border-image: none; width: 1200px; overflow: hidden; position: relative;
+}
+.gjj .lef {
+	width: 1200px; overflow: hidden; padding-bottom: 20px;
+}
+.gjj .lef li {
+	padding: 15px 70px 0px 75px; width: 50px; float: left;
+}
+.gjj .lef li b {
+	width: 83px; height: 83px; overflow: hidden; display: block;
+}
+.gjj .lef li b.pic1 {
+	background: url("/web/uiFramework/commonResource/image/2017011114175893089.png") no-repeat -10px -18px;
+}
+.gjj .lef li b.pic2 {
+	background: url("/web/uiFramework/commonResource/image/2017011114175893089.png") no-repeat -195px -18px;
+}
+.gjj .lef li b.pic3 {
+	background: url("/web/uiFramework/commonResource/image/2017011114175893089.png") no-repeat -385px -18px;
+}
+.gjj .lef li b.pic4 {
+	background: url("/web/uiFramework/commonResource/image/2017011114175893089.png") no-repeat -568px -18px;
+}
+.gjj .lef li b.pic5 {
+	background: url("/web/uiFramework/commonResource/image/2017011114175893089.png") no-repeat -15px -159px;
+}
+.gjj .lef li b.pic6 {
+	background: url("/web/uiFramework/commonResource/image/2017011114175893089.png") no-repeat -198px -159px;
+}
+.gjj .lef li b.pic7 {
+	background: url("/web/uiFramework/commonResource/image/2018042311091825403.png") no-repeat 0% 0% / 90%;
+}
+.gjj .lef li b.pic8 {
+	background: url("/web/uiFramework/commonResource/image/2017090614403122992.png") no-repeat 10px;
+}
+.gjj .lef li b.pic7 img {
+	width: 50px; height: 50px;
+}
+.gjj .lef li span {
+	padding: 5px 0px 0px; width: 95px; text-align: center; display: block;
+}
+.gjj .lef li a {
+	text-decoration: none;
+}
+.gjj .lef li a:hover {
+	color: rgb(0, 109, 190);
+}
+.rig {
+	background: url("/web/uiFramework/commonResource/image/2017051714392351103.png") no-repeat 5px -20px / 97%; width: 325px; height: 300px; padding-bottom: 20px;
+}
+.rig ul li.grxxcx_new {
+	background: url("/web/uiFramework/commonResource/image/2017011116052162437.png") no-repeat 9px 0px;
+}
+.rig ul li.dwywbl_new {
+	background: url("/web/uiFramework/commonResource/image/2017011116052162437.png") no-repeat 9px -112px;
+}
+.bianmin ul {
+	overflow: hidden; margin-top: 20px;
+}
+.bianmin ul li {
+	background: white; border: 1px solid white; border-image: none; width: 178px; overflow: hidden; margin-left: 48px; float: left;
+}
+.bianmin ul .bianmin_last {
+	margin-right: 0px;
+}
+.bianmin ul li a img {
+	width: 100%;
+}
+.bianmin ul li a {
+	text-decoration: none;
+}
+.bianmin ul li:hover {
+	border: 1px solid rgb(79, 182, 214); border-image: none;
+}
+.bianmin span {
+	margin: 10px 0px; width: 178px; text-align: center; font-size: 14px; display: block;
+}
+.gov_info_pub {
+	width: 490px;
+}
+.gov_info_pub ul {
+	padding-top: 20px;
+}
+.gov_info_pub ul li {
+	color: rgb(255, 255, 253); margin-bottom: 2px; float: left; background-color: rgb(235, 244, 255);
+}
+.gov_info_pub ul li a {
+	padding: 10px 0px; width: 100%; text-align: center; font-size: 13px; text-decoration: none; display: block;
+}
+.gov_info_pub ul .liHover:hover {
+	background-color: rgb(83, 182, 214);
+}
+.gov_info_pub ul li:first-child {
+	margin-right: 2px;
+}
+.gov_info_pub ul li:first-child {
+	width: 162px;
+}
+.gov_info_pub ul li.l2 {
+	width: 162px;
+}
+.gov_info_pub ul li.l3 {
+	width: 100px; margin-right: 2px;
+}
+.gov_info_pub ul li.l4 {
+	width: 162px; margin-left: 2px;
+}
+.gov_info_pub ul li.l5 {
+	width: 96px;
+}
+.gov_info_pub ul li.l6 a {
+	padding: 0px;
+}
+.file {
+	
+}
+.hdfw {
+	margin: 0px auto; width: 100%; padding-top: 20px; background-color: rgb(249, 249, 248);
+}
+.hdfwIn {
+	margin: 0px auto; width: 1200px;
+}
+.hudong {
+	
+}
+.hudong li {
+	margin: 20px 74px; width: 92px; height: 92px; float: left;
+}
+.hudong .wsdc {
+	margin-left: 0px;
+}
+.hudong li a {
+	width: 100%; height: 100%; display: block;
+}
+.chanel_cen {
+	width: 100%; overflow: hidden; margin-top: 15px;
+}
+.chanel_cen ul li {
+	width: 204px; height: 55px; margin-bottom: 30px; float: left;
+}
+.chanel_cen ul li a {
+	width: 38%; text-align: center; color: rgb(0, 0, 0); padding-top: 10px; padding-left: 60px; font-size: 14px !important; display: block;
+}
+.chanel_cen ul li .weibo {
+	line-height: 33px;
+}
+.chanel_cen ul li .wangsyw {
+	width: 46%;
+}
+.chanel_cen ul li .app {
+	width: 38%;
+}
+.title_blank {
+	color: rgb(0, 0, 0); padding-bottom: 10px; font-size: 18px; font-weight: bold;
+}
+.fen_cen {
+	overflow: hidden;
+}
+.fen_cen li a {
+	width: 100%; text-align: center; line-height: 40px; font-size: 13px; text-decoration: none; display: block;
+}
+.fen_cen li {
+	border: 1px solid transparent; border-image: none; width: 260px; height: 40px; margin-bottom: 5px; background-color: rgb(244, 243, 242);
+}
+.fen_cen li:hover {
+	border: 1px solid rgb(0, 90, 178); border-image: none; background-color: rgb(239, 247, 255);
+}
+.other_cen {
+	overflow: hidden;
+}
+.other_cen li a.l1 {
+	width: 100%; text-align: center; line-height: 40px; font-size: 14px; text-decoration: none; display: block;
+}
+.other_cen li a.l3 {
+	width: 100%; text-align: center; line-height: 40px; font-size: 14px; text-decoration: none; display: block;
+}
+.other_cen li a.l2 {
+	margin: 0px auto; width: 70%; text-align: center; font-size: 14px; text-decoration: none; display: block;
+}
+.other_cen li {
+	border: 1px solid transparent; border-image: none; width: 218px; height: 40px; margin-bottom: 12px; background-color: rgb(244, 243, 242);
+}
+.other_cen li:hover {
+	border: 1px solid rgb(0, 90, 178); border-image: none; background-color: rgb(239, 247, 255);
+}

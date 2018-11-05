@@ -1,0 +1,1991 @@
+/************************************************************************************************
+ * 华信永道平台公共脚本库（YongDao Library）
+ * 基础功能库
+ * 此库中的方法不依赖于特定的页面类型，在ydpx、jsp中均可使用
+ ************************************************************************************************/
+'use strict';
+
+var ydl = {};
+
+/**
+ * 字符串去左右空白字符（包括空格、制表符、回车、换行、换页符等）
+ * 直接在字符串变量或字符串直接量上使用
+ * （只有IE不支持String.trim()，其他浏览器的String对象已经包含了此方法。）
+ * @example stringValue.trimRight(); ' hello world '.trim();
+ * @return {String} 去空白字符后的字符串
+ */
+if (!String.prototype.trim) String.prototype.trim = function() {
+	return this.replace(/^[　\s]+|[　\s]+$/g, '');
+};
+if (!String.prototype.trimLeft) String.prototype.trimLeft = function() {
+	return this.replace(/^[　\s]+/, '');
+};
+if (!String.prototype.trimRight) String.prototype.trimRight = function() {
+	return this.replace(/[　\s]+$/, '');
+};
+String.prototype.delSpace = function() {
+	return this.replace(/[　\s]/g, '');
+};
+/**
+ * 按全角两个字符，半角一个字符计算的字符串长度
+ * @example '你好China'.length2();	//返回值是9
+ * @returns {Number} 长度值
+ */
+String.prototype.length2 = function() {
+	return this.replace(/[^\x00-\xff]/g, '..').length;
+};
+
+
+/**
+ * 将yyyy-MM-dd格式的日期字符串转成日期对象
+ * @example var d = '2011-03-01'.toDate()
+ * @returns {Date} 日期对象，如果字符串不是正确的日期格式，返回null
+ */
+String.prototype.toDate = function() {
+	if (!this) return null;
+	var ms = Date.parse(this.replace(/-/g, '/').replace(/^(\d{4})(\d{2})(\d{2})$/, '$1/$2/$3'));
+	if (isNaN(ms)) return null;
+	else return new Date(ms);
+};
+
+
+(function(ydl, $, undefined) {
+
+/**
+ * 上下文根，例如'/gjj'
+ */
+ydl.contexPath = (function () {
+	var $contexPath = $('meta[name="contexPath"]');
+	if ($contexPath.length > 0) return $contexPath.attr('content');
+	else {
+		var path = location.pathname.split('/')[1];
+		return path === undefined || path.length == 0 ? '' : '/' + path;
+	}
+})();
+
+/**
+ * 平台公共数据
+ */
+ydl.common = {
+	//键盘码（可用于在键盘事件处理函数中与event.which的值比较，注意为了兼容非IE浏览器，不应与event.keyCode比较）
+	keys: {
+		'A': 65, 'B': 66, 'C': 67, 'D': 68, 'E': 69, 'F': 70, 'G': 71, 'H': 72, 'I': 73, 'J': 74, 'K': 75, 'L': 76, 'M': 77,
+		'N': 78, 'O': 79, 'P': 80, 'Q': 81, 'R': 82, 'S': 83, 'T': 84, 'U': 85, 'V': 86, 'W': 87, 'X': 88, 'Y': 89, 'Z': 90,
+		'Num0': 48, 'Num1': 49, 'Num2': 50, 'Num3': 51, 'Num4': 52, 'Num5': 53, 'Num6': 54, 'Num7': 55, 'Num8': 56, 'Num9': 57,
+		'NumPad0': 96, 'NumPad1': 97, 'NumPad2': 98, 'NumPad3': 99, 'NumPad4': 100, 'NumPad5': 101, 'NumPad6': 102, 'NumPad7': 103, 'NumPad8': 104, 'NumPad9': 105, 'NumPadDot': 110,
+		'F1': 112, 'F2': 113, 'F3': 114, 'F4': 115, 'F5': 116, 'F6': 117, 'F7': 118, 'F8': 119, 'F9': 120, 'F10': 121, 'F11': 122, 'F12': 123,
+		'Left': 37, 'Up': 38, 'Right': 39, 'Down': 40, 'PageUp': 33, 'PageDown': 34, 'End': 35, 'Home': 36,
+		'NumPadAdd': 107, 'NumPadSubtract': 109, 'NumPadDivide': 111, 'NumPadMultiplay': 106, 'NumLock': 144,
+		'Enter': 13, 'Esc': 27,  'Tab': 9, 'Backspace': 8, 'Delete': 46, 'Slash': 191, 'Quote': 222 
+	},
+	//下拉列表空白选项
+	blankOption: '<option value="">请选择...</option>'
+};
+
+/**
+ * 生成唯一ID，可用作对象标识或随机字符串
+ * @param {Boolean} [isStandard=false] 如果设为true，创建符合RFC-4122(v4)标准的UUID字符串，否则返回1970年1月1日至今的毫秒数
+ * @return {String|Number} 如果isStandard=true，返回########-####-####-####-############格式的字符串，否则返回一个整数
+ */
+ydl.uuid = function(isStandard) {
+	if (!isStandard) return new Date().getTime();
+	else {
+		var i, s = [], itoh = '0123456789abcdef';
+		for (i = 0; i < 36; i++) s[i] = Math.floor(Math.random() * 0x10);
+		s[14] = 4;
+		s[19] = (s[19] & 0x3) | 0x8;
+		for (i = 0; i < 36; i++) s[i] = itoh.charAt(s[i]);
+		s[8] = s[13] = s[18] = s[23] = '-';
+		return s.join('');
+	}
+};
+
+/**
+ * 格式化日期
+ * @example ydl.formatDate(date); //返回类似'2011-03-26 09:12:30'格式的日期字符串
+ * @example ydl.formatDate(date, '今天是yyyy年M月d日礼拜E，现在已经aah点m分了'); //返回'今天是2011年3月26日礼拜六，现在已经下午4点38分了'
+ * @param {Date} date 日期对象
+ * @param {String} [pattern='yyyy-MM-dd HH:mm:ss'] 自定义格式代码（兼容java.text.SimpleDateFormat），其中部分英文字母将被替换，详见下面注释
+ * @returns {String} 按pattern指定的格式返回，没有指定pattern时返回yyyy-MM-dd HH:mm:ss格式
+ */
+ydl.formatDate = function(date, pattern) {
+	var d = {
+		'M': String(date.getMonth() + 1),	//M=月份（1-12），MM=两位月份（01-12）
+		'd': String(date.getDate()),		//d=日期（1-31），dd=两位日期（01-31）
+		'H': String(date.getHours()),		//H=24小时制的小时（0-23），HH=两位小时（00-23）
+		'h': String(date.getHours() < 13 ? date.getHours() : date.getHours() - 12),		//h=12小时制的小时（0-12），hh=两位小时（00-12）
+		'm': String(date.getMinutes()),		//m=分钟（0-59），mm=两位分钟（00-59）
+		's': String(date.getSeconds())		//s=秒钟（0-59），ss=两位秒钟（00-59）	
+	};
+	pattern = pattern || 'yyyy-MM-dd HH:mm:ss';
+	for (var r in d) pattern = pattern.replace(new RegExp(r + r, 'g'), ('0' + d[r]).substring(d[r].length - 1)).replace(new RegExp(r, 'g'), d[r]);
+	return pattern = pattern.replace(/E/g, '日一二三四五六'.charAt(date.getDay()))	//E=中文星期
+		.replace(/aa/g, date.getHours() < 12 ? '上午' : '下午')						//aa=中文上下午标志（上午，下午）
+		.replace(/a/g, date.getHours() < 12 ? 'AM' : 'PM')							//a=上下午标志（AM、PM）
+		.replace(/yyyy/g, date.getFullYear()).replace(/yy/g, ('' + date.getFullYear()).substring(2))	//yyyy=四位年份，yy=两位年份
+		.replace(/SSS/g, ydl.pad(date.getMilliseconds(), 3)).replace(/S/g, date.getMilliseconds());	//SSS=毫秒（000-999），S=毫秒（0-999）
+};
+
+/**
+ * 获取客户端当前日期字符串
+ * @returns {String} yyyy-MM-dd格式的当前日期
+ */
+ydl.today = function() {
+	return ydl.formatDate(new Date(), 'yyyy-MM-dd');
+};
+
+/**
+ * 判断是否闰年
+ * @param {String|Date|Number} 年份数字，或日期对象，或yyyy-MM-dd格式的字符串
+ * @returns {Boolean} 是否闰年
+ */
+ydl.isLeapYear = function (year) {
+	if (year instanceof Date) year = year.getFullYear();
+	else if (typeof year === 'string') year = year.substr(0, 4);
+	return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+};
+
+/**
+ * 日期计算
+ * @param {String|Date} d 日期对象或者yyyy-MM-dd格式的日期字符串
+ * @param {Number} v 整数，与日期相加的值，正数为向后增加日期，负数为向前减少日期
+ * @param {String} [unit] 增加或减少数量的单位，'y'=年，'m'=月，'d'=日，可省略，缺省为'd'
+ * @returns {String} yyyy-MM-dd格式的日期字符串，如果原始日期不正确，则返回NaN
+ */
+ydl.dateAdd = function(d, v, unit) {
+	if (!unit) unit = 'd';
+	if (typeof d === 'string') d = d.toDate();
+	if (!d)  return NaN;
+	var year = d.getFullYear();
+	var month = d.getMonth();
+	var date = d.getDate();
+	switch (unit.toLowerCase()) {
+	case 'y': 
+		//考虑闰年2月29号
+		if (date == 29 && month == 1 && !ydl.isLeapYear(year + v)) date = 28;
+		d = new Date(year + v, month, date);
+		break;
+	case 'm': 
+		var maxDay = new Date(year, month + v + 1, 0).getDate();	
+		d = new Date(year, month + v, date > maxDay ? maxDay : date); 
+		break;
+	case 'd': 
+		d = new Date(year, d.getMonth(), date + v); 
+		break;
+	}
+	return ydl.formatDate(d, 'yyyy-MM-dd');
+};
+
+/**
+ * 计算两个日期之间的日期差
+ * @param {String|Date} d1 第一个日期，yyyy-MM-dd格式的字符串或日期对象
+ * @param {String|Date} d2 第二个日期，yyyy-MM-dd格式的字符串或日期对象
+ * @param {String} unit 返回值的单位，'y'=年，'m'=月，'d'=日，可省略，缺省为'd'
+ * @returns {Number} 两个日期的差，d1早于d2时返回正数，否则返回负数，由unit参数确定单位
+ */
+ydl.dateDiff = function(d1, d2, unit) {
+	if (!unit) unit = 'd';
+	if (typeof d1 === 'string') d1 = d1.toDate();
+	if (typeof d2 === 'string') d2 = d2.toDate();
+	switch (unit.toLowerCase()) {
+	case 'y': return d2.getFullYear() - d1.getFullYear(); break;
+	case 'm': return (d2.getFullYear() - d1.getFullYear()) * 12 + d2.getMonth() - d1.getMonth(); break;
+	case 'd': return (d2.getTime() - d1.getTime()) / (1000 * 3600 * 24); break;
+	}
+};
+
+/**
+ * 在数字或字符串前面或后面用字符补足位数
+ * @param {String|Number} input 输入的字符串或数字
+ * @param {Number} n 补齐后的位数
+ * @param {String} [ch='0'] 补齐用的字符
+ * @param {Boolean} [after='false'] 是否在后面补齐，缺省为在前面
+ * @return {String} 如果输入字符串的长度小于补齐后的位数，用ch补齐
+ */
+ydl.pad = function(input, n, ch, after) {
+	ch = ch === undefined ? '0' : ch;
+	var i = (input += '').length2();
+	if (after) {
+		while(i++ < n) input += ch;
+	}
+	else {
+		while(i++ < n) input = ch + input;
+	}
+	return input;
+};
+
+/**
+ * 在对象数组中查找包含指定属性值的数组元素
+ * @param {String} value 要查找的值
+ * @param {Array} array 在哪个对象数组中查找
+ * @param {String} attr 要查找的值所在的属性名
+ * @param {String} [ret] 返回的属性值，可以省略，缺省为返回整个对象
+ * @return {Object} 找到的数组元素，如果没找到则返回空串或null（根据是否提供ret参数决定）
+ */
+ydl.matchArray = function(value, array, attr, ret) {
+	if (!array) return ret ? '' : null;
+	for (var i = 0; i < array.length; i++) {
+		if (array[i][attr] == value) return ret ? (array[i] ? array[i][ret] : '') : array[i];
+	}
+	return ret ? '' : null;
+};
+
+/**
+ * 对数组进行排序，返回新数组，不改变原数组
+ * @example //对数字数组排序，返回排序后的数组
+ *			var s1 = [28, 67, 19, 41, 26]; var s2 = ydl.sort(s1);
+ * @example //根据一组文本框的size属性排序，返回排序后的input对象数组
+ *			var inputs1 = $('#div input').get(); var inputs2 = ydl.sort(inputs1, 'size');
+ * @example //根据表格第三列单元格中的数字对表格的所有行排序，返回排序后的表格行对象数组
+ *			var trs1 = $('#the-table tr').get(); var trs2 = ydl.sort(trs1, function(tr) {
+ *				return parseInt($(tr).children(':eq(2)').text());
+ *			});
+ * @param {Array} arr 要排序的数组
+ * @param {String|Function} [attr] 如果arr是对象数组，此参数指定用来排序的属性名，或取得属性值的方法
+ * @param {Boolean} [desc=false] 是否倒序
+ * @returns {Array} 排序后的新数组
+ */
+ydl.sort = function(arr, attr, desc) {
+	var newArr = [].concat(arr);
+	switch (typeof attr) {
+	case 'string':
+		//用数组元素的指定属性值排序
+		return desc ? newArr.sort(function(a, b) {
+			return a[attr] == b[attr] ? 0 : (b[attr] > a[attr] ? 1 : -1);
+		}) : newArr.sort(function(a, b) {
+			return a[attr] == b[attr] ? 0 : (b[attr] < a[attr] ? 1 : -1);
+		});
+		break;
+	case 'function':
+		//用指定函数获取的值排序
+		return desc ? newArr.sort(function(a, b) {
+			return attr(b) == attr(a) ? 0 : (attr(b) > attr(a) ? 1 : -1);
+		}) : newArr.sort(function(a, b) {
+			return attr(b) == attr(a) ? 0 : (attr(b) < attr(a) ? 1 : -1);
+		});
+		break;
+	default:
+		//直接用数组元素数值排序，如果是字符串，按字符编码排序
+		if (typeof attr === 'boolean') desc = attr;
+		return desc ? newArr.sort(function(a, b) {
+			return a == b ? 0 : (b > a ? 1 : -1);
+		}) : newArr.sort();
+	}
+};
+
+/**
+ * 计时器
+ * ydl.timer.start() 开始计时，返回计时器ID
+ * ydl.timer.output(timerId) 输出指定的计时器从开始至今经过的毫秒数
+ * ydl.timer.stop(timerId) 停止计时，输出指定的计时器从开始到停止经过的毫秒数
+ * @example var t = ydl.timer.start(); doSomething(); ydl.log(ydl.timer.output(t)); doSomething(); ydl.log(ydl.timer.stop(t));
+ */
+ydl.timer = {
+	duration: {},
+	start: function() {
+		var timerId = ydl.uuid();
+		this.duration[timerId] = new Date();
+		return timerId;
+	},
+	output: function(timerId) {
+		if (this.duration[timerId]) return new Date() - this.duration[timerId];
+		else return '';
+	},
+	stop: function(timerId) {
+		if (this.duration[timerId]) {
+			var duration = new Date() - this.duration[timerId];
+			delete this.duration[timerId];
+			return duration;
+		}
+	}
+};
+
+/**
+ * 按id查找对象（代替jQuery的$('#id')，当不需要jQuery对象时可提高性能）
+ * @param {String} elementId id字符串
+ * @param {Object} wnd Window对象，指定在哪个window中查找，缺省为当前window
+ * @return {Object} 如果elementId不是字符串，返回输入的参数本身；否则按id查找，返回唯一的对象，未找到则返回null
+ */
+ydl.getElementById = function(elementId, wnd) {
+	if (typeof elementId === 'string') return (wnd || window).document.getElementById(elementId);
+	return elementId;
+};
+
+/**
+ * 按name查找对象
+ * @param {String} elementName name字符串
+ * @param {Object} wnd Window对象，指定在哪个window中查找，缺省为当前window
+ * @return {Any|NodeList} 如果elementName不是字符串，返回输入的参数本身；否则按name查找，返回对象集合，未找到则返回空集合
+ */
+ydl.getElementsByName = function(elementName, wnd) {
+	if (typeof elementName === 'string') return (wnd || window).document.getElementsByName(elementName);
+	return elementName;
+};
+
+/**
+ * 按标签名查找对象
+ * @param {String} elementTagName 标签名
+ * @param {Object} wnd Window对象，指定在哪个window中查找，缺省为当前window
+ * @return {Any|NodeList} 如果elementTagName不是字符串，返回输入的参数本身；否则按tagName查找，返回对象集合，未找到则返回空集合
+ */
+ydl.getElementsByTagName = function(elementTagName, wnd) {
+	if (typeof elementTagName === 'string') return (wnd || window).document.getElementsByTagName(elementTagName);
+	return elementTagName;
+};
+
+/**
+ * 页面跳转
+ * @param {String} url 要跳转的网址，可以是相对或绝对路径
+ * @param {Object} target 目标window对象，可省略，缺省为当前window
+ * @return undefined
+ */
+ydl.go = function(url, target) {
+	(target || window).location.href = url;
+};
+
+/**
+ * 通过多种方式返回DOM对象（jQuery对象拆箱）
+ * @param {Object|String} element DOM对象（可以是对象数组），或JQuery对象，或元素的id
+ * @return {Object} DOM对象，未找到返回undefined
+ */
+ydl.getDom = function(element) {
+	var ele = ydl.getElementById(element);
+	if (ele) return ele instanceof jQuery ? ele.get() : ele;
+	else return undefined;
+};
+
+/**
+ * 获取任意对象中的表单元素，返回对象，可以在ajax提交时作为参数使用
+ * @param {Object|String} element 页面元素的id、dom对象或jQuery对象
+ * @param {Boolean} [includeDisabled=true] 是否包含禁用的对象，缺省为true
+ * @return {Array} 对象：[{name: value}]
+ */
+ydl.getInputsArray = function(element, includeDisabled) {
+	if (typeof element === 'boolean') {
+		includeDisabled = element;
+		element = undefined;
+	}
+	var filter = includeDisabled ? '' : ':enabled';
+	var $inputs = element === undefined ? $(':input[name]' + filter + ':not(.fixtable-body :input,.datalist-editor-dialog :input)') : 
+			$(ydl.getDom(element)).find(':hidden[name],:input[name]' + filter);
+
+	var inputs = [];
+	$inputs.each(function() {
+		if ($.inArray(this.type, ['text', 'hidden', 'textarea', 'select-one', 'password']) >= 0 ||
+				($.inArray(this.type, ['checkbox', 'radio']) >= 0 && this.checked)) {
+			inputs.push({name: this.name, value: this.value});
+		}
+		else if (this.type === 'select-multiple') {
+			for (var i = 0; i < this.options.length; i++) {
+				if (this.options[i].selected) inputs.push({name: this.name, value: this.options[i].value});
+			}
+		}
+	});
+	return inputs;
+};
+
+ydl.getInputs = function (element, includeDisabled) {
+	var inputs = {};
+	$.each(ydl.getInputsArray(element, includeDisabled), function (i, e) { 
+		if (inputs[e.name] === undefined){ 
+		       if(e.value=="" || e.value==null){
+					inputs[e.name] = "";//hzy ie8 兼容性问题 2018-01-10 看上去象废话,其实不是.
+			  
+			   }else{
+					inputs[e.name] = e.value; 
+			   } 
+		}else{ 
+		  	  inputs[e.name] += ',' + e.value;
+		}
+			
+	}); 
+	//alert(JSON.stringify(inputs))
+	return inputs;
+};
+
+
+/**
+ * Ajax 查询/提交数据
+ * 要求服务器返回固定格式的JSON数据：{"returnCode":0, "message":"", "data":{}}
+ * @param {String} url 提交的地址
+ * @param {Object|String} [data] 提交到服务器的数据，对象{name1:value1,name2:value2}，或者字符串'name1=value1&name2=value2'
+ * @param {Function} [success(data)] 成功后执行的回调函数，将服务器返回的JSON对象作为参数
+ * @param {Object} [options] jQuery的ajax选项，以下是常用选项，其他选项请参考jQuery文档 {
+ *		{String} [type='POST'] 提交类型（'GET'或'POST'）
+ *		{Boolean} [async=true] 是否异步提交（缺省为true）
+ *		{String} [dataType='json'] 返回数据类型（xml, json, script, html，缺省为json）
+ *		{Function} [handleError(data, errorCode, message)] 处理错误的函数，在服务器成功返回了json数据但返回码非0时执行，与error函数的区别是后者在服务器没有成功返回数据时执行
+ *		{Object} [errorCode] 错误码和错误信息对照表，例如{'3': '更新出错', '5': '删除出错'}，如果提供了此参数，将忽略服务器返回的message信息，使用此处的定义显示
+ * }
+ * @return {Object} deferred promise对象
+ */
+ydl.ajax = function(url, data, success, options) {
+	var t = ydl.timer.start();
+	options = $.extend({
+		url: url,
+		async: true,
+		method: 'POST',
+		contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+		dataType: 'json',
+		timeout: 1800000,
+		cache: false,
+		silent: false	//非jquery参数
+	}, options);
+	var sysError = {
+		'timeout': '服务器超时',
+		'error': '服务器出错',
+		'abort': '操作已取消',
+		'parsererror': '服务器返回的数据格式不正确'
+	};
+	var dtd = $.Deferred();
+	options = $.extend(options, {
+		data: options.contentType === 'application/json' ? JSON.stringify(data) : data,
+		error: function(jqXHR, textStatus, errorThrown) {
+			ydl.log('Ajax Response：(' + ydl.timer.stop(t) + 'ms)\n' + jqXHR.responseText);
+			var message = (sysError[textStatus] || textStatus) + '\n' + errorThrown;
+			if (options.handleError) {
+				options.handleError(null, 'YDP03001', message);	//回调错误处理函数
+				dtd.reject(textStatus);
+			}
+			else {
+				if (!options.silent) {
+					ydl.alert('对不起，系统出错了！' + (sysError[textStatus] || textStatus) + '\n\n' + errorThrown, function() {
+						dtd.reject(textStatus);
+					});
+				}
+				else dtd.reject(textStatus);
+			}
+		},
+		success: function(data, textStatus, jqXHR) {
+			ydl.log('Ajax Response：(' + ydl.timer.stop(t) + 'ms)\n' + (options.dataType == 'json' ? ydl.getMember(data) : jqXHR.responseText));
+			if (data.returnCode && data.returnCode != 0) {
+				if (data.returnCode == 'TIMEOUT') {
+					ydl.alert(data.message ? data.message : '登录超时，请重新登录！',function(){dtd.reject(data.message, data.returnCode, data);});
+					//ydl.logout();
+				}
+				else if (options.handleError) {
+					options.handleError(data, data.returnCode, data.message);	//回调错误处理函数
+					dtd.reject(data.message, data.returnCode, data);
+				}
+				else if (!options.silent && data.message !== undefined && data.message.length > 0) {
+				   if(data.returnCode=="_"){
+				    	ydl.alert('提示信息：\n\n' + ((options.errorCode && options.errorCode[data.returnCode] !== undefined ?
+							options.errorCode[data.returnCode] : data.message) || '') + '\n\n',
+							function(){dtd.reject(data.message, data.returnCode, data);});				    
+				    }else{
+				    	ydl.alert('提示信息：\n\n' + ((options.errorCode && options.errorCode[data.returnCode] !== undefined ?
+							options.errorCode[data.returnCode] : data.message) || '') + '\n\n',
+							function(){dtd.reject(data.message, data.returnCode, data);}); 
+				    }
+
+				}
+				else dtd.reject(data.message, data.returnCode, data);
+				
+			}
+			else {
+				success && success(data.data ? data.data : data, data);	//回调成功处理函数
+				dtd.resolve(data);
+			}
+		}
+	});
+	ydl.log('Ajax Request：' + url + '\n' + ydl.getMember(data));
+	$.ajax(options);
+	return dtd.promise();
+};
+
+/**
+ * 创建下拉列表选项
+ */
+ydl.createOptions = function(options, textAttr, valueAttr, defaultValue) {
+	return createOptions(options, textAttr, valueAttr, function (value) {
+		return value == defaultValue;
+	}, function (value, text, selected) {
+		return '<option value="' + value + '"' + (selected ? ' selected="selected"' : '') + '>' + text + '</option>';
+	});
+};
+
+/**
+ * 创建一组单选框
+ * @param {String} id 组件ID
+ * @param {Boolean} isVertical 是否纵向排列
+ */
+ydl.createRadios = function(options, textAttr, valueAttr, defaultValue, id, isVertical) {
+	if (!defaultValue) defaultValue = '';
+	return createOptions(options, textAttr, valueAttr, function (value) {
+		return value == defaultValue;
+	}, function (value, text, checked, index) {
+		var checkedAttr = checked ? ' checked="checked"' : '';
+		if (isVertical)
+			return '<div class="radio"><label><input type="radio" id="' + id + ':' + index + '" name="' + id + '" value="' + value + '"' + checkedAttr + ' />' + text + '</label></div>';
+		else 
+			return '<label class="radio-inline"><input type="radio" id="' + id + ':' + index + '" name="' + id + '" value="' + value + '"' + checkedAttr + ' />' + text + '</label>';
+	});
+}
+
+/**
+ * 创建一组复选框
+ * @param {String} id 组件ID
+ * @param {Boolean} isVertical 是否纵向排列
+ */
+ydl.createCheckboxes = function(options, textAttr, valueAttr, defaultValue, id, isVertical) {
+	if (!defaultValue) defaultValue = '';
+	defaultValue = defaultValue.split(',');
+	return createOptions(options, textAttr, valueAttr, function (value) {
+		return $.inArray(value, defaultValue) >= 0;
+	}, function (value, text, checked, index) {
+		var checkedAttr = checked ? ' checked="checked"' : '';
+		var idAttr = id ? ' id="' + id + ':' + index + '" name="' + id + '"' : '';
+		if (isVertical)
+			return '<div class="checkbox"><label><input type="checkbox"' + idAttr + ' value="' + value + '"' + checkedAttr + ' />' + text + '</label></div>';
+		else 
+			return '<label class="checkbox-inline"><input type="checkbox"' + idAttr + ' value="' + value + '"' + checkedAttr + ' />' + text + '</label>';
+	});
+}
+
+/**
+ * 创建多值组件选项
+ * @example var options = ydl.createOptions({'1': '男', '0': '女'});
+ * @example var options = ydl.createOptions([{value: '1', text: '男'}, {value: '0', text: '女'}]);
+ * @example var options = ydl.createOptions([{code: '1', desc: '男'}, {code: '0', desc: '女'}], 'desc', 'code');
+ * @param {Object|Array} options 对象{value: text}，或数组[{text:'', value:''}]
+ * @param {String} [textAttr='text'] 数组元素的选项文本属性名
+ * @param {String} [valueAttr='value'] 数组元素的选项值属性名
+ * @param {Function} defaultValue(value) 返回是否默认值的函数
+ * @param {Function} template(value, text, selected) 生成一个选项html的函数
+ * @return {String} 一组选项的html代码
+ */
+function createOptions(options, textAttr, valueAttr, defaultValue, template) {
+	var html = [];
+	if ($.isArray(options)) {
+		textAttr = textAttr || 'text';
+		valueAttr = valueAttr || 'value';
+		for (var i = 0, l = options.length; i < l; i++) {
+			html.push(template(options[i][valueAttr], options[i][textAttr], defaultValue(options[i][valueAttr]), i));
+		}
+	}
+	else if (typeof options === 'object') {
+		var index = 0;
+		for (var o in options) {
+			html.push(template(o, options[o], defaultValue(o), index));
+			index++;
+		}
+	}
+	return html.join('');
+}
+
+/**
+ * 根据指定的值设置下拉列表的选择项，支持组合框
+ * 如果有多个选项具有相同的值，只选中第一个
+ * @param {Object|String} select 下拉列表DOM对象，或jQuery对象，或ID属性值
+ * @param {String} value 要选择的值
+ * @return {Number} 返回选择项的索引，如果有多个对象，返回最后一个，如果没找到指定的值，返回-1
+ */
+ydl.selectByValue = function(select, value) {
+	if (!select) return -1;
+	select = ydl.getDom(select);
+	if (!value) value = '';
+	else value = ('' + value).trimRight();
+	if (select instanceof Array) {
+		var r = -1;
+		for (var i = 0; i < select.length; i++) {
+			r = ydl.selectByValue(select[i], value);
+		}
+		return r;
+	}
+	if (select.tagName && select.tagName == 'SELECT') {
+		var index = -1;
+		var options = select.options;
+		for (var i = 0, l = options.length; i < l; i++) {
+			if (options[i].value !== undefined && options[i].value.trimRight() == value) {
+				options[i].selected = true;
+				index = i;
+				//给组合框赋值
+				var $prev = $(select).prev().find('input.combobox');
+				if ($prev.length > 0) {
+					$prev.val($(options[i]).text());
+					$(select).prev().find('input[type=hidden]').val(options[i].value);
+				}
+				break;
+			}
+		}
+		if (index == -1) lo('ydl.selectByValue：列表' + (select.id || '') + '中未找到值"' + value + '"', 'orange');
+		return index;
+	}
+	else if (select.type && select.type === 'hidden') {
+		var $combo = $(select).parent();
+		if ($combo.hasClass('combobox-container')) {
+			return ydl.selectByValue($combo.next(), value);	
+		}
+		else return ll('ydl.selectByValue出错：指定的对象不是select', -1);
+	}
+	else return ll('ydl.selectByValue出错：指定的对象不是select', -1);
+};
+
+
+/**
+ * 创建连续相同字符组成的字符串
+ * @example var s = ydl.string('x', 10); //返回'xxxxxxxxxx'
+ * @param {String|Number} str 包含的字符（允许多个字符）
+ * @param {Number} count 重复的次数
+ * @return {String} 包含数量为count个str的字符串
+ */
+ydl.string = function(str, count) {
+	return new Array(parseInt(count) + 1).join(' ').replace(/ /g, str);
+};
+
+/**
+ * 从datalist列表行中获取指定字段名的单元格
+ * @example $(row).getCell('opername'); //获取本行中列id为opername的单元格
+ * @example $(row).getCell(3); 			//获取本行中第3个单元格
+ * @example $(row).getCell('opername', 'select');  //获取本行中列id为opername的单元格中的下拉列表
+ * @example $(row).getCell('opername').children('select');  //与上一个例子相同
+ * @param {String|Number} id 在datalist组件中定义的字段id，或者列顺序号（包括复选框、行号和隐藏列）
+ * @param {String} children jQuery选择符，用来选择单元格的子节点
+ * @return {Object} 单元格（TD）的jQuery对象
+ */
+$.fn.getCell = function(id, children) {
+	try {
+		if (this[0].tagName === 'TR') {
+			var $td;
+			if (typeof id === 'string') {
+				var $headRow = this.closest('table').find('thead tr:last');
+				var index = $headRow.find('th._' + id).index();
+				if (index >= 0) $td = this.find('td:eq(' + index + ')');
+				else return null;
+			}
+			else $td = $(this[0].cells[id]);
+			if (children) return $td.find(children);
+			else return $td;
+		}
+		else {
+			ydl.log('$.fn.getCell出错：该方法只能针对表格行使用', 'red');
+			return null;
+		}
+	}
+	catch (ex) {
+		ydl.log('$.fn.getCell出错：' + ydl.error(ex), 'red');
+		return null;
+	}
+};
+
+/**
+ * 将页面容器转换为对话框
+ * @param {String} containers 容器ID，多个ID之间用半角逗号分隔
+ * @param {Object} options 对话框选项，常用属性包括id、title、size、buttons等
+ * @return {Object} 对话框的jQuery对象
+ */
+ydl.makeDialog = function(containers, options) {
+	var containers = $.map(containers.split(','), function(value) {
+		return '#' + value.trim();
+	}).join(',');
+	return $('<div' + (options && options.id ? ' id="' + options.id + '"' : '') + 
+			'></div>').append($(containers)).dialog($.extend({
+		title: '对话框',
+		autoOpen: false,
+		modal: true
+	}, options || {}));
+};
+
+//初始化对话框
+$.fn.dialog = function (options, type, content) {
+	var oriElement = this;
+	//兼容原jquery ui中相关用法
+	if (typeof(options) === 'string') {
+		if (options == 'open') this.modal({backdrop: this.data('closeOnEscape') || 'static', keyboard: this.data('closeOnEscape')});
+		if (options == 'close') this.modal('hide');
+		if (options == 'destroy') this.closest('.modal').remove();
+		if (options == 'option') {
+			if (type == 'title') this.find('h4.modal-title').html(content);
+		}
+		return this;
+	}
+	else {
+		if (this.data('dialog-inited') == undefined) $(this).data('dialog-inited', true);
+		else return this;
+	}
+	options = $.extend({
+		title: '对话框'
+	}, options || {});
+	//是否显示对话框右上角的x关闭按钮
+	var closeHtml = options.close ?  '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">× </button>' :'';
+	//对话框对象
+	var $dialog = $('<div class="modal fade" data-backdrop="static" '+(options.id ? 'id="'+options.id+'"' : '') +'tabindex="-1" role="dialog" aria-hidden="true">'+
+			'<div class="modal-dialog' + (options.size ? ' modal-' + options.size : '') + '"><div class="modal-content">'+
+			'<div class="modal-header">'+closeHtml+'<h4 class="modal-title">'+options.title+'</h4></div>'+
+			'<div class="modal-body"></div>'+
+			'</div></div></div>');
+	$dialog.find('.modal-body').append(this);
+	$('body').append($dialog);
+	$dialog.data('closeOnEscape', options.closeOnEscape || false);
+	//对话框--框角按钮
+	if (options.buttons) {
+		var $footer = $('<div class="modal-footer"></div>');
+		$.each(options.buttons,function (key, value){
+			var $addButton = $('<button type="button" class="btn btn-default">'+key+'</button>');
+			if (typeof(value) === 'function') {
+				$addButton.click(function () {
+					value.call($dialog, oriElement);
+				});
+			}
+			$footer.append($addButton);
+		});
+		$dialog.find('.modal-content').append($footer);
+	}
+	//对话框--创建后执行
+	if (options.create){
+		if (typeof(options.create) === 'function') options.create();
+	}
+	//对话框--注册隐藏事件
+	if (options.hidden){
+		$dialog.on('hidden.bs.modal', function () {
+			options.hidden();
+		})
+	}
+	//对话框--注册显示事件
+	if (options.shown){
+		$dialog.on('shown.bs.modal', function () {
+			options.shown();
+		})
+	}
+	//对话框--注册隐藏事件
+	if (options.hide){
+		$dialog.on('hide.bs.modal', function () {
+			options.hide();
+		})
+	}
+	//对话框--注册显示事件
+	if (options.show){
+		$dialog.on('show.bs.modal', function () {
+			options.show();
+		})
+	}
+	return $dialog;
+};
+
+
+//模态对话框
+ydl.dialog = {};
+
+/**
+ * 在模态对话框中打开页面
+ * @param {String} url 对话框页面地址
+ * @param {Object} [inputData] 传递给对话框的参数，在对话框页面中通过ydl.dialog.arguments()获取。
+ * @param {Function} [callback(data)] 回调函数，在对话框关闭时执行并将对话框返回的数据作为参数。
+ * @param {Object} [paras] 窗口参数 { 'width': 窗口宽度, 'height': 窗口高度 }
+ * @return undefined
+ */
+ydl.dialog.open = function(url, inputData, callback, paras) {
+	if (!paras) paras = {};
+	var $div = $('<div '+(paras.height ? 'style="height:'+paras.height+'px;"' :'')+'></div>');
+	var $dialog = $div.appendTo($('body')).append(
+		$('<iframe class="modalDialog" style="width: 100%; height: 100%;" frameborder="0"></iframe>')
+	).dialog($.extend(paras,{
+		modal: true,
+		width: paras.width || '',
+		close: true,
+		show: function() {
+			$div.children('iframe').attr('src', url);
+			if (paras.open) paras.open();
+		},
+		hidden: function() {
+			//关闭对话框时同时删除DOM节点
+			try {
+				delete window.modalDialogArguments;
+			}
+			catch (ex) {
+				window.modalDialogArguments = null;
+			}
+			//执行回调函数
+			var callbackArguments = $dialog.data('callbackArguments');
+			if (callback) callback.apply(this, callbackArguments);
+			//关闭对话框时同时删除DOM节点
+			var zzDiv=null
+			var maxid=0;
+		    $(".modal-backdrop").each(function(i){
+                if(maxid<$(this).css("z-index")){
+				   maxid=$(this).css("z-index");
+				   zzDiv=$(this);
+				} 
+			});
+			if(zzDiv)
+				zzDiv.remove();
+			$dialog.remove(); 
+			//if (paras.close) paras.close();
+		}
+	}));
+	//在iframe中加载页面
+	$div.children('iframe').load(function() {
+		//将对话框标题设置为页面标题
+		$dialog.dialog('option', 'title', this.contentWindow.document.title);
+	})
+	//打开对话框
+	$dialog.dialog('open');
+	
+	//设置对话框参数
+	window.modalDialogArguments = {
+		dialogArgs: inputData,
+		dialogHandler: $dialog,
+		dialogCallback: callback
+	};
+
+};
+
+/**
+ * 在模态对话框内的页面使用，获取从父页面传递来的参数
+ * @return {Object} 参数对象
+ */
+ydl.dialog.arguments = function() {
+	return parent.modalDialogArguments.dialogArgs;
+};
+
+/**
+ * 在模态对话框内的页面使用，关闭对话框并执行回调函数
+ * @return undefined
+ */
+ydl.dialog.close = function() {
+	var args = parent.modalDialogArguments;
+	if (args) {
+		args.dialogHandler.data('callbackArguments', arguments);
+		args.dialogHandler.dialog('close');
+	}
+	else {
+		top.close();
+		parent.dialogArguments.dialogCallback && parent.dialogArguments.dialogCallback.apply(this, arguments);
+	}
+};
+
+
+/**
+ * 在组件后面添加按钮
+ * 用于表单元素
+ * @param {String} buttonText 按钮文本
+ * @param {Function} clickFunc(field) 点击按钮时执行的函数，参数为组件DOM对象
+ * @param {Object|String} [options] 更多选项，或按钮的ID，缺省没有ID
+ * @param {String} [options.id] 按钮的ID，缺省没有ID
+ * @param {String} [options.theme] 按钮样式，可用bootstrap主题样式名，或自定义样式名
+ * @param {String} [options.icon] 按钮图标，bootstrap图标名（不含前缀）
+ */
+$.fn.addButton = function(buttonText, clickFunc, options) {
+	var buttonId, icon, theme;
+	if ($.isPlainObject(options)) {
+		buttonId = options.id;
+		icon = options.icon ? '<span class="glyphicon glyphicon-' + options.icon + '"></span> ' : '';
+		theme = options.theme || 'default';
+	}
+	else {
+		buttonId = options;
+		icon = '';
+		theme = 'default';
+	}
+	var id = this.length > 1 || !buttonId ? '' : ' id="' + buttonId + '"';
+	this.each(function () {
+		var $ele = $(this);
+		//当前元素是列表，添加到列表按钮栏
+		if ($ele.hasClass('datalist-table-body')) {
+			$('<button class="btn btn-' + theme + '" type="button"' + id + '>' + icon +
+					buttonText + '</button>').click(function () {
+						if ($.isFunction(clickFunc)) clickFunc.call($ele[0], $ele[0]);
+					}).prependTo($ele.closest('.fixtable-box').prev().children('div'));
+		}
+		//容器
+		else if ($ele.hasClass('ydpx-container')) {
+			if ($ele.children('.panel-heading').children('.btn-group').length === 0) {
+				$ele.children('.panel-heading').append('<div class="ydpx-container-buttons btn-group btn-group-sm pull-right"></div>');
+			}
+			$('<button class="btn btn-' + theme + '" type="button"' + id + '>' + icon +
+					buttonText + '</button>').click(function () {
+						if ($.isFunction(clickFunc)) clickFunc.call($ele[0], $ele[0]);
+					}).prependTo($ele.children('.panel-heading').children('.btn-group'));
+		}
+		//当前元素是表单输入域，添加到它后面
+		else {
+			//创建按钮，添加事件
+			var $button = $('<button class="btn btn-' + theme + ' btn-sm" type="button"' + id + '>' +
+					icon + buttonText + '</button>').click(function () {
+						if ($.isFunction(clickFunc)) clickFunc.call($ele[0], $ele[0]);
+					}).wrap('<span class="input-group-btn"></span>').parent();
+			//如果页面组件不在输入框组中，创建一个输入框组
+			var $inputGroup = $ele.parent();
+			if (!$inputGroup.hasClass('input-group')) {
+				$inputGroup = $inputGroup.children().wrapAll('<div class="input-group input-group-sm"></div>').parent();
+			}
+			//添加按钮到输入框组
+			$inputGroup.append($button);
+		}
+	});
+	return this;
+};
+
+/**
+ * 获取对象全部成员信息（调试程序用）
+ * @param {Object} obj 对象
+ * @returns {Any|String} 如果obj不是对象返回obj本身，否则返回格式化的对象成员信息{name:value}
+ */
+ydl.getMember = function(obj) {
+//	if ((__isDebugMode || __forceConsoleOut) && ydl.localData('localconfig_debugTarget') != DEBUG_TARGET_NONE) {
+		var objType = $.type(obj);
+		if (objType == 'object' || objType == 'array') {
+			if (obj.nodeType || $.isWindow(obj)) return String(obj);
+			else {
+				var indent = arguments.length > 1 ? ++arguments[1] : 1;	//缩进级别
+				if (indent > 10) return '...';	//限制9层递归，防止死循环
+				var indentChar = '    '; //缩进字符
+				var indentString = ydl.string(indentChar, indent - 1);
+				var memberInfo = '';
+				if (objType === 'array') {	//数组
+					for (var i = 0, l = obj.length; i < l; i++) memberInfo += indentChar + indentString + i + ': ' + ydl.getMember(obj[i], indent) + '\n';
+					return '[\n' + memberInfo + indentString + ']';
+				}
+				else {	//对象
+					for (var member in obj) memberInfo += indentChar + indentString + member + ': ' + ydl.getMember(obj[member], indent) + '\n';
+					return '{\n' + memberInfo + indentString + '}';
+				}
+			}
+		}
+		else if ($.isFunction(obj)) {	//函数
+			var funcString = String(obj);
+			return funcString.substring(0, funcString.indexOf('{')) + '{...}';
+		}
+		else if (objType === 'string') return '"' + obj + '"';	//字符串
+		else return String(obj);	//其他类型
+//	}
+//	else return obj;
+};
+
+ydl.log = function (message) {
+	//通过浏览器脚本控制台输出（IE8+、Opera、Firefox、Chrome均正常，IE6、IE7不支持）
+	window.console && console.log(message);
+	return message;
+};
+
+/**
+ * 读写cookie
+ * 注意：cookie会随每次HTTP请求发送到服务器，如果不需要发送请使用ydl.localData保存本地数据
+ * @example ydl.cookie('cookie_key', 'cookie_value');	//将名字为cookie_key的cookie值设置为cookie_value，如果该cookie不存在则创建
+ * @example ydl.cookie('cookie_key');					//读取指定名字的cookie值
+ * @example ydl.cookie('cookie_key', null);			//删除名字为cookie_key的cookie，如果创建cookie时指定了domain和path，删除时也要同样指定
+ * @example ydl.cookie('cookie_key', 'cookie_value', {expires: 7, path: '/', domain: 'yondervision.com', secure: true}); //创建时指定cookie的参数
+ * @param {String} key cookie的名字
+ * @param {String} value 要保存到cookie中的值，如果设为null将删除此cookie
+ * @param {Object} [options] cookie选项 {
+ *		{Number} [expires=365] cookie多少天后过期
+ *		{String} [path] cookie所属应用路径
+ *		{String} [domain] cookie所属域名
+ * 		{Boolean} [secure=false] 是否只在https连接上发送cookie
+ * 		{Boolean} [raw=false] 读取cookie时是否返回未解码的原始数据
+ * @return {String} 返回cookie的值，读取时没有找到返回null
+ */
+ydl.cookie = function(key, value, options) {
+	//设置cookie
+	if (arguments.length > 1 && (value === null || typeof value !== "object")) {
+		//缺省选项
+		options = $.extend({
+			expires: 365,
+			domain: location.hostname,
+			path: ydl.contexPath
+		}, options);
+		//设置过期，删除cookie
+		if (value === null) options.expires = -1;
+		//设置多少天后过期
+		if (typeof options.expires === 'number') {
+			var days = options.expires;
+			var t = options.expires = new Date();
+			t.setDate(t.getDate() + days);
+		}
+		return (document.cookie = [
+			encodeURIComponent(key), '=',
+			options.raw ? String(value) : encodeURIComponent(String(value)),
+			options.expires ? '; expires=' + options.expires.toUTCString() : '',
+			options.path ? '; path=' + options.path : '',
+			options.domain ? '; domain=' + options.domain : '',
+			options.secure ? '; secure' : ''
+		].join(''));
+	}
+	//读取cookie的值
+	options = value || {};
+	var result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie);
+	return result ? (options.raw ? result[1] : decodeURIComponent(result[1])) : null;
+};
+
+
+/**
+ * 在浏览器端存储数据
+ * IE6、7使用userData保存，IE8+、Firefox、chrome、opera使用localStorage保存，如果这两种都不支持就使用cookie保存
+ * @example ydl.localData('data_key', 'data_value');	//将名字为data_key的值设置为data_value，如果该存储项不存在则创建
+ * @example ydl.localData('data_key');					//读取指定名字的本地存储项的值
+ * @example ydl.localData('data_key', null);			//删除名字为data_key的存储项
+ * @param {String} key 存储项的名字
+ * @param {String} [value] 要保存的值，如果设为null将删除此存储项
+ * @param {Boolean} [session=false] 是否仅在当前会话中有效，缺省false为持久化存储 
+ * @return {String} 返回存储项的值，读取时没有找到返回null
+ */
+ydl.localData = function(key, value, session) {
+	if (window.localStorage && window.sessionStorage) {
+		//使用Web Storage
+		if (value === null) {	//删除
+			if (session) window.sessionStorage.removeItem(key);
+			else window.localStorage.removeItem(key);
+			return null;
+		}
+		else if (value === undefined) {	//读取
+			if (session) return window.sessionStorage.getItem(key);
+			else return window.localStorage.getItem(key);
+		}
+		else {	//设置
+			if (session) window.sessionStorage.setItem(key, value);
+			else window.localStorage.setItem(key, value);
+			return value;
+		}
+	}
+	else {
+		//使用userdata（不支持session）
+		try {
+			var documentElement = top.document.documentElement;
+			documentElement.addBehavior('#default#userdata');
+			if (value === null) {	//删除
+				documentElement.removeAttribute('value');
+				documentElement.save(key);
+				return null;
+			}
+			else if (value === undefined) {	//读取
+				documentElement.load(key);
+				return documentElement.getAttribute('value');
+			}
+			else {	//设置
+				documentElement.setAttribute('value', value);
+				documentElement.save(key);
+				return value;
+			}
+		}
+		catch (ex) {
+			return ydl.cookie(key, value, session ? {expires: null} : {});
+		}
+	}
+};
+ydl.sessionData = function (key, value) {
+	return ydl.localData(key, value, true);
+};
+
+/**
+ * 获取计算后的样式
+ * @param {Object} el DOM对象
+ * @param {String} [cssprop] CSS样式属性名
+ * @returns {String} 计算后的CSS样式值，未指定cssprop则返回整个样式对象
+ */
+ydl.getStyle = function getStyle(el, cssprop) {
+	var style;
+	if (el.currentStyle) //IE
+		style = el.currentStyle;
+	else if (document.defaultView && document.defaultView.getComputedStyle) //Firefox
+		style = document.defaultView.getComputedStyle(el, '');
+	else //try and get inline style
+		style = el.style;
+	return cssprop ? style[cssprop] : style;
+}
+
+
+/**
+ * 数字加千分隔
+ * @param {String|Number} number 数字或数字形式的字符串
+ * @returns {String} 整数位每三位加一个逗号
+ */
+ydl.addComma = function(number) {
+	number += '';
+	return number.indexOf(',') == -1 ? 	number.split('').reverse().join('').replace(/(\d{3})(?!\d*\.\d+)/g, '$1,').split('').reverse().join('').replace(/^(-?),/, '$1') : number;
+};
+
+/**
+ * 数字去千分隔
+ * @param {String} number 数字形式的字符串
+ * @returns {String} 去掉数字中的所有逗号
+ */
+ydl.delComma = function(number) {
+	return (number + '').replace(/,/g, '');
+};
+
+
+/**
+ * 人民币金额转大写
+ * @example ydl.capitalMoney(1020.03);			//返回'壹仟零贰拾元零叁分'
+ * @example ydl.capitalMoney(1020.03, false);	//返回'壹仟零佰贰拾零元零角叁分'
+ * @param {String|Number} money 金额数字（最多2位小数）
+ * @param {Boolean} [readable=true] 是否返回易读形式
+ * @returns {String} 如果readable=false，返回固定位数的大写形式，否则返回口述金额时习惯的形式
+ */
+ydl.capitalMoney = function(money, readable) {
+	if (money === '') return '';
+	if (typeof money == 'number') money = money.toFixed(2);
+	else money = parseFloat(ydl.delComma(money.replace(/￥/g, ''))).toFixed(2);
+	money = money.replace('.', '');
+	if (money == '000') return "零元整";
+	var sNumber = '零壹贰叁肆伍陆柒捌玖';
+	var sUnit = '分角元拾佰仟万拾佰仟亿拾佰仟万拾佰仟';
+	var rmb = '';
+	for (var i = 0; i < money.length; i++) rmb += sNumber.substr(money.substr(i, 1) - '0', 1) + sUnit.substr(money.length - i - 1, 1);
+	if (readable || readable === undefined) {
+		var filterUnit = function(s) {
+			return s.replace('零亿', '亿').replace('零万', '万').replace('零仟', '零').replace('零佰', '零').replace('零拾', '零');
+		};
+		var filterZero = function(s) {
+			while (s.indexOf('零零') >= 0) s = s.replace('零零', '零');
+			return s;
+		};
+		rmb = filterUnit(filterZero(filterUnit(rmb.replace('零角', '零').replace('零分', '零'))));
+		rmb = filterZero(filterUnit(rmb.replace('亿万', '亿零').replace('零万', '零'))).replace('零元', '元');
+		if (rmb.charAt(rmb.length - 1) == '零') rmb = rmb.substr(0, rmb.length - 1) + '整';
+	}
+	return rmb;
+};
+
+/**
+ * 获取一组相同name属性的单选框中被选中的选项信息
+ * @param {String|Object} radio 单选框的name属性，或者一组单选框的dom对象list或jQuery对象
+ * @returns {Object} 包含被选中的单选框的索引、值、文本的对象，没有选中的选择则返回索引-1，值和文本为空
+ */
+ydl.getCheckedRadio = function(radio) {
+	var radios = (typeof radio === 'string' ? document.getElementsByName(radio) : radio instanceof jQuery ? radio.get() : radio);
+	for (var i = 0; i < radios.length; i++) {
+		if (radios[i].checked) return {
+			index: i,
+			value: radios[i].value,
+			text: $(radios[i]).parent().text()
+		};
+	}
+	return {
+		index: -1,
+		value: '',
+		text: ''
+	};
+};
+
+/**
+ * 获取一组相同name属性的复选框中被选中的选项信息
+ * @param {String|Object} radio 复选框的name属性，或者一组复选框的dom对象list或jQuery对象
+ * @returns {Array} 包含被选中的复选框的索引、值、文本的对象数组，没有选中的选项则返回空数组
+ */
+ydl.getCheckedCheckbox = function(checkbox) {
+	var checkboxes = (typeof checkbox === 'string' ? document.getElementsByName(checkbox) : checkbox instanceof jQuery ? checkbox.get() : checkbox);
+	var result = [];
+	for (var i = 0; i < checkboxes.length; i++) {
+		if (checkboxes[i].checked) result.push({
+			index: i,
+			value: checkboxes[i].value,
+			text: $(checkboxes[i]).parent().text()
+		});
+	}
+	return result;
+};
+
+/**
+ * 设置一组复选框的选中状态
+ * @param {String} id 生成这一组复选框的多值组件ID
+ * @param {Array|String} values 要选中项的值，字符串数组或者用半角逗号分隔开的字符串
+ * @returns Array 包含所有选中复选框的DOM对象数组，没有选中的则返回空数组
+ */
+ydl.setCheckedCheckbox = function(id, values) {
+	if (typeof values === 'string') values = values.split(',');
+	var checkboxes = [];
+	$('input[name=' + id + ']').each(function() {
+		if ($.inArray(this.value, values) >= 0) {
+			this.checked = true;
+			checkboxes.push(this);
+		}
+		else this.checked = false;
+	});
+	return checkboxes;
+};
+
+/**
+ * 设置一组单选框的选中状态
+ * @param {String} id 生成这一组单选框的多值组件ID
+ * @param {String} values 要选中项的值
+ * @returns Object 选中的单选框DOM对象，没有选中项则返回null
+ */
+ydl.setCheckedRadio = function(id, value) {
+	var radios = document.getElementsByName(id);
+	for (var i = 0; i < radios.length; i++) {
+		var radio = radios[i];
+		if (radio.value == value) {
+			radio.checked = true;
+			return radio;
+		}
+	}
+	return null;
+};
+
+/**
+ * 根据下拉列表的选项值查询选项文本
+ * @param {String|Object} select 下拉列表的id、DOM对象或jQuery对象
+ * @param {String} value 要查找的选项值 
+ * @returns {String} 选项值对应的选项文本，如果没有找到返回选项值本身
+ */
+ydl.getSelectTextByValue = function(select, value) {
+	select = ydl.getDom(select);
+	if (!select) return value;
+	else return $('option[value="' + value + '"]', select).text().trim() || value;
+};
+
+/**
+ * 根据指定的选项文本设置下拉列表的选择项
+ * 如果有多个选项具有相同的文本，只选中第一个
+ * @param {Object|String} select 下拉列表DOM对象，或jQuery对象，或ID属性值
+ * @param {String} value 要选择的选项文本
+ * @returns {Number} 返回选择项的索引，如果没找到指定的文本，返回-1
+ */
+ydl.selectByText = function(select, text) {
+	select = ydl.getDom(select);
+	if (select instanceof Array) {
+		var r = -1;
+		for (var i = 0; i < select.length; i++) {
+			r = arguments.callee(select[i], text);
+		}
+		return r;
+	}
+	if (select.tagName && select.tagName == 'SELECT') {
+		var index = -1;
+		var options = select.options;
+		if (!text) text = '';
+		else text = ('' + text).trimRight();
+		for (var i = 0, l = options.length; i < l; i++) {
+			if ($(options[i]).text().trimRight() == text) {
+				options[i].selected = true;
+				index = i;
+				//给组合框赋值
+				var $next = $(select).next();
+				if ($next.is('.ui-autocomplete-input')) {
+					$next.val($(options[i]).text());
+				}
+				break;
+			}
+		}
+		index == -1 && ydl.log('ydl.selectByText：列表' + (select.id || '') + '中未找到文本"' + text + '"', 'orange');
+		return index;
+	}
+	else ydl.log('ydl.selectByText出错：指定的对象不是select', 'red');
+};
+$.fn.selectByText = function(text) {
+	ydl.selectByText(this, text);
+	return this;
+};
+
+/**
+ * 设置表单元素的布尔属性
+ * @param {String|Object} id 页面组件ID
+ * @param {String} attrName 属性名，可以是'readonly', 'disabled', 'hidden', 'required'
+ * @param {Boolean} [isSet=true] 是否设置属性，true为添加属性，false为取消属性
+ * @returns {Object} id指定的DOM对象
+ */
+ydl.attr = function(id, attrName, isSet) {
+	var ele = ydl.getDom(id);
+	if (!ele && typeof id === 'string') ele = $n(id);
+	if (!ele) {
+		ydl.log('ydl.attr出错：找不到指定的表单对象', 'red');
+		return null;
+	}
+	
+	if (ele.length == 1 && !(ele instanceof HTMLSelectElement)) ele = ele[0];
+	else if (ele.length > 1 && !(ele instanceof HTMLSelectElement)) {
+		$.each(ele, function () {
+			ydl.attr(this, attrName, isSet);
+		});
+		return ele;
+	}
+	if ($.type(ele) === 'array' && ele.length === 1) ele = ele[0];
+	attrName = attrName.toLowerCase();
+	isSet = isSet || isSet === undefined;
+	var tagName = ele.tagName.toLowerCase();
+	var eleType = ele.type;
+
+	var $ele = $(ele);
+	var inList = $ele.closest('table').hasClass('datalist-table-body');
+	
+	var classMethod = isSet ? 'addClass' : 'removeClass';
+	if (tagName === 'input' || tagName === 'textarea') {
+		//单选框、复选框
+		if (eleType === 'radio' || eleType === 'checkbox') {
+			if (attrName === 'readonly' || attrName === 'disabled') {
+				$ele.closest('.multivalue').find(':input').prop('disabled', isSet);
+			}
+			else if (attrName === 'hidden') {
+				//如果不在列表中，隐藏所在列标签；如果在列表中，隐藏所在单元格全部内容
+				(inList ? $ele.closest('td').children() : $ele.closest('.col'))[classMethod]('hide');
+				//取消隐藏表达式输出的隐藏样式
+				if (!isSet && !inList) $ele.closest('.input-group').removeClass('hide');
+				//隐藏关联的标签
+				if (ele.id) $('label[for=' + ele.id.replace(/:/g, '\\:') + '],label[for=' + ele.id.replace(/:.+/, '') + ']')[classMethod]('hide');
+			}
+			else if (attrName === 'required') {
+				$ele.closest('.multivalue').data('required', isSet);
+				if (!inList) $ele.closest('.col')[classMethod]('star');
+			}
+		}
+		//单行文本框、多行文本框、密码框、文件框、日期框（特殊处理）、金额框（特殊处理）、……
+		else {
+			if (attrName === 'readonly' || attrName === 'disabled') {
+				ele.readOnly = isSet;
+				//日期框修改完只读属性后需要重新初始化
+				if ($ele.hasClass('date')) $ele.datepicker();
+				//金额框同时设置用于显示的文本框
+				if ($ele.hasClass('money')) $ele.next()[0].readOnly = isSet;
+			}
+			else if (attrName === 'hidden') {
+				//如果不在列表中，隐藏所在列标签；如果在列表中，隐藏所在单元格全部内容
+				(inList ? $ele.closest('td').children() : $ele.closest('.col'))[classMethod]('hide');
+				//取消隐藏表达式输出的隐藏样式
+				if (!isSet && !inList) $ele.closest('.input-group').addBack().removeClass('hide');
+				//隐藏关联的标签
+				if (ele.id) $('label[for=' + ele.id.replace(/:/g, '\\:') + ']')[classMethod]('hide');
+				//金额框隐藏用于显示的文本框
+				if ($ele.hasClass('money')) $ele.next()[classMethod]('hide');
+			}
+			else if (attrName === 'required') {
+				//设置必填图标
+				if (!inList) $ele.closest('.col')[classMethod]('star');
+				$ele.attr('required',isSet);
+			}
+		}
+	}
+	//下拉框、组合框（特殊处理）
+	else if (tagName === 'select') {
+		if (attrName === 'readonly' || attrName === 'disabled') {
+			ele.disabled = isSet;
+			//组合框
+			if ($ele.hasClass('combobox')) $ele.combobox(isSet ? 'disable' : 'enable');
+		}
+		else if (attrName === 'hidden') {
+			//如果不在列表中，隐藏所在列标签；如果在列表中，隐藏所在单元格全部内容
+			(inList ? $ele.closest('td').children() : $ele.closest('.col'))[classMethod]('hide');
+			//取消隐藏表达式输出的隐藏样式
+			if (!isSet && !inList) $ele.closest('.input-group').addBack().removeClass('hide');
+			//隐藏关联的标签
+			if (ele.id) $('label[for=' + ele.id.replace(/:/g, '\\:') + ']')[classMethod]('hide');
+		}
+		else if (attrName === 'required') {
+			//设置必填图标
+			if (!inList) $ele.closest('.col')[classMethod]('star');
+			$ele.attr('required',isSet);
+		}
+	}
+	//按钮
+	else if (tagName === 'button') {
+		if (attrName === 'readonly' || attrName === 'disabled') ele.disabled = isSet;
+		else if (attrName === 'hidden') $ele[classMethod]('hide');
+	}
+	
+	//取消只读之后清楚校验报错信息
+	if(attrName === 'required' && !isSet){
+		ydl.validator.clear($ele.closest('.multivalue'));
+		ydl.validator.clear($ele);
+	}
+};
+
+/**
+ * 删除表单对象的布尔属性
+ * @param {String|Object} id 表单对象ID
+ * @param {String} attrName 属性名，可以是'readonly', 'disabled', 'hidden', 'required', 'checked', 'selected'
+ * @returns {Object} id指定的DOM对象
+ */
+ydl.removeAttr = function(id, attrName) {
+	return ydl.attr(id, attrName, false);
+};
+
+/**
+ * 通过表单字段查找字段描述
+ * @param {Object|String} field 表单字段DOM对象，或字段的JQuery对象，或字段id
+ * @param {String} [defaultLabel] 默认的字段描述，当无法在页面中找到字段对应label和th时使用
+ * @returns {String} 返回与field关联的label文本或列表标题行th的文本，未找到则返回默认字段描述
+ */
+ydl.getLabel = function(field, defaultLabel) {
+	var ret = '';
+	var f = ydl.getDom(field);
+	if (f === undefined) {
+		if (document.getElementsByName(field).length > 0) {
+			ret = $('label[for=' + field + ']').text();
+		}
+		return ret.replace(/[:：]$/g, '') || defaultLabel || '';
+	}
+	if (f instanceof Array && f.length == 0) return defaultLabel || "";
+	if (f instanceof Array) f = f[0];
+	defaultLabel = defaultLabel || f.id || '';
+	//assert: 列表元素为<table class="datalist">，输入字段为td的直接子节点
+	var fieldParent = f.parentNode;
+	if (fieldParent.tagName == 'TD' && $(fieldParent).closest('table').hasClass('datalist-table-body')) {
+		try {
+			var $tr = $(fieldParent.parentNode);
+			ret = $tr.closest('table').find('thead>tr:first').children(':eq(' + $tr.children().index(fieldParent) + ')').text().trim().replace(/\*$/, '');
+		}
+		catch (ex) {
+			ydl.log('ydl.getLabel出错：获取标签失败' + ydl.error(ex), 'red');
+			ret = '';
+		}
+	}
+	//单选框或复选框
+	else if ($(f).is('fieldset')) {
+		ret = $('label[for="' + f.id.replace(/:/g, '\\:').replace('group_', '') + '"]').text();
+	}
+	else {
+		ret = $('label[for="' + f.id.replace(/:/g, '\\:') + '"]').text();
+	}
+	return ret == '' ? defaultLabel : ret.replace(/[:：]$/g, ''); //返回前去掉末尾的冒号
+};
+
+/**
+ * 获取指定表单字段的值
+ * @param {String|Object} 表单字段的id属性或dom对象或jQuery对象
+ * @param {String} [defaultValue] 默认值，当没有找到字段，或字段值为空时返回
+ * @param {Boolean} [getText=false] 是否获取文本信息，如果为true，对于select、checkbox、radio将返回文字描述而不是value
+ * @returns {String} 字段值字符串或默认值，多选的复选框返回用逗号分隔的值，没有取到值，也没有指定默认值时返回空串
+ */
+ydl.getValue = function(field, defaultValue, getText) {
+	//支持ydl.getValue(field, getText, defaultValue)方式
+	if (typeof defaultValue == 'boolean') {
+		var bGetText = defaultValue;
+		defaultValue = getText;
+		getText = bGetText;
+	}
+	var r;
+	var f = ydl.getDom(field);
+	if (f instanceof Array) f = f[0];
+	if (!f) {
+		//单选框、复选框
+		if (typeof field === 'string') {
+			var $group = $('#group_' + field);
+			if ($group.hasClass('multivalue')) {
+				var $checked = $('[name=' + field + ']:checked');
+				r = $checked.map(function() {
+					return getText ? $(this).parent('label').text() : this.value;
+				}).get().join(',');
+			}
+		}
+	}
+	else {
+		//下拉选择框、多选列表、组合框
+		if (f.type === 'select-one' || f.type === 'select-multiple') {
+			r = $('option:selected', f).map(function () {
+				if (getText) {
+					var text = this.innerHTML.trim();
+					return this.value === '' && text === '请选择...' ? '' : text;
+				}
+				else return this.value;
+			}).get().join(',');
+		}
+		//取金额框格式化文本
+		else if (getText && $(f).hasClass('money')) {
+			r = $(f).next('.money-display').val();
+		}
+		//普通文本框、多行文本框、金额框（取原始值）、日期框、密码框……
+		else r = f.value;
+	}
+	return r || defaultValue || '';
+};
+
+/**
+ * 根据指定的页面元素设置字段值
+ * @param {String|Object} field 表单输入组件的ID或DOM对象或jQuery对象（支持多个对象）
+ * @param {String|String[]} value 数据值，或多个值的数组（复选框）
+ * @returns {Object} dom对象或数组
+ */
+ydl.setValue = function (field, value) {
+	var inputs = ydl.getDom(field);
+	//单选框、复选框
+	if (!inputs && typeof field === 'string' && $('#group_' + field).hasClass('multivalue')) {
+		inputs = document.getElementsByName(field);
+	}
+	$(inputs).filter(':input:not(button)').each(function (index, input) {
+		var $input = $(input);
+		
+		//在动态列表中
+		if ($input.closest('table').hasClass('ydpx-datalist')) {
+			//设置数据值
+			input.value = value;
+			//显示值
+			var displayValue = value;
+			var $td = $input.parent();
+			//金额型，给显示金额的文本框赋值
+			if ($td.hasClass('money')) {
+				displayValue = parseFloat(value);
+				displayValue = isNaN(displayValue) ? '' : ydl.addComma(displayValue.toFixed($input.data('declen') || 2));
+				$input.next().val(displayValue);
+			}
+			//不可编辑，给span设置显示值
+			if (input.type === 'hidden') $td.children('span').text(displayValue);
+		}
+		else {
+			//永道标准组件
+			var ydWidgetName = $input.data('yd-widget');
+			if (ydWidgetName && $input[ydWidgetName]('hasMethod', 'setValue')) {
+				$input[ydWidgetName]('setValue', value);
+			}
+			//单选框、复选框
+			else if (input.type === 'radio' || input.type === 'checkbox') {
+				input.checked = $.inArray(input.value, value.split(',')) != -1;
+			}
+			//金额框
+			else if ($input.hasClass('money')) {
+				var displayValue = parseFloat(value);
+				displayValue = isNaN(displayValue) ? '' : ydl.addComma(parseFloat(value).toFixed($input.data('declen') || 2));
+				$input.val(value).next().val(displayValue);
+			}
+			//组合框
+			else if ($input.hasClass('combobox') || $input.parent().hasClass('combobox-container')) {
+				ydl.selectByValue(input, value);
+			}
+			//其他
+			else $input.val(value);
+		}
+	});
+	return inputs;
+};
+
+/**
+ * 根据指定的页面元素设置字段值
+ * @param {String} value 要设置的数据值
+ * @returns {Object} 返回dom对象
+ */
+$.fn.setValue = function(value) {
+	ydl.setValue(this, value);
+	return this;
+};
+
+
+
+/**
+ * 对象数组转对象
+ * @param {Array} arr 对象数组
+ * @param {String} key 作为输出对象属性名的数组对象属性名
+ * @param {String|function} value 作为输出对象属性值的数组对象属性名；或处理函数，传入数组对象
+ * @returns {Object} 返回对象
+ */
+ydl.arr2obj = function (arr, key, value) {
+	var ret = {};
+	if ($.isFunction(value)) {
+		for (var i = 0; i < arr.length; i++) ret[arr[i][key] || i] = value(arr[i], i);
+	}
+	else {
+		for (var i = 0; i < arr.length; i++) ret[arr[i][key] || i] = arr[i][value];
+	}
+	return ret;
+};
+
+/**
+ * 对象转对象数组
+ * @param {Object} 对象
+ * @param {String} [key] 对象属性名输出到数组对象中的属性名，缺省为key
+ * @param {String} [value] 对象属性值输出到数组对象中的属性名，缺省为value
+ * @param {Array} 对象数组
+ */
+ydl.obj2arr = function (obj, key, value) {
+	if (key === undefined) key = 'key';
+	if (value === undefined) value = 'value';
+	var ret = [];
+	for (var k in obj) {
+		var r = {};
+		r[key] = k;
+		r[value] = obj[k];
+		ret.push(r);
+	}
+	return ret;
+};
+
+/**
+ * 对象数组转简单数组
+ * @param {Array} objArr 对象数组
+ * @param {String|Function} [key] 输出到数组中的数组对象属性名，缺省为value；或处理函数，传入数组对象
+ * @returns {Array} 数组
+ */
+ydl.arr2arr = function (objArr, key) {
+	if (key === undefined) key = 'value';
+	var ret = [];
+	if ($.isFunction(key)) {
+		for (var i = 0; i < objArr.length; i++) ret.push(key(objArr[i], i));
+	}
+	else {
+		for (var i = 0; i < objArr.length; i++) ret.push(objArr[i][key]);
+	}
+	return ret;
+};
+
+/**
+ * 将多个同步或异步对象组合成一个deferred对象
+ * 支持deferred对象、布尔值（true代表resolved，false代表rejected）、函数（返回值按布尔值处理）
+ */
+ydl.deferred = function (arr) {
+	var args = $.isArray(arr) ? arr : arguments;
+	var d = [];
+	for (var i = 0; i < args.length; i++) {
+		var item = args[i];
+		if ($.isFunction(item.promise)) {
+			d.push(item);
+		}
+		else if ($.isFunction(item)) {
+			var r = item();
+			if (r) d.push($.Deferred().resolve());
+			else d.push($.Deferred().reject());
+		}
+		else if (typeof item === 'boolean') {
+			if (item) d.push($.Deferred().resolve());
+			else d.push($.Deferred().reject());
+		}
+		else d.push($.Deferred().resolve());
+	}
+	return $.when.apply(null, d);
+};
+
+/**
+ * 对话框模板
+ * @param {Object} options 对话框参数 {
+ * 		{String} [html] 自定义对话框提示内容 （设置此项后, message, desc, icon, list均不生效）
+ * 		{String} message 对话框提示标题，支持html
+ * 		{String} [desc] 对话框提示文本，支持html，可缺省
+ *      {String} [icon] 图标：info=提示，warn=警告，error=错误，pay=付款，ask=询问，common=通用，可省略，缺省为info
+ * 		{String} [size] 对话框大小，可用值为'lg'（大号）、'sm'（小号），缺省为中号
+ * 		{Object} [list] 列表，可缺省 两种配置方式如下：
+ *			1、生成顺序按照数组排列顺序为准 {
+ *				{String} [title] 列表标题
+ *				{Array} head 表头 字符串数组 ['编号','姓名']
+ *				{Array} body 表体 二维数组 [['001', '张三'], ['002', '李四']]
+ *			}
+ *			2、生成顺序按照表头key值顺序生成，表体内容与表头相对应 {
+ *				{String} [title] 列表标题
+ *				{Array} head 表头 对象数组 [{
+ *					{String} id 列ID
+ *					{String} text 列描述
+ *				}] 例如： [{id: 'aa',text:'列1'}, {id: 'bb',text:'列2'}]
+ *				{Array} body 表体 对象数组,与表头中设置对应 [{aa: '111', bb: '222'}, {aa: '444', bb: '555'}]
+ *			}
+ * 		{String|Object[]} [buttons] 按钮，可缺省，分为两种配置方式：
+ *			1、逗号分隔的多个按钮文本，如 'xx, xx, ...'
+ *			2、按钮对象数组 [{
+ * 				{String} text 按钮文本
+ *				{String} [id] 按钮id，可缺省
+ * 				{String|Number} [value] 按钮返回值，缺省为从0开始的按钮顺序号
+ * 				{String} [theme] 按钮样式，可用bootstrap主题样式名，或自定义样式名，缺省为默认样式
+ *				{String} [icon] 按钮图标，可用bootstrap主题样式名，或自定义样式名，缺省为不添加图标
+ * 			}]
+ * }
+ */
+ydl.detailDialog = function(options) {
+	if (!options) options = {};
+	var html = '';
+	//图标HTML
+	var icon = '<span class="yd-icon ' + (options.icon || 'info') + '"></span>';//info、warn、error、pay、ask、common
+	//对话框标题HTML
+	var message = '<h2 class="' + (options.icon == 'pay' || options.icon == 'ask' || options.icon == 'common' ? '' : 'yd-message') + '">' + (options.message || '') + '</h2>';
+	//对话框提示文本HTML
+	var desc = options.desc ? options.desc : '';
+	//列表Html
+	var list = '';
+	if (options.list) {
+		list += '<table class="table table-hover table-bordered yd-list">'+ (options.list.title ? '<caption>'+options.list.title+'</caption>': '' )+'<thead><tr>';
+		$.each(options.list.head || [], function (i, thead) {
+			list += typeof thead === 'string' ? '<th><label>' + thead + '</label></th>' : '<th data-id="' + thead.id + '"><label>' + thead.text + '</label></th>';
+		});
+		list += '</tr></thead><tbody>';
+		$.each(options.list.body || [], function(i, tbody){
+			list += '<tr>';
+			if ($.isPlainObject(tbody)) {
+				$.each(options.list.head || [], function (index, thead) {
+					list += '<td data-id="' + thead.id + '">' + tbody[thead.id] + '</td>';
+				});
+			}
+			else {
+				$.each(tbody, function(index, listTr){
+					list += '<td>' + listTr + '</td>';
+				});
+			}
+			list += '</tr>';
+		});
+		list += '</tbody></table>';
+	}
+	//当自定义对话框提示文本存在内容时则直接显示文本
+	html = options.html && options.html.length > 0 ? options.html : '<div class="yd-detail-dialog">' + icon + message + (desc ? '<div class="yd-desc">' +  desc + '</div>' : '') + list + '</div>';
+	//将文本形式的按钮数据转为对象数组
+	if (typeof options.buttons === 'string') options.buttons = $.map(options.buttons.split(','), function (text, i) {
+		return {text: text, value: i};
+	});
+	//生成按钮HTML
+	var modalBtn = $.map(options.buttons, function (button, i) {
+		if (typeof button === 'string') button = {text: button};
+		var btnHtml = '<button type="button" id="' + (button.id || '') + '" class="btn btn-' + (button.theme || 'primary') +
+			'" value="' + (button.value === undefined ? i : button.value) +
+			'">' + (button.icon ? '<span class="glyphicon glyphicon-' + button.icon + '"></span> ' : '') + 
+			(button.text || '按钮' + i) + '</button>';
+		return btnHtml;
+	}).join('');
+	
+	//生成整个弹出框
+	return '<div class="modal fade" id="confirm_modal"><div class="modal-dialog' + (options.size ? ' modal-' + options.size : '') +
+			'"><div class="modal-content"><div class="modal-body">' + html + '</div><div class="modal-footer">' + modalBtn + 
+			'</div></div></div></div>';
+};
+
+/**
+ * 自定义对话框
+ * @param {Object} options 对话框参数 {
+ * 		{String} message 对话框标题，支持html
+ * 		{String} [title] 对话框标题,与message一样，为兼容旧版本方法
+ * 		{String} [desc] 对话框提示文本，支持html，可缺省
+ * 		{String} [text] 对话框提示文本，与desc一样，为兼容旧版本方法
+ * 		{String} [icon] 图标：info=提示，warn=警告，error=错误，pay=付款，ask=询问，common=通用，可省略，缺省为info
+ * 		{Object} [list] 列表，可缺省 两种配置方式如下：
+ *			1、生成顺序按照数组排列顺序为准 {
+ *				{String} [title] 列表标题
+ *				{Array} head 表头 字符串数组 ['编号','姓名']
+ *				{Array} body 表体 二维数组 [['001', '张三'], ['002', '李四']]
+ *			}
+ *			2、生成顺序按照表头key值顺序生成，表体内容与表头相对应 {
+ *				{String} [title] 列表标题
+ *				{Array} head 表头 对象数组 [{
+ *					{String} id 列ID
+ *					{String} text 列描述
+ *				}] 例如： [{id: 'aa',text:'列1'}, {id: 'bb',text:'列2'}]
+ *				{Array} body 表体 对象数组,与表头中设置对应 [{aa: '111', bb: '222'}, {aa: '444', bb: '555'}]
+ *			}
+ * 		{String} [html] 自定义对话框内容（定义此参数后，massage, title, desc, text, icon, list 均失效）
+ * 		{String} [size] 对话框大小，可用值为'lg'（大号）、'sm'（小号），缺省为中号
+ * 		{Number} [focus=0] 对话框打开后默认给第几个按钮设置焦点，缺省为第一个，设为false不设置焦点（用于比较长的对话框，防止自动滚动到最下面）
+ * 		{Boolean} [closeOnEscape] 是否允许按Esc或点击背景关闭对话框
+ * 		{String|Object[]} [buttons] 按钮，可缺省，两种配置方式如下：
+ * 			1、逗号分隔的多个按钮文本（缺省为'确定,取消'）
+ * 			2、按钮对象数组[{
+ * 	    		{String} text 按钮文本
+ * 	    		{String} [id] 按钮id，可缺省
+ * 	    		{String|Number} [value] 按钮返回值，缺省为从0开始的按钮顺序号
+ * 	    		{String} [theme] 按钮样式，可用bootstrap主题样式名，或自定义样式名
+ * 	    		{String} [icon] 按钮图标，可用bootstrap主题样式名，或自定义样式名，缺省为不添加图标
+ * 	    	}]
+ * 		{Function} [open] 打开对话框后的回调函数，参数为对话框对象
+ * 		{Function} [callback] 点击任意按钮的回调函数，参数为按钮返回值、按钮文本、对话框对象
+ * }
+ */
+ydl.customDialog = function(options) {
+	if (!options) options = {};
+	
+	//将文本形式的按钮数据转为对象数组
+	//if (typeof options.buttons === 'string') options.buttons = $.map(options.buttons.split(','), function (text, i) {
+		//return {text: text, value: i};
+	//});
+	
+	//生成按钮HTML
+	//var modalBtn = $.map(options.buttons || [{text: '确定', theme: 'primary'}, {text: '取消'}], function (button, i) {
+		//if (typeof button === 'string') button = {text: button};
+		//return '<button type="button" class="btn btn-' + (button.theme || 'default') +
+				//'" value="' + (button.value === undefined ? i : button.value) +
+				//'">' + (button.icon ? '<span class="glyphicon glyphicon-' + button.icon + '"></span> ' : '') + 
+				//(button.text || '按钮' + i) + '</button>';
+	//}).join('');
+	
+	//生成整个弹出框
+	//var $modal = $('<div class="modal fade" id="confirm_modal"><div class="modal-dialog' + (options.size ? ' modal-' + options.size : '') +
+			//'"><div class="modal-content">' + (options.title ? '<div class="modal-header"><h4 class="modal-title">' + options.title + 
+			//'</h4></div>' : '') + '<div class="modal-body">' + (options.text || '') + '</div><div class="modal-footer">' + modalBtn + 
+			//'</div></div></div></div>');
+
+	//生成整个弹出框
+	var $modal = $(ydl.detailDialog({
+		html: options.html || '',
+		message: options.message || options.title,
+		desc: options.desc || options.text,
+		icon: options.icon || '',
+		size: options.size || '',
+		list: options.list || {},
+		buttons: options.buttons || [{text: '确定', theme: 'primary'}, {text: '取消'}]
+	}));
+	
+	//获取返回值
+	$modal.on('click', 'button', function () {
+		if ($.isFunction(options.callback)) {
+			if (options.callback.call($modal, this.value, $(this).text(), $modal.find('.modal-body')) !== false) $modal.modal('hide');
+		}
+		else $modal.modal('hide');
+	})
+	.on('shown.bs.modal', function (e) {
+		if ($.isFunction(options.open)) options.open.call($modal, $modal.find('.modal-body'));
+	})
+	//完全关闭后删除弹出框
+	.on('hidden.bs.modal', function (e) {
+  		$(this).remove();
+	})
+	//打开后将第一个按钮设置焦点
+	.on('shown.bs.modal', function (e) {
+		if (options.focus !== false) $(this).find('.modal-footer button:eq(' + (options.focus || 0) + ')').focus();
+	})
+	//插入到页面
+	.appendTo('body')
+	//显示弹出框
+	.modal(options.closeOnEscape ? {backdrop: true, keyboard: true} : {backdrop: 'static', keyboard: false});
+};
+
+/**
+ * 提示信息框
+ * @param {(String|Object)} options 提示信息，可直接使用包含提示信息的字符串，或使用包含下述信息的对象
+ * @param {String} [options.icon] 图标：info=提示，warn=警告，error=错误，可省略，指定了错误码时缺省为error，否则缺省为info
+ * @param {String} [options.message] 对话框标题，支持html
+ * @param {String} [options.code] 错误码，可省略
+ * @param {String} [options.desc] 详细信息，可省略
+ * @param {Function} [callback] 点击确定按钮后的回调函数，可省略
+ * @return {Undefined}
+ */
+ydl.alert = function (options, callback) {
+	//var html;
+	var message = '', desc = '', icon = ''; 
+	if (typeof options === 'string' || typeof options === 'number') {
+		//html = '<span class="info"></span><h2>' + options + '</h2>';
+		icon = 'info';
+		message = options;
+	}
+	else {
+		//var icon = '<span class="' + (options.icon || (options.code !== undefined ? 'error' : 'info')) + '"></span>';	//info、warn、error
+		//var message = '<h2>' + (options.message || '') + '</h2>';
+		//var code = options.code ? '<b>错误码：</b>' + options.code + '<br>' : '';
+		//var desc = options.desc ? '<b>详细信息：</b>' + options.desc : '';
+		//html = icon + message + (code || desc ? '<div>' + code + desc + '</div>' : '');
+		icon = options.icon || (options.code !== undefined ? 'error' : 'info');
+		message = options.message || '';
+		desc = (options.code ? '<b>错误码：</b>' + options.code + '<br>' : '') + (options.desc ? '<b>详细信息：</b>' + options.desc : '');
+	}
+	ydl.customDialog({
+		//text: '<div class="yd-alert">' + html + '</div>',
+		text: '',
+		message: message,
+		desc: desc,
+		icon: icon,
+		buttons: '复制信息,确定',
+		focus: 1,
+		callback: function (button) {
+			if (button == 0) return false;
+			else if ($.isFunction(callback)) callback();
+		},
+		open: function ($dialogBody) {
+			//复制信息
+			var copyInfo = [];
+			copyInfo.push('标题：' + $dialogBody.find('h2').text());
+			$.each($dialogBody.find('p'),function(){
+				copyInfo.push($(this).text());
+			});
+			if (window.poolSelect && poolSelect['_OPERID'] && poolSelect['_OPERNAME']) copyInfo.push('操作人：'+poolSelect['_OPERID']+'-'+poolSelect['_OPERNAME']);
+			copyInfo.push('操作日期：'+ ydl.formatDate(new Date()));
+			//初始化复制信息到剪贴板按钮
+			var button = $(this).find('.modal-footer button[value="0"]').attr('data-clipboard-text', copyInfo.join('\n'))[0];
+			//如果不是ie8则加载插件
+			if(!/MSIE 8/.test(navigator.userAgent)){
+				
+				//如果是其他ie浏览器则在弹出框上面再弹出一个弹出框，避免复制错误信息按钮无法使用
+				if(/Trident/.test(navigator.userAgent)){
+					$(button).click(function () {
+						$('<div></div>').dialog('open').dialog('close').remove();
+					});
+				}
+				
+				//获取剪贴板插件js文件
+				$.getScript(ydl.contexPath +'/common/script/clipboard.min.js',function(){
+					//初始化复制信息到剪贴板按钮
+					new Clipboard(button).on('success', function(e) {
+					    $(e.trigger).text('已复制到剪贴板');
+					});
+				});
+			}else{
+			//如果是ie8则单独处理
+				$(button).click(function () {
+					alert($(this).data('clipboard-text') + '\n\n请按Ctrl+C复制');
+				});
+			}
+		},
+		closeOnEscape: true
+	});
+};
+
+/**
+ * 设置按钮文本，不影响图标
+ */
+$.fn.buttonText = function (text) {
+	return this.each(function () {
+		var $button = $(this);
+		if (!$button.is('button')) return;
+		var html = $button.html();
+		html = html.replace(/^(<span.+?<\/span>)?.+?(<span.+?<\/span>)?$/, '$1' + text + '$2');
+		$button.html(html);
+	});
+};
+
+
+/**
+ * 获取错误信息
+ * @param {Object} exception javascript错误对象
+ * @param {String} [member='message'] 错误对象属性名
+ * @returns {String} 如果提供了属性名，返回对应的属性值；如果属性名为all则返回全部属性（字符串，每行一个属性name=value）
+ */
+ydl.error = function(exception, member) {
+	if (typeof exception === 'string') return exception;
+	else {
+		member = member || 'message';
+		switch (member.toLowerCase()) {
+			case 'message': return (exception.message || exception.description);
+			case 'all': return ydl.getMember(exception);
+			default: return exception[member];
+		}
+	}
+};
+
+/**
+ * 用指定数据渲染模板字符串
+ * @param {String} template 模板字符串，变量写成${}的形式，用$${}转义，大括号中支持写序号或变量名
+ * @param {(String|Object)} data 模板变量值，分多个参数或按对象传入
+ * @return {String} 替换变量后的字符串
+ */
+ydl.render = function (template, data) {
+    if (!template) return '';
+    if (typeof data !== 'object') data = Array.prototype.slice.call(arguments, 1);
+	var n = 0;
+    return template.replace(/\$?\$\{(.*?)\}/g, function (match, p) {
+        if (match.indexOf('$$') === 0) return match.substr(1);
+        return data[p === '' ? n++ : p] || '';
+    });
+};
+
+
+/**
+ * 从身份证号码获取信息
+ * @param {String} idno 身份证号码，可以是15位或18位
+ * @returns {Object} 包含出生日期birthdate（yyyy-MM-dd字符串）、年龄age（整数）、性别sex（1=男，2=女）的对象
+ */
+ydl.idCardInfo = function(idno) {
+	if (!idno) return null;
+	if (!ydl.validator.get('idcard')(idno, {type: 'idcard'})) return null;
+	var y = idno.length == 18 ? idno.substr(6, 4) : '19' + idno.substr(6, 2);
+	var m = idno.substr(idno.length == 18 ? 10 : 8, 2);
+	var d = idno.substr(idno.length == 18 ? 12 : 10, 2);
+	var birthdate = y + '-' + m + '-' + d;	
+	var todaydate = window.poolSelect && poolSelect['CURRENT_SYSTEM_DATE'] || ydl.today();
+	var age = ydl.dateDiff(birthdate, todaydate, 'y');
+	if (ydl.dateDiff(ydl.dateAdd(birthdate, age, 'y'), todaydate, 'd') < 0) age--;
+	var returnInfoObj = {
+		birthdate: birthdate,
+		age: age,
+		sex: parseInt(idno.substr(idno.length == 18 ? 16 : 14, 1)) % 2 == 0 ? 2 : 1
+	};
+	return returnInfoObj;
+};
+
+/**
+ * 判断是否是ie8浏览器
+ * @returns {Boolean} 是否是ie8
+ */
+ydl.common.isIe8=function(){
+	if (navigator.appName === 'Microsoft Internet Explorer') { 
+       if (navigator.userAgent.match(/Trident/i) && navigator.userAgent.match(/MSIE 8.0/i))return ture;
+    };
+};
+
+})(ydl, jQuery);
+
+
+/**
+ * 常用方法的别名
+ */
+var $$ = ydl.getElementById;
+var $n = ydl.getElementsByName;
+var $t = ydl.getElementsByTagName;
+var lo = ydl.log;
+var lm = function (s) { ydl.log(ydl.getMember(s)); return s; };
+var ll = function (l, s) { ydl.log(l + ': ' + ydl.getMember(s)); return s; };

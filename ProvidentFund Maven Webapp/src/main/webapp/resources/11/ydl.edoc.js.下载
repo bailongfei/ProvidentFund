@@ -1,0 +1,68 @@
+/************************************************************************************************
+ * 华信永道平台公共脚本库（YongDao Library）
+ * 电子档案支持库
+ ************************************************************************************************/
+'use strict';
+if (typeof ydl === 'undefined') alert('ydl.datalist.js必须在ydl.base.js之后加载');
+
+(function(ydl, $, undefined) {
+	if (typeof ydl.edoc === 'undefined') ydl.edoc = {};
+
+var EDOC_PANEL_ID = 'edocPanel';
+var EDOC_OBJECT_ID = 'edocCtrl';
+//显示电子档案
+ydl.edoc.show = function(){
+    var $edocPanel = $('#' + EDOC_PANEL_ID);
+    if ($edocPanel.length > 0) $edocPanel.show();
+    else return init();
+};
+//隐藏电子档案
+ydl.edoc.hide = function(){
+    $('#' + EDOC_PANEL_ID).hide();
+};
+//初始化电子档案
+function init() {
+    //流程号
+    var flowId = poolSelect['_WF'];
+    //步骤号
+    var stepId = poolSelect['_ST'];
+    //实例号
+    var instanceId = poolSelect['_IS'];
+    //错误信息
+    var errMsg = '';
+    if (!flowId) errMsg += '流程号未在总线中取到值！\n';
+    if (!stepId) errMsg += '步骤号未在总线中取到值！\n';
+    if (!instanceId) errMsg += '实例号未在总线中取到值！\n';
+    if (errMsg != '') {
+        ydl.alert(errMsg);
+        return false;
+    }
+    ydl.ajax(ydl.contexPath + '/getDocument', {
+		poolKey: poolSelect['_POOLKEY'],
+		instanceid: instanceId,
+		flowid: flowId,
+		stepid: stepId,
+		operid: poolSelect['_OPERID'],
+		opname: poolSelect['_OPERNAME']
+    }).done(function (data) {
+		//如果此步骤不可查看
+		if (data.data.ckbz == 0 && data.data.smbz == 0) return '';
+		//组织电子档案显示html结构
+	    var panelHtml = '<div id="' + EDOC_PANEL_ID + '" class="panel">' +
+	        '<div class="panel-heading"></div>' +
+	        '<div class="panel-body"></div></div>';
+	    $('#page_tabs').after($(panelHtml));
+		var paramHtml = $.map(data.data,function(value, key){
+	        return '<param name="'+key+'" value="'+value.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')+'"/>';
+			//return '<param name="'+key+'" value=\''+value+'\'/>';
+	    }).join('');
+		var objHtml = '<object id="'+EDOC_OBJECT_ID+'" classid="clsid:F0E6D919-40BB-4B2B-AAD5-743E54F45C78" codebase="">' + paramHtml+ '</object>';
+		$('#'+EDOC_PANEL_ID + ' .panel-body').html(objHtml);
+		$('#'+EDOC_OBJECT_ID).css({'height':'500px', "width": '100%'});
+		return $(panelHtml);
+	}).fail(function (err) {
+		//TODO:失败提示
+	});
+}
+
+})(ydl, jQuery);

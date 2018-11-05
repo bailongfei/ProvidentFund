@@ -1,0 +1,30 @@
+/**
+ * 0403页面模板脚本
+ */
+
+var tpl = {};
+
+(function(tpl, ydl, $, undefined) {
+	'use strict';
+	
+/**
+ * 初始化模板
+ */
+tpl.init = function (menuData) {
+	
+
+};
+
+/**
+ * 自动计算页面内信息展示框体的高度（凭证专用）
+ */
+tpl.autoHeight = function () {
+	var height = $(window).height() - $('#header_wrap').height() - $('#page_footer').height() - $('.nav-tabs').height() -
+			parseFloat($('.nav-tabs').css('margin-top') + $('.nav-tabs').css('margin-bottom')) -
+			parseFloat($('#voucher').css('margin-bottom')) -
+			$('#page_flow_buttons').height() - parseFloat($('#page_flow_buttons').css('margin-bottom')) - 10;
+	$('#voucher').height(height);
+};
+
+
+})(tpl, ydl, jQuery);

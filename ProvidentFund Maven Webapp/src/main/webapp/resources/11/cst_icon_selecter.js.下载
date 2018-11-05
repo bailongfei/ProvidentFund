@@ -1,0 +1,26 @@
+(function (cst) {
+	cst.getIconList = function(){
+		return "<ul>" +
+			"<li><i class='dk_fzjgkh' /></li>" +
+			"<li><i class='dk_zcglkh' /></li>" +
+			"<li><i class='em_001' /></li>" +
+			"<li><i class='em_002' /></li>" +
+			"<li><i class='gjzf_ajcl' /></li>" +
+			"<li><i class='gjzf_bmdwf' /></li>" +
+			"<li><i class='gjzf_buxxjb' /></li>" +
+			"<li><i class='im_pzgl' /></li>" +
+			"<li><i class='im_xmjxgl' /></li>" +
+			"<li><i class='im_ywpzgl' /></li>" +
+			"<li><i class='im_ywwdgl' /></li>" +
+			"<li><i class='pf_jfybsb' /></li>" +
+			"<li><i class='pf_ryjfybsb' /></li>" +
+			"<li><i class='pf_xmjfsq' /></li>" +
+			"<li><i class='pf_xmjfybsb' /></li>" +
+			"<li><i class='pl_ryjfsq' /></li>" +
+			"<li><i class='ppe_zcsq' /></li>" +
+			"<li><i class='ppe_zcxxbd' /></li>" +
+			"<li><i class='rm_fxddysb' /></li>" +
+			"<li><i class='rm_hfxywcc' /></li>" +
+		"</ul>";
+	};
+})(cst);

@@ -1,0 +1,44 @@
+
+
+/* 打印 */
+
+#voucher { width: 100%; height: 600px; overflow: auto; }
+
+#voucher p{margin-top:0pt;margin-bottom:1pt;}
+#voucher p.a{text-align:justified;}
+#voucher p.a3{text-align:center;}
+#voucher span.a3{font-size:9.0pt;}
+#voucher span.Char{font-size:9.0pt;}
+#voucher p.a4{text-align:left;}
+#voucher span.a4{font-size:9.0pt;}
+#voucher span.Char0{font-size:9.0pt;}
+#voucher p.a5{text-align:center;margin-top:12.0pt;margin-bottom:3.0pt;}
+#voucher span.a5{font-family:'Cambria';font-size:16.0pt;font-weight:bold;}
+#voucher span.Char1{font-family:'Cambria';font-size:16.0pt;font-weight:bold;}
+#voucher p.a6{text-indent:21.0pt;}
+#voucher span.a7{font-size:9.0pt;}
+#voucher span.Char2{font-size:9.0pt}
+
+#voucher .wordHtmlDiv table{border-right:1px solid #000000;border-bottom:1px solid #000000}
+#voucher .wordHtmlDiv table td{border-left:1px solid #000000;border-top:1px solid #000000}
+
+ @media print { 
+	#voucher { border: 0; } 
+	#page_header,#page_nav,#page_footer,#page_left_menu,#page_right_menu,
+	#page_flow_buttons,#page_tabs .nav-tabs { display: none; } 
+	
+    #page_main {float:none !important}
+    
+	body, #page_wrap, #page_main, #page_main .wrap, #voucher { overflow: visible; width: 100% }
+	#page_main { position: static; top: 0; left: 0; right: 0; bottom: 0; }
+	#page_main .wrap { margin: 0; }
+	table { border-collapse: collapse; empty-cells: show; }
+	#voucher .noprint { display: none; } 
+	body>div:not(.modal):not(#page_wrap){ display: none; }	
+	#page_wrap>div:not(#page_main){ display: none; }	 
+	div[id^=page_tab_]>div:not(#voucher){ display: none; }
+	.modal,.modal-content,.modal-body { border: 0; } 
+	.modal-header,.modal-footer,.modal-title { display: none;} 
+    .popover { display: none !important;} 
+	
+}
