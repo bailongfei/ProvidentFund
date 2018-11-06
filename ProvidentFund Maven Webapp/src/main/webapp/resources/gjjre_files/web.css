@@ -1,0 +1,480 @@
+body {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+div {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+p {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+ul {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+li {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+ol {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+dl {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+dt {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+dd {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+img {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+h1 {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+h2 {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+h3 {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+h4 {
+	list-style: none; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+body {
+	margin: 0px; padding: 0px;
+}
+object {
+	margin: 0px; padding: 0px;
+}
+iframe {
+	margin: 0px; padding: 0px;
+}
+h1 {
+	margin: 0px; padding: 0px;
+}
+h2 {
+	margin: 0px; padding: 0px;
+}
+h3 {
+	margin: 0px; padding: 0px;
+}
+h4 {
+	margin: 0px; padding: 0px;
+}
+h5 {
+	margin: 0px; padding: 0px;
+}
+h6 {
+	margin: 0px; padding: 0px;
+}
+blockquote {
+	margin: 0px; padding: 0px;
+}
+a {
+	margin: 0px; padding: 0px;
+}
+code {
+	margin: 0px; padding: 0px;
+}
+em {
+	margin: 0px; padding: 0px;
+}
+img {
+	margin: 0px; padding: 0px;
+}
+q {
+	margin: 0px; padding: 0px;
+}
+small {
+	margin: 0px; padding: 0px;
+}
+strong {
+	margin: 0px; padding: 0px;
+}
+dd {
+	margin: 0px; padding: 0px;
+}
+dl {
+	margin: 0px; padding: 0px;
+}
+dt {
+	margin: 0px; padding: 0px;
+}
+li {
+	margin: 0px; padding: 0px;
+}
+ol {
+	margin: 0px; padding: 0px;
+}
+ul {
+	margin: 0px; padding: 0px;
+}
+fieldset {
+	margin: 0px; padding: 0px;
+}
+form {
+	margin: 0px; padding: 0px;
+}
+label {
+	margin: 0px; padding: 0px;
+}
+table {
+	margin: 0px; padding: 0px;
+}
+tbody {
+	margin: 0px; padding: 0px;
+}
+tr {
+	margin: 0px; padding: 0px;
+}
+th {
+	margin: 0px; padding: 0px;
+}
+td {
+	margin: 0px; padding: 0px;
+}
+input {
+	margin: 0px; padding: 0px;
+}
+textarea {
+	margin: 0px; padding: 0px;
+}
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.clearfix::before {
+	display: table; content: "";
+}
+.clearfix::after {
+	display: table; content: "";
+}
+.clearfix::after {
+	clear: both;
+}
+.clearfix {
+	
+}
+a:link {
+	font-family: "Î¢ÈíÑÅºÚ"; font-size: 12px; text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+body {
+	font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px; min-width: 1200px;
+}
+.foot1 {
+	background: rgb(1, 110, 197); margin: 0px auto; width: 100%; height: 202px; min-width: 1200px; max-width: 1440px;
+}
+.foot {
+	margin: 0px auto; text-align: center; color: rgb(213, 213, 213); padding-bottom: 10px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 12px;
+}
+.foot1 .footer_top {
+	margin: 0px auto; width: 630px; overflow: hidden;
+}
+.foot1 .footer_top select {
+	margin: 20px auto 0px; border: currentColor; border-image: none; width: 300px; height: 30px; color: rgb(116, 116, 116); line-height: 30px; padding-left: 10px;
+}
+.foot1 .footer_bottom a {
+	color: rgb(213, 213, 213); text-decoration: none;
+}
+.foot1 .footer_bottom span {
+	margin: 0px 5px;
+}
+.foot1 p {
+	margin: 10px;
+}
+* {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+a {
+	color: rgb(0, 0, 0);
+}
+.header {
+	max-width: 1440px;
+}
+.bgBox {
+	background: url("/web/uiFramework/commonResource/image/2017112115540812702.jpg") no-repeat center / cover; margin: 0px auto; width: 100%; height: 141px; position: relative; -ms-behavior: url(backgroundsize.min.htc); behavior: url(backgroundsize.min.htc);
+}
+.bgBox .txtBox {
+	margin-top: 27px; margin-left: 275px; display: inline-block;
+}
+.bgBox .txtBox .txt_sm.bgBox .txtBox .txt_lg {
+	display: inline-block;
+}
+#bgBox1 {
+	background: url("/web/uiFramework/commonResource/image/2017052714550998049.png") no-repeat center; margin: 0px auto; width: 100%; height: 141px; position: relative; min-width: 1200px; max-width: 1440px;
+}
+.nav {
+	margin: 0px auto; width: 1200px; height: 45px; background-color: rgb(49, 140, 212);
+}
+.nav ul {
+	width: 925px; float: left;
+}
+.nav ul li {
+	width: 152px; height: 45px; text-align: center; line-height: 45px; overflow: hidden; float: left;
+}
+.nav ul li:hover {
+	background-color: rgb(1, 110, 197);
+}
+.nav ul li.kjtnav_curr {
+	background-color: rgb(1, 110, 197);
+}
+.nav ul li a {
+	padding: 14px 38px; color: rgb(255, 255, 255); font-family: "Î¢ÈíÑÅºÚ"; font-size: 18px;
+}
+.nav .search {
+	width: 230px; height: 45px; line-height: 45px; float: right;
+}
+.nav .search .searchInput {
+	background: url("/web/uiFramework/commonResource/image/2016060318212456147.png") no-repeat 8px 5px; width: 180px; height: 30px; padding-right: 5px; padding-left: 40px; margin-top: 7px;
+}
+#textfield {
+	border-radius: 2px; border: currentColor; border-image: none; width: 160px; height: 30px; color: rgb(137, 137, 137); line-height: 30px; padding-left: 5px; font-family: "Î¢ÈíÑÅºÚ"; vertical-align: middle;
+}
+.btn {
+	background: rgb(238, 238, 238); border-radius: 2px; border: 1px solid rgb(221, 221, 221); border-image: none; width: 50px; height: 30px; color: rgb(137, 137, 137); line-height: 30px; font-family: "Î¢ÈíÑÅºÚ"; vertical-align: middle; display: inline-block;
+}
+.btn0 {
+	background: rgb(254, 131, 0); color: rgb(255, 255, 255);
+}
+.rdtj {
+	margin-bottom: 35px;
+}
+.rdtj .til {
+	background: url("/web/uiFramework/commonResource/image/2017052215093688037.png") no-repeat 0% 0% / 100%; width: 100%; height: 30px; text-align: center; overflow: hidden; position: relative; z-index: 99;
+}
+.rdtj .til h2 {
+	color: rgb(255, 252, 255);
+}
+.rdtj .til h2 a {
+	color: rgb(255, 252, 255); font-family: "Î¢ÈíÑÅºÚ"; font-size: 16px; font-weight: normal;
+}
+.rdtj .til span {
+	width: 17px; height: 19px; margin-right: 3px; display: inline-block;
+}
+.rdtj ul {
+	background: rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor rgb(208, 208, 208) rgb(208, 208, 208); padding: 45px 0px 15px; border-image: none; margin-top: -18px;
+}
+.rdtj ul li {
+	padding: 5px 0px;
+}
+.rdtj ul li img {
+	padding-right: 5px; padding-bottom: 3px; padding-left: 7px;
+}
+.rdtj .til .s1 {
+	background: url("/web/uiFramework/commonResource/image/2016060713213828477.png") no-repeat 4px 4px; margin-right: 6px;
+}
+.xzzx {
+	padding: 20px 15px;
+}
+#rightCon {
+	margin-bottom: 20px;
+}
+.xzzx ul {
+	margin-top: 20px;
+}
+.xzzx ul li {
+	height: 35px; line-height: 36px; overflow: hidden; border-bottom-color: rgb(220, 220, 220); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.xzzx ul li img {
+	padding-top: 15px; padding-right: 5px; padding-bottom: 2px; margin-right: 5px; float: left;
+}
+.xzzx ul li a {
+	color: rgb(0, 0, 0); line-height: 36px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 13px; float: left;
+}
+.xzzx ul li:hover {
+	background-color: rgb(238, 238, 238);
+}
+.xzzx ul li:hover a {
+	color: rgb(28, 129, 206);
+}
+.xzzx ul li span {
+	color: rgb(152, 152, 152); padding-right: 10px;
+}
+.fenye {
+	text-align: center; clear: both; margin-top: 15px; margin-bottom: 15px;
+}
+.fenye a {
+	padding: 0px 6px; border: 1px solid rgb(204, 204, 204); border-image: none; height: 22px; color: rgb(0, 0, 0); line-height: 22px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 12px; margin-right: 5px; display: inline-block; min-width: 40px;
+}
+.tdLeft {
+	width: 150px; text-align: center; font-family: "Î¢ÈíÑÅºÚ"; font-size: 13px; border-right-color: rgb(191, 191, 191); border-right-width: 1px; border-right-style: solid;
+}
+.tdRight {
+	padding: 10px; width: 564px; line-height: 25px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 13px;
+}
+.leftNavSan {
+	width: 714px;
+}
+.leftNavSan p {
+	background: rgb(246, 250, 255); height: 30px; line-height: 30px; padding-left: 15px;
+}
+.RightNavSan {
+	width: 250px;
+}
+.leftNavSan h1 {
+	padding: 30px 0px 10px; text-align: center; color: rgb(85, 85, 85); font-size: 20px;
+}
+.QiehZhenw {
+	background: rgb(237, 244, 252); width: 100%; height: 30px; border-bottom-color: rgb(66, 152, 238); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.QiehZhenw li {
+	width: 20%; height: 30px; text-align: center; float: left;
+}
+.QiehZhenw li a {
+	height: 30px; color: rgb(85, 85, 85); line-height: 30px; font-size: 15px; display: block;
+}
+.QiehZhenw li a:hover {
+	background: rgb(39, 137, 236); color: rgb(255, 255, 255); display: block;
+}
+.QiehZhenw li.hover a {
+	background: rgb(39, 137, 236); color: rgb(255, 255, 255); display: block;
+}
+.sanJiContent {
+	margin: 25px auto 0px; width: 92%; min-height: 100px;
+}
+.leftNavSan #con_four_4 {
+	padding: 10px;
+}
+.leftNavSan #con_four_3 {
+	padding: 10px;
+}
+.leftNavSan #con_four_2 {
+	padding: 10px;
+}
+.leftNavSan #con_four_1 {
+	padding: 10px;
+}
+.leftNavSan #con_four_4 p {
+	background: none; height: 30px; line-height: 30px;
+}
+.leftNavSan #con_four_3 p {
+	background: none; height: 30px; line-height: 30px;
+}
+.leftNavSan #con_four_2 p {
+	background: none; height: 30px; line-height: 30px;
+}
+.leftNavSan #con_four_1 p {
+	background: none; height: 30px; line-height: 30px;
+}
+.leftNavSan #con_four_4 p a {
+	color: rgb(85, 85, 85); font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+.leftNavSan #con_four_3 p a {
+	color: rgb(85, 85, 85); font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+.leftNavSan #con_four_2 p a {
+	color: rgb(85, 85, 85); font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+.leftNavSan #con_four_1 p a {
+	color: rgb(85, 85, 85); font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+.leftNavSan #con_four_4 p a:link {
+	font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+#con_four_0 {
+	padding: 0px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+#con_four_1 {
+	padding: 0px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+#con_four_2 {
+	padding: 0px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+#con_four_3 {
+	padding: 0px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+#con_four_4 {
+	padding: 0px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+.hd h2 {
+	font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px;
+}
+.survey-result .percent-content {
+	margin-top: 1px;
+}
+.centerCon {
+	background: rgb(249, 249, 249); width: 100%; overflow: hidden;
+}
+.titleDiv {
+	background: rgb(239, 239, 239); height: 36px; line-height: 36px; border-bottom-color: rgb(1, 110, 197); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.titleDivRed {
+	border-bottom-color: rgb(160, 13, 1); border-bottom-width: 1px; border-bottom-style: solid; position: relative;
+}
+.titleMarginTop {
+	margin-top: 20px;
+}
+.titleZh {
+	background: url("/web/uiFramework/commonResource/image/2017051711342597367.png") no-repeat -18px rgb(239, 239, 239); width: 110px; color: rgb(255, 255, 255); padding-left: 20px; font-size: 16px; float: left;
+}
+.titleZhFive {
+	background: url("/web/uiFramework/commonResource/image/2017060911443183896.png") no-repeat 0px rgb(239, 239, 239); width: 152px;
+}
+.titleBglong {
+	background: url("/web/uiFramework/commonResource/image/2017051816121136557.png") no-repeat -10px rgb(239, 239, 239); width: 275px;
+}
+.titleBglong1 {
+	background: url("/web/uiFramework/commonResource/image/2017051816121136557.png") no-repeat -75px rgb(239, 239, 239); width: 210px;
+}
+.titleZhRed {
+	background: url("/web/uiFramework/commonResource/image/2017051815570345689.png") no-repeat 0px rgb(239, 239, 239); width: 130px;
+}
+.gov_info_pub .titleZh {
+	background: url("/web/uiFramework/commonResource/image/2017051711342597367.png") no-repeat 0px rgb(239, 239, 239); width: 120px; padding-left: 14px;
+}
+.titleZh4 {
+	background: url("/web/uiFramework/commonResource/image/2017060911443183896.png") no-repeat -18px rgb(239, 239, 239); width: 140px; color: rgb(255, 255, 255); padding-left: 14px; font-size: 16px; float: left;
+}
+.right #rightCon {
+	border-width: 2px 1px 1px; border-style: solid; border-color: rgb(224, 224, 224); border-image: none; margin-top: 10px;
+}
+.dangjianUl {
+	right: 0px; overflow: hidden; position: absolute;
+}
+.w_mod01 {
+	background: url("/web/uiFramework/commonResource/image/2017052215093688037.png") no-repeat 0px / 100%; width: 100%; height: 30px; text-align: center; color: rgb(255, 255, 255); line-height: 30px; font-size: 14px; position: relative; z-index: 99;
+}
+.w_mod02 {
+	padding-top: 15px;
+}
+.w_mod01 .hint {
+	background: url("/web/uiFramework/commonResource/image/2017052215091573408.png") no-repeat 36%;
+}
+.w_mod01 .quesP {
+	background: url("/web/uiFramework/commonResource/image/2017052215092426548.png") no-repeat 36%;
+}
+.marginTop20 {
+	margin-top: 20px;
+}
+.xzzxZh {
+	background: rgb(255, 255, 255); padding: 10px 15px; margin-top: -15px; border-right-color: rgb(208, 208, 208); border-bottom-color: rgb(208, 208, 208); border-left-color: rgb(208, 208, 208); border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid;
+}
+.went_mod {
+	background: rgb(255, 255, 255); padding: 15px; color: rgb(0, 0, 0); font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px; margin-top: -15px; border-right-color: rgb(208, 208, 208); border-bottom-color: rgb(208, 208, 208); border-left-color: rgb(208, 208, 208); border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid;
+}
+.mod02_se {
+	color: rgb(254, 131, 0); line-height: 22px;
+}
+.w_mod03 {
+	line-height: 22px; margin-top: 15px;
+}
+.mod03_se {
+	color: rgb(1, 110, 197);
+}
+.mod03_se01 {
+	color: rgb(254, 131, 0);
+}
+.w_mod04 {
+	line-height: 22px;
+}
+.cdh_tu {
+	margin-bottom: 10px;
+}
+.sanJiContent p strong {
+	color: rgb(0, 0, 0); font-size: 10.5pt;
+}

@@ -68,4 +68,7 @@
       cause = #{cause,jdbcType=VARCHAR}
     where tqyyId = #{tqyyid,jdbcType=INTEGER}
   </update>
+  <select id="findall" resultType="Gjjtqyyb">
+  	select * from gjjtqyyb 
+  </select>  
 </mapper>

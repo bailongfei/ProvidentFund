@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.blf.service.UnitsaccountService;
-import com.entity.Hjqcb;
+
 import com.entity.Unitsaccount;
 import com.util.Pager;
 @Controller
@@ -47,8 +47,9 @@ public class UnitsaccountController {
 		List<Map<String, Object>> list=unse.queryUnPagefo(map);
 		int i=unse.getPageCount(map);
 		p.setList(list);
-	    p.setTotalCount(i);
-	    
+		p.setTotalCount(i);
+		
 	return p;
+	 
  }
 }

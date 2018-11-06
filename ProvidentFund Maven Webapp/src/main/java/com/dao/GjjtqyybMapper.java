@@ -1,5 +1,7 @@
 package com.dao;
 
+import java.util.List;
+
 import com.entity.Gjjtqyyb;
 
 public interface GjjtqyybMapper {
@@ -14,4 +16,6 @@ public interface GjjtqyybMapper {
     int updateByPrimaryKeySelective(Gjjtqyyb record);
 
     int updateByPrimaryKey(Gjjtqyyb record);
+    //查询所有提取原因
+    public List<Gjjtqyyb> findall();
 }

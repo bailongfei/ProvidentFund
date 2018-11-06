@@ -8,26 +8,26 @@
  <select id="queryUnfo" parameterType="Integer" resultType="map">
     select ua.*,uf.* from unitsaccount ua join unitinfo uf on ua.UnitInfoId=uf.UnitInfoId where ua.UnitInfoAccount=#{unitinfoaccount}
  </select>
- <!--补缴查询  -->
- <select id="queryUnPagefo" parameterType="map"  resultType="map">
-   select uc.*,uf.* from unitsaccount uc join Unitinfo uf on uc.unitinfoaccount=uf.unitinfoaccount
+ <!-- 补缴查询 -->
+ <select id="queryPageUnfo" parameterType="map"  resultType="map">
+    select uc.*,uf.* from unitsaccount uc join Unitinfo uf on uc.unitinfoaccount=uf.unitinfoaccount
     <where>
-        
         <if test="unfoName!=null and unfoName!=''">
           and uf.UnitInfoName like "%"#{unfoName}"%"
        </if>
+
     </where>
     order by uf.UnitInfoId desc
     limit #{startIndex},#{pageSize}
   </select> 
-  <select id="getUnfoCount" resultType="int">
+  <select id="getPageCount" resultType="int">
         select count(*) from unitsaccount uc join Unitinfo uf on uc.unitinfoaccount=uf.unitinfoaccount
        <where>
          <if test="unfoName!=null and unfoName!=''">
           and uf.UnitInfoName like "%"#{unfoName}"%"
         </if>
        </where>
-         order by uf.UnitInfoId desc
+         order by uf.UnitInfoId desc 
   </select>
   <resultMap id="BaseResultMap" type="com.entity.Unitsaccount">
     <id column="UnitInfoAccount" jdbcType="INTEGER" property="unitinfoaccount" />

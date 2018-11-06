@@ -4,10 +4,10 @@
   <resultMap id="BaseResultMap" type="com.entity.Shzt">
     <id column="shbh" jdbcType="INTEGER" property="shbh" />
     <result column="shxq" jdbcType="VARCHAR" property="shxq" />
-    <result column="bhyy" jdbcType="VARCHAR" property="bhyy" />
+    <result column="驳回原因" jdbcType="VARCHAR" property="驳回原因" />
   </resultMap>
   <sql id="Base_Column_List">
-    shbh, shxq, bhyy
+    shbh, shxq, 驳回原因
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,9 +20,9 @@
     where shbh = #{shbh,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.entity.Shzt">
-    insert into shzt (shbh, shxq, bhyy
+    insert into shzt (shbh, shxq, 驳回原因
       )
-    values (#{shbh,jdbcType=INTEGER}, #{shxq,jdbcType=VARCHAR}, #{bhyy,jdbcType=VARCHAR}
+    values (#{shbh,jdbcType=INTEGER}, #{shxq,jdbcType=VARCHAR}, #{驳回原因,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Shzt">
@@ -34,8 +34,8 @@
       <if test="shxq != null">
         shxq,
       </if>
-      <if test="bhyy != null">
-        bhyy,
+      <if test="驳回原因 != null">
+        驳回原因,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -45,8 +45,8 @@
       <if test="shxq != null">
         #{shxq,jdbcType=VARCHAR},
       </if>
-      <if test="bhyy != null">
-        #{bhyy,jdbcType=VARCHAR},
+      <if test="驳回原因 != null">
+        #{驳回原因,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -56,8 +56,8 @@
       <if test="shxq != null">
         shxq = #{shxq,jdbcType=VARCHAR},
       </if>
-      <if test="bhyy != null">
-        bhyy = #{bhyy,jdbcType=VARCHAR},
+      <if test="驳回原因 != null">
+        驳回原因 = #{驳回原因,jdbcType=VARCHAR},
       </if>
     </set>
     where shbh = #{shbh,jdbcType=INTEGER}
@@ -65,7 +65,7 @@
   <update id="updateByPrimaryKey" parameterType="com.entity.Shzt">
     update shzt
     set shxq = #{shxq,jdbcType=VARCHAR},
-      bhyy = #{bhyy,jdbcType=VARCHAR}
+      驳回原因 = #{驳回原因,jdbcType=VARCHAR}
     where shbh = #{shbh,jdbcType=INTEGER}
   </update>
 </mapper>

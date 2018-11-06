@@ -1,0 +1,813 @@
+/************************************************************************************************
+ * 华信永道平台公共脚本库（YongDao Library）
+ * 表单校验方法库
+ ************************************************************************************************/
+'use strict';
+if (typeof ydl === 'undefined') alert('ydl.validator.js必须在ydl.base.js之后加载');
+
+(function(ydl, $, undefined) {
+
+/**
+ * 工具方法，仅能在数据类型校验器中使用
+ */
+var _ = {
+	/**
+	 * 浮点型校验工具（在float、money中使用）
+	 * @param {Object} options 校验规则参数
+	 * @param {String} defaultDecLen 缺省小数位
+	 * @return {regExp: 正则表达式对象, message: 校验规则提示信息}
+	 */
+	getFloatRegExp: function (options, defaultDecLen) {
+		var regNeg = options.negative ? '-?' : '';
+		var msgNeg = (options.negative ? '，' : '，不') + '允许负数';
+		var regInt = options.intlen ? parseInt(options.intlen) - 1 : '';
+		var msgInt = options.intlen ? '，不超过' + options.intlen + '位整数' : '';
+		var regDec = parseInt(options.declen) || defaultDecLen;
+		var msgDec = options.declen ? '，不超过' + options.declen + '位小数' : '';
+		return {
+			regExp: new RegExp('^(' + regNeg + '(([1-9]\\d{0,' + regInt + '})|0)(\\.\\d{1,' + regDec + '})?)$'),
+			message: msgInt + msgDec + msgNeg
+		};
+	},
+	
+	/**
+	 * 校验身份证号工具（在idcard、idcard15、idcard18中使用）
+	 * @param {Object} field 文本输入框dom对象
+	 * @param {String} value 身份证号
+	 * @param {int} len 身份证号长度
+	 * @return {Boolean} 是否通过校验
+	 */
+	idCardHelper: function (field, value, len) {
+		//自动转大写（末位X）
+		value = value.toUpperCase();
+		if (field) field.value = value;
+		//检查长度
+		if (len !== undefined && len !== value.length) return false;
+		var length = len || value.length;
+		//检查格式
+		if (!/^(\d{15}|\d{17}(\d|X))$/.test(value)) return false;
+		//检查出生日期
+		if (!ydl.isValidDate(length == 15 ? '19' + value.substr(6, 6) : value.substr(6, 8))) return false;
+		//检查校验位
+		if (length === 18) {
+			var s1 = '79A584216379A5842', s2 = '10X98765432', s = 0;
+			for (var i = 0; i < 17; i++) s += parseInt(value.charAt(i)) * parseInt(s1.charAt(i), 16);
+			return s2.charAt(s % 11) === value.charAt(17);
+		}
+		else return true;
+	},
+	
+	/**
+	 * 检查数值范围
+	 */
+	checkRange: function (value, range, checkField, msgTag) {
+		var vars = {'%l': range[0], '%h': range[1]};
+		var msg = '';
+		if (isNaN(value)) msg = '%f应为 %l 到 %h 之间（含）的数字，请重新输入！';
+		else if (range[0] !== '' && parseFloat(value) < parseFloat(range[0])) msg = '%f应为大于或等于 %l 的数字，请重新输入！';
+		else if (range[1] !== '' && parseFloat(value) > parseFloat(range[1])) msg = '%f应为小于或等于 %h 的数字，请重新输入！';
+		return checkField(msg === '', msg, msgTag, vars);
+	},
+	
+	/**
+	 * 校验最大最小长度
+	 * @param {String} value 要检查的字符串
+	 * @param {Object} options 校验规则参数
+	 * @param {Function} checkField 添加校验提示信息的公共方法
+	 * @param {String} msgTag 校验规则标识
+	 * @return {Boolean} 是否通过
+	 */
+	checkLength: function (value, options, checkField, msgTag) {
+		var useLength2 = options.length2 !== undefined;
+		var fieldLength;
+		if (options.type == 'float' || options.type == 'money' || $(this).attr('data-type') == 'money') {
+			value = ydl.delComma(value);	//金额取长度前去掉千分隔符
+			if (value != '') value = parseFloat(value) + '';	//忽略小数点后尾随的0
+			fieldLength = value.replace(/\./g, '').length;		//长度不包含小数点
+		}
+		else fieldLength = useLength2 ? value.length2() : value.length;
+		var tip = useLength2 ? '\n（汉字按2个字符计算）' : '';
+		var defLength = useLength2 ? options.length2 : options.length;
+		if (defLength !== undefined) {
+			if (!isNaN(defLength)) {
+				if (!checkField(
+					fieldLength == parseInt(defLength), 
+					'%f的长度应为 %l 个字符，您输入了 %n 个字符，请重新输入！' + tip, msgTag,
+					{ '%n': fieldLength, '%l': defLength, '%h': defLength }
+				)) return false;
+			}
+			if ($.isArray(defLength) && !isNaN(defLength[0]) && !isNaN(defLength[1])) {
+				if (!checkField(
+					fieldLength >= parseInt(defLength[0]) && fieldLength <= parseInt(defLength[1]),
+					'%f的长度应在 %l 到 %h 个字符之间，您输入了 %n 个字符，请重新输入！' + tip, msgTag,
+					{ '%n': fieldLength, '%l': defLength[0], '%h': defLength[1] }
+				)) return false;
+			}
+		}
+		return checkField(true, '', msgTag);
+	},
+	
+	/**
+	 * 检查例外值
+	 */
+	checkExcept: function (value, except, checkField, msgTag) {
+		var msg = '%f不允许输入%v';
+		var result = true;
+		switch ($.type(except)) {
+		case 'string':
+		case 'number':
+			result = value != except;
+			break;
+		case 'array':
+			for (var i = except.length; i--; ) {
+				if (value == except[i]) {
+					result = false;
+					break;
+				}
+			}
+			break;
+		case 'regexp':
+			result = function() {
+				return !except.test(value);
+			};
+			break;
+		}
+		return checkField(result, msg, msgTag);
+	}
+};
+
+
+/**
+ * 数据类型校验器{'数据类型名': 校验器方法}
+ * this为输入元素DOM对象（单个元素），如果是通过ydl.validator.get()返回的方法调用，this为null
+ * @param {String} value 输入字符串
+ * @param {Object} options 调用ydl.validator()时传入的全部校验规则参数
+ * @return {Object} 返回对象 {
+ * 		{Boolean|Object} result 支持返回true/false/Deferred
+ * 		{String} message 校验失败时的提示信息，支持%f、%v、%s变量
+ * 		{Object} vars 自定义变量描述符与值的对象 {'%x': 'xxxx'}
+ * }
+ */
+var dataTypes = {
+	//日期yyyy-mm-dd
+	'date': function (value, options) {
+		//允许输入的年月日之间不加横线，自动添加
+		if (options.formatdate) {
+			value = value.replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3');
+			if (this) this.value = value;
+		}
+		if (!/^([12]\d{3})-(0[1-9]|1[012])-(0[1-9]|[12]\d|3[01])$/.test(value)) {
+			return {result: false, message: '%f必须是正确的日期！\n（yyyy-mm-dd）'};
+		}
+		var parts = value.replace(/\b0+/g, '').split('-');
+		var month = parseInt(parts[1]) - 1, date = parseInt(parts[2]);
+		var monthDays = [31, ydl.isLeapYear(value) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+		return {result: date >= 1 && date <= monthDays[month], message: '%f不是正确的日期，请重新输入！'};
+	},
+	//时间hh:mm:ss
+	'time': function (value, options) {
+		return {result: /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/.test(value), message: '%f必须是正确的时间格式！\n（hh:mm:ss）'};
+	},
+	//月份1~12
+	'month': function (value, options) {
+		return {result: /^([1-9]|1[012])$/.test(value), message: '%f必须是正确的月份！\n（1～12）'};
+	},
+	//月份01~12
+	'longmonth': function (value, options) {
+		return {result: /^(0[1-9]|1[012])$/.test(value), message: '%f必须是正确的月份！\n（01～12）'};
+	},
+	//日1~31
+	'day': function (value, options) {
+		return {result: /^([1-9]|[12]\d|3[01])$/.test(value), message: '%f必须是正确的日期！\n（1～31）'};
+	},
+	//日01~31
+	'longday': function (value, options) {
+		return {result: /^(0[1-9]|[12]\d|3[01])$/.test(value), message: '%f必须是正确的日期！\n（01～31）'};
+	},
+	//年月yyyymm
+	'yyyymm': function (value, options) {
+		return {result: /^\d{4}(0[1-9]|1[012])$/.test(value), message: '%f必须是yyyymm格式（四位数字年份加两位数字月份）'};
+	},
+	//年月yyyy-mm
+	'yyyy-mm': function (value, options) {
+		return {result: /^\d{4}-(0[1-9]|1[012])$/.test(value), message: '%f必须是yyyy-mm格式（四位数字年份加两位数字月份，中间用“-”连接）'};
+	},
+	//数字
+	'number': function (value, options) {
+		return {result: /^\d+$/.test(value), message: '%f必须输入数字！'};
+	},
+	//整数
+	'int': function (value, options) {
+		var regex = new RegExp('^(' + (options.negative ? '-?' : '') + '[1-9]\\d*|0)$');
+		if (!regex.test(value)) {
+			return {result: false, message: '%f必须是' + (options.negative ? '' : '正') + '整数！'};
+		}
+		if (parseInt(value) < (options.negative ? -2147483647 : 0) || parseInt(value) > 2147483647) {
+			return {result: false, message: '%f的大小超出了有效的整数范围'};
+		}
+		else return {result: true};
+	},
+	//浮点数
+	'float': function (value, options) {
+		var ret = _.getFloatRegExp(options, '');
+		return {result: ret.regExp.test(value), message: '%f必须是数字' + ret.message};
+	},
+	//不包含非法字符
+	'validchar': function (value, options) {
+		return {result: !/['"\\\|~&]/.test(value), message: '%f中不能含有以下字符！\n（单引号、双引号、反斜线、竖线、波浪线、＆符号）'};
+	},
+	//金额
+	'money': function (value, options) {
+		//校验前去掉千分隔符
+		value = value.replace(/[, ]/g, '');
+		if (this) this.value = value;
+		var ret = _.getFloatRegExp(options, '2');
+		var result = ret.regExp.test(value);
+		if (!result) $(this).show().next('.money-display').hide();
+		return {result: result, message: '%f必须是正确的金额格式' + ret.message};
+	},
+	//手机号码，1开头的11位数字，如13812341234
+	'mobile': function (value, options) {
+		return {result: /^1\d{10}$/.test(value), message: '%f必须是正确的手机号码格式！\n（1开头的11位数字）'};
+	},
+	//电话号码，如13812341234、010-12345678、(0431)12345678-1234等，详细规则如下：
+	//	1、可以是1开头的11位数字（手机号）
+	//	2、可以是“区号-电话号-分机号”或者是“(区号)电话号-分机号”格式
+	//	3、区号是0开头的3～4位数字，可以没有区号
+	//	4、电话号是8位数字，不能以0开头
+	//	5、分机号是1～8位数字，可以没有分机号
+	'phone': function (value, options) {
+		//将全角括号统一为半角括号
+		value = value.replace(/（/g, '(').replace(/）/g, ')');
+		if (this) this.value = value;
+		return {
+			result: /^(1\d{10}|(0\d{2,3}-|\(0\d{2,3}\))?[1-9]\d{7}(-\d{1,8})?)$/.test(value), 
+			message: '%f必须是正确的电话号码格式！\n（例如13812345678、88889999、010-12345678、(010)12345678-1234等）'
+		};
+	},
+	//多个电话号码，以半角分号（;）隔开，规则同上
+	'phones': function (value, options) {
+		var regex = /^(1\d{10}|(0\d{2,3}-|\(0\d{2,3}\))?[1-9]\d{7}(-\d{1,8})?)$/;
+		value = value.replace(/[；，, ]/g, ';').replace(/（/g, '(').replace(/）/g, ')');
+		if (this) this.value = value;
+		var arr = value.split(';');
+		for (var i = 0; i < arr.length; i++) {
+			if (!regex.test(arr[i])) return {result: false, message: '%f中含有格式不正确的电话号码！'};
+		}
+		return {result: true};
+	},
+	//电子邮箱（xxx@xxx.xxx）
+	'email': function (value, options) {
+		return {
+			result: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value), 
+			message: '%f必须是正确的电子信箱格式！\n（例如 username@website.com）'
+		};
+	},
+	//邮政编码
+	'zipcode': function (value, options) {
+		return {result: /^\d{6}$/.test(value), message: '%f必须是正确的邮政编码！\n（6位数字）'};
+	},
+	//身份证号
+	'idcard': function (value, options) {
+		var len = options.idcardlength;
+		return {
+			result: _.idCardHelper(this, value, len), 
+			message: '%f必须是正确的身份证号码！\n（' + (len ? len : '15或18') + '位数字' + (len == 18 ? '，最后一位可以是X' : '') + '）'
+		};
+	},
+	'idcard15': function (value, options) {
+		return {result: _.idCardHelper(this, value, 15), message: '%f必须是正确的身份证号码！\n（15位数字）'};
+	},
+	'idcard18': function (value, options) {
+		return {result: _.idCardHelper(this, value, 18), message: '%f必须是正确的身份证号码！\n（18位数字，最后一位可以是X）'};
+	},
+	//汉字
+	'hanzi': function (value, options) {
+		return {result: /^([\u4e00-\u9fa5])+$/.test(value), message: '%f必须全部是汉字！'};
+	},
+	//IP地址
+	'ipv4': function (value, options) {
+		return {result: /^(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))$/.test(value), message: '%f必须是合法的IP地址，例如192.168.0.1'};
+	},
+	//组织机构代码
+	'orgcode': function (value, options) {
+		function checkOrgCode() {
+			if (!/^[A-Za-z0-9]{8}-?[0-9Xx]$/.test(value)) return false;
+			//自动添加连字符及转大写
+			if (value.charAt(8) != '-') value = value.replace(/^(.{8})(.+)$/, '$1-$2');
+			value = value.toUpperCase();
+			if (this) this.value = value;
+			var W = [3, 7, 9, 10, 5, 8, 4, 2];
+			var sum = 0;
+			for (var i = 0; i < 8; i++) {
+				var c = value.substr(i, 1);
+				if (c >= '0' && c <= '9') {
+					sum += W[i] * parseInt(c);
+				}
+				else if (c >= 'A' && c <= 'Z') {
+					sum += W[i] * (c.charCodeAt(0) - 'A'.charCodeAt(0) + 10);
+				}
+				else return false;
+			}
+			var checksum = 11 - sum % 11;
+			if (checksum == 10) checksum = 'X';
+			else if (checksum == 11) checksum = '0';
+			return value.charAt(value.length - 1) == checksum;
+		}
+		return {result: checkOrgCode(), message: '%f必须是正确的组织机构代码！\n（例如ABC12345-1、40000000X）'};
+	},
+	//统一社会信用代码
+	'usccode': function (value, options) {
+		var w = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];
+		var cm = '0123456789ABCDEFGHJKLMNPQRTUWXY';
+		var cw = 0;
+		for (var i = 0; i < 17; i++) {
+			cw += w[i] * cm.indexOf(value.charAt(i));
+		}
+		return {
+			result: value.length === 18 && value.charAt(17) === cm.charAt(31 - cw % 31), 
+			message: '%f必须是正确的统一社会信用代码！\n（例如91350100M000100Y43）'
+		};
+	},
+	
+	//异步校验测试1
+	'a_test1': function (value, options) {
+		var dtd = $.Deferred();
+		ydl.ajax(ydl.contexPath + '/test.jsp', {s: value, t: options.t || 1}, function (data) {
+			dtd.resolve();
+		}, {handleError: function (data, code, message) {
+			dtd.reject(message);
+		}});
+		return {result: dtd.promise(), message: '异步校验测试1失败：%s'};
+	},
+	//异步校验测试2
+	'a_test2': function (value, options) {
+		var dtd = ydl.sendCommand('CMD99', {s: value, t: options.t || 1}, $.noop);
+		return {result: dtd, message: '异步校验测试2失败：%s'};
+	}
+};
+
+var diyFunc = {
+	'message.show': function ($field, messages, $messageHolder) {
+		$messageHolder.attr('data-original-title', messages).tooltip({
+			 html: true,
+			 container: $field.closest('.modal-body').length > 0 ? false : 'body'
+		 }).addClass('has-error');
+		
+	},
+	'message.clear': function ($field, $messageHolder){
+		$messageHolder.removeAttr('data-original-title');
+	}
+};
+
+/**
+ * 缺省校验规则
+ */
+var _validatorDefault = {
+	negative: false,
+	keepspace: false,
+	uppercase: false,
+	lowercase: false,
+	formatdate: true,
+	reset: false,
+	focus: true
+};
+
+
+/**
+ * 校验表单输入域
+ * @example if (!ydl.validator(input, {type: 'foo', required: true})) return false;
+ * @example ydl.validator(input, {rule: someAsyncFunction}).done(function () {
+ * 		alert('校验通过');
+ * }).fail(function (message) {
+ * 		alert('校验未通过：' + message);
+ * });
+ * @param {String|Object} inputFields 表单输入元素DOM对象，或JQuery对象，或id属性值，可以是一个或多个元素
+ * @param {Object} options 校验规则，其中包括：
+ * 		校验规则参数：required（必填）、type（数据类型）、length或length2（长度）、range（数值范围）、rule或async（自定义规则）、except（例外规则）
+ * 		前处理参数：keepspace（保留前后空格）、uppercase或lowercase（改变大小写）、reset（清除上次校验结果）
+ * 		后处理参数：focus（未通过时设置焦点）
+ * @return {Boolean|Object} 如果规则中包含async或a_开头的数据类型，则返回Deferred对象，否则返回是否通过校验的布尔值
+ */
+ydl.validator = function (inputFields, options) {
+	
+	//应用缺省值
+	if (!options) options = {required: true};
+	options = $.extend({}, _validatorDefault, options);
+	
+	//如果数据类型以a_开头，或提供了async函数，按异步处理
+	var async = options.type && options.type.indexOf('a_') === 0 || options.async;
+	
+	//获取要校验的表单元素，如果有多个元素则按相同规则依次校验每一个
+	var field = ydl.getDom(inputFields);
+	if (field!=undefined && (field instanceof Array || (window.HTMLCollection && field instanceof HTMLCollection) || (window.NodeList && field instanceof NodeList))) {	
+		if (field.length === 1) field = field[0];
+		else return (function () {
+			if (async) {
+				var r = true;
+				for (var i = 0; i < field.length; i++) {
+					if (field[i]) r &= ydl.validator(field[i], options, true);
+				}
+				return !!r;
+			}
+			else {
+				var d = [];
+				for (var i = 0; i < field.length; i++) {
+					if (field[i]) d.push(ydl.validator(field[i], options, false));
+				}
+				return $.when.apply(window, d);
+			}
+		})();
+	}
+	
+	//表单字段值
+	var $field, fieldValue;
+	//文本框、下拉框
+	if (field) {
+		$field = $(field);
+		fieldValue = field.value;
+	}
+	//单选框或复选框
+	else if (typeof inputFields === 'string') {
+		field = document.getElementById('group_' + inputFields);
+		if (field) {
+			$field = $(field);
+			fieldValue = $('input:checked', field).map(function () {
+				return this.value;
+			}).get().join(',');
+			ll('group_fieldValue', fieldValue);
+		}
+		else {
+			alert('表单校验出错：未找到输入字段' + String(inputFields));
+			return rof();
+		}
+	}
+	else {
+		alert('表单校验出错：未找到输入字段' + String(inputFields));
+		return rof();
+	}
+	
+	//表单字段描述
+	var fieldDesc = options.desc || ydl.getLabel(field, '输入字段');
+	
+	//---------------------------------------------
+	
+	//清除上次校验提示
+	if (options.reset) ydl.validator.clear(field);
+	
+	//如果没有keepspace=true参数，文本框去掉前后空格
+	if (!options.keepspace && (field.type == 'text' || field.type === 'textarea')) field.value = fieldValue = fieldValue.trim();
+	
+	//检查必填
+	if (options.required && !checkField(fieldValue != '', '%f为必填项，请输入！', 'REQUIRED')) return rof();
+	
+	if (fieldValue !== '') {
+				
+		//改变大小写
+		if (options.uppercase) field.value = fieldValue.toUpperCase();
+		if (options.lowercase) field.value = fieldValue.toLowerCase();
+		
+		//检查例外值（不允许的值）
+		if (options.except !== undefined && !_.checkExcept(fieldValue, options.except, checkField, 'EXCEPT')) return rof(); 
+		
+		//检查最大、最小长度
+		if ((options.length !== undefined || options.length2 !== undefined) && 
+				!_.checkLength.call(field, fieldValue, options, checkField, 'LENGTH')) return rof();
+		
+		//检查数值范围
+		if ($.isArray(options.range) && !isNaN(options.range[0]) && !isNaN(options.range[1]) && 
+				!_.checkRange(fieldValue, options.range, checkField, 'RANGE')) return rof();
+		
+		//数据类型与自定义规则不能同时使用
+		if (options.type !== undefined || options.rule !== undefined || options.async !== undefined) {
+			var r;
+			//检查数据类型
+			if (options.type !== undefined && $.isFunction(dataTypes[options.type])) {
+				var ret = dataTypes[options.type].call(field, fieldValue, options);
+				r = checkField(ret.result, ret.message, 'TYPE');
+			}
+			//检查同步规则
+			else if (options.rule !== undefined) {
+				r = checkField(options.rule, options.message, options.tag || 'RULE');
+			}
+			//检查异步规则
+			else if (options.async !== undefined) {
+				r = checkField(options.async, options.message, options.tag || 'RULE');
+			}
+			//执行后处理
+			if (async) return r.done(afterDone).fail(afterFail);
+			else if (!r) {
+				afterFail();
+				return false;
+			}
+		}
+	}
+	
+	//成功通过校验
+	return rot();
+	
+	//---------------------------------------------
+	
+	//成功后处理
+	function afterDone() {
+
+	}
+	
+	//失败后处理
+	function afterFail() {
+		//设置焦点
+		if (options.focus !== false) {
+			$field.select().focus();
+		}
+	}
+
+	/**
+	 * @param {String} msgTag 本次检查规则标识，用于识别相同的检查规则，避免重复显示提示信息
+	 */
+	function checkField(rule, msg, msgTag, vars) {
+		
+		var r;
+		switch ($.type(rule)) {
+			case 'function':	r = rule.call(field, fieldValue); break;	//函数
+			case 'regexp':		r = rule.test(fieldValue); break;	//正则表达式
+			case 'boolean':		r = rule; break;					//逻辑表达式
+			case 'object':		r = rule; break;					//Deferred对象(其他对象当作true处理)
+			default:			r = (fieldValue == rule);			//匹配字符串或数字
+		}
+		
+		//options定义的message参数优先于校验方法的提示信息，如果都没定义，显示默认信息
+		msg = options.message === undefined ? (msg || '%f格式不正确，请重新输入！') : options.message;
+		if (!msgTag) msgTag = msg;
+		//替换变量
+		var errorMessage = msg.replace(/%f/gi, '【' + fieldDesc + '】').replace(/%v/gi, fieldValue);
+		if (vars) $.each(vars, function(k, v) {
+			errorMessage = errorMessage.replace(new RegExp(k, 'gi'), v);
+		});
+		
+		var errorMessages = $field.data('errorMessages');
+		if (!errorMessages) {
+			errorMessages = {};
+			$field.data('errorMessages', errorMessages);
+		}
+		
+		if ($.isFunction(r.promise)) {
+			return r.then(function () {
+				if (msgTag in errorMessages) delete errorMessages[msgTag];
+				setErrorMessage($field);
+			}, function (message) {
+				errorMessages[msgTag] = errorMessage.replace(/%s/gi, message);
+				setErrorMessage($field);
+			});
+		}
+		else {
+			if (r) {
+				if (msgTag in errorMessages) delete errorMessages[msgTag];
+			}
+			else errorMessages[msgTag] = errorMessage;
+			setErrorMessage($field);
+			return r;
+		}
+	}
+
+	//设置校验提示信息
+	function setErrorMessage($field) {
+		ll($field.prop('id') + '/' + $field.prop('type') + '/' + $field.val(), $field.data('errorMessages'));
+		var messages = $.map($field.data('errorMessages'), function (v, k) {
+			return v;
+		}).join('<br />');
+		var $messageHolder = $field;
+		//特殊处理金额框
+		if ($field.hasClass('money')) $messageHolder = $field.parent();
+		//特殊处理组合框
+		if ($field.is(':hidden')) {
+			var $t = $field.prevAll('.combobox-container');
+			if ($t.length > 0) $messageHolder = $t;
+		}
+		if (messages) {
+			diyFunc['message.show']($field, messages, $messageHolder);
+			$messageHolder.addClass('has-error');
+		}
+		else {
+			diyFunc['message.clear']($field, $messageHolder);
+			$messageHolder.removeClass('has-error');
+		}
+	}
+	
+	//返回失败
+	function rof(msg) {
+		if (async) return $.Deferred().fail(afterFail).reject(msg);
+		else {
+			afterFail();
+			return false;
+		}
+	}
+
+	//返回成功
+	function rot() {
+		if (async) return $.Deferred().done(afterDone).resolve();
+		else {
+			afterDone();
+			return true;
+		}
+	} 
+}
+
+
+/**
+ * 清除错误提示
+ * @param {String|Object} [inputFields] 表单输入元素DOM对象，或JQuery对象，或id属性值 
+ */
+ydl.validator.clear = function (inputFields) {
+	var $fields = inputFields === undefined ? $('.has-error') : $(ydl.getDom(inputFields));
+	$fields.each(function () {
+		var $field = $(this);
+		var $messageHolder = $field.data('messageHolder') || $field;
+		if ($messageHolder.hasClass('has-error')) {
+			diyFunc['message.clear']($field, $messageHolder);
+			$messageHolder.removeClass('has-error').data('errorMessages', {});
+		}
+	});
+};
+
+/**
+ * 设置缺省校验规则
+ * @param {Object} options 校验规则
+ * @return 设置后的新缺省校验规则
+ */
+ydl.validator.setDefault = function (options) {
+	return $.extend(_validatorDefault, options);
+};
+
+/**
+ * 获取缺省校验规则
+ * @return 当前缺省校验规则
+ */
+ydl.validator.getDefault = function () {
+	return $.extend({}, _validatorDefault);
+};
+
+/**
+ * 添加/重写数据类型校验器
+ * 如果已存在则覆盖原有的校验器，否则新增校验器
+ * @example ydl.validator('foo', function (input) { return input == 'bar'; });
+ * @param {String} dataType 数据类型名
+ * @param {Function} checkFunc(inputString, ret(result, message), options]) 校验器方法
+ * 		第一个参数为要校验的字符串；第二个参数为返回校验结果的函数（true/false，错误信息）；
+ * 		第三个参数为本次校验的全部校验规则定义对象
+ * @return undefined
+ */
+ydl.validator.set = function (dataType, checkFunc) {
+	if (dataType.indexOf('.') == -1) dataTypes[dataType] = checkFunc;
+	else diyFunc[dataType] = checkFunc;
+};
+
+/**
+ * 返回数据类型校验器方法，可针对字符串校验
+ * @example var fooValidator = ydl.validator.get('foo'); alert(fooValidator('bar'));
+ * @param {String} dataType 数据类型名
+ * @param {Object} [options] 其他校验参数
+ * @param {Boolean} [returnMessage=false] 是否返回错误信息
+ * @return {Function} 校验器方法，参数为(value, options[, callback(result, message)])；
+ * 没找到指定的数据类型则返回undefined
+ */
+ydl.validator.get = function (dataType, options, returnMessage) {
+	var validator = dataTypes[dataType];
+	if (!options) options = {};
+	//同步校验
+	if (dataType.indexOf('a_') === -1) {
+		return function (value, opt) {
+			opt = $.extend(options, opt);
+			value = preProcess(opt, value);
+			var ret = validator(value, opt);
+			return returnMessage ? ret : ret.result;
+		};
+	}
+	//异步校验
+	else {
+		return function (value, opt, callback) {
+			if ($.isFunction(opt)) {
+				callback = opt;
+				opt = undefined;
+			}
+			opt = $.extend(options, opt);
+			value = preProcess(opt, value);
+			var ret = validator(value, opt);
+			ret.result.done(function () {
+				callback(true);
+			}).fail(function (msg) {
+				callback(false, ret.message ? ret.message.replace(/%s/g, msg) : '');
+			});
+		}
+	}
+	//前处理：去空格、改变大小写
+	function preProcess(opt, value) {
+		if (!opt.keepspace) value = value.trim();
+		if (opt.uppercase) value = value.toUpperCase();
+		if (opt.lowercase) value = value.toLowerCase();
+		return value;
+	}
+};
+
+/**
+ * 根据字段属性检查输入值是否符合要求，不符合则显示提示
+ * @param {Object} $ele 字段的jQuery对象
+ * @param {Boolean} [setFocus] 校验后是否设置焦点，缺省为false
+ * @return {Boolean|Object} true/false/Deferred对象
+ */
+ydl.checkFieldAttr = function ($ele, setFocus) {
+	//不检查标志，例如对比修改的修改前字段
+	if ($ele.hasClass('_nocheck')) return $.Deferred().resolve();
+	var rules = {};
+	//必填
+	if ($ele.attr('required') !== undefined) rules.required = true;
+	//数据类型
+	if ($ele.data('type')) rules.type = $ele.data('type');
+	//最大长度、最小长度
+	var maxlen = $ele.attr('maxlength');
+	var minlen = $ele.data('minlength');
+	if (minlen !== undefined || maxlen !== undefined) {
+		if (minlen === undefined) minlen = 0;
+		if (maxlen === undefined) maxlen = Number.POSITIVE_INFINITY; 
+		rules.length2 = [minlen, maxlen];
+	}
+	//整数位数、小数位数、允许负数
+	var declen = $ele.data('declen');
+	if (declen !== undefined) rules.declen = declen;
+	var intlen = $ele.data('intlen');
+	if (intlen !== undefined) rules.intlen = intlen;
+	var negative = $ele.data('negative');
+	if (negative !== undefined) rules.negative = negative;
+	//数值范围
+	var min = $ele.data('min');
+	var max = $ele.data('max');
+	if (min !== undefined || max !== undefined) {
+		if (min === undefined) min = Number.NEGATIVE_INFINITY;
+		if (max === undefined) max = Number.POSITIVE_INFINITY;
+		rules.range = [min, max];
+	}
+	//当规则非空时执行校验
+	if ($.isEmptyObject(rules)) return true;
+	else {
+		rules.focus = setFocus;
+		var ret = ydl.validator($ele, rules);
+		ll('checkFieldAttr:' + $ele.prop('id') + '/' + $ele.val() + '/' + ret, rules);
+		return ret;
+	}
+}
+
+/**
+ * 公共表单校验
+ * @param {String|Object} form 表单DOM对象（form）或其他任何容器
+ * @return {Object} deferred对象
+ */
+ydl.formValidate = function(form, setFocus) {
+	if (setFocus === undefined) setFocus = true;
+	form = ydl.getDom(form);
+	//排除列表中的输入元素
+	var $eles = $(':input[name],select.combobox', form).not($('.datalist-box :input', form));
+	var d = [];
+	for (var i = 0; i < $eles.length; i++) {
+		if ($eles[i].type == 'radio' || $eles[i].type == 'checkbox') {
+			var $ele = $eles.eq(i).closest('fieldset');
+			if ($ele.data('required')) {
+				d.push(ydl.validator($ele.attr('data-id'),{
+					required: true,
+					focus: setFocus
+				}));
+			}
+		}
+		else d.push(ydl.checkFieldAttr($eles.eq(i), setFocus));
+	}
+	return ydl.deferred.apply(null, d).done(function() {
+		if ($.isFunction(form.after_auto_validate)) form.after_auto_validate();
+	});
+};
+
+/**
+ * 检查日期字符串是否是正确的日期
+ * @param {String} dateString 日期字符串（yyyy-mm-dd格式）
+ * @return {Boolean} 是否正确
+ */
+ydl.isValidDate = function(dateString) {
+	var v = ydl.validator.get('date');
+	return v(dateString, {formatdate: true});
+};
+
+	
+})(ydl, jQuery);
+
+$(function () {
+	//默认输入后检查表单字段值
+	$('body').on('change', ':input[name],select.combobox', function() {
+		if (this.type == 'radio' || this.type == 'checkbox') {
+			var $ele = $(this).closest('fieldset');
+			if ($ele.data('required')) {
+				ydl.validator($ele.data('id'), {
+					required: true,
+					focus: false
+				});
+			}
+		}
+		else ydl.checkFieldAttr($(this), false);
+	});
+})

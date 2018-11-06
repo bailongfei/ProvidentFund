@@ -128,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<tr>
 			   <td>选择人员新建删除</td>
 			   <td><input type="file"  class="" id="" name="" ></td>
-			   <td>操作人:<input type="text" size="6" class="" id="" name="" ></td>
+			   <td>操作人:<input type="text"  class="" id="" name="" ></td>
 			</tr>
 			<tr>
 			  <td><input type="checkbox"  class="" id="" name="" ></td>
@@ -140,8 +140,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 			<tr>
 			  <td><input type="checkbox"  class="" id="" name="" ></td>
-			  <td><input type="text" size="6" class="" id="" name="" ></td>
-			  <td><input type="text" size="6" class="" id="" name="" ></td>
+			  <td><input type="text"  class="" id="" name="" ></td>
+			  <td><input type="text"  class="" id="" name="" ></td>
 			  <td><input type="text" size="6" class="" id="" name="" ></td>
 			  <td><input type="text" size="6" class="" id="" name="" ></td>
 			  <td><input type="text" size="6" class="" id="" name="" ></td>
