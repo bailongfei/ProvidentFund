@@ -566,32 +566,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</dl></li>
 						<!-- 测试 -->
 						<li data-name="set" class="layui-nav-item"><a
-							href="javascript:;" lay-tips="刘林涛" lay-direction="2"> <i
-								class="layui-icon layui-icon-set"></i> <cite>刘林涛</cite>
+							href="javascript:;" lay-tips="王崇" lay-direction="2"> <i
+								class="layui-icon layui-icon-set"></i> <cite>王崇</cite>
 						</a>
 							<dl class="layui-nav-child">
 								<dd class="layui-nav-itemed">
-									<a href="javascript:;">测试使用</a>
+									<a href="javascript:;">代码</a>
 									<dl class="layui-nav-child">
 										<dd>
-											<a lay-href="test/test1.jsp">测试1</a>
+											<a lay-href="wang/credit.jsp">贷款</a>
 										</dd>
 										<dd>
-											<a lay-href="set/system/email.html">测试2</a>
+											<a lay-href="wang/repay.jsp">还款</a>
 										</dd>
 									</dl>
 								</dd>
-								<dd class="layui-nav-itemed">
-									<a href="javascript:;">联系使用</a>
-									<dl class="layui-nav-child">
-										<dd>
-											<a lay-href="set/user/info.html">Demo1</a>
-										</dd>
-										<dd>
-											<a lay-href="set/user/password.html">Demo2</a>
-										</dd>
-									</dl>
-								</dd>
+							
 							</dl></li>
 					</ul>
 				</div>
