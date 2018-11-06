@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.entity.Peraccount;
 import com.entity.Unitinfo;
+import com.zhl.pager.Pager;
 
 public interface PeraccountMapper {
     int deleteByPrimaryKey(Integer grzhbh);
@@ -30,4 +31,8 @@ public interface PeraccountMapper {
     public Map<String, Object> finddkInfo(Integer dkxxbh);
     //查询所有单位
     public List<Unitinfo> queryUnitinfos();
+    //根据单位id查询个人账号信息
+    public List<Map<String, Object>> findaccountinfo(Map<String, Object> map);
+    //查询分页数据总数
+    public int findaccountnum(Map<String, Object> map);
 }

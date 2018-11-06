@@ -3,8 +3,6 @@ package com.entity;
 public class Gjjtqyyb {
     private Integer tqyyid;
 
-    private Integer accumulation;
-
     private String cause;
 
     public Integer getTqyyid() {
@@ -13,14 +11,6 @@ public class Gjjtqyyb {
 
     public void setTqyyid(Integer tqyyid) {
         this.tqyyid = tqyyid;
-    }
-
-    public Integer getAccumulation() {
-        return accumulation;
-    }
-
-    public void setAccumulation(Integer accumulation) {
-        this.accumulation = accumulation;
     }
 
     public String getCause() {

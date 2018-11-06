@@ -351,4 +351,16 @@
   <select id="queryUnitinfos" resultType="Unitinfo">
   	select * from unitinfo
   </select>
+  <!-- 根据单位id查询账号信息 -->
+  <select id="findaccountinfo" resultType="map" parameterType="map">
+  	select * from peraccount p right join unitinfo u on p.UnitInfoId=u.UnitInfoId
+  	where p.zhztbh=1
+  	and p.UnitInfoId=#{UnitInfoId}
+  	limit #{startIndex},#{pageSize}
+  </select>
+  <!-- 查询数量 -->
+  <select id="findaccountnum" resultType="int">
+  	select count(*) from peraccount p right join unitinfo u on p.UnitInfoId=u.UnitInfoId
+  	where p.UnitInfoId=#{UnitInfoId}
+  </select>
 </mapper>

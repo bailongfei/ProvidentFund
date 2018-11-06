@@ -22,10 +22,12 @@
     <result column="zzlwhth" jdbcType="VARCHAR" property="zzlwhth" />
     <result column="dkzje" jdbcType="DECIMAL" property="dkzje" />
     <result column="txpwwh" jdbcType="VARCHAR" property="txpwwh" />
+    <result column="tqyyId" jdbcType="INTEGER" property="tqyyid" />
   </resultMap>
   <sql id="Base_Column_List">
     accumulation, lmkbh, grzhbh, netinfoId, dkxxbh, UnitInfoId, ExtractingAmount, grapprovalStatuss, 
-    spsj, sqsj, fwdz, gfhtxybh, fwmj, fwdj, fwzj, fzzc, zfhth, zzlwhth, dkzje, txpwwh
+    spsj, sqsj, fwdz, gfhtxybh, fwmj, fwdj, fwzj, fzzc, zfhth, zzlwhth, dkzje, txpwwh, 
+    tqyyId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -44,14 +46,14 @@
       sqsj, fwdz, gfhtxybh, 
       fwmj, fwdj, fwzj, fzzc, 
       zfhth, zzlwhth, dkzje, 
-      txpwwh)
+      txpwwh, tqyyId)
     values (#{accumulation,jdbcType=INTEGER}, #{lmkbh,jdbcType=INTEGER}, #{grzhbh,jdbcType=INTEGER}, 
       #{netinfoid,jdbcType=INTEGER}, #{dkxxbh,jdbcType=INTEGER}, #{unitinfoid,jdbcType=INTEGER}, 
       #{extractingamount,jdbcType=DECIMAL}, #{grapprovalstatuss,jdbcType=VARCHAR}, #{spsj,jdbcType=DATE}, 
       #{sqsj,jdbcType=DATE}, #{fwdz,jdbcType=VARCHAR}, #{gfhtxybh,jdbcType=VARCHAR}, 
       #{fwmj,jdbcType=DECIMAL}, #{fwdj,jdbcType=DECIMAL}, #{fwzj,jdbcType=DECIMAL}, #{fzzc,jdbcType=DECIMAL}, 
       #{zfhth,jdbcType=VARCHAR}, #{zzlwhth,jdbcType=VARCHAR}, #{dkzje,jdbcType=DECIMAL}, 
-      #{txpwwh,jdbcType=VARCHAR})
+      #{txpwwh,jdbcType=VARCHAR}, #{tqyyid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Accumulation">
     insert into accumulation
@@ -116,6 +118,9 @@
       <if test="txpwwh != null">
         txpwwh,
       </if>
+      <if test="tqyyid != null">
+        tqyyId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="accumulation != null">
@@ -177,6 +182,9 @@
       </if>
       <if test="txpwwh != null">
         #{txpwwh,jdbcType=VARCHAR},
+      </if>
+      <if test="tqyyid != null">
+        #{tqyyid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -240,6 +248,9 @@
       <if test="txpwwh != null">
         txpwwh = #{txpwwh,jdbcType=VARCHAR},
       </if>
+      <if test="tqyyid != null">
+        tqyyId = #{tqyyid,jdbcType=INTEGER},
+      </if>
     </set>
     where accumulation = #{accumulation,jdbcType=INTEGER}
   </update>
@@ -263,13 +274,12 @@
       zfhth = #{zfhth,jdbcType=VARCHAR},
       zzlwhth = #{zzlwhth,jdbcType=VARCHAR},
       dkzje = #{dkzje,jdbcType=DECIMAL},
-      txpwwh = #{txpwwh,jdbcType=VARCHAR}
+      txpwwh = #{txpwwh,jdbcType=VARCHAR},
+      tqyyId = #{tqyyid,jdbcType=INTEGER}
     where accumulation = #{accumulation,jdbcType=INTEGER}
   </update>
   <select id="findbyperaccount" resultType="map" parameterType="String">
-  	select a.*,p.peracId,p.bkname,u.UnitInfoName from accumulation  a join peraccount p on a.grzhbh=p.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId 
-  	<if test="peracId !=null and peracId !=''">
-  		where p.peracId=#{peracId}
-  	</if>
+  	select a.*,p.peracId,p.bkname,u.UnitInfoName,g.* from accumulation  a join peraccount p on a.grzhbh=p.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId join gjjtqyyb g on a.tqyyId=g.tqyyId
+  	where p.peracId=#{0}
   </select>
 </mapper>

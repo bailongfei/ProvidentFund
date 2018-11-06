@@ -94,4 +94,15 @@ public class PeraccountController {
 		service.PeopleTransfer(account);
 		return "1";
 	}
+	@ResponseBody
+	@RequestMapping("/findaccountinfo")
+	public Pager findaccountinfo(@RequestParam Map<String, Object> map,HttpSession session){
+				//从session获取当前登陆单位账号的单位id
+		//Integer UnitInfoId=(Integer) session.getAttribute("UnitInfoId");
+		map.put("UnitInfoId", 1);//待改
+		Pager p=new Pager();
+		p.setPageSize(2);//设置每页条数
+		Pager pager=service.findaccountinfo(map, p);
+		return pager;
+	}
 }

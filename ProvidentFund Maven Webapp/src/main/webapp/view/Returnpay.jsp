@@ -4,12 +4,12 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'Perbusiness.jsp' starting page</title>
+    <title>My JSP 'Returnpay.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -19,23 +19,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
-	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="resources/js/bootstrap/css/bootstrap.min.css">  
+	<script src="resources/js/jquery.min.js"></script>
+	<script src="resources/js/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
-	
 	<script type="text/javascript">
 	  $(function(){
          getAll(1);
+         
       });
       function getAll(pageNum){
          alert(pageNum);
-         var peracId=$("#peracId").val();
+         var bkname=$("#bkname").val();
          $.ajax({
-            url:"Returnpay/findbyPager",
+            url:"Peraccount/findaccountinfo",
             type:"post", 
             data:{"curPage":pageNum,
-            	  "peracId":peracId
             },
             dataType:'json',
             success:function(data){
@@ -44,11 +43,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                for(var i=0;i<datalist.length;i++){
                	   var obj=datalist[i];
                    var tr="<tr>";
+                   tr+="<td><input type='checkbox' name='peracId' value='"+obj.peracId+"'></td>";
 				   tr+="<td>"+obj.peracId+"</td>";
                    tr+="<td>"+obj.bkname+"</td>";
                    tr+="<td>"+obj.UnitInfoName+"</td>";
-                   tr+="<td>"+obj.chje+"</td>";
-                   tr+="<td>"+obj.chsj+"</td>";
+                   tr+="<td>"+obj.peracBalance+"</td>";
 				   tr+="</tr>";
                    $("#tab").append(tr);
                }
@@ -65,7 +64,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          
          });
       }
-      //上一页 下一页
+      function ceshi(){
+      	var peracIds =[]; 
+	    $('input[name="peracId"]:checked').each(function(){ 
+	        peracIds.push($(this).val());
+	        alert(peracIds);
+	    }); 
+	    $.ajax({
+	    	url:"",
+	    	type:"post",
+	    	data:{
+	    	
+	    	},
+	    	dataType:'json',
+	    	success:function(data){
+	    		$("#tab2").empty();
+	    		for(var i=0;i<data.length;i++){
+	    			var tr="<tr>";
+	    			tr+="<td>""</td>"
+	    		}
+	    	}
+	    })
+      }
+		 //上一页 下一页
 	  $(document).ready(function(){
 	  	  $("#prepage").click(function(){
              var nowpage=parseInt($("#nowPage").html());
@@ -75,54 +96,84 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            var nowpage=parseInt($("#nowPage").html());
            getAll(nowpage+1);
       	  });
-      	  $("#grperbuType").change(function(){
-      	  	getAll(1);
-      	  })
+      	  /* $("#btn").click(function(){
+         	var arr = new Array();
+         	 $('input[name="peracId"]:[checked]').each(function () {
+                    alert($(this).val());
+             });
+             //alert(arr);
+                $.ajax({
+             	url:"",
+             	type:"post",
+             	data:{
+             		"arr":arr
+             	},
+             	dataType:'json',
+             	success:function(data){
+             		
+             	}
+             }) 
+         }) */
 	  });
-	  /* function UpdateStates(obj1,obj2){
-	  	$.ajax({
-	  		url:"Peraccount/UpdateStates",
-	  		type:"post",
-	  		data:{
-	  			"grzhbh":obj1,
-	  			"zhztbh":obj2
-	  		},
-	  		dataType:'text',
-	  		success:function(data){
-	  			if(data=='1'){
-		  			alert("申请已提交 请等待审批");
-		  			getAll(1);	  				
-	  			}
-	  		}
-	  	})
-	  } */
 	</script>
+	<style type="text/css">
+		#box1{
+			width: 600px;
+			height: 600px;
+			margin:0px auto;
+			border: 1px solid #000; 
+		}
+	</style>
   </head>
+  
   <body>
-    <table class="table">
-    	<tr>
-    		<td colspan="4">
-    			<input type="text" name="peracId" id="peracId" class="form-control" style="width: 20%;float: left;">
-    		
-    			<input type="button"   class="btn btn-primary"  value="搜索" onclick="getAll(1)">
-    		</td>
-    		
-    	</tr>
-    	<tr>
-    		<td>个人账号</td>
-    		<td>员工姓名</td>
-    		<td>所在单位</td>
-    		<td>冲回金额</td>
-    		<td>创建时间</td>
-    	</tr>
-    	<tbody id="tab"></tbody>
-    </table>
-    
-    
-
-    	<button id="prepage" class="btn btn-default  btn-sm">&laquo;</button>
+    <div id="box1">
+    	<table>
+    		<tr>
+    			<td><input type="text" id="unitname"></td>
+    			<td><input type="button" value="搜索"></td>
+    		</tr>
+    		<tr>
+    			<td></td>
+    			<td>个人账号</td>
+    			<td>员工姓名</td>
+    			<td>所在单位</td>
+    			<td>总共缴纳</td>
+    		</tr>
+    		<tbody id="tab"></tbody>
+    	</table>
+    	<button id="prepage">上一页</button>
 		当前是第<span id="nowPage"></span>页 
-    	<button id="nextpage"  class="btn btn-default  btn-sm">&raquo;</button>&nbsp;&nbsp;
+    	<button id="nextpage">下一页</button>&nbsp;&nbsp;
     	共<span id="countPage"></span>页
+    	<input type="button" value="测试" id="btn" onclick="ceshi()">
+    </div>
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<table>
+	            		<tr>
+	            			<td>个人账号</td>
+	            			<td>员工姓名</td>
+	            			<td>所在单位</td>
+	            			<td>冲回金额</td>
+	            		</tr>
+	            		<tbody id="tab2"></tbody>
+	            	</table>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary">提交更改</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
   </body>
 </html>

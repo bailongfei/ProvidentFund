@@ -26,4 +26,6 @@ public interface PeraccountService {
     public List<Unitinfo> queryUnitinfos();
     //人员转移
     public int PeopleTransfer(Peraccount account);
+    //根据单位id查询个人账号信息
+    public Pager findaccountinfo(Map<String, Object> map,Pager p);
 }
