@@ -8,8 +8,8 @@ import com.entity.Usertable;
 
 public interface AdminService {
 	// 验证登陆
-	public List<Map<String, Object>> queryUser(String username);
-
+	public Usertable queryUser(String username);
+	 public Usertable createUser(Usertable user);
 	// 查询模块
 	public List<Map<String, Object>> findModules(String userName);
 

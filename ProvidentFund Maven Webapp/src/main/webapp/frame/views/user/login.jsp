@@ -157,7 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 function login(){
     var obj = $("#loginForm").serializeObject();
    $.ajax({
-      url:"${pageContext.request.contextPath}/login/login.action",
+      url:"${pageContext.request.contextPath}/login/dologin",
       contentType : "application/json;charset=utf-8",
       data:JSON.stringify(obj),
       dataType:"text",

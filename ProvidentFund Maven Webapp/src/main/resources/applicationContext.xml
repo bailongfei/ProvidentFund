@@ -14,7 +14,9 @@
 		<property name="location" value="classpath:jdbc.properties"></property>
 
 	</bean>
-
+	<!--引入applicationContext-shiro -->
+	<import resource="classpath:applicationContext-shiro.xml" />
+	<!-- <import resource="classpath:spring-config-shiro.xml"/> -->
 	<!-- 配置dbcp数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -45,7 +47,7 @@
 					</property>
 				</bean>
 			</array>
-		</property>		
+		</property>
 	</bean>
 	<!-- 配置扫描dao接口 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

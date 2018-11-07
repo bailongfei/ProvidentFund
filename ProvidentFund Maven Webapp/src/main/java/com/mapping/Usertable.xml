@@ -20,4 +20,7 @@
 	<insert id="saveUsers" parameterType="map" >
 	  insert into usertable(userName,rolesId) values(#{userName},#{rolesId})
 	</insert>
+	<insert id="createUser" parameterType="com.entity.Usertable">
+	  insert into usertable(userName,password,salt,locked) values(#{userName},#{password},#{salt},#{locked})
+	</insert>
 </mapper>

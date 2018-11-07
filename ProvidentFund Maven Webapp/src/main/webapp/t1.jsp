@@ -8,6 +8,8 @@
         <base href="<%=basePath%>">  
         <script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>  
         <script type="text/javascript" src="resources/jquery.form.js"></script>   
+        <script type="text/javascript" src="resources/jquery.lgymove.js"></script>
+        <link rel="stylesheet" href="resources/lgymove.css" type="text/css" />
         <title>My JSP 'index.jsp' starting page</title>  
         <script type="text/javascript">  
                 //ajax 方式上传文件操作  
@@ -63,5 +65,10 @@
             </table>    
         </form>  
 
+<div id="imgscode"></div>
       </body>  
     </html>  
+
+<script>
+$("#imgscode").imgcode();
+</script>

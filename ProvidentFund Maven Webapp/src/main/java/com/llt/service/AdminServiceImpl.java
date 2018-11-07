@@ -12,14 +12,22 @@ import com.entity.Modules;
 import com.entity.Roles;
 import com.entity.Rolesmodule;
 import com.entity.Usertable;
+import com.llt.util.PasswordHelper;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminDao dao;
-
+@Autowired
+private PasswordHelper passwordHelper;
+	
+	 public Usertable createUser(Usertable user) {
+	        //º”√‹√‹¬Î
+	        passwordHelper.encryptPassword(user);
+	        return dao.createUser(user);
+	    }
 	@Override
-	public List<Map<String, Object>> queryUser(String username) {
+	public Usertable queryUser(String username) {
 		// TODO Auto-generated method stub
 		return dao.queryUser(username);
 	}
