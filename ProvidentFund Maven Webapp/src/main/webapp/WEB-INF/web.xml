@@ -5,18 +5,7 @@
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 	
-	<!-- <filter>  
-        <filter-name>loginFilter</filter-name>  
-   这里的filterclass是你创建的fitler类  
-        <filter-class>com.llt.util.Filter</filter-class>  
-    </filter>  
-    <filter-mapping>  
-        <filter-name>loginFilter</filter-name>  
-  定义规则  
-        <url-pattern>*.jsp</url-pattern>  
-    </filter-mapping> 
-	 -->
-	 <!-- shiro -->
+
 	 <filter>
         <filter-name>shiroFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

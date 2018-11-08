@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,10 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
@@ -40,17 +44,20 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	@ResponseBody
 	@RequestMapping("/dologin") //url  
-	public String dologin(@RequestBody Usertable user, Model model){  
+	public String dologin(@RequestBody Usertable user, HttpSession session){  
 	    String info = loginUser(user);  
 	    if (!"SUCC".equals(info)) {  
-	        model.addAttribute("failMsg", "用户不存在或密码错误！");  
+	       // model.addAttribute("failMsg", "用户不存在或密码错误！");  
 	        System.out.println("用户不存在或密码错误！111111111111");
-	        return "fail";  
+	        return "0";  
 	    }else{  
-	        model.addAttribute("successMsg", "登陆成功！");//返回到页面说夹带的参数  
-	        model.addAttribute("name", user.getUserName());  
-	        return "success";//返回的页面  
+	       /* model.addAttribute("successMsg", "登陆成功！");//返回到页面说夹带的参数  
+	        model.addAttribute("name", user.getUserName());  */
+	        Usertable user1 = adminService.queryUser(user.getUserName());
+	        session.setAttribute("adminUsers", user1.getUserName());
+	        return "1";//返回的页面  
 	    }  
 	  }  
 	  
@@ -87,9 +94,11 @@ public class AdminController {
 	    	System.out.println("用户不存在或密码错误！333333333333");
 	        return "用户不存在或者密码错误！";  
 	    } catch (AuthenticationException ex) {  
+	        System.out.println("自定义报错信息  ！");
 	        return ex.getMessage(); // 自定义报错信息  
 	    } catch (Exception ex) {  
 	        ex.printStackTrace();  
+	        System.out.println("内部错误，请重试！");
 	        return "内部错误，请重试！";  
 	    }  
 	    return "SUCC";  
@@ -132,8 +141,8 @@ public class AdminController {
 	@RequestMapping("/queryMenu")
 	@ResponseBody
 	public List<Map<String, Object>> queryMenu(HttpSession session) {
-		String username = (String) session.getAttribute("adminUsers");
-		System.out.println(username + "session-------------");
+		//String username = (String) session.getAttribute("adminUsers");
+		String username=(String) session.getAttribute("adminUsers");
 		List<Map<String, Object>> list = adminService.findModules(username);
 		return list;
 	}

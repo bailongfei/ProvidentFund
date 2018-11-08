@@ -9,7 +9,9 @@ import com.entity.Usertable;
 public interface AdminService {
 	// 验证登陆
 	public Usertable queryUser(String username);
-	 public Usertable createUser(Usertable user);
+
+	public int createUser(Usertable user);
+
 	// 查询模块
 	public List<Map<String, Object>> findModules(String userName);
 

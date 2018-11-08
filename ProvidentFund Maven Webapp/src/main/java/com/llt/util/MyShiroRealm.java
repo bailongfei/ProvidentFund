@@ -35,14 +35,14 @@ public class MyShiroRealm extends AuthorizingRealm {
         return authorizationInfo;
     }
 
-	Logger log=Logger.getLogger(MyShiroRealm.class);
+
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         String username = (String)token.getPrincipal();
-
+        System.out.println(username);
         Usertable user = userService.queryUser(username);
-        log.debug(user);
+        System.out.println(user);
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号
         }
@@ -50,6 +50,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         if(Boolean.TRUE.equals(user.getLocked())) {
             throw new LockedAccountException(); //帐号锁定
         }
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         //交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(

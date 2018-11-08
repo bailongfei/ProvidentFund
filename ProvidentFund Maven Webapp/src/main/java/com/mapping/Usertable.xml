@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.AdminDao">
-  <select id="queryUser" resultType="map"
+  <select id="queryUser" resultType="com.entity.Usertable"
 		parameterType="java.lang.String">
-		select u.userId, u.userName,u.password from usertable u where u.userName=#{userName}
+		select u.userId, u.userName,u.password,u.salt,u.locked from usertable u where u.userName=#{userName}
 	</select>
 	<select id="findUsersById" parameterType="integer" resultType="map">
 	  select u.userId,u.userName,r.rolesId,r.rolesName from usertable u,roles r where u.rolesId = r.rolesId and  userId=#{userId}

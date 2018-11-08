@@ -92,9 +92,9 @@
 						class="layui-icon layui-icon-login-wechat"></i></a> <a
 						href="javascript:;"><i
 						class="layui-icon layui-icon-login-weibo"></i></a> <a
-						href="login.html"
+						href="login.jsp"
 						class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
-					<a href="login.html"
+					<a href="login.jsp"
 						class="layadmin-user-jump-change layadmin-link layui-hide-sm layui-show-xs-inline-block">登入</a>
 				</div>
 			</div>

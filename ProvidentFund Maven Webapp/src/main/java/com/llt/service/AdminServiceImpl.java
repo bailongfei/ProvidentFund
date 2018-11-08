@@ -21,10 +21,14 @@ public class AdminServiceImpl implements AdminService {
 @Autowired
 private PasswordHelper passwordHelper;
 	
-	 public Usertable createUser(Usertable user) {
+	 public int createUser(Usertable user) {
 	        //加密密码
 	        passwordHelper.encryptPassword(user);
-	        return dao.createUser(user);
+	        int a= dao.createUser(user);
+	        if (a>0) {
+				System.out.println("添加成功");
+			}
+	        return a;
 	    }
 	@Override
 	public Usertable queryUser(String username) {

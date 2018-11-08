@@ -10,7 +10,9 @@ import com.entity.Usertable;
 public interface AdminDao {
 	// 验证登陆
 	public Usertable queryUser(String username);
-	 public Usertable createUser(Usertable user);
+
+	public int createUser(Usertable user);
+
 	// 按权限查询所拥有的模块
 	public List<Map<String, Object>> findModules(String userName);
 
