@@ -33,13 +33,14 @@ public class UnitsaccountController {
 	 System.out.println(list);
 	return list;
  }
- @RequestMapping("/queryPageUnfo")
- @ResponseBody
+@RequestMapping("/queryPageUnfo")
+@ResponseBody
  public Pager queryPageUnfo(String UnitInfoName,@RequestParam(required = false, defaultValue = "1") Integer pageNum){
-	 Pager p=new Pager();//分页对象
+	System.out.println(UnitInfoName+"汇缴"+pageNum);  
+	Pager p=new Pager();//分页对象
 		p.setCurPage(pageNum);/*当前页*/
 		p.setPageSize(1);/*//每页条数*/
-		Map<String,Object> map=new HashMap<String, Object>();
+		Map<String,Object> map=new HashMap<String,Object>();
 		//map.put("startIndex", (curPage-1)*pageSize);
 		map.put("startIndex", p.getStartIndex());//设置开始索引
 		map.put("pageSize", p.getPageSize());//设置每页条数
@@ -48,7 +49,6 @@ public class UnitsaccountController {
 		int i=unse.getPageCount(map);
 		p.setList(list);
 		p.setTotalCount(i);
-		
 	return p;
 	 
  }

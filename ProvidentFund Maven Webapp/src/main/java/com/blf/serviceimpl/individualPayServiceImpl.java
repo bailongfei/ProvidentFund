@@ -1,6 +1,7 @@
 package com.blf.serviceimpl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,16 @@ public int saveIparOrperccOrUpdatePercc(Peraccount pecc, Individualpay ip) {
 	map.put("grzhbhs",ip.getGrzhbhs());
 	int r=percc.updatePercc(map);
 	return r;
+}
+@Override
+public List<Map<String, Object>> queryIperss(String UnitInfoAccount, String bkname) {
+	List<Map<String, Object>> list=ipay.queryIperRy(UnitInfoAccount, bkname);
+	return list;
+}
+@Override
+public Map<String, Object> queryCheckdata(String perId) {
+	Map<String, Object> list=ipay.queryCheckdata(perId);
+	return list;
 }
 
 }

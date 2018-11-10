@@ -18,6 +18,9 @@ public interface IndividualpayMapper {
     int deleteByPrimaryKey(Integer grzhbhs);
    // public int updateIpar(@Param("unitinfoaccount")Integer unitinfoaccount,@Param("nhyf")Integer hjys);
     public int updateIpar(Hjqcb hq);
+    public List<Map<String,Object>> queryIperRy(@Param("UnitInfoAccount")String UnitInfoAccount,@Param("bkname")String bkname);//≤πΩ…≤È—Ø»À‘±
+    public Map<String,Object> queryCheckdata(@Param("perId")String perId);
+    public int BujiaoUpdateIper(@Param("personalaccount")String personalaccount,@Param("grjczes")String grjczes);//≤πΩ…
     int insert(Individualpay record);
 
     int insertSelective(Individualpay record);

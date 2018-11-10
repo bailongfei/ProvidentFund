@@ -29,12 +29,14 @@ public class UnitsaccountServiceimpl implements UnitsaccountService {
 	@Override
 	public List<Map<String, Object>> queryUnPagefo(Map<String, Object> map) {
 		List<Map<String, Object>> list=dao.queryPageUnfo(map);
+		System.out.println("»ã½É:"+list);
 		return list;
 	}
 
 	@Override
 	public int getPageCount(Map<String, Object> map) {
 		int i=dao.getPageCount(map);
+		System.out.println("ÈËÊı"+i);
 		return i;
 	}
 

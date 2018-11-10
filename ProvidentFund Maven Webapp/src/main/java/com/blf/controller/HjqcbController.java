@@ -51,7 +51,7 @@ public class HjqcbController{
  }
 @RequestMapping("/saveHjqcb")
  public void saveHjqcb(Hjqcb hq,HttpServletResponse response) throws IOException{
-	 System.out.println(hq.getUnitinfoaccount()+"汇缴参数"+hq.getNhyf());
+	System.out.println(hq.getUnitinfoaccount()+"汇缴参数"+hq.getNhyf());
 	response.setContentType("text/html;charset=utf-8");
 	int i=hs.insertHjqcbOrUpdateIparOrqueryIperOrsavepercc(hq);
 	PrintWriter out=response.getWriter();
