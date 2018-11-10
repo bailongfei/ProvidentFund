@@ -80,8 +80,8 @@
 								<a lay-href="set/user/password.html">修改密码</a>
 							</dd>
 							<hr>
-							<dd layadmin-event="logout" style="text-align: center;">
-								<a>退出</a>
+							<dd layadmin-event="" style="text-align: center;">
+								<a onclick="loginout()">退出</a>
 							</dd>
 						</dl></li>
 
@@ -193,6 +193,18 @@
 	}
 
 	)
+	function loginout(){
+	   $.ajax({
+	   url:"${pageContext.request.contextPath}/login/logout.do",
+	   type:"post",
+	   dataType:"json",
+	   success:function(data){
+	   if(data=='logout'){
+	       window.location.href = "user/login.jsp";
+	   }
+	   }
+	   })
+	}
 </script>
 
 

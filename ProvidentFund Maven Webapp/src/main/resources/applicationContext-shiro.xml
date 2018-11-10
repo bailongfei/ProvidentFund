@@ -26,9 +26,8 @@
 		<!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截. -->
 		<property name="filterChainDefinitions">
 			<value>
-				/index.jsp=anon
-				/jsp/success.jsp=anon
-				/jsp/fail.jsp=anon
+				/frame/views/index.jsp=anon
+				/frame/views/user/login.jsp=anon
 				<!-- /jsp/user.jsp = roles[user] /jsp/admin.jsp = roles[admin] -->
 				<!-- /logout = logout -->
 				<!-- /**=rememberMe,adminUsers --><!-- 在所有需要记住我的功能的地方加入rememberMe防止session为空 -->
