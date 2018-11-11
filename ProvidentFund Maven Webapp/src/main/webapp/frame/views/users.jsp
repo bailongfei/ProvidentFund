@@ -20,18 +20,19 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
+<script
+	src="${pageContext.request.contextPath}/resources/jquery-1.11.3.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/jqueryExt.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap-theme.min.css">
 
-<script
-	src="${pageContext.request.contextPath}/resources/jquery-1.11.3.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/jqueryExt.js"></script>
 </head>
 
 <body>
@@ -81,8 +82,7 @@
 				<div class="modal-body">
 
 					<div style="padding:10px;">
-						<form class="bs-example bs-example-form" role="form"
-							id="userForm">
+						<form class="bs-example bs-example-form" role="form" id="userForm">
 							<input type="hidden" id="user-id" name="userId" />
 							<div class="input-group">
 								<span class="input-group-addon">员工名称</span> <input type="text"
@@ -90,10 +90,11 @@
 									name="userName">
 							</div>
 							<br>
-							<div class="input-group">
-								<span class="input-group-addon">角色</span> <input type="text"
-									class="form-control" placeholder="请输入员工描述" id="user-miaoshu"
-									name="userdescribe">
+							 <div class="input-group">
+								<span class="input-group-addon">角色</span> 
+								<select id="rolesSelect" class="form-control"
+									name="rolesId">
+								</select>
 							</div>
 							<br>
 							<!-- <div class="input-group">
@@ -108,7 +109,8 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 					</button>
-					<button type="button" class="btn btn-primary" id="saveOrUpdate">提交更改</button>
+					<button type="button" class="btn btn-primary"
+						id="saveOrUpdateUsers">提交更改</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -136,9 +138,19 @@
 		})
 	})
 
-	/****************************************************修改前的查询END!***********************************************************/
-
-
+	/****************************************************查询角色***********************************************************/
+	function queryRoles() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/login/queryRoles",
+			type : "post",
+			dataType : "json",
+			success : function(data) {
+				for (var i = 0; i < data.length; i++) {
+					$("#rolesSelect").append("<option value='" + data[i].rolesId + "' selected='selected'>" + data[i].rolesName + "</option>");
+				}
+			}
+		})
+	}
 
 	/****************************************************修改保存***********************************************************/
 	/* 清空表格 */
@@ -149,20 +161,22 @@
 	})
 	/* 提交信息--修改或者添加 */
 	$("#saveOrUpdateUsers").click(function() {
+
 		var obj = $("#userForm").serializeObject();
+		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/login/saveOrUpdateUsers",
 			type : "post",
-			async : true,
+			 async : true,
 			contentType : "application/json;charset=utf-8",
-			data : JSON.stringify(obj),
+			data :JSON.stringify(obj),
 			dataType : "text",
 			success : function() {
 				var curr = $("#currPage").val();
 				queryAllUsers(curr);
 				$("#myModal").modal('hide');
 				alert("成功！！！");
-				
+
 
 			}
 		})
@@ -188,6 +202,7 @@
 	/****************************************************分页分页分页***********************************************************/
 	$(function() {
 		queryAllUsers(1);
+		queryRoles();
 	})
 
 	function queryAllUsers(startPage) {

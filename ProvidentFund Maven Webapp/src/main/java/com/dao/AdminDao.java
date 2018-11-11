@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.entity.Roles;
+import com.entity.Rolesmodule;
 import com.entity.Usertable;
 
 public interface AdminDao {
 	// 验证登陆
-	public List<Map<String, Object>> queryUser(String username);
+	public Usertable queryUser(String username);
+
+	public int createUser(Usertable user);
 
 	// 按权限查询所拥有的模块
 	public List<Map<String, Object>> findModules(String userName);
@@ -32,13 +35,13 @@ public interface AdminDao {
 	public List<Map<String, Object>> findUsertables();
 
 	// 添加员工
-	public void saveUsers(Usertable usertable);
+	public void saveUsers(Map<String, Object> map);
 
 	// 修改前的的查询
 	public List<Map<String, Object>> findUsersById(Integer userId);
 
 	// 修改员工信息
-	public void updateUsertable(Usertable usertable);
+	public void updateUsertable(Map<String, Object> map);
 
 	// 删除员工
 	public void deleteUsers(Integer userId);
@@ -50,7 +53,7 @@ public interface AdminDao {
 	public void deleteRolesModule(int rolesId);
 
 	// 往角色菜单中间表中插入数据
-	//public void saveRolesModule(Rolesmodule rolModue);
+	public void saveRolesModule(Rolesmodule rolModue);
 
 	// 查询所有角色
 	public List<Map<String, Object>> queryAllRoles();

@@ -1,7 +1,11 @@
 eclipse.preferences.version=1
 <<<<<<< HEAD
+<<<<<<< HEAD
 validator.Checked=src/main/webapp/frame/layuiadmin/json
 =======
 validator.Checked=src/main/webapp/resources,src/main/webapp/frame
 >>>>>>> refs/remotes/origin/jym
+=======
+validator.Checked=src/main/webapp/frame/layuiadmin/json
+>>>>>>> refs/remotes/origin/liulintao
 validator.Unchecked=
