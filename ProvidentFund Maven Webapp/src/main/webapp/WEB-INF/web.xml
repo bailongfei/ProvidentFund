@@ -8,23 +8,37 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
-	<!-- 配置由Spring提供的过滤器，用于整合shiro框架 -->
-  <!-- 在项目启动的过程中，当前过滤器会从Spring工厂中提取同名对象 -->
- 
-	<filter><!-- 编码过滤器 -->
-		<filter-name>Encoding</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<async-supported>true</async-supported>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>utf-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>Encoding</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+
+	 <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+       <!-- 解决工程编码过滤器  
+        注意:请将此过滤器放在所有过滤器的前面，否则有可能出现乱码  -->
+
 	<!-- Spring监听器 -->
+    <filter>
+        <filter-name>encoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+     <!-- 加载Spring 容器配置 -->
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

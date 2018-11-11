@@ -15,38 +15,19 @@ public class Usertable implements java.io.Serializable {
 	private Roles roles;
 	private String userName;
 	private String password;
-	private String question;
-	private String answer;
-
-	// Constructors
-
-	/** default constructor */
-	public Usertable() {
-	}
-
-	/** full constructor */
-	public Usertable(Roles roles, String userName, String password, String question, String answer) {
-		this.roles = roles;
-		this.userName = userName;
-		this.password = password;
-		this.question = question;
-		this.answer = answer;
-	}
-
-	// Property accessors
+	private String salt;
+	private Boolean locked = Boolean.FALSE;
 
 	public Integer getUserId() {
-		return this.userId;
+		return userId;
 	}
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
-	
-
 	public Roles getRoles() {
-		return this.roles;
+		return roles;
 	}
 
 	public void setRoles(Roles roles) {
@@ -54,7 +35,7 @@ public class Usertable implements java.io.Serializable {
 	}
 
 	public String getUserName() {
-		return this.userName;
+		return userName;
 	}
 
 	public void setUserName(String userName) {
@@ -62,28 +43,69 @@ public class Usertable implements java.io.Serializable {
 	}
 
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getQuestion() {
-		return this.question;
+	public String getSalt() {
+		return salt;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
-	public String getAnswer() {
-		return this.answer;
+	public Boolean getLocked() {
+		return locked;
 	}
 
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
 	}
 
+	public String getCredentialsSalt() {
+		return userName + salt;
+	}
+
+	public Usertable(Integer userId, Roles roles, String userName, String password, String salt, Boolean locked) {
+		super();
+		this.userId = userId;
+		this.roles = roles;
+		this.userName = userName;
+		this.password = password;
+		this.salt = salt;
+		this.locked = locked;
+	}
+
+	public Usertable() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		Usertable user = (Usertable) o;
+
+		if (userId != null ? !userId.equals(user.userId) : user.userId != null)
+			return false;
+
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Usertable [userId=" + userId + ", roles=" + roles + ", userName=" + userName + ", password=" + password
+				+ ", salt=" + salt + ", locked=" + locked + "]";
+	}
+
+	
 
 }

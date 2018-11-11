@@ -16,7 +16,9 @@
 		<property name="location" value="classpath:jdbc.properties"></property>
 
 	</bean>
-
+	<!--引入applicationContext-shiro -->
+	<import resource="classpath:applicationContext-shiro.xml" />
+	<!-- <import resource="classpath:spring-config-shiro.xml"/> -->
 	<!-- 配置dbcp数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -37,6 +39,7 @@
 		<property name="typeAliasesPackage" value="com.entity"></property><!--类型别名 dao映射可以直接返回实体对象 -->
 		<!--PageHelper配置  -->
 		<property name="plugins">
+
             <array>
                 <bean class="com.github.pagehelper.PageInterceptor">
                     <property name="properties">

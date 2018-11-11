@@ -13,7 +13,7 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
     ,base: layui.cache.base //记录静态资源所在路径
     ,views: layui.cache.base + 'tpl/' //动态模板所在目录
     ,entry: 'index' //默认视图文件名
-    ,engine: '.html' //视图文件后缀名
+    ,engine: '.jsp' //视图文件后缀名
     ,pageTabs: true //是否开启页面选项卡功能。iframe版推荐开启
     
     ,name: 'layuiAdmin'
@@ -24,7 +24,7 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
 
     //自定义请求字段
     ,request: {
-      tokenName: false //自动携带 token 的字段名（如：access_token）。可设置 false 不携带。
+      tokenName: true //自动携带 token 的字段名（如：access_token）。可设置 false 不携带。
     }
     
     //自定义响应字段

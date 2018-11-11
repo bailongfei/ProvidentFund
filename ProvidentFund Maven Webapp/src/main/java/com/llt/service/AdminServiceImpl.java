@@ -12,14 +12,26 @@ import com.entity.Modules;
 import com.entity.Roles;
 import com.entity.Rolesmodule;
 import com.entity.Usertable;
+import com.llt.util.PasswordHelper;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminDao dao;
-
+@Autowired
+private PasswordHelper passwordHelper;
+	
+	 public int createUser(Usertable user) {
+	        //加密密码
+	        passwordHelper.encryptPassword(user);
+	        int a= dao.createUser(user);
+	        if (a>0) {
+				System.out.println("添加成功");
+			}
+	        return a;
+	    }
 	@Override
-	public List<Map<String, Object>> queryUser(String username) {
+	public Usertable queryUser(String username) {
 		// TODO Auto-generated method stub
 		return dao.queryUser(username);
 	}
@@ -102,12 +114,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void saveOrUpdateUsers(Usertable usertable) {
+	public void saveOrUpdateUsers(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		if (usertable.getUserId()!=null && usertable.getUserId()>0) {
-			dao.updateUsertable(usertable);
+		if (!map.get("userId").equals("")) {
+			dao.updateUsertable(map);
 		}else {
-			dao.saveUsers(usertable);
+			dao.saveUsers(map);
 		}
 	}
 

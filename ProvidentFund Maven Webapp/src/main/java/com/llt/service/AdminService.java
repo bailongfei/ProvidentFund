@@ -8,7 +8,9 @@ import com.entity.Usertable;
 
 public interface AdminService {
 	// 验证登陆
-	public List<Map<String, Object>> queryUser(String username);
+	public Usertable queryUser(String username);
+
+	public int createUser(Usertable user);
 
 	// 查询模块
 	public List<Map<String, Object>> findModules(String userName);
@@ -38,7 +40,7 @@ public interface AdminService {
 	public List<Map<String, Object>> findUsertables();
 
 	// 添加或者修改员工
-	public void saveOrUpdateUsers(Usertable usertable);
+	public void saveOrUpdateUsers(Map<String, Object> map);
 
 	// 修改前的的查询
 	public List<Map<String, Object>> findUsersById(Integer userId);

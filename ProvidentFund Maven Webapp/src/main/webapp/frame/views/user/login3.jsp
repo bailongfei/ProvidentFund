@@ -88,7 +88,7 @@
 
 		</div>
 
-		<!--  <div class="layui-trans layadmin-user-login-footer">
+	 <div class="layui-trans layadmin-user-login-footer">
       
       <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>
       <p>
@@ -96,9 +96,9 @@
         <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线演示</a></span>
         <span><a href="http://www.layui.com/admin/" target="_blank">前往官网</a></span>
       </p>
-    </div> -->
+    </div>
 
-		<!--<div class="ladmin-user-login-theme">
+		<div class="ladmin-user-login-theme">
       <script type="text/html" template>
         <ul>
           <li data-theme=""><img src="{{ layui.setter.base }}style/res/bg-none.jpg"></li>
@@ -109,11 +109,11 @@
           <li data-theme="#20222A" style="background-color: #20222A;"></li>
         </ul>
       </script>
-    </div>-->
+    </div>
 
 	</div>
 
-	<!-- <script src="../../layuiadmin/layui/layui.js"></script>  
+	<script src="../../layuiadmin/layui/layui.js"></script>  
   <script>
   layui.config({
     base: '../../layuiadmin/' //静态资源所在路径
@@ -166,7 +166,7 @@
     }); 
     
   }); 
-  </script> -->
+  </script>
 
 </body>
 </html>
