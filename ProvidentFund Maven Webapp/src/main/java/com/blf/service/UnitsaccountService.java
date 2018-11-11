@@ -9,4 +9,6 @@ import com.entity.Unitsaccount;
 public interface UnitsaccountService {
 	public List<Map<String,Object>> queryUnitinfo();
 	public List<Map<String,Object>> queryUnfo(Unitsaccount unitinfoaccount);
+	public List<Map<String,Object>> queryUnPagefo(Map<String,Object> map);
+	public int getPageCount(Map<String, Object> map);
 }

@@ -2,6 +2,7 @@ package com.blf.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.blf.service.individualPayService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +21,7 @@ import com.util.Message;
 
 @Controller
 @RequestMapping("/ipay")
+@SessionAttributes(value={"s","ss"})
 public class individualPayController {
 	@Autowired
 	private individualPayService ipsc;
@@ -36,5 +40,27 @@ public class individualPayController {
 		ObjectMapper mapper=new ObjectMapper();
 		String jsonStr=mapper.writeValueAsString(message);
 		out.print(jsonStr);
+  }
+  @RequestMapping("/queryIpery")
+  @ResponseBody
+  public List<Map<String,Object>> queryIper(String UnitInfoAccount,String bkname){
+	  System.out.println(UnitInfoAccount+"²¹½É"+bkname);
+	  List<Map<String, Object>> list=ipsc.queryIperss(UnitInfoAccount, bkname);
+	  System.out.println(list);
+	  return list; 
+  }
+  @RequestMapping("/querycheckData")
+  @ResponseBody
+  public List querycheckData(@RequestParam(value="checkData[]")String[] checkData){
+	  List list=new ArrayList();
+	  System.out.println("²¹½É²ÎÊý"+checkData);
+	  if(checkData.length>0){
+		  for(int i=0;i<checkData.length;i++){
+			  Map<String, Object> list2=ipsc.queryCheckdata(checkData[i]);
+		      list.add(list2);
+		  }
+	  }
+	  System.out.println(list);
+	return list;
   }
 }

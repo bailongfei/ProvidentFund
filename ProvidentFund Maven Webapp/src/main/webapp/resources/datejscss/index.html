@@ -1,0 +1,29 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>js仿阿里云年月日期区间选择代码</title>
+<script src="jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="dateYMPicker.js" ></script>
+<link rel="stylesheet" href="dateYMPicker.css" />
+</head>
+
+<body>
+<input type="text"  class="calendar" placeholder="获取时间" value="" readonly="readonly" >
+<input type="text" class="calendar" placeholder="获取时间" value="" readonly="readonly"> 
+
+</body>
+</html>
+<script>
+			
+			$('.calendar').dateYMRangPicker({
+				onApplyHandler:function(startDate,endDate){
+					console.log(startDate,endDate);
+					var value = startDate + "-" + endDate;
+					alert(startDate);
+					console.log(value);
+					console.log(this);
+					$(this).val(value);
+				}
+			});
+</script>

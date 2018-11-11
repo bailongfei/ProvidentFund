@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.blf.service.HjqcbService;
 import com.entity.Hjqcb;
-import com.entity.Perbusiness;
-import com.entity.Unitsaccount;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.util.BaseAction;
 import com.util.Message;
 import com.util.Pager;
 
@@ -54,7 +51,7 @@ public class HjqcbController{
  }
 @RequestMapping("/saveHjqcb")
  public void saveHjqcb(Hjqcb hq,HttpServletResponse response) throws IOException{
-	 System.out.println(hq.getUnitinfoaccount()+"汇缴参数"+hq.getNhyf());
+	System.out.println(hq.getUnitinfoaccount()+"汇缴参数"+hq.getNhyf());
 	response.setContentType("text/html;charset=utf-8");
 	int i=hs.insertHjqcbOrUpdateIparOrqueryIperOrsavepercc(hq);
 	PrintWriter out=response.getWriter();
@@ -69,7 +66,7 @@ public Pager queryHj(String UnitInfoName,@RequestParam(required = false, default
 	System.out.println(UnitInfoName);
 	Pager p=new Pager();//分页对象
 	p.setCurPage(pageNum);/*当前页*/
-	p.setPageSize(1);/*//每页条数*/
+	p.setPageSize(4);/*//每页条数*/
 	Map<String,Object> map=new HashMap<String, Object>();
 	//map.put("startIndex", (curPage-1)*pageSize);
 	map.put("startIndex", p.getStartIndex());//设置开始索引

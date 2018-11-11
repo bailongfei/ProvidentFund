@@ -48,111 +48,112 @@
       #{bjjkzt,jdbcType=VARCHAR}, #{bjjzrq,jdbcType=DATE}, #{bjbz,jdbcType=VARCHAR}, 
       #{bjywllx,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.Bjqcb">
+  <!-- 补缴添加 -->
+  <insert id="saveBujiao" parameterType="map">
     insert into bjqcb
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="bjbh != null">
+      <if test="bjbh != null and bjbh !=''">
         bjbh,
       </if>
-      <if test="unitinfoaccount != null">
+      <if test="unitinfoaccount != null and unitinfoaccount !=''">
         UnitInfoAccount,
       </if>
-      <if test="grzhbhs != null">
+      <if test="grzhbhs != null and grzhbhs !=''">
         grzhbhs,
       </if>
-      <if test="userid != null">
+      <if test="userid != null and userid !=''">
         userId,
       </if>
-      <if test="dwbje != null">
+      <if test="dwbje != null and dwbje !=''">
         dwbje,
       </if>
-      <if test="grbje != null">
+      <if test="grbje != null and grbje !=''">
         grbje,
       </if>
-      <if test="bjrs != null">
+      <if test="bjrs != null and bjrs !=''">
         bjrs,
       </if>
-      <if test="bjje != null">
+      <if test="bjje != null and bjje !=''">
         bjje,
       </if>
-      <if test="bjny != null">
+      <if test="bjny != null and bjny !=''">
         bjny,
       </if>
-      <if test="bjys != null">
+      <if test="bjys != null and bjys !=''">
         bjys,
       </if>
-      <if test="bjssje != null">
+      <if test="bjssje != null and bjssje !=''">
         bjssje,
       </if>
-      <if test="bjssjedx != null">
+      <if test="bjssjedx != null and bjssjedx !=''">
         bjssjedx,
       </if>
-      <if test="bjjkfs != null">
+      <if test="bjjkfs != null and bjjkfs !=''">
         bjjkfs,
       </if>
-      <if test="bjjkzt != null">
+      <if test="bjjkzt != null and bjjkzt !=''">
         bjjkzt,
       </if>
-      <if test="bjjzrq != null">
+      <if test="bjjzrq != null and bjjzrq !=''">
         bjjzrq,
       </if>
-      <if test="bjbz != null">
+      <if test="bjbz != null and bjbz !=''">
         bjbz,
       </if>
-      <if test="bjywllx != null">
+      <if test="bjywllx != null and bjywllx !=''">
         bjywllx,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="bjbh != null">
+      <if test="bjbh != null and bjbh !=''">
         #{bjbh,jdbcType=INTEGER},
       </if>
-      <if test="unitinfoaccount != null">
+      <if test="unitinfoaccount != null and unitinfoaccount !=''">
         #{unitinfoaccount,jdbcType=INTEGER},
       </if>
-      <if test="grzhbhs != null">
+      <if test="grzhbhs != null and grzhbhs !=''">
         #{grzhbhs,jdbcType=INTEGER},
       </if>
-      <if test="userid != null">
+      <if test="userid != null and userid !=''">
         #{userid,jdbcType=INTEGER},
       </if>
-      <if test="dwbje != null">
+      <if test="dwbje != null and dwbje !=''">
         #{dwbje,jdbcType=DECIMAL},
       </if>
-      <if test="grbje != null">
+      <if test="grbje != null and grbje !=''">
         #{grbje,jdbcType=DECIMAL},
       </if>
-      <if test="bjrs != null">
+      <if test="bjrs != null and bjrs !=''">
         #{bjrs,jdbcType=INTEGER},
       </if>
-      <if test="bjje != null">
+      <if test="bjje != null and bjje !=''">
         #{bjje,jdbcType=DATE},
       </if>
-      <if test="bjny != null">
+      <if test="bjny != null and bjny !=''">
         #{bjny,jdbcType=DATE},
       </if>
-      <if test="bjys != null">
+      <if test="bjys != null and bjys !=''">
         #{bjys,jdbcType=INTEGER},
       </if>
-      <if test="bjssje != null">
+      <if test="bjssje != null and bjssje !=''">
         #{bjssje,jdbcType=DECIMAL},
       </if>
-      <if test="bjssjedx != null">
+      <if test="bjssjedx != null and bjssjedx !=''">
         #{bjssjedx,jdbcType=VARCHAR},
       </if>
-      <if test="bjjkfs != null">
+      <if test="bjjkfs != null and bjjkfs !=''">
         #{bjjkfs,jdbcType=VARCHAR},
       </if>
-      <if test="bjjkzt != null">
+      <if test="bjjkzt != null and bjjkzt !=''">
         #{bjjkzt,jdbcType=VARCHAR},
       </if>
-      <if test="bjjzrq != null">
+      <if test="bjjzrq != null and bjjzrq !=''">
         #{bjjzrq,jdbcType=DATE},
       </if>
-      <if test="bjbz != null">
+      <if test="bjbz != null and bjbz !=''">
         #{bjbz,jdbcType=VARCHAR},
       </if>
-      <if test="bjywllx != null">
+      <if test="bjywllx != null and bjywllx !=''">
         #{bjywllx,jdbcType=VARCHAR},
       </if>
     </trim>
