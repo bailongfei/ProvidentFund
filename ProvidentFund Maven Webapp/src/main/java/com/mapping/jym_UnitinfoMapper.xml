@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.jym_UnitinfoMapper" >
+
+
+  <insert id="insertUnitinfo" parameterType="com.entity.Unitinfo" 
+  useGeneratedKeys="true" keyProperty="unitinfoid" keyColumn="id">
+  
+    insert into unitinfo (unitinfoname,unitinfocredit)
+    values (#{unitinfoname,jdbcType=VARCHAR}, 
+      #{unitinfocredit,jdbcType=VARCHAR}) 
+  </insert>           
+   <insert id="insertUnitinfo1" parameterType="com.entity.Unitinfo" 
+  useGeneratedKeys="true" keyProperty="unitinfoid" keyColumn="id">
+  
+    insert into unitinfo (gslxbh,fattype,unitinfosubjection,unitinfofader,unitinfotype,unitinfonumber,unitinfoaddress,unitinfopostcode,
+    unitinfoemail,unitinfopayday,jjlxbh,gshylxbh,unitinfosocialaccount,unitinfosection,unitinfofoundlusd,unitinfooperatorname,
+    unitinfooperatorphone,nitinfooperatortype,unitinfooperatornumber,unitinfobankname,unitinfoswiftcode)
+    values (#{gslxbh},#{fattype},#{unitinfosubjection},#{unitinfofader},#{unitinfotype},#{unitinfonumber},#{unitinfoaddress},#{unitinfopostcode},
+    #{unitinfoemail},#{unitinfopayday},#{jjlxbh},#{gshylxbh},#{unitinfosocialaccount},#{unitinfosection},
+    #{unitinfofoundlusd},#{unitinfooperatorname},#{unitinfooperatorphone},#{nitinfooperatortype},#{unitinfooperatornumber},#{unitinfobankname},
+    #{unitinfoswiftcode})
+  </insert>
+  
+  <update id="updateUnitinfo" parameterType="com.entity.Unitinfo" 
+  useGeneratedKeys="true" keyProperty="unitinfoid" keyColumn="id">
+	  update unitinfo set 
+	  unitinfoaccount=#{unitinfoaccount},
+	  gslxbh=#{gslxbh},fattype=#{fattype},unitinfosubjection=#{unitinfosubjection},unitinfofader=#{unitinfofader}, 
+	  unitinfotype=#{unitinfotype},unitinfonumber=#{unitinfonumber},unitinfoaddress=#{unitinfoaddress},unitinfopostcode=#{unitinfopostcode}, 
+	  unitinfoemail=#{unitinfoemail},unitinfopayday=#{unitinfopayday},jjlxbh=#{jjlxbh},gshylxbh=#{gshylxbh}, 
+	  unitinfosocialaccount=#{unitinfosocialaccount},unitinfosection=#{unitinfosection},unitinfofoundlusd=#{unitinfofoundlusd},unitinfooperatorname=#{unitinfooperatorname}, 
+	  unitinfooperatorphone=#{unitinfooperatorphone},nitinfooperatortype=#{nitinfooperatortype},unitinfooperatornumber=#{unitinfooperatornumber},unitinfobankname=#{unitinfobankname}, 
+	  unitinfoswiftcode=#{unitinfoswiftcode}
+	  where unitinfoid=#{unitinfoid}
+	</update>
+	
+	<insert id="insertUnitsaccount" parameterType="com.entity.Unitsaccount" 
+  useGeneratedKeys="true" keyProperty="unitinfoaccount" keyColumn="id">
+  
+    insert into unitsaccount (unitinfoaccount,unitinfoid,unitsname,unitesstate,unitsdepositratio,
+    unitsindividua,unitesusername,unitesaccount,unitesbankname,unitestrustee,unitesperson)
+    values (#{unitinfoaccount},#{unitinfoid},#{unitsname},#{unitesstate},#{unitsdepositratio},
+      #{unitsindividua},#{unitesusername},#{unitesaccount},#{unitesbankname},#{unitestrustee},#{unitesperson})
+  </insert>
+  <!-- <select id="selectUnitinfoId" resultType="java.util.Map"  parameterType="Integer">
+  select *  from unitinfo where  unitinfoid=#{unitinfoid}
+  </select> -->
+   <select id="selectUnitinfot"  resultType="java.util.Map">
+   
+  select u.unitlnfostateid from unitinfo u where  u.unitinfoname=#{unitinfoname} and u.unitinfocredit=#{unitinfocredit}
+  </select>
+   <select id="selectGshylx"  resultType="java.util.Map">
+       select * from gshylx
+  </select>
+  <select id="selectGslxb"  resultType="java.util.Map">
+     select * from gslxb
+  </select>
+ 
+   <select id="selectJjlxb"  resultType="java.util.Map">
+     select * from jjlxb
+  </select>
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ryzyMapper">
+  <resultMap id="BaseResultMap" type="com.entity.ryzy">
+    <id column="zyid" jdbcType="INTEGER" property="zyid" />
+    <result column="ydw" jdbcType="INTEGER" property="ydw" />
+    <result column="xdw" jdbcType="INTEGER" property="xdw" />
+    <result column="sqr" jdbcType="INTEGER" property="sqr" />
+    <result column="sqsj" jdbcType="DATE" property="sqsj" />
+    <result column="zyyy" jdbcType="VARCHAR" property="zyyy" />
+    <result column="tjsj" jdbcType="TIMESTAMP" property="tjsj" />
+    <result column="shzt" jdbcType="INTEGER" property="shzt" />
+    <result column="bhyy" jdbcType="VARCHAR" property="bhyy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    zyid, ydw, xdw, sqr, sqsj, zyyy, tjsj, shzt, bhyy
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ryzy
+    where zyid = #{zyid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ryzy
+    where zyid = #{zyid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.ryzy">
+    insert into ryzy (zyid, ydw, xdw, 
+      sqr, sqsj, zyyy, tjsj, 
+      shzt, bhyy)
+    values (#{zyid,jdbcType=INTEGER}, #{ydw,jdbcType=INTEGER}, #{xdw,jdbcType=INTEGER}, 
+      #{sqr,jdbcType=INTEGER}, #{sqsj,jdbcType=DATE}, #{zyyy,jdbcType=VARCHAR}, #{tjsj,jdbcType=TIMESTAMP}, 
+      #{shzt,jdbcType=INTEGER}, #{bhyy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.ryzy">
+    insert into ryzy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="zyid != null">
+        zyid,
+      </if>
+      <if test="ydw != null">
+        ydw,
+      </if>
+      <if test="xdw != null">
+        xdw,
+      </if>
+      <if test="sqr != null">
+        sqr,
+      </if>
+      <if test="sqsj != null">
+        sqsj,
+      </if>
+      <if test="zyyy != null">
+        zyyy,
+      </if>
+      <if test="tjsj != null">
+        tjsj,
+      </if>
+      <if test="shzt != null">
+        shzt,
+      </if>
+      <if test="bhyy != null">
+        bhyy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="zyid != null">
+        #{zyid,jdbcType=INTEGER},
+      </if>
+      <if test="ydw != null">
+        #{ydw,jdbcType=INTEGER},
+      </if>
+      <if test="xdw != null">
+        #{xdw,jdbcType=INTEGER},
+      </if>
+      <if test="sqr != null">
+        #{sqr,jdbcType=INTEGER},
+      </if>
+      <if test="sqsj != null">
+        #{sqsj,jdbcType=DATE},
+      </if>
+      <if test="zyyy != null">
+        #{zyyy,jdbcType=VARCHAR},
+      </if>
+      <if test="tjsj != null">
+        #{tjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shzt != null">
+        #{shzt,jdbcType=INTEGER},
+      </if>
+      <if test="bhyy != null">
+        #{bhyy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.ryzy">
+    update ryzy
+    <set>
+      <if test="ydw != null">
+        ydw = #{ydw,jdbcType=INTEGER},
+      </if>
+      <if test="xdw != null">
+        xdw = #{xdw,jdbcType=INTEGER},
+      </if>
+      <if test="sqr != null">
+        sqr = #{sqr,jdbcType=INTEGER},
+      </if>
+      <if test="sqsj != null">
+        sqsj = #{sqsj,jdbcType=DATE},
+      </if>
+      <if test="zyyy != null">
+        zyyy = #{zyyy,jdbcType=VARCHAR},
+      </if>
+      <if test="tjsj != null">
+        tjsj = #{tjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shzt != null">
+        shzt = #{shzt,jdbcType=INTEGER},
+      </if>
+      <if test="bhyy != null">
+        bhyy = #{bhyy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where zyid = #{zyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.ryzy">
+    update ryzy
+    set ydw = #{ydw,jdbcType=INTEGER},
+      xdw = #{xdw,jdbcType=INTEGER},
+      sqr = #{sqr,jdbcType=INTEGER},
+      sqsj = #{sqsj,jdbcType=DATE},
+      zyyy = #{zyyy,jdbcType=VARCHAR},
+      tjsj = #{tjsj,jdbcType=TIMESTAMP},
+      shzt = #{shzt,jdbcType=INTEGER},
+      bhyy = #{bhyy,jdbcType=VARCHAR}
+    where zyid = #{zyid,jdbcType=INTEGER}
+  </update>
+</mapper>
