@@ -9,8 +9,6 @@ import java.util.Set;
 
 public class Usertable implements java.io.Serializable {
 
-	// Fields
-
 	private Integer userId;
 	private Roles roles;
 	private String userName;
@@ -107,5 +105,6 @@ public class Usertable implements java.io.Serializable {
 	}
 
 	
+
 
 }

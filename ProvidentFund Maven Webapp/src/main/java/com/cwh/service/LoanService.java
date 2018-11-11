@@ -3,10 +3,8 @@ package com.cwh.service;
 import java.util.List;
 import java.util.Map;
 
-import com.entity.Bkshzjb;
 import com.entity.Grzfbkzhxx;
 import com.entity.Loaninfo;
-import com.github.pagehelper.PageInfo;
 
 public interface LoanService {
 	//²éÑ¯ËùÓÐ
