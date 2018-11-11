@@ -90,6 +90,12 @@
       <if test="netinfoid != null and netinfoid!=''">
         netinfoId,
       </if>
+      <if test="unitinfoaccount != null">
+        UnitInfoAccount,
+      </if>
+      <if test="grzhbhs != null">
+        grzhbhs,
+      </if>
       <if test="unitinfoaccount != null and unitinfoaccount !=''">
         UnitInfoAccount,
       </if>
@@ -379,6 +385,160 @@
       </if>
     </trim>
   </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.entity.Peraccount">
+    insert into peraccount
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="grzhbh != null">
+        grzhbh,
+      </if>
+      <if test="zhztbh != null">
+        zhztbh,
+      </if>
+      <if test="unitpositionid != null">
+        UnitpositionId,
+      </if>
+      <if test="unitinfoid != null">
+        UnitInfoId,
+      </if>
+      <if test="netinfoid != null">
+        netinfoId,
+      </if>
+      <if test="unitinfoaccount != null">
+        UnitInfoAccount,
+      </if>
+      <if test="grzhbhs != null">
+        grzhbhs,
+      </if>
+      <if test="peracid != null">
+        peracId,
+      </if>
+      <if test="peracloginpw != null">
+        peracloginpw,
+      </if>
+      <if test="peractransactionpw != null">
+        peracTransactionpw,
+      </if>
+      <if test="peracbalance != null">
+        peracBalance,
+      </if>
+      <if test="peracupdatestatus != null">
+        peracUpdatestatus,
+      </if>
+      <if test="bkname != null">
+        bkname,
+      </if>
+      <if test="bksex != null">
+        bksex,
+      </if>
+      <if test="phonenum != null">
+        phoneNum,
+      </if>
+      <if test="idtype != null">
+        IdType,
+      </if>
+      <if test="idnumbers != null">
+        IdNumbers,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="marital != null">
+        marital,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="postcode != null">
+        postcode,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="monthlyprofit != null">
+        monthlyProfit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="grzhbh != null">
+        #{grzhbh,jdbcType=INTEGER},
+      </if>
+      <if test="zhztbh != null">
+        #{zhztbh,jdbcType=INTEGER},
+      </if>
+      <if test="unitpositionid != null">
+        #{unitpositionid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoid != null">
+        #{unitinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="netinfoid != null">
+        #{netinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoaccount != null">
+        #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null">
+        #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="peracid != null">
+        #{peracid,jdbcType=VARCHAR},
+      </if>
+      <if test="peracloginpw != null">
+        #{peracloginpw,jdbcType=VARCHAR},
+      </if>
+      <if test="peractransactionpw != null">
+        #{peractransactionpw,jdbcType=VARCHAR},
+      </if>
+      <if test="peracbalance != null">
+        #{peracbalance,jdbcType=DECIMAL},
+      </if>
+      <if test="peracupdatestatus != null">
+        #{peracupdatestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bkname != null">
+        #{bkname,jdbcType=VARCHAR},
+      </if>
+      <if test="bksex != null">
+        #{bksex,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null">
+        #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null">
+        #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumbers != null">
+        #{idnumbers,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="marital != null">
+        #{marital,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlyprofit != null">
+        #{monthlyprofit,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.Peraccount">
     update peraccount
     <set>
@@ -393,6 +553,12 @@
       </if>
       <if test="netinfoid != null">
         netinfoId = #{netinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="unitinfoaccount != null">
+        UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null">
+        grzhbhs = #{grzhbhs,jdbcType=INTEGER},
       </if>
       <if test="unitinfoaccount != null">
         UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER},
@@ -482,6 +648,7 @@
       monthlyProfit = #{monthlyprofit,jdbcType=DECIMAL}
     where grzhbh = #{grzhbh,jdbcType=INTEGER}
   </update>
+
   <select id="findbyaccount" parameterType="map" resultType="Peraccount">
   	select * from peraccount where peracid=#{peracid} and peracloginpw=#{peracloginpw}
   </select>
@@ -545,4 +712,35 @@
   		and bkname=#{bkname}
   	</if>
   </select>
+<!-- cwh -->
+  <select id="queryAllcwh" resultType="java.util.Map">
+select*from Peraccount
+ </select>
+ <select id="queryAllzgcwh" resultType="java.util.Map">
+select*from Peraccount
+ </select>
+ <select id="queryByIdcwh" resultType="Peraccount">
+	       select * from Peraccount p JOIN Individualpay l on p.grzhbhs=l.grzhbhs where l.grzhbhs=#{grzhbhs}
+	   
+	</select>
+	<select id="getallcwh" resultType="java.util.Map">
+	       select * from Peraccount p JOIN Individualpay l on p.grzhbhs=l.grzhbhs where l.grzhbhs=#{grzhbhs}
+  </select>
+  <update id="updatecwh" parameterType="java.util.List">
+    update Peraccount
+<foreach collection="list" item="map" separator=",">
+ set bkname=#{map.bkname},bksex=#{map.bksex},phonenum=#{map.phonenum},idtype=#{map.idtype},idnumbers=#{map.idnumbers},birthday=#{map.birthday},marital=#{map.marital},education=#{map.education},address=#{map.address} where grzhbh=#{map.grzhbh}
+</foreach>
+ </update>
+ <insert id="savecwh" parameterType="Peraccount">
+ insert into Peraccount(bkname,phonenum,idnumbers,address)
+     values(#{bkname},#{phonenum},#{idnumbers},#{address})
+ 
+ </insert>
+  <select id="queryAlltycwh" resultType="java.util.Map">
+select*from Peraccount g join grzhztb t on g.zhztbh=t.zhztbh
+ </select>
+ <select id="querymhcwh" resultType="Peraccount">
+	select * from Peraccount where bkname like #{name}
+	</select>
 </mapper>

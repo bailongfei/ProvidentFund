@@ -623,6 +623,62 @@
 										</dd>
 									</dl>
 								</dd>
+
+							</dl></li>
+							<li data-name="set" class="layui-nav-item"><a
+							href="javascript:;" lay-tips="崔文函" lay-direction="2"> <i
+								class="layui-icon layui-icon-set"></i> <cite>崔文函</cite>
+						</a>
+							<dl class="layui-nav-child">
+								<dd class="layui-nav-itemed">
+									<a href="javascript:;">审核</a>
+									<dl class="layui-nav-child">
+										<dd>
+											<a lay-href="cwh/cwhloanin.jsp">贷款初审</a>
+										</dd>
+										<dd>
+											<a lay-href="cwh/cwhLaninzo.jsp">贷款终审</a>
+										</dd>
+										<dd>
+											<a lay-href="cwh/cwhAccu.jsp">提取审核</a>
+										</dd>
+										<dd>
+											<a lay-href="cwh/cwhperzt.jsp">账号状态</a>
+										</dd>
+									</dl>
+								</dd>
+								<dd class="layui-nav-itemed">
+									<a href="javascript:;">个人</a>
+									<dl class="layui-nav-child">
+										<dd>
+											<a lay-href="cwh/cwhper.jsp">个人信息</a>
+										</dd>
+										
+									</dl>
+								</dd>
+							
+								
+								<dd class="layui-nav-itemed">
+									<a href="javascript:;">委托收款,职工信息</a>
+									<dl class="layui-nav-child">
+										<dd>
+											<a lay-href="cwh/cwhUnit.jsp">委托收款</a>
+										</dd>
+									<dd>
+											<a lay-href="cwh/cwhperzg.jsp">职工户籍采集</a>
+										</dd>
+									</dl>
+								</dd>
+								<dd class="layui-nav-itemed">
+									<a href="javascript:;">经办人信息</a>
+									<dl class="layui-nav-child">
+										<dd>
+											<a lay-href="cwh/cwhunitinfo.jsp">经办人信息管理</a>
+										</dd>
+									
+									</dl>
+								</dd>
+								
 							</dl></li>
 					</ul>
 				</div>
@@ -660,7 +716,6 @@
 					</ul>
 				</div>
 			</div>
-
 
 			<!-- 主体内容 -->
 			<div class="layui-body" id="LAY_app_body">

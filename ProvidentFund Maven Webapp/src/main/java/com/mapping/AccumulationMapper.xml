@@ -278,8 +278,24 @@
       tqyyId = #{tqyyid,jdbcType=INTEGER}
     where accumulation = #{accumulation,jdbcType=INTEGER}
   </update>
+
   <select id="findbyperaccount" resultType="map" parameterType="String">
   	select a.*,p.peracId,p.bkname,u.UnitInfoName,g.* from accumulation  a join peraccount p on a.grzhbh=p.grzhbh join unitinfo u on p.UnitInfoId=u.UnitInfoId join gjjtqyyb g on a.tqyyId=g.tqyyId
   	where p.peracId=#{0}
   </select>
+
+   <select id="queryAllcwh" resultType="java.util.Map">
+select*from Accumulation g join peraccount t on g.grzhbh=t.grzhbh
+ </select>
+ 
+ <update id="updatecwh" parameterType="com.entity.Accumulation">
+ 
+   	update Accumulation
+
+<trim suffixOverrides="," prefix="set">
+<if test="grapprovalStatuss!=0"> grapprovalStatuss="审核通过" </if>
+</trim>
+<where>accumulation=#{accumulation}</where>
+ </update>
+ 
 </mapper>

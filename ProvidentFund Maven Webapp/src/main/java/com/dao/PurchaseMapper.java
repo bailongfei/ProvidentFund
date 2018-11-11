@@ -1,5 +1,8 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Purchase;
 
 public interface PurchaseMapper {
@@ -14,4 +17,6 @@ public interface PurchaseMapper {
     int updateByPrimaryKeySelective(Purchase record);
 
     int updateByPrimaryKey(Purchase record);
+    //²éÑ¯ËùÓĞ
+    public List<Map>queryAll();
 }

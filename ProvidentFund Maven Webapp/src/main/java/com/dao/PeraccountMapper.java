@@ -2,6 +2,9 @@ package com.dao;
 import java.util.List;
 import java.util.Map;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Peraccount;
 import com.entity.Unitinfo;
 import com.zhl.pager.Pager;
@@ -43,4 +46,20 @@ public interface PeraccountMapper {
     public List<Map<String, Object>> findbyname(Map<String, Object> map);
     //根据姓名查询的总数量
     public int findbynamecount(Map<String, Object> map);
+  //查询所有
+    public List<Map>queryAllcwh();
+    //查询所有
+    public List<Map>queryAllzgcwh();
+  //id查询
+    public List<Peraccount> queryByIdcwh(int grzhbh);
+    public List<Map> getallcwh(Integer grzhbh);
+    
+//修改
+    public int updatecwh(List<Map> list);
+//添加
+    public int savecwh(Peraccount u);
+    //查询所有
+    public List<Map>queryAlltycwh();
+  //模糊
+    public List<Map> querymhcwh();
 }

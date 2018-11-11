@@ -246,4 +246,47 @@
       jkhtll = #{jkhtll,jdbcType=DECIMAL}
     where dkxxbh = #{dkxxbh,jdbcType=INTEGER}
   </update>
+   <select id="queryAllcwh" resultType="java.util.Map">
+select*from loaninfo g join bkshzjb t on g.shbh=t.shbh
+ </select>
+ <select id="queryAllzocwh" resultType="java.util.Map">
+select*from loaninfo g join bkshzjb t on g.shbh=t.shbh
+ </select>
+<select id="queryByIdcwh" resultType="Loaninfo">
+	   select*from Loaninfo where dkxxbh=#{dkxxbh}
+	</select>
+  <select id="getallcwh" resultType="java.util.Map">
+    select * from purchase p JOIN loaninfo l on p.dkxxbh=l.dkxxbh JOIN bkshzjb b on l.shbh=b.shbh where l.dkxxbh=#{dkxxbh}
+  </select>
+  
+   <update id="updatecwh" parameterType="java.util.List">
+    update Loaninfo
+<foreach collection="list" item="map" separator=",">
+ set shbh=#{map.shbh} where dkxxbh=#{map.dkxxbh}
+</foreach>
+ </update>
+ <update id="updatebhyycwh" parameterType="java.util.List">
+    update Loaninfo
+<foreach collection="list" item="map" separator=",">
+ set bhyy=#{map.bhyy} where dkxxbh=#{map.dkxxbh}
+</foreach>
+ </update>
+ <update id="updatebhcwh" parameterType="java.util.List">
+    update Loaninfo`
+<foreach collection="list" item="map" separator=",">
+ set shbh=#{map.shbh} where dkxxbh=#{map.dkxxbh}
+</foreach>
+ </update>
+ <!-- 查询审核状态 -->
+ <select id="getshbhcwh" resultType="java.util.Map">
+ select * from bkshzjb where shbh=2 or shbh=4
+ </select>
+ <select id="getshbhzocwh" resultType="java.util.Map">
+ select * from bkshzjb where shbh=3 or shbh=4
+ </select>
+ <insert id="savegrcwh" parameterType="Grzfbkzhxx">
+ insert into Grzfbkzhxx(dkxxbh,dkzh,dkffe,zxll,hsbjze,dksyqs,name)
+     values(#{dkxxbh},#{dkzh},#{dkffe},#{zxll},#{hsbjze},#{dksyqs},#{name})
+ 
+ </insert>
 </mapper>

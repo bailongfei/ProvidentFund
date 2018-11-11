@@ -30,4 +30,12 @@ public interface IndividualpayMapper {
     int updateByPrimaryKeySelective(Individualpay record);
 
     int updateByPrimaryKey(Individualpay record);
+    //查询所有
+    public List<Map>queryAll();
+    //修改状态
+    public void update(Individualpay grzhbhs);    
+    //修改状态
+    public void updatefc(Individualpay grzhbhs);    
+  //修改状态
+    public void updateqf(Individualpay grzhbhs);    
 }

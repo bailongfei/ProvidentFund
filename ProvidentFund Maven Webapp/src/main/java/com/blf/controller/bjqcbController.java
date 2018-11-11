@@ -2,7 +2,6 @@ package com.blf.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.blf.service.bjqcbService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.util.Message;
-
 @Controller
 @RequestMapping("/bj")
 public class bjqcbController {

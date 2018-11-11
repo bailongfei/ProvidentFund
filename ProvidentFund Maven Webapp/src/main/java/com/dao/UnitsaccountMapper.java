@@ -23,4 +23,7 @@ public interface UnitsaccountMapper {
     int updateByPrimaryKeySelective(Unitsaccount record);
 
     int updateByPrimaryKey(Unitsaccount record);
+    //²éÑ¯ËùÓĞ
+    public List<Map>queryAllcwh();
+    public int savecwh(Unitsaccount g);
 }

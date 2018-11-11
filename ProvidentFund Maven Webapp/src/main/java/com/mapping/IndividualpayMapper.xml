@@ -628,4 +628,7 @@
       extractThisYear = #{extractthisyear,jdbcType=VARCHAR}
     where grzhbhs = #{grzhbhs,jdbcType=INTEGER}
   </update>
+  <select id="queryAll" resultType="java.util.Map">
+select*from Individualpay g join Perdetails t on g.personNo=t.personNo
+ </select>
 </mapper>

@@ -418,4 +418,23 @@
       Fattype = #{fattype,jdbcType=VARCHAR}
     where UnitInfoId = #{unitinfoid,jdbcType=INTEGER}
   </update>
+   <select id="queryAllcwh" resultType="java.util.Map">
+select*from unitinfo
+ </select>
+ <insert id="savecwh" parameterType="Unitinfo">
+ insert into Unitinfo(unitinfoid,unitinfoname,unitinfooperatorname,unitinfooperatorphone,nitinfooperatortype,unitinfooperatornumber)
+     values(#{unitinfoid},#{unitinfoname},#{unitinfooperatorname},#{unitinfooperatorphone},#{nitinfooperatortype},#{unitinfooperatornumber})
+ 
+ </insert>
+ <delete id="deletecwh" parameterType="Integer">
+	   delete from Unitinfo where UnitInfoId=#{UnitInfoId}
+	</delete>
+	<update id="updatecwh" parameterType="Unitinfo">
+	update Unitinfo set unitinfoid=#{unitinfoid},unitinfoname=#{unitinfoname},unitinfooperatorname=#{unitinfooperatorname},
+	unitinfooperatorphone=#{unitinfooperatorphone},nitinfooperatortype=#{nitinfooperatortype},
+	unitinfooperatornumber=#{unitinfooperatornumber} where unitinfoid=#{unitinfoid}
+	</update>
+	<select id="queryByUnitinfoIdcwh" resultType="Unitinfo">
+	   select*from Unitinfo where UnitInfoId=#{UnitInfoId}
+	</select>
 </mapper>

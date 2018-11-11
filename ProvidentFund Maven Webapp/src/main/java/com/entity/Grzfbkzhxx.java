@@ -4,6 +4,26 @@ import java.util.Date;
 
 public class Grzfbkzhxx {
     private Integer dkbh;
+    private String name;
+    private Integer dksyqs;
+    
+
+
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getDksyqs() {
+		return dksyqs;
+	}
+
+	public void setDksyqs(Integer dksyqs) {
+		this.dksyqs = dksyqs;
+	}
 
     private Integer dkxxbh;
 
