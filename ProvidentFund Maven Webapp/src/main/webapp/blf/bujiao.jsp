@@ -686,11 +686,7 @@ new Date(2010, 2, 12) // March 12th, 2010
        var dwhjs=$(".dwhj").val();
        var grhjs=$(".grhj").val();
        var dwgrhjs=$(".dwgrhj").val();
-       //var bjrsss=$(".bjrs").val();
-      /*  for(var i=3;i<6;i++){
-         var je=$(hjje).parent().parent().children().eq(i).children().val();
-         alert(je);
-       } */
+      
        var dwjje=$(hjje).parent().parent().children().eq(3).children().val();
        var gejje=$(hjje).parent().parent().children().eq(4).children().val();
        var zzsje=$(hjje).parent().parent().children().eq(5).children().val();

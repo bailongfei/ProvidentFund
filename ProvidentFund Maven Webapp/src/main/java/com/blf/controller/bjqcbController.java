@@ -23,11 +23,12 @@ private bjqcbService bjsc;
 public void saveBjOrIper(@RequestParam Map map,HttpServletResponse response) throws IOException{
 	  System.out.println("²¹½É"+map.get("unitinfoaccount"));  
 	    response.setContentType("text/html;charset=utf-8");
-	    int i=bjsc.savebjqcbOrUpdateIper(map);
+	    int i=bjsc.savebjqcbOrUpdateIper(map);//²¹½É
 	    PrintWriter out=response.getWriter();
 		Message message=new Message(i,"²Ù×÷³É¹¦!");
 		ObjectMapper mapper=new ObjectMapper();
 		String jsonStr=mapper.writeValueAsString(message);
 		out.print(jsonStr);
   }
+
 }
