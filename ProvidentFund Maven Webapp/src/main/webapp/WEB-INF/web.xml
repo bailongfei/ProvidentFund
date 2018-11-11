@@ -8,6 +8,7 @@
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 	
+
 	 <filter>
         <filter-name>shiroFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -64,4 +65,5 @@
     <listener>
        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
+
 </web-app>
