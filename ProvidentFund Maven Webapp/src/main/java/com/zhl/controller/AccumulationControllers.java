@@ -15,7 +15,7 @@ import com.entity.Gjjtqyyb;
 import com.zhl.service.AccumulationService;
 @RequestMapping("/Accumulation")
 @Controller
-public class AccumulationController {
+public class AccumulationControllers {
 	@Autowired
 	private AccumulationService service;
 	//添加公积金提取申请
