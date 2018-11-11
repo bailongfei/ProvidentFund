@@ -3,7 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
+<%@taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -31,13 +31,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				type:"post",
 				dataType:'json',
 				success:function(data){
-					$("#grapprovalstatuss").empty();
+					$("#tqyyid").empty();
 					var opt="<option value=''>--请选择提取原因--</option>";
 					for(var i=0;i<data.length;i++){
 						var obj=data[i];
 						opt+="<option value='"+obj.tqyyid+"'>"+obj.cause+"</option>";
 					}
-					$("#grapprovalstatuss").append(opt);
+					$("#tqyyid").append(opt);
 				}
 			})
 		}
@@ -63,8 +63,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$(":text").val('');
 		});
 		$(document).ready(function(){
-	    	$("#grapprovalstatuss").change(function(){
-	    		var tqyyId=$("#grapprovalstatuss").val();
+	    	$("#tqyyid").change(function(){
+	    		var tqyyId=$("#tqyyid").val();
 	    		if(tqyyId=="1"){
 	    			$("#zf").hide();
 	    			$("#tx").hide();
@@ -149,7 +149,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<td><input type="text" name="extractingamount"></td>
     		<td>提取原因:</td>
     		<td>
-    			<select id="grapprovalstatuss" name="grapprovalstatuss"></select>
+    			<select id="tqyyid" name="tqyyid"></select>
     		</td>
     	</tr>
     	<tr id="houseaddress" style="display: none;">

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.dao.AccumulationMapper;
@@ -29,6 +30,7 @@ public class AccumulationServiceImpl implements AccumulationService {
 		// TODO Auto-generated method stub
 		return tqyydao.findall();
 	}
+	@Transactional
 	@Override
 	public List<Map<String, Object>> findbyperaccount(String peracId) {
 		// TODO Auto-generated method stub

@@ -3,7 +3,6 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,15 +10,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <title>My JSP 'Perbusiness.jsp' starting page</title>
     
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
+    
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
+<!-- 使用模态窗口引入bootstrap ${pageContext.request.contextPath}-->
+<link rel="stylesheet" type="text/css"
+	href="resources/js/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/js/bootstrap/css/bootstrap-theme.min.css">
+<script src="resources/js/jquery.min.js"></script>
+<script src="resources/js/bootstrap/js/bootstrap.min.js"></script>
+<!--最基础jQuery.js都是基于这个  -->
+<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
+<!-- 异步转换参数js -->
+<script type="text/javascript" src="resources/jqueryExt.js"></script>
+<!-- 上传文件js -->
+<script type="text/javascript" src="resources/jquery.form.js"></script>
 	<script type="text/javascript">
 	  $(function(){
 	  	queryUnitinfos();
@@ -95,29 +102,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	})
 	  } */
 	</script>
+	<style type="text/css">
+		#box{
+			font-size: 18px;
+		}
+	</style>
   </head>
   <body>
-  	<form action="" id="fm">
-    <table>
-    	<tr>
-    		<td>		<!-- 个人账户主键 -->
-    				    <input type="hidden" name="grzhbh" id="grzhbh">
-    			个人账户：<input type="text" name="peracId" id="peracId">
-    		</td>
-    		<td>	  
-    				  <!-- 原单位主键 -->
-    				  <input type="hidden" id="lastunitinfoid">
-    			原单位：<input type="text" id="lastunitname">
-    		</td>
-    	</tr>
-    	<tr>
-    		<td>姓名：<input type="text" id="bkname"></td>
-    		<td>新单位:<select id="unit" name="unitinfoid"></select></td>
-    	</tr>
-    	<tr>
-    		<td><button id="transfer" type="button">提交</button></td>
-    	</tr>
-    </table>
-    </form>
+  	<form role="form" id="fm">
+  	<div id="box" style="width:500px;height: 500px;float: left;">
+  		<table>
+  			<tr>
+  				<td>个人账户:</td>
+  				<td>
+		    		<input class="form-control" style="width: 200px;"  type="text" name="peracId" id="peracId" placeholder="个人账号">
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>证件号码:</td>
+  				<td>
+		    		<input class="form-control" style="width: 200px;"  type="text" id="IdNumbers" placeholder="证件号码">
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>个人账户余额:</td>
+  				<td>
+		    		<input class="form-control" style="width: 200px;"  type="text" id="peracBalance" placeholder="个人账户余额">
+  				</td>
+  			</tr>
+  		</table>
+  			<!-- 个人账号主键 -->
+	    	<input type="hidden" name="grzhbh" id="grzhbh">
+	    	<!-- 原单位主键 -->
+	    	<input type="hidden" id="lastunitinfoid">
+	    	<h4>原单位：<input type="text" id="lastunitname"></h4>
+	    	<h4>姓名：<input type="text" id="bkname"></h4>
+	    	</tr>
+	    	<tr>
+	    		<td><button id="transfer" type="button">提交</button></td>
+	    	</tr>
+	    
+  	</div>
+  	<div id="box2" style="width:500px;height: 500px;float: left;">
+  		<h3>新单位:<select id="unit" name="unitinfoid"></select></h3>
+  	</div>
+  	</form>
+    
+    
   </body>
 </html>

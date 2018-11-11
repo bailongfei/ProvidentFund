@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.entity.Peraccount;
 import com.entity.Unitinfo;
+import com.zhl.pager.Pager;
 
 public interface PeraccountMapper {
 	public int insertPercc(Map<String,Object> map);
@@ -32,4 +33,14 @@ public interface PeraccountMapper {
     public Map<String, Object> finddkInfo(Integer dkxxbh);
     //查询所有单位
     public List<Unitinfo> queryUnitinfos();
+    //根据单位id查询个人账号信息
+    public List<Map<String, Object>> findaccountinfo(Map<String, Object> map);
+    //查询分页数据总数
+    public int findaccountnum(Map<String, Object> map);
+    //根据身份证号码查询个人及单位信息
+    public List<Map<String, Object>> findbyIdnumber(String IdNumber);
+    //根据姓名查询账户正常账户信息
+    public List<Map<String, Object>> findbyname(Map<String, Object> map);
+    //根据姓名查询的总数量
+    public int findbynamecount(Map<String, Object> map);
 }

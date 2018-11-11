@@ -11,15 +11,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <title>My JSP 'Perbusiness.jsp' starting page</title>
     
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
+<!-- 使用模态窗口引入bootstrap ${pageContext.request.contextPath}-->
+<link rel="stylesheet" type="text/css"
+	href="resources/js/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/js/bootstrap/css/bootstrap-theme.min.css">
+<script src="resources/js/jquery.min.js"></script>
+<script src="resources/js/bootstrap/js/bootstrap.min.js"></script>
+<!--最基础jQuery.js都是基于这个  -->
+<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
+<!-- 异步转换参数js -->
+<script type="text/javascript" src="resources/jqueryExt.js"></script>
+<!-- 上传文件js -->
+<script type="text/javascript" src="resources/jquery.form.js"></script>
 	<script type="text/javascript">
 		/* $(function(){
 			$.ajax({
@@ -114,23 +121,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <table>
+    <table class="table">
     	<tr>
-    		<td>
-    			<input type="text" name="bkname" id="bkname">
-    			<select name="grperbuType" id="grperbuType">
-    				<option value="">--请选择--</option>
-    				<option value="汇缴">汇缴</option>
-    			</select>
-    		</td>
+    		
     		<td>
     			<input type="date" name="date1" id="date1">
     		</td>
     		<td>
     			<input type="date" name="date2" id="date2">
     		</td>
+    		<td><input class="form-control" type="text" name="bkname" id="bkname"></td>
+    		<td>
+    			
+    			<select type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="grperbuType" id="grperbuType">
+    				<option value="">--请选择--</option>
+    				<option value="汇缴">汇缴</option>
+    			</select>
+    		</td>
     	</tr>
     	<tr>
+    		
     		<td>个人账号</td>
     		<td>员工姓名</td>
     		<td>所在单位</td>
@@ -139,12 +149,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<td>发生额度</td>
     		<td>单位缴纳</td>
     		<td>个人缴纳</td>
+    		
     	</tr>
     	<tbody id="tab"></tbody>
     </table>
-    	<button id="prepage">上一页</button>
+    <div class="panel panel-default">
+    	<button id="prepage" class="btn btn-default">上一页</button>
 		当前是第<span id="nowPage"></span>页 
-    	<button id="nextpage">下一页</button>&nbsp;&nbsp;
+    	<button id="nextpage" class="btn btn-default">下一页</button>&nbsp;&nbsp;
     	共<span id="countPage"></span>页
+    	
+    	</div>
   </body>
 </html>

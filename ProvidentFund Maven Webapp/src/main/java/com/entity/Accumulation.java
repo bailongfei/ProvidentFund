@@ -43,6 +43,8 @@ public class Accumulation {
 
     private String txpwwh;
 
+    private Integer tqyyid;
+
     public Integer getAccumulation() {
         return accumulation;
     }
@@ -201,5 +203,13 @@ public class Accumulation {
 
     public void setTxpwwh(String txpwwh) {
         this.txpwwh = txpwwh == null ? null : txpwwh.trim();
+    }
+
+    public Integer getTqyyid() {
+        return tqyyid;
+    }
+
+    public void setTqyyid(Integer tqyyid) {
+        this.tqyyid = tqyyid;
     }
 }

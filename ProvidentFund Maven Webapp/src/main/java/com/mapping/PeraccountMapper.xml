@@ -505,7 +505,7 @@
   </select>
   <!-- 根据个人账号查询单位信息 -->
   <select id="findUnitName" parameterType="String" resultType="map">
-  	select * from peraccount p  left join unitinfo u on p.UnitInfoId=u.UnitInfoId 
+  	select * from peraccount p  left join unitinfo u on p.UnitInfoId=u.UnitInfoId join grzhztb g on p.zhztbh=g.zhztbh
   	where p.peracId=#{0}
   </select>
   <!-- 根据贷款编号查询贷款信息 -->  
@@ -516,5 +516,33 @@
   <!-- 查询所有单位信息 -->
   <select id="queryUnitinfos" resultType="Unitinfo">
   	select * from unitinfo
+  </select>
+  <!-- 根据单位id查询账号信息 -->
+  <select id="findaccountinfo" resultType="map" parameterType="map">
+  	select * from peraccount p right join unitinfo u on p.UnitInfoId=u.UnitInfoId
+  	where p.zhztbh=1
+  	and p.UnitInfoId=#{UnitInfoId}
+  	limit #{startIndex},#{pageSize}
+  </select>
+  <!-- 查询数量 -->
+  <select id="findaccountnum" resultType="int">
+  	select count(*) from peraccount p right join unitinfo u on p.UnitInfoId=u.UnitInfoId
+  	where p.UnitInfoId=#{UnitInfoId}
+  </select>
+  <select id="findbyIdnumber" parameterType="String" resultType="map">
+  	select * from peraccount p join unitinfo u on p.UnitInfoId=u.UnitInfoId where p.IdNumbers=#{0}
+  </select>
+  <select id="findbyname" parameterType="map" resultType="map">
+  	select * from peraccount p where zhztbh=1 
+  	<if test="bkname!=null and bkname!=''">
+  		and bkname=#{bkname}
+  	</if>
+  	limit #{startIndex},#{pageSize}
+  </select>
+  <select id="findbynamecount" parameterType="map" resultType="int">
+  	select count(*) from peraccount p where zhztbh=1 
+  	<if test="bkname!=null and bkname!=''">
+  		and bkname=#{bkname}
+  	</if>
   </select>
 </mapper>
