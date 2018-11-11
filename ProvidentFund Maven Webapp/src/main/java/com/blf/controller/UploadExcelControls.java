@@ -22,7 +22,7 @@ import com.entity.Peraccount;
 
 @Controller
 @RequestMapping("/uploadExcel/*")  
-public class UploadExcelControl {
+public class UploadExcelControls {
 @Autowired
 private individualPayService ips;
     /**
