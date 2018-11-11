@@ -19,7 +19,7 @@ import com.wangc.service.PeraccountService;
 
 @Controller
 @RequestMapping("/good")
-public class PeraccountController {
+public class PeraccountControllerwc {
 	@Autowired
 	private	PeraccountService ps;
 	private Peraccount pds;

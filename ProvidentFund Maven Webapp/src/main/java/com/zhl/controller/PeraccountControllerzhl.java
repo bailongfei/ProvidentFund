@@ -23,7 +23,7 @@ import com.zhl.service.ReturnpayService;
 
 @Controller
 @RequestMapping("/Peraccount")
-public class PeraccountController {
+public class PeraccountControllerzhl {
 	@Autowired
 	private PeraccountService service;
 	@Autowired
