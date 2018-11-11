@@ -6,7 +6,9 @@ import java.util.Map;
 import com.entity.Unitposition;
 
 public interface UnitpositionMapper {
+
 	public List<Map<String,Object>> queryZw();
+
     int deleteByPrimaryKey(Integer unitpositionid);
 
     int insert(Unitposition record);

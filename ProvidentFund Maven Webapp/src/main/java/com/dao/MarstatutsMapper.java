@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Marstatuts;
 
 public interface MarstatutsMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Marstatuts record);

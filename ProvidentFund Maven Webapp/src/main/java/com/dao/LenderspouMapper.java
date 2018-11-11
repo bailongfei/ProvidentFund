@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Lenderspou;
 
 public interface LenderspouMapper {
+
     int deleteByPrimaryKey(Integer pobh);
 
     int insert(Lenderspou record);

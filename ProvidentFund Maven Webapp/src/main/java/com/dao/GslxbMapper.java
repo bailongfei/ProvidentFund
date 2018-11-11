@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Gslxb;
 
 public interface GslxbMapper {
+
     int deleteByPrimaryKey(Integer gslxbh);
 
     int insert(Gslxb record);

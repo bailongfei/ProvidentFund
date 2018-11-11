@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Hjmx;
 
 public interface HjmxMapper {
+
     int deleteByPrimaryKey(Integer hjmxbh);
 
     int insert(Hjmx record);

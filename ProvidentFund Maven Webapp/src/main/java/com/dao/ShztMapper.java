@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Shzt;
 
 public interface ShztMapper {
+
     int deleteByPrimaryKey(Integer shbh);
 
     int insert(Shzt record);

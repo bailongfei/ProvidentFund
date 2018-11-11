@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Overdue;
 
 public interface OverdueMapper {
+
     int deleteByPrimaryKey(Integer yqdjbh);
 
     int insert(Overdue record);

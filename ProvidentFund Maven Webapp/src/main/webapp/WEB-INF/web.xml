@@ -9,7 +9,7 @@
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 
-	 <filter>
+	 <filter id="Filter_1541931884542">
         <filter-name>shiroFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
         <init-param>
@@ -26,7 +26,7 @@
         注意:请将此过滤器放在所有过滤器的前面，否则有可能出现乱码  -->
 
 	<!-- Spring监听器 -->
-    <filter>
+    <filter id="Filter_1541931884544">
         <filter-name>encoding</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
@@ -43,7 +43,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<servlet>
+	<servlet id="Servlet_1541931884489">
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
@@ -52,7 +52,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup><!-- 自启动，数字越小优先级越高 -->
 	</servlet>
-	<servlet-mapping>
+	<servlet-mapping id="ServletMapping_1541931884337">
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>

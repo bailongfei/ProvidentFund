@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Jjlxb;
 
 public interface JjlxbMapper {
+
     int deleteByPrimaryKey(Integer jjlxbh);
 
     int insert(Jjlxb record);

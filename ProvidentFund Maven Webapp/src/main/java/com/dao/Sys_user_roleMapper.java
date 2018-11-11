@@ -2,7 +2,9 @@ package com.dao;
 
 import com.entity.Sys_user_role;
 
+
 public interface Sys_user_roleMapper {
+
     int deleteByPrimaryKey(Integer id3);
 
     int insert(Sys_user_role record);

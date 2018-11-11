@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.entity.Sys_role;
 
+
 public interface Sys_roleMapper {
 	List<Map<String, Object>> queryRole(String account);
 

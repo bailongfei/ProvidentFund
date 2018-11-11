@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 validator.Checked=src/main/webapp/frame/layuiadmin/json
 =======
 validator.Checked=src/main/webapp/resources,src/main/webapp/frame
@@ -8,4 +9,7 @@ validator.Checked=src/main/webapp/resources,src/main/webapp/frame
 =======
 validator.Checked=src/main/webapp/frame
 >>>>>>> branch 'master' of https://github.com/bailongfei/ProvidentFund.git
+=======
+validator.Checked=src/main/webapp/frame/layuiadmin
+>>>>>>> refs/remotes/origin/wangcc
 validator.Unchecked=

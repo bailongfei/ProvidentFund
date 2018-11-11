@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Gjjtqjl;
 
 public interface GjjtqjlMapper {
+
     int deleteByPrimaryKey(Integer tqjlbh);
 
     int insert(Gjjtqjl record);

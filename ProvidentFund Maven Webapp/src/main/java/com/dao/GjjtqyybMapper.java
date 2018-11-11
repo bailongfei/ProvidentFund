@@ -5,7 +5,9 @@ import java.util.List;
 import com.entity.Gjjtqyyb;
 
 public interface GjjtqyybMapper {
+
     int deleteByPrimaryKey(Integer tqyyid);
+
 
     int insert(Gjjtqyyb record);
 

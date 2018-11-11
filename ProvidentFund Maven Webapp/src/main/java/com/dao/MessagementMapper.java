@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Messagement;
 
 public interface MessagementMapper {
+
     int deleteByPrimaryKey(Integer messageid);
 
     int insert(Messagement record);

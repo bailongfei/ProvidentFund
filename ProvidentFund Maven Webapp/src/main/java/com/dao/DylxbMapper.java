@@ -1,9 +1,16 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Dylxb;
 
 public interface DylxbMapper {
+
+	public List<Map<String, Object>> Dylxbquery();
+
     int deleteByPrimaryKey(Integer dylxbh);
+
 
     int insert(Dylxb record);
 
@@ -14,4 +21,5 @@ public interface DylxbMapper {
     int updateByPrimaryKeySelective(Dylxb record);
 
     int updateByPrimaryKey(Dylxb record);
+
 }

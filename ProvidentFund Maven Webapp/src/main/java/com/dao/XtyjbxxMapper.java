@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Xtyjbxx;
 
 public interface XtyjbxxMapper {
+
     int deleteByPrimaryKey(Integer ygbh);
 
     int insert(Xtyjbxx record);

@@ -5,14 +5,23 @@ import java.util.Map;
 import java.util.List;
 import java.util.Map;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Peraccount;
 import com.entity.Unitinfo;
 import com.zhl.pager.Pager;
+
 
 public interface PeraccountMapper {
 	public int insertPercc(Map<String,Object> map);
 	public int updatePercc(Map<String,Object> map);
 	public int savePercc(Peraccount per);
+
+	
+	 public int save(Peraccount tb);
+    public List<Map<String, Object>> queryTbid(int grzhbh);
+
     int deleteByPrimaryKey(Integer grzhbh);
 
     int insert(Peraccount record);
@@ -22,6 +31,7 @@ public interface PeraccountMapper {
     Peraccount selectByPrimaryKey(Integer grzhbh);
 
     int updateByPrimaryKeySelective(Peraccount record);
+
 
     int updateByPrimaryKey(Peraccount record);
     //根据账号密码查询
@@ -62,4 +72,5 @@ public interface PeraccountMapper {
     public List<Map>queryAlltycwh();
   //模糊
     public List<Map> querymhcwh();
+
 }

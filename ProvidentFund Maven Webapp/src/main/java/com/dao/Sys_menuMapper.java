@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.entity.Sys_menu;
 
+
 public interface Sys_menuMapper {
 	   List<Map<String, Object>> queryMenu(String account);
     int deleteByPrimaryKey(Integer menuId);

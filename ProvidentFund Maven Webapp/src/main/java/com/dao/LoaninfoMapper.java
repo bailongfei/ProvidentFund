@@ -3,13 +3,14 @@ package com.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.entity.Bkshzjb;
 import com.entity.Grzfbkzhxx;
 import com.entity.Loaninfo;
 
 public interface LoaninfoMapper {
+
+	public int Loansave(Loaninfo lo);
+
     int deleteByPrimaryKey(Integer dkxxbh);
 
     int insert(Loaninfo record);

@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Sys_role_menu;
 
 public interface Sys_role_menuMapper {
+
     int deleteByPrimaryKey(Integer id2);
 
     int insert(Sys_role_menu record);

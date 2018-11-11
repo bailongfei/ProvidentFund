@@ -6,6 +6,7 @@ import java.util.Map;
 import com.entity.Unitinfo;
 
 public interface UnitinfoMapper {
+
     int deleteByPrimaryKey(Integer unitinfoid);
 
     int insert(Unitinfo record);

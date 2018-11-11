@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.entity.Hjqcb;
 import com.entity.Individualpay;
 
+
 public interface IndividualpayMapper {
 	public int selectSum(Integer unitinfoaccount);
 	public List<Map<String,Object>> selectBGjce(Integer unitinfoaccount);
@@ -15,12 +16,15 @@ public interface IndividualpayMapper {
 	public List<Individualpay> queryIpaer(Integer unitinfoaccount);
 	public int insertIpayPer(Map<String,Object> map);
 	public int saveIpaer(Individualpay iper);
+
     int deleteByPrimaryKey(Integer grzhbhs);
+
    // public int updateIpar(@Param("unitinfoaccount")Integer unitinfoaccount,@Param("nhyf")Integer hjys);
     public int updateIpar(Hjqcb hq);
     public List<Map<String,Object>> queryIperRy(@Param("UnitInfoAccount")String UnitInfoAccount,@Param("bkname")String bkname);//≤πΩ…≤È—Ø»À‘±
     public Map<String,Object> queryCheckdata(@Param("perId")String perId);
     public int BujiaoUpdateIper(@Param("personalaccount")String personalaccount,@Param("grjczes")String grjczes);//≤πΩ…
+
     int insert(Individualpay record);
 
     int insertSelective(Individualpay record);

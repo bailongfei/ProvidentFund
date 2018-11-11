@@ -6,6 +6,7 @@ import java.util.Map;
 import com.entity.Returnpay;
 
 public interface ReturnpayMapper {
+
     int deleteByPrimaryKey(Integer chbh);
 
     int insert(Returnpay record);

@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Grzhztb;
 
 public interface GrzhztbMapper {
+
     int deleteByPrimaryKey(Integer zhztbh);
 
     int insert(Grzhztb record);

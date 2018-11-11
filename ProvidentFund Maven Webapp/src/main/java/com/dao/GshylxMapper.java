@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Gshylx;
 
 public interface GshylxMapper {
+
     int deleteByPrimaryKey(Integer gshylxbh);
 
     int insert(Gshylx record);

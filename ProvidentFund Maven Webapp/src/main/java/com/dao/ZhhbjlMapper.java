@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Zhhbjl;
 
 public interface ZhhbjlMapper {
+
     int deleteByPrimaryKey(Integer jlbh);
 
     int insert(Zhhbjl record);

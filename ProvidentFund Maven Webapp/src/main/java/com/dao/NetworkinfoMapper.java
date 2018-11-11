@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Networkinfo;
 
 public interface NetworkinfoMapper {
+
     int deleteByPrimaryKey(Integer netinfoid);
 
     int insert(Networkinfo record);

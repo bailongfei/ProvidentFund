@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Xwfb;
 
 public interface XwfbMapper {
+
     int deleteByPrimaryKey(Integer xwbh);
 
     int insert(Xwfb record);

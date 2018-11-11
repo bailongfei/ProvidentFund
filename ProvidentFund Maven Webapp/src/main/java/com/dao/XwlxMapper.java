@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Xwlx;
 
 public interface XwlxMapper {
+
     int deleteByPrimaryKey(Integer xwlxbh);
 
     int insert(Xwlx record);

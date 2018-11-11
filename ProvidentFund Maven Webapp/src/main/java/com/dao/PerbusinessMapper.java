@@ -6,11 +6,14 @@ import java.util.Map;
 import com.entity.Perbusiness;
 
 public interface PerbusinessMapper {
+
     int deleteByPrimaryKey(Integer perbuid);
+
 
     int insert(Perbusiness record);
 
    public int insertSelective(Perbusiness record);
+
 
     Perbusiness selectByPrimaryKey(Integer perbuid);
 
