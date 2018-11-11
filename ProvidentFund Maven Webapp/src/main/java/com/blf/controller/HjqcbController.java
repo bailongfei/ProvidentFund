@@ -66,7 +66,7 @@ public Pager queryHj(String UnitInfoName,@RequestParam(required = false, default
 	System.out.println(UnitInfoName);
 	Pager p=new Pager();//分页对象
 	p.setCurPage(pageNum);/*当前页*/
-	p.setPageSize(1);/*//每页条数*/
+	p.setPageSize(4);/*//每页条数*/
 	Map<String,Object> map=new HashMap<String, Object>();
 	//map.put("startIndex", (curPage-1)*pageSize);
 	map.put("startIndex", p.getStartIndex());//设置开始索引

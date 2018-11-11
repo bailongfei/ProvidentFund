@@ -180,7 +180,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			<tr>
 			  <td>合计:</td>
-			  <td colspan="2"><input type="text" size="6" class="bjrs" id="" name="bjrs" readonly="readonly" >人数</td>
+			  <td colspan="2"><input type="text" size="6" value="0" class="bjrs" id="" name="bjrs" readonly="readonly" >人数</td>
 			  <td><input type="text" size="6" value="0" class="dwhj" id="" name="dwbje" readonly="readonly"></td>
 			  <td><input type="text" size="6" value="0"  class="grhj" id="" name="grbje" readonly="readonly"></td>
 			  <td><input type="text" size="6" value="0" class="dwgrhj" id="" name="" readonly="readonly"></td>
@@ -657,7 +657,7 @@ new Date(2010, 2, 12) // March 12th, 2010
         };                  
     $(document).on("click","#saveBujiao",function(){
     
-         if($(".dwgrhj").val()>0){
+         if($(".dwgrhj").val()>0&&$(".bjrs").val()>0){
             var datas=$("#form1").serialize();
             
             $.ajax({
@@ -696,8 +696,15 @@ new Date(2010, 2, 12) // March 12th, 2010
         var ids=parseFloat(id)+parseFloat(i);
         stuId=this;
         $(stuId).parent().siblings("#tbody").children().eq(i).children().eq(0).children().val(ids); */
-        
-        
+        /* 动态改变模态框的高度 */
+			 var ht=parseInt(500);
+			 var gh=(i+1)*parseInt(35);
+			 var gds=ht+gh;
+			$("#wh").height(gds);
+        /* 添加人数 */
+        //var rs=$(".bjrs").val();
+        var rsss=(i+parseInt(1));
+        $(".bjrs").val(rsss);
         i++;//行号增加
     });
     
@@ -705,7 +712,7 @@ new Date(2010, 2, 12) // March 12th, 2010
        var checkDatass=[];
        var pid=$(this).val();//动态获取input值
            checkDatass.push(pid);
-       alert(pid);
+       
          $.ajax({
            url:"${pageContext.request.contextPath}/ipay/querycheckData",
            type:"post",
@@ -713,7 +720,7 @@ new Date(2010, 2, 12) // March 12th, 2010
            dataType:"json",
            success:function(data){
               //$("#tbodyId").empty();
-              alert(data[0].bkname);
+              
               for(var i=0;i<data.length;i++){
                 var val=data[i];
                 $(".grzhbhs").val(val.grzhbhs);
