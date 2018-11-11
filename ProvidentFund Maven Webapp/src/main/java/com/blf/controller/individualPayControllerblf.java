@@ -22,7 +22,7 @@ import com.util.Message;
 @Controller
 @RequestMapping("/ipay")
 @SessionAttributes(value={"s","ss"})
-public class individualPayController {
+public class individualPayControllerblf {
 	@Autowired
 	private individualPayService ipsc;
   @RequestMapping("/saveIpayPer")

@@ -21,7 +21,7 @@ import com.wangc.serviceimpl.PurchaseServiceimpl;
 
 @Controller
 @RequestMapping("/purchase")
-public class PurchaseController {
+public class PurchaseControllerwc {
 	@Autowired
 	private PurchaseServiceimpl ps;
     @Autowired

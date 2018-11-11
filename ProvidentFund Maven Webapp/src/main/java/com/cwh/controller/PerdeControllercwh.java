@@ -19,7 +19,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 @Controller
 @RequestMapping("/peraccountcwh")
-public class PerdeController {
+public class PerdeControllercwh {
 	@Autowired
 private PerdeService ser;
 @RequestMapping("/queryAllcwh")

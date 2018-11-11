@@ -16,7 +16,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 @Controller
 @RequestMapping("/loaninfocwh")
-public class LoanController {
+public class LoanControllercwh {
 	@Autowired
 private LoanService ser;
 	private Grzfbkzhxx gs;

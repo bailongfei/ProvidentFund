@@ -1,4 +1,4 @@
-package com.cwh.controller;
+package com.blf.controller;
 
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -16,15 +16,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.util.ImportExcelUtil;
-import com.cwh.service.PerdeService;
+import com.blf.service.individualPayService;
 import com.entity.Individualpay;
 import com.entity.Peraccount;
 
 @Controller
 @RequestMapping("/uploadExcel/*")  
-public class UploadExcelControl {
+public class UploadExcelControlsblf {
 @Autowired
-private PerdeService ips;
+private individualPayService ips;
     /**
      * 描述：通过传统方式form表单提交方式导入excel文件
      * @param request
@@ -86,13 +86,36 @@ private PerdeService ips;
         for (int i = 0; i < listob.size(); i++) {
             List<Object> lo = listob.get(i);
             Peraccount vo = new Peraccount();
-            vo.setBkname(String.valueOf(lo.get(0)));
-            vo.setPhonenum(String.valueOf(lo.get(1)));
-            vo.setIdnumbers(String.valueOf(2));
-           
-            vo.setAddress(String.valueOf(lo.get(3)));
-         ips.savecwh(vo);
-           System.out.println("打印信息-->机构:"+vo.getBkname()+" 机构:"+vo.getPhonenum()+"  名称："+vo.getIdnumbers());
+            vo.setZhztbh(Integer.valueOf((String) lo.get(0)));
+            //vo.setZhztbh(Integer.parseInt(String.valueOf(lo.get(0))));
+            vo.setUnitpositionid(Integer.valueOf((String) lo.get(1)));
+            vo.setUnitinfoid(Integer.valueOf((String) lo.get(2)));
+            vo.setUnitinfoaccount(Integer.valueOf((String) lo.get(3)));
+            vo.setPeracid(String.valueOf(lo.get(4)));
+            vo.setPeracloginpw(String.valueOf(lo.get(5)));
+            vo.setPeractransactionpw(String.valueOf(lo.get(6)));
+            vo.setBkname(String.valueOf(lo.get(7)));
+            vo.setBksex(String.valueOf(lo.get(8)));
+            vo.setPhonenum(String.valueOf(lo.get(9)));
+            vo.setIdtype(String.valueOf(lo.get(10)));
+            vo.setIdnumbers(String.valueOf(11));
+            vo.setBirthday(String.valueOf(lo.get(12)));
+            vo.setMarital(String.valueOf(lo.get(13)));
+            vo.setEducation(String.valueOf(lo.get(14)));
+            vo.setEmail(String.valueOf(lo.get(15)));
+            vo.setPostcode(String.valueOf(lo.get(16)));
+            vo.setAddress(String.valueOf(lo.get(17)));
+            Individualpay ip=new Individualpay();
+			ip.setUnitinfoaccount(Integer.valueOf((String) lo.get(3)));
+            ip.setPersonalaccount(String.valueOf(lo.get(18)));
+            ip.setPersonaldepositbase(Integer.valueOf((String) lo.get(19)));
+            ip.setUnitratedeposit(Integer.valueOf((String) lo.get(20)));
+            ip.setPercontributionrate(Integer.valueOf((String) lo.get(21)));
+            ip.setOpenaccountstatus(String.valueOf(lo.get(22)));
+            ip.setOpeningdate(String.valueOf(lo.get(23)));
+            ip.setPeraccountbalance(Integer.valueOf((String) lo.get(24)));
+            ips.saveIparOrperccOrUpdatePercc(vo, ip);
+            System.out.println("打印信息-->机构:"+vo.getZhztbh()+" 机构:"+vo.getUnitinfoaccount()+"  名称："+vo.getEmail()+"   时间："+ip.getOpeningdate()+"   资产："+ip.getPersonaldepositbase());
         }
 
         PrintWriter out = null;

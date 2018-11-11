@@ -20,7 +20,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 @Controller
 @RequestMapping("/unitinfocwh")
-public class UnitinfoCwhController {
+public class UnitinfoCwhControllercwh {
 	@Autowired
 private UnitinfoService ser;
 	@RequestMapping("/queryAllcwh")

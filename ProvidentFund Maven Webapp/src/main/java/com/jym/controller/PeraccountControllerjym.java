@@ -23,7 +23,7 @@ import com.jym.services.PeraccountServices;
 */
 @Controller
 @RequestMapping("/Peraccount")
-public class PeraccountControllerss {
+public class PeraccountControllerjym {
 	@Autowired
 	private PeraccountServices ser;
 	@RequestMapping("/save")

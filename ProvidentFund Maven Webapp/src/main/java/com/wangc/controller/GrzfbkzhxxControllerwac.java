@@ -30,7 +30,7 @@ import com.wangc.service.RepaylanService;
 
 @Controller
 @RequestMapping("/Grzfbk")
-public class GrzfbkzhxxController {
+public class GrzfbkzhxxControllerwac {
 @Autowired
 	private RepaylanService rs;
 	@Autowired

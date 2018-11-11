@@ -20,7 +20,7 @@ import com.github.pagehelper.PageInfo;
 import net.sf.jsqlparser.statement.update.Update;
 @Controller
 @RequestMapping("/accumulationcwh")
-public class AccumcwhController {
+public class AccumcwhControllercwh {
 	@Autowired
 private AccumcwhService ser;
 	@RequestMapping("/queryAllcwh")

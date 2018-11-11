@@ -23,7 +23,7 @@ import com.wangc.serviceimpl.PurchaseServiceimpl;
 
 @Controller
 @RequestMapping("/lololo")
-public class LoaninfoController {
+public class LoaninfoControllerwac {
 	@Autowired
 	private LoaninfoService ls;
 	@Autowired

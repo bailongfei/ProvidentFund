@@ -13,7 +13,7 @@ import com.zys.service.hjqcbService;
 
 @Controller
 @RequestMapping("/hjqcb")
-public class hjqcbController {
+public class hjqcbControllerzys {
 @Autowired
 private hjqcbService service;
 @RequestMapping("/queryAll")

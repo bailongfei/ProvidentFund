@@ -19,7 +19,7 @@ import com.wangc.service.DylxbService;
 
 @Controller
 @RequestMapping("/Dyhtxxx")
-public class DyhtxxController {
+public class DyhtxxControllerwac {
 
 	@Autowired
 		private DylxbService bs;

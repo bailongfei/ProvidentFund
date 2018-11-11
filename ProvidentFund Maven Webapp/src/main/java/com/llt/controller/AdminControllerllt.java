@@ -29,7 +29,7 @@ import com.llt.service.AdminService;
 
 @Controller
 @RequestMapping("/login")
-public class AdminController {
+public class AdminControllerllt {
 
 	@Autowired
 	private AdminService adminService;

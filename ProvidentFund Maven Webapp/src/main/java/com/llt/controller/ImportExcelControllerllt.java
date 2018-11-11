@@ -21,7 +21,7 @@ import com.entity.InfoVo;
 
 @Controller
 @RequestMapping("/uploadExcel/*")
-public class ImportExcelController {
+public class ImportExcelControllerllt {
 	@Autowired
 	private InfoVoMapper dao;
 

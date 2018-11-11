@@ -12,7 +12,7 @@ import com.zys.service.IndividualpayService;
 
 @Controller
 @RequestMapping("/Individualpay")
-public class IndividualpayController {
+public class IndividualpayControllerzys {
 	@Autowired
 	private IndividualpayService service;
 	@RequestMapping("/queryIndividualpay")

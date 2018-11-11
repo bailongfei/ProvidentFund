@@ -11,7 +11,7 @@ import com.zys.service.BjqcbService;
 
 @Controller
 @RequestMapping("/bjqcb")
-public class BjqcbController {
+public class BjqcbControllerzys {
 	@Autowired
 	private BjqcbService service;
 	@RequestMapping("/queryBjqcb")

@@ -14,7 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 @Controller
 @RequestMapping("/unitcwh")
-public class UnitcwhController {
+public class UnitcwhControllercwh {
 	@Autowired
 private UnitcwhService ser;
 @RequestMapping("/queryAllcwh")
