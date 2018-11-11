@@ -16,10 +16,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
+<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
+<!-- 使用模态窗口引入bootstrap ${pageContext.request.contextPath}-->
+<link rel="stylesheet" type="text/css"
+	href="resources/js/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/js/bootstrap/css/bootstrap-theme.min.css">
+<script src="resources/js/jquery.min.js"></script>
+<script src="resources/js/bootstrap/js/bootstrap.min.js"></script>
+<!--最基础jQuery.js都是基于这个  -->
+<script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
+<!-- 异步转换参数js -->
+<script type="text/javascript" src="resources/jqueryExt.js"></script>
+<!-- 上传文件js -->
+<script type="text/javascript" src="resources/jquery.form.js"></script>
 	<script type="text/javascript">
 		function merge(){
 			alert($("#fm").serialize());
@@ -66,12 +78,64 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <form action="" id="fm">
+  <form class="form-horizontal" role="form" action="" id="fm">
+	<div class="form-group">
+		<label for="firstname" class="col-sm-2 control-label">保留账号:</label>
+		<div class="col-sm-4">
+			<input type="text" name="peracId1" id="pid1" class="form-control" 
+				   placeholder="请输入保留账号">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="lastname" class="col-sm-2 control-label">密码:</label>
+		<div class="col-sm-4">
+			<input type="password" name="peracloginpw1" class="form-control" 
+				   placeholder="请输入姓">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="lastname" class="col-sm-2 control-label">保留账号单位:</label>
+		<div class="col-sm-4">
+			<input ype="text" id="unit1"  class="form-control" 
+				   placeholder="请输入姓">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="lastname" class="col-sm-2 control-label">销户账号:</label>
+		<div class="col-sm-4">
+			<input type="text" name="peracId2" id="pid2" class="form-control" 
+				   placeholder="请输入姓">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="lastname" class="col-sm-2 control-label">密码:</label>
+		<div class="col-sm-4">
+			<input type="password" name="peracloginpw2" class="form-control" 
+				   placeholder="请输入姓">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="lastname" class="col-sm-2 control-label">销户账号单位:</label>
+		<div class="col-sm-4">
+			<input type="text" id="unit2" class="form-control" 
+				   placeholder="请输入姓">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-4">
+			<input type="button" value="合并账户" onclick="merge()" class="btn btn-default">
+		</div>
+	</div>
+</form>
+  
+  
+   <!--  <form action="" id="fm">
     	保留账号:<input type="text" name="peracId1" id="pid1">密码:<input type="password" name="peracloginpw1"><br/>
     	保留账号单位:<input type="text" id="unit1"><br/>
     	销户账号:<input type="text" name="peracId2" id="pid2">密码:<input type="password" name="peracloginpw2"><br/>
     	销户账号单位:<input type="text" id="unit2"><br/>
     	<input type="button" value="合并账户" onclick="merge()">
-    </form>
+    </form> -->
   </body>
 </html>

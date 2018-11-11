@@ -28,4 +28,12 @@ public interface PeraccountService {
     public int PeopleTransfer(Peraccount account);
     //根据单位id查询个人账号信息
     public Pager findaccountinfo(Map<String, Object> map,Pager p);
+    //修改账户信息
+    public void Updateinfo(Peraccount account);
+    //根据账户id查询
+    public Peraccount findbyid(Integer grzhbh);
+    //根据身份证号码查询个人及单位信息
+    public List<Map<String, Object>> findbyIdnumber(String IdNumber);
+    //根据姓名查询账户正常账户信息
+    public Pager findbyname(Map<String, Object> map, Pager p);
 }

@@ -68,21 +68,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	var peracIds =[]; 
 	    $('input[name="peracId"]:checked').each(function(){ 
 	        peracIds.push($(this).val());
-	        alert(peracIds);
 	    }); 
 	    $.ajax({
-	    	url:"",
+	    	url:"Peraccount/findbperacId",
 	    	type:"post",
 	    	data:{
-	    	
+	    		"peracIds":peracIds
 	    	},
 	    	dataType:'json',
 	    	success:function(data){
 	    		$("#tab2").empty();
+	    		$("#percount").val(0);
 	    		for(var i=0;i<data.length;i++){
+	    			var obj=data[i];
 	    			var tr="<tr>";
-	    			tr+="<td>""</td>"
+	    			tr+="<td>"+obj.peracId+"</td>";
+                    tr+="<td>"+obj.bkname+"</td>";
+                    tr+="<td>"+obj.UnitInfoName+"</td>";
+                    tr+="<td><input type='hidden' name='grzhbh"+i+"' value='"+obj.grzhbh+"'><input type='text' name='chje"+i+"'></td>";
+	    			tr+="</tr>";
+	    			$("#tab2").append(tr);
 	    		}
+	    		$("#percount").val(data.length-1);
 	    	}
 	    })
       }
@@ -96,6 +103,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            var nowpage=parseInt($("#nowPage").html());
            getAll(nowpage+1);
       	  });
+      	  $("#sub").click(function(){
+      	  	$.ajax({
+      	  		url:"Peraccount/returnpay",
+      	  		type:"post",
+      	  		data:$("#fm").serialize(),
+      	  		dataType:'text',
+      	  		success:function(data){
+      	  			alert(data);
+      	  		}
+      	  	})
+      	  })
       	  /* $("#btn").click(function(){
          	var arr = new Array();
          	 $('input[name="peracId"]:[checked]').each(function () {
@@ -146,9 +164,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		当前是第<span id="nowPage"></span>页 
     	<button id="nextpage">下一页</button>&nbsp;&nbsp;
     	共<span id="countPage"></span>页
-    	<input type="button" value="测试" id="btn" onclick="ceshi()">
+    	<input type="button" value="测试" id="btn" >
     </div>
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
+    <button class="btn btn-primary btn-lg" onclick="ceshi()" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
 	<!-- 模态框（Modal） -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog">
@@ -158,6 +176,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
 	            </div>
 	            <div class="modal-body">
+	            	<form action="" id="fm">
+	            	<input type="hidden" name="percount" id="percount">
 	            	<table>
 	            		<tr>
 	            			<td>个人账号</td>
@@ -167,10 +187,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            		</tr>
 	            		<tbody id="tab2"></tbody>
 	            	</table>
+	            	</form>
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	                <button type="button" class="btn btn-primary">提交更改</button>
+	                <button type="button" class="btn btn-primary" id="sub">提交更改</button>
 	            </div>
 	        </div><!-- /.modal-content -->
 	    </div><!-- /.modal -->

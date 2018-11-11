@@ -120,6 +120,38 @@ public class PeraccountServiceImpl implements PeraccountService {
 		p.setList(list);//把分页的数据放到pager对象里面
 		return p;
 	}
+
+	@Override
+	public void Updateinfo(Peraccount account) {
+		// TODO Auto-generated method stub
+		dao.updateByPrimaryKeySelective(account);
+	}
+
+	@Override
+	public Peraccount findbyid(Integer grzhbh) {
+		// TODO Auto-generated method stub
+		return dao.selectByPrimaryKey(grzhbh);
+	}
+
+	@Override
+	public List<Map<String, Object>> findbyIdnumber(String IdNumber) {
+		// TODO Auto-generated method stub
+		return dao.findbyIdnumber(IdNumber);
+	}
+
+	@Override
+	public Pager findbyname(Map<String, Object> map, Pager p) {
+		// TODO Auto-generated method stub
+		String curPage=(String) map.get("curPage");//接收从前台传来的的当前页
+		p.setCurPage(Integer.parseInt(curPage));//设置当前页到pager对象
+		int totalCount=dao.findbynamecount(map);
+		p.setTotalCount(totalCount);
+		map.put("startIndex", p.getStartIndex());//设置开始索引
+		map.put("pageSize", p.getPageSize());//设置每页条数
+		List<Map<String, Object>> list=dao.findbyname(map);//查询分页的数据
+		p.setList(list);
+		return p;
+	}
 	
 	
 }

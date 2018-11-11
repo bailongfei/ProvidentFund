@@ -1,11 +1,15 @@
 package com.zhl.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +17,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.entity.Peraccount;
+import com.entity.Returnpay;
 import com.entity.Unitinfo;
 import com.zhl.pager.Pager;
 import com.zhl.service.PeraccountService;
+import com.zhl.service.ReturnpayService;
 
 @Controller
 @RequestMapping("/Peraccount")
 public class PeraccountController {
 	@Autowired
 	private PeraccountService service;
+	@Autowired
+	private ReturnpayService rpservice;
 	//登陆
 	@ResponseBody
 	@RequestMapping("/login")
@@ -103,6 +111,55 @@ public class PeraccountController {
 		Pager p=new Pager();
 		p.setPageSize(2);//设置每页条数
 		Pager pager=service.findaccountinfo(map, p);
+		return pager;
+	}
+	@ResponseBody
+	@RequestMapping("/findbperacId")
+	public List findbperacId(@RequestParam(value="peracIds[]")String[] peracIds){
+		List list=new ArrayList();
+		System.out.println(peracIds);
+		if(peracIds.length>0){
+			for (int i = 0; i < peracIds.length; i++) {
+				Map<String, Object> map=service.findUnitName(peracIds[i]);
+				list.add(map);
+			}
+		}
+		return list;
+	}
+	//冲缴
+	@ResponseBody
+	@RequestMapping("/returnpay")
+	public String returnpay(@RequestParam Map<String, Object> map){
+		String percount=(String) map.get("percount");
+		Integer accountnum=Integer.valueOf(percount);//获取数量
+		Date date=new Date();
+		for(Integer i=0;i<accountnum;i++){//循环从map拿到值 并放到实体类中进行保存
+			Integer grzhbh= Integer.valueOf((String)map.get("grzhbh"+i.toString()));
+			Long chje=Long.valueOf((String)map.get("chje"+i.toString()));
+			Returnpay repay=new Returnpay();
+			repay.setGrzhbh(grzhbh);
+			repay.setChje(chje);
+			repay.setChsj(date);//设置冲缴时间
+			rpservice.SaveReturnpay(repay);//添加冲缴记录
+			Peraccount account=service.findbyid(grzhbh);//根据个人账号主键查询个人账号信息
+			account.setPeracbalance(account.getPeracbalance()+Integer.valueOf(chje.toString()));
+			service.Updateinfo(account);//把冲缴的钱加到个人账户余额
+		}
+		return "1";
+	} 
+	//根据身份证号码查询个人及单位信息
+	@ResponseBody
+	@RequestMapping("/findbyIdnumber")
+	public Map<String, Object> findbyIdnumber(String IdNumber){
+		List<Map<String, Object>> list=service.findbyIdnumber(IdNumber);
+		return list.get(0);
+	}
+	@ResponseBody
+	@RequestMapping("/findbyname")
+	public Pager findbyname(@RequestParam Map<String, Object> map){
+		Pager p=new Pager();
+		p.setPageSize(2);//设置每页条数
+		Pager pager=service.findbyname(map,p);
 		return pager;
 	}
 }
