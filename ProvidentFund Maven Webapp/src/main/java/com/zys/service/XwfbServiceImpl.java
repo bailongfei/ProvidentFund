@@ -9,6 +9,7 @@ import com.zys.entity.Xwfb;
 
 @Service
 public class XwfbServiceImpl implements XwfbService{
+	//注入dao层
 @Autowired
 private XwfbDao dao;
 //查询所有
@@ -36,5 +37,10 @@ public List<Xwfb> queryXwfb() {
 	public int updateXwfb(Xwfb xw) {
 		return dao.updateXwfb(xw);
 	}
+	//分页查询
+	/*@Override
+	public List<Xwfb> queryXwfb1(Pager pager) {
+		return dao.queryXwfb1(pager);
+	}*/
 	
 }

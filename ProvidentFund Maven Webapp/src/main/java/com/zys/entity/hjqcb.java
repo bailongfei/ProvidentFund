@@ -1,5 +1,5 @@
 package com.zys.entity;
-
+//»ã½ÉÇå²á±í
 import java.util.Date;
 
 public class hjqcb {

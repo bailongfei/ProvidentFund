@@ -11,4 +11,5 @@ public interface XwfbService {
 	public int deleteXwfb(int id);//删除
 	public Xwfb queryById(int id);//根据id查询
 	public int updateXwfb(Xwfb xw);//修改
+	
 }

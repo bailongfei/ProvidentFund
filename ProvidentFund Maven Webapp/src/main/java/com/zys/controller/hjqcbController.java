@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zys.entity.hjqcb;
 import com.zys.service.hjqcbService;
 
-
 @Controller
 @RequestMapping("/hjqcb")
 public class hjqcbController {

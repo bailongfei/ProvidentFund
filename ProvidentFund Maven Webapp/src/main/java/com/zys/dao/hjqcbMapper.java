@@ -6,6 +6,7 @@ import com.zys.entity.hjqcb;
 
 
 public interface hjqcbMapper {
-    public List<hjqcb> queryAll();
-    public int insert(hjqcb h);
+
+    public List<hjqcb> queryAll();//ª„Ω…«Â≤·≤È—Ø
+    public int insert(hjqcb h);//
 }

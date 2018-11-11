@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zys.entity.Individualpay;
 import com.zys.service.IndividualpayService;
 
-
 @Controller
 @RequestMapping("/Individualpay")
 public class IndividualpayController {

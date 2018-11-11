@@ -3,7 +3,6 @@ package com.zys.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zys.entity.Xwfb;
 import com.zys.service.XwfbService;
 
-
 @Controller
+//查询所有
 @RequestMapping("/xwfb")
 public class XwfbController {
 		@Autowired
@@ -74,4 +73,21 @@ public class XwfbController {
 			 Xwfb tt=service.queryById(xw.getXwbh());
 			return tt;
 		 }
+		//分页查询
+		/* public String queryXwfb1(Pager pager,HttpServletRequest request)throws UnsupportedEncodingException{
+		   //组装page对象，传入方法中查询列表 回显数据
+			 Pager p=pager;
+		    int pageSize=4;//设置每页大小
+		    p.setPageSize(pageSize);
+		    int curPage=p.getCurPage();
+			if(curPage==0){
+		    	curPage=1;
+		    	p.setCurPage(curPage);
+		    }
+		    int startlndex=pager.getStartIndex();
+		    if(!(p.getCurPage()==0)){
+		    	startlndex=getStartIndexBycurPage(curPage,pageSize);
+		    }
+			 return null;
+		 }*/
 }
