@@ -190,4 +190,7 @@
       housePrice = #{houseprice,jdbcType=DECIMAL}
     where gfxxbh = #{gfxxbh,jdbcType=INTEGER}
   </update>
+  <select id="queryAll" resultType="java.util.Map">
+select*from purchase
+ </select>
 </mapper>

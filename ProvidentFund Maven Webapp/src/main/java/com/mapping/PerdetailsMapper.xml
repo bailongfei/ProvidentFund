@@ -249,4 +249,30 @@
       graddress = #{graddress,jdbcType=VARCHAR}
     where personNO = #{personno,jdbcType=INTEGER}
   </update>
+  <select id="queryAll" resultType="java.util.Map">
+select*from perdetails
+ </select>
+ <select id="queryAllzg" resultType="java.util.Map">
+select*from perdetails
+ </select>
+  <insert id="save" parameterType="Perdetails">
+ insert into Perdetails(grname,phonenums,idnumber,graddress)
+     values(#{grname},#{phonenums},#{idnumber},#{graddress})
+ 
+ </insert>
+ <delete id="delete" parameterType="Integer">
+	   delete from perdetails where personNO=#{personNO}
+	</delete>
+	<select id="queryById" resultType="Perdetails">
+	   select*from Perdetails where personNO=#{personNO}
+	</select>
+	<select id="getall" resultType="java.util.Map">
+    select * from Perdetails where personNO=#{personNO}
+  </select>
+  <update id="update" parameterType="java.util.List">
+    update Perdetails
+<foreach collection="list" item="map" separator=",">
+ set grname=#{map.grname},grsex=#{map.grsex},phonenums=#{map.phonenums},idtypes=#{map.idtypes},idnumber=#{map.idnumber},birthdays=#{map.birthdays},maritals=#{map.maritals},educations=#{map.educations},graddress=#{map.graddress} where personno=#{map.personno}
+</foreach>
+ </update>
 </mapper>

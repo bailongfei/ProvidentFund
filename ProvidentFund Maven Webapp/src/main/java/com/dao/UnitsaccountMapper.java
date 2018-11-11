@@ -1,5 +1,8 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Unitsaccount;
 
 public interface UnitsaccountMapper {
@@ -50,4 +53,7 @@ public interface UnitsaccountMapper {
      * @mbg.generated Sun Oct 21 20:42:37 CST 2018
      */
     int updateByPrimaryKey(Unitsaccount record);
+    //²éÑ¯ËùÓĞ
+    public List<Map>queryAllcwh();
+    public int savecwh(Unitsaccount g);
 }

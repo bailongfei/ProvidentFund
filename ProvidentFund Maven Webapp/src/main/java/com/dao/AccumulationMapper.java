@@ -1,5 +1,8 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Accumulation;
 
 public interface AccumulationMapper {
@@ -50,4 +53,9 @@ public interface AccumulationMapper {
      * @mbg.generated Sun Oct 21 20:42:37 CST 2018
      */
     int updateByPrimaryKey(Accumulation record);
+  //查询所有
+    public List<Map>queryAllcwh();
+    //修改状态
+    public void updatecwh(Accumulation accumulation);
+
 }

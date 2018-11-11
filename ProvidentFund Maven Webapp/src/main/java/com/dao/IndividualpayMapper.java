@@ -1,5 +1,8 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Individualpay;
 
 public interface IndividualpayMapper {
@@ -50,4 +53,12 @@ public interface IndividualpayMapper {
      * @mbg.generated Sun Oct 21 20:42:37 CST 2018
      */
     int updateByPrimaryKey(Individualpay record);
+    //查询所有
+    public List<Map>queryAll();
+    //修改状态
+    public void update(Individualpay grzhbhs);    
+    //修改状态
+    public void updatefc(Individualpay grzhbhs);    
+  //修改状态
+    public void updateqf(Individualpay grzhbhs);    
 }

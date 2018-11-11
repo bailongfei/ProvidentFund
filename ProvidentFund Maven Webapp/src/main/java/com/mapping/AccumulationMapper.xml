@@ -306,4 +306,17 @@
       txpwwh = #{txpwwh,jdbcType=VARCHAR}
     where accumulation = #{accumulation,jdbcType=INTEGER}
   </update>
+   <select id="queryAllcwh" resultType="java.util.Map">
+select*from Accumulation g join peraccount t on g.grzhbh=t.grzhbh
+ </select>
+ 
+ <update id="updatecwh" parameterType="com.entity.Accumulation">
+ 
+   	update Accumulation
+
+-<trim suffixOverrides="," prefix="set">
+<if test="grapprovalStatuss!=0"> grapprovalStatuss="审核通过" </if>
+</trim>
+<where>accumulation=#{accumulation}</where>
+ </update>
 </mapper>

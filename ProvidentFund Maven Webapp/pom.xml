@@ -193,6 +193,24 @@
 		 <artifactId>mybatis-generator-core</artifactId>
 		 <version>1.3.5</version>
 		</dependency>
+		<dependency>
+    <groupId>com.github.pagehelper</groupId>
+    <artifactId>pagehelper</artifactId>
+    <version>5.0.0</version>
+</dependency>
+<!-- 批量录入 -->
+<dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+        </dependency>
+        
 	</dependencies>
 	<build>
 		<finalName>ProvidentFund</finalName>
@@ -225,7 +243,7 @@
 				<configuration>
 				<uriEncoding>UTF-8</uriEncoding>
 				<port>8080</port>
-				<path>/ProvidentFund/frame/views/index.jsp</path><!-- 应用的部署位置 -->
+				<path>/ProvidentFund</path><!-- 应用的部署位置 -->
 				</configuration>
 			</plugin>
 		<plugin>

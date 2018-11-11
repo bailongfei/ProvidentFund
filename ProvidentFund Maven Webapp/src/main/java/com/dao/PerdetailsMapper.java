@@ -1,6 +1,11 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import com.entity.Loaninfo;
 import com.entity.Perdetails;
+import com.entity.Unitinfo;
 
 public interface PerdetailsMapper {
     /**
@@ -50,4 +55,18 @@ public interface PerdetailsMapper {
      * @mbg.generated Sun Oct 21 20:42:37 CST 2018
      */
     int updateByPrimaryKey(Perdetails record);
+    //查询所有
+    public List<Map>queryAll();
+    //查询所有
+    public List<Map>queryAllzg();
+    //添加
+    public int save(Perdetails u);
+    //删除
+    public int delete(int personNO);
+//id查询
+    public List<Perdetails> queryById(int personno);
+    public List<Map> getall(Integer personno);
+//修改
+    public int update(List<Map> list);
+
 }

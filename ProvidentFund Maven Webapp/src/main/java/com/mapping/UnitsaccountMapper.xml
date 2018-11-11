@@ -321,4 +321,11 @@
       UnitesPerson = #{unitesperson,jdbcType=VARCHAR}
     where UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER}
   </update>
+   <select id="queryAllcwh" resultType="java.util.Map">
+select*from Unitsaccount 
+ </select>
+ <insert id="savecwh" parameterType="Unitsaccount">
+     insert into Unitsaccount(unitsname,unitesusername,unitesaccount,unitestrustee,unitesbankname,unitesperson)
+     values(#{unitsname},#{unitesusername},#{unitesaccount},#{unitestrustee},#{unitesbankname},#{unitesperson})
+  </insert>
 </mapper>
