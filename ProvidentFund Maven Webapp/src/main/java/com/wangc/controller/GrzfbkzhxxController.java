@@ -1,5 +1,7 @@
 package com.wangc.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.entity.Grzfbkzhxx;
 import com.entity.Loaninfo;
 import com.entity.Repayplan;
+import com.wangc.Pager.Pager;
 import com.wangc.service.GrzfbkzhxxService;
 import com.wangc.service.RepaylanService;
 
@@ -32,7 +35,7 @@ public class GrzfbkzhxxController {
 	private RepaylanService rs;
 	@Autowired
 			private GrzfbkzhxxService gf;
-	
+	//查询还款状态为o
 	@RequestMapping("/Grzquery")
 	@ResponseBody
 	public List<Map<String, Object>> quee(){
@@ -40,6 +43,21 @@ public class GrzfbkzhxxController {
 		System.out.println(list);
 		return list;
 	}
+	//查询还款状态为1销户
+	@RequestMapping("/Grzquerytwo")
+	@ResponseBody
+	public List<Map<String, Object>> queet(){
+			List<Map<String, Object>> list1=gf.Grzfquerytwo();
+			return list1;
+		
+	}
+	//查询还款状态为o
+	@ResponseBody
+	@RequestMapping("/updatestatic")
+	public void update(int dkbh){
+			gf.updatestatic(dkbh);
+	}
+	
 	 @RequestMapping("/queryGrzg")
 	 @ResponseBody
 	 public Map<String, Object> queryById(int dkbh){
@@ -47,11 +65,13 @@ public class GrzfbkzhxxController {
 		 Map<String, Object> map=new HashMap<String, Object>();
          DecimalFormat df = new DecimalFormat("#.0");
 		 map=tt.get(0);
+		 //等额本金还款
 		 Double dkffe=(Double) map.get("dkffe");//贷款总金额
 		 Double grdkqs=(Double) map.get("grdkqs");//贷款期数
 		 Double zxll=(Double) map.get("zxll");//利率
+		 Double hsbjze=(Double) map.get("hsbjze");//已还本金
 		 Double grdqjhghbj=dkffe/grdkqs;//应还本金
-		 Double dqjhghlxs=grdqjhghbj*zxll;//应还利息
+		 Double dqjhghlxs=(dkffe-hsbjze)*zxll;//应还利息
 		 Double dqjhhkje=grdqjhghbj+dqjhghlxs;//应还总金额
 		 map.put("grdqjhghbj", df.format(grdqjhghbj));
 		 map.put("dqjhghlxs", df.format(dqjhghlxs));
@@ -68,7 +88,9 @@ public class GrzfbkzhxxController {
 		 PrintWriter out=response.getWriter();
 		 Double dksyqs=Double.parseDouble((String) map.get("dksyqs"));//剩余期数
 		 dksyqs=dksyqs-1;
-		 
+		 if(dksyqs<1){
+			 map.put("sfzx", "1");
+		 }
 		 Integer dkbh=Integer.valueOf((String) map.get("dkbh"));
 		 Double dkffe=Double.parseDouble((String) map.get("dkffe")) ;
 		 Double zxll=Double.parseDouble((String) map.get("zxll"));
@@ -106,7 +128,6 @@ public class GrzfbkzhxxController {
 		 }else{
 			 out.print("添加失败!");
 		 }
-		
 	 }
 	//查询还款明细
 	@RequestMapping("/Repayid")
@@ -116,7 +137,18 @@ public class GrzfbkzhxxController {
 		 List<Map<String, Object>> list1=rs.queryDyhtxx(dkbh);
 		 System.out.println(list1);
 		return list1;
-		 
 	 }
-	
+	//分页
+	@RequestMapping("/findByIdGrzfb")
+	@ResponseBody
+	public Pager findbygrzfbk(@RequestParam(required =false,defaultValue="1") Integer pageNum,String name){
+		Pager p=new Pager();
+		p.setCurPage(pageNum);//当前页;
+		p.setPageSize(2);//每页条数
+		Map<String, Object>  grzfbk=new HashMap<String, Object>();
+		grzfbk.put("bkname", name);
+		Pager pager=gf.findbygrzfbk(grzfbk, p);
+		return pager;
+		
+	}
 }

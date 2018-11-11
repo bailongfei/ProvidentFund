@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,6 +37,7 @@ public class LoaninfoController {
 	private Loaninfo lf;
 	private Jointborrower jo;
 	//贷款信息添加
+	 @Transactional
 	@RequestMapping("/losave")
 	@ResponseBody
 	 public String Loansave(Loaninfo lo,HttpServletRequest request,HttpServletResponse response) {
@@ -46,10 +48,9 @@ public class LoaninfoController {
 		 }else {
 			return "0";
 		 }
-	
-		 
-	 }
+		 }
 	//共同借款人添加
+	 @Transactional
 	@ResponseBody
 	@RequestMapping("/saveJoin")
 	public String saveTbGoods(Jointborrower tb){
@@ -61,6 +62,7 @@ public class LoaninfoController {
 		 }
 	}
 	//住房信息添加
+	 @Transactional
 	@ResponseBody
 	@RequestMapping("/purchasave")
 	public String saveTbGoods(Purchase pu){
@@ -72,12 +74,10 @@ public class LoaninfoController {
 			return "0";
 		 }
 	}
-	
-	
+    @Transactional
 	@RequestMapping("/dysave")
 	@ResponseBody
 	 public String purchasave(Dyhtxx dh){
-		
 		 ls.Loansave(lf);
 		 Integer lfid=lf.getDkxxbh();
 		 System.out.println(lf.toString());
@@ -90,30 +90,9 @@ public class LoaninfoController {
 		 dh.setDkxxbh(lfid);
 		 int a=ds.Dyhtxxsave(dh);
 		 if (a>0) {
-			return "1";
+			return "申请成功";
 		}else {
-			 return "0";
+			 return "申请失败";
 		}
 	 }
-	
-/*	
-	@RequestMapping("/purchasave")
-	@ResponseBody
-	 public String purchasave(Purchase pu){
-		 ls.Loansave(lf);
-		 Integer lfid=lf.getDkxxbh();
-		 System.out.println(lf.toString());
-		 System.out.println(lfid);
-		 jo.setDkxxbh(lfid);
-		 jb.save(jo);
-		 System.out.println(jo.toString());
-		 pu.setDkxxbh(lfid);
-		 int i=ps.save(pu);
-		 System.out.println(pu.toString());
-		 if(i>0){
-			 return "1";
-		 }else{
-			 return "0";
-		 }
-	 }*/
 }

@@ -31,22 +31,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  		<table class="table table-hover">
+  		<table class="table table-bordered">
      <thead>
        <tr class="success">
        	 <th>还款编号</th>
-       	  <th>个人姓名</th>
+       	 <th>个人姓名</th>
          <th>贷款账号</th>
          <th>贷款总额</th>
          <th>执行利率</th>
          <th>贷款期数信息</th>
          <th>剩余贷款期数</th>
-         <th>已还款</th>
-         
-           </tr>	
+         <th>已还款</th>  
+         <th></th>  
+         <th></th>  
+       </tr>	
      </thead>
      <tbody id="tbody">
-     
      </tbody>
     </table>
     	 <!-- 模态框弹出录入内容 -->
@@ -150,11 +150,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<!-- /.modal -->
 		</div>
-  		
-  		
-  		
-  		
-  			 <!-- 模态框弹出录入内容 -->
+
+
+		 <!-- 模态框弹出录入内容 -->
 		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
 			aria-labelledby="modalTitle1" aria-hidden="true">
 			<div class="modal-dialog">
@@ -171,7 +169,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					  <!--form提交表单  -->
 						<form class="form-horizontal"  enctype="multipart/form-data">
 							<table class="table table-bordered">
-								<caption>边框表格布局</caption>
+								<caption></caption>
 								<thead>
 									<tr>
 										<th>还款编号</th>
@@ -186,8 +184,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</tbody>
 							</table>
 							
-							
-							<input type="button"   id="abcdef" data-toggle='modal' data-target='#myModal' class="btn btn-primary" value="保存">
 						</form>
 
 					</div>
@@ -203,11 +199,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
   		
   		
-  		
-  		
-  		
-  		
-  		
   </body>
 </html>
 
@@ -216,6 +207,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    $(function(){
      queryTbGoodsType();
   });
+  
+  
+  	 
   /* 查询 */
   function queryTbGoodsType(){
     $.ajax({
@@ -264,7 +258,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            $("#dksyqs").val(data.dksyqs);
              $("#hsbjze").val(data.hsbjze);
          }
-         
       });
   	}
    $(document).on("click","#abcdef",function(){
@@ -305,6 +298,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          
       });
   	}
-
- 
+ //上一页 下一页
+	  $(document).ready(function(){
+	  	  $("#prepage").click(function(){
+             var nowpage=parseInt($("#nowPage").html());
+             getAll(nowpage-1);
+     	  });
+     	  $("#nextpage").click(function(){
+           var nowpage=parseInt($("#nowPage").html());
+           getAll(nowpage+1);
+      	  });
+      	  $("#grperbuType").change(function(){
+      	  	getAll(1);
+      	  })
+      	  $("#bkname").keyup(function(){
+      	  	getAll(1);
+      	  })
+	  });
 </script>

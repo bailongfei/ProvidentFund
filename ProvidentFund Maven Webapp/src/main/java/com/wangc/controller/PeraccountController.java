@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,7 +23,8 @@ public class PeraccountController {
 	@Autowired
 	private	PeraccountService ps;
 	private Peraccount pds;
-	
+	 
+	 @Transactional
 	 @ResponseBody
 	 @RequestMapping("/saveUploadOrUpdate")
 	 public String saveTbGoods(Peraccount tb,HttpServletRequest request,HttpServletResponse response) throws IOException{
@@ -37,7 +39,7 @@ public class PeraccountController {
 		 //int i=ps.save(tb);
 		 
 	 }
-
+	
 	//¸ù¾Ýid²éÑ¯
 	 @RequestMapping("/queryTById")
 	 @ResponseBody

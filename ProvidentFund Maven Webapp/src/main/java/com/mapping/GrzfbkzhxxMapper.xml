@@ -56,18 +56,54 @@
        <if test="grdqjhghbj!=null">grdqjhghbj=#{grdqjhghbj},</if>
        <if test="dqjhghlxs!=null">dqjhghlxs=#{dqjhghlxs},</if>
        <if test="dksyqs!=null">dksyqs=#{dksyqs},</if>
-       <if test="hsbjze!=null">hsbjze=#{hsbjze}</if>
+       <if test="hsbjze!=null">hsbjze=#{hsbjze},</if>
+              <if test="sfzx!=null">sfzx=#{sfzx}</if>
+       
     </set>
     where dkbh=#{dkbh}
   </update>
+ <!--  修改状态 -->
+   <update id="updatestatic" parameterType="com.entity.Grzfbkzhxx">
+    update Grzfbkzhxx set sfzx='3' where dkbh=#{dkbh}
+  </update>
+  
+  
+ <!--   分页模糊查询
+   -->
+  <select id="findbygrzfbk" resultType="Map" parameterType="Map">
+  		select * from Grzfbkzhxx
+  		<if test="bkname !=null and dkname!=''">
+  				and name=#{bkname}
+  		</if>	
+  		limit #{startIndex},#{pageSize}
+  </select> 
+   
+
+  <!--      根据条件查询出个人明细总条数 
+   -->
+  
+  <select id="findcount" resultType="Integer" parameterType="Map">
+  		select count(*) from Grzfbkzhxx
+  			<if test="bkname !=null and dkname!=''">
+  				and name like concat('%',#{bkname},'%')
+  			</if>	
+  			
+  </select>
   
 	<select id="queryGrzgId" resultType="map" parameterType="int">
-		select * from  Grzfbkzhxx where dkbh=#{dkbh}
+		select g.*,l.hkfs,l.idNumber from loaninfo l  join grzfbkzhxx g  on g.dkxxbh=l.dkxxbh where dkbh=#{dkbh}
 	</select>
+	
   
+  <!-- 查询还款未还清 -->
   <select id="Grzfquery" resultType="map">
-  		select * from grzfbkzhxx
+  		select * from grzfbkzhxx where sfzx='0'
   </select>
+  <!-- 	查询还款还清未销户 -->
+  <select id="Grzfquerytwo" resultType="map">
+  		select g.*,l.idNumber,l.dwzh from grzfbkzhxx g  join loaninfo l on g.dkxxbh=l.dkxxbh where sfzx='1'
+  </select>
+  
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--

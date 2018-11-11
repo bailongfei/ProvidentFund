@@ -1,5 +1,8 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Loaninfo;
 
 public interface LoaninfoMapper {
@@ -9,7 +12,6 @@ public interface LoaninfoMapper {
      *
      * @mbg.generated Wed Oct 31 09:19:01 CST 2018
      */
-
 	public int Loansave(Loaninfo lo);
     int deleteByPrimaryKey(Integer dkxxbh);
 

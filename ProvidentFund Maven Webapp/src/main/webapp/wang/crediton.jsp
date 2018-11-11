@@ -52,9 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="layui-input-inline">
                 <input type="tel" id="grsex" name="bksex"  autocomplete="off" class="layui-input" readonly unselectable="on" >
               </div>
-		
 	</div>
-	
 		  <div class="layui-form-item">
           
            <label class="layui-form-label">证件类型</label>
@@ -121,19 +119,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <select name="hkfs" lay-verify="required" lay-search="">
                
                  
-                <option value="等额本金">等额本金</option>
-                <option value="等额本息">等额本息</option>
+                <option value="0">等额本金</option>
+                <option value="1">等额本息</option>
            
                 </select>
               </div>
             </div>
               	</div>
               <div class="layui-form-item">
-             <!-- 
-              <label class="layui-form-label">申请日期</label>
-              <div class="layui-input-inline">
-               <input type="date" name="date1" id="date1">
-                             </div> -->
+             
+           	
                 <label class="layui-form-label">贷款期数</label>
               <div class="layui-input-inline">
               		 <select name="grdkqs" lay-verify="required" lay-search="">
@@ -146,6 +141,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                			 <option value="72">72期</option>
                			 <option value="84">84期</option>
                			 
+               
+           
                 </select>
      
               </div>
@@ -153,11 +150,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="layui-input-inline">
                 <input type="tel" id="hkkk"  name="hkzh"  autocomplete="off" class="layui-input" readonly unselectable="on">
                     </div>
-               <label class="layui-form-label">月还款日</label>
+                  <label class="layui-form-label">申请日期</label>
               <div class="layui-input-inline">
-                <input type="tel"   name="myhkrq"  autocomplete="off" class="layui-input" >
-                    </div>
-                 
+                <input type="text" name="dksqrq" id="LAY-component-form-group-date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+              </div>
             
               </div>
                   
@@ -172,12 +168,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           
             	       <div class="layui-input-block">
               <div class="layui-footer" style="left: 0;">
-                <button class="layui-btn" id="saveUploadOrUpdate" type="button" lay-filter="component-form-demo1">下一步</button>
+                <button class="layui-btn" id="saveUploadOrUpdate" id="prev" type="button" lay-filter="component-form-demo1">下一步</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
               </div>
             </div>
           </div>
         </form>
+        
         
       </div>
          
@@ -250,6 +247,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          
             </div>
           </div>
+          
           
           <div class="layui-form-item layui-layout-admin">
             	       <div class="layui-input-block">
@@ -354,12 +352,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="layui-card-body" style="padding: 15px;">
        <form class="layui-form" id="type3" lay-filter="component-form-group">
          <div class="layui-form-item">
-		 <label class="layui-form-label">抵押房屋坐落</label>
+		 <<label class="layui-form-label">抵押房屋坐落</label>
               <div class="layui-input-inline">
                 <input type="tel" name="dywfwzl"  autocomplete="off" class="layui-input">
               </div>
                 
-		<label class="layui-form-label">抵押类型</label>
+		<label class="layui-form-label">住房类型</label>
 		  <div class="layui-input-inline">
 		     <div class="layui-input-inline">
 			<select class="dydy form-control"  name="dylxbh">
@@ -373,6 +371,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <input type="tel" name="dywpgjz"  autocomplete="off" class="layui-input">
               </div>
               </div>
+           
+           
            
           </div>
           <div class="layui-form-item">
@@ -442,6 +442,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       elem: '#LAY-component-form-group-date'
     });
     
+    /* 自定义验证规则 */
+    form.verify({
+      title: function(value){
+        if(value.length < 5){
+          return '标题至少得5个字符啊';
+        }
+      }
+      ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+      ,content: function(value){
+        layedit.sync(editIndex);
+      }
+    });
     
     /* 监听指定开关 */
     form.on('switch(component-form-switchTest)', function(data){
@@ -651,24 +663,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    };
    /* 添加抵押信息*/
    $(document).on("click","#sava4",function(){
-     if(confirm("确定提交吗!")){
-          $("#type3").ajaxSubmit({
+      $("#type3").ajaxSubmit({
         url:"lololo/dysave",
         type:"post",
         contentType:"application/x-www-form-urlencoded; charset=utf-8",
         dataType:"text",
         success:function(data){
-          if(data.length>0){
-            alert("贷款申请成功");
-           window.location.href="wang/MyJsp.jsp";
-          }else{
-              alert("信息编写有误");
-          }
-           
+           alert(data);
         }
       });
-     }
-      
    });
 
 	</script>

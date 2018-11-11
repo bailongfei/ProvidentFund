@@ -288,11 +288,13 @@
   </update>
   
   
-  
+
+   
+   
    <insert id="Loansave" parameterType="Loaninfo">
    	<selectKey keyProperty="dkxxbh" order="AFTER" resultType="java.lang.Integer">  
         SELECT LAST_INSERT_ID()  
     </selectKey> 
-    insert into loaninfo(jkhtbh,bkname,bksex,phone,zjtype,idNumber,incomes,dkje,grdkqs,eamil,jkhtll,dwzh,dkrgjjzh,hkzh) values(#{jkhtbh},#{bkname},#{bksex},#{phone},#{zjtype},#{idnumber},#{incomes},#{dkje},#{grdkqs},#{eamil},#{jkhtll},#{dwzh},#{dkrgjjzh},#{hkzh})
+    insert into loaninfo(jkhtbh,bkname,bksex,phone,zjtype,idNumber,incomes,dkje,grdkqs,eamil,jkhtll,dwzh,dkrgjjzh,hkzh,hkfs,dksqrq,myhkrq) values(#{jkhtbh},#{bkname},#{bksex},#{phone},#{zjtype},#{idnumber},#{incomes},#{dkje},#{grdkqs},#{eamil},#{jkhtll},#{dwzh},#{dkrgjjzh},#{hkzh},#{hkfs},#{dksqrq},#{myhkrq})
   </insert>
 </mapper>
