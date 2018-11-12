@@ -125,7 +125,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		<div  onclick="fomtj()" style="color:#ffffff;left:8px;top:5px;position:absolute; ">质检校验</div>
 			   </div>
 			   
-			  
 			   
 			   <form id="form2" class="layui-form">
 			   
@@ -253,7 +252,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			     <div class="layui-form-item" style="left:750px;position:absolute;top:155px;">
 				    <label class="layui-form-label"  style="color:#1589bc;font-weight:bold;width:150px;">单位经办部门:<span style="color:red">*</span></label>
 				    <div class="layui-input-inline">
-                          <input type="text" name="unitinfosection" required lay-verify="required" placeholder="请输入单位经办部门" autocomplete="off" class="layui-input">
+				    <select name="unitinfosection"  lay-verify="required">
+	                    <option value="人事部门">人事部门</option>
+						<option value="财务部">财务部</option>
+						
+					 </select>
+                        
                     </div>
 			     </div>
 			
@@ -399,7 +403,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                <div class="layui-form-item" style="left:580px;position:absolute;top:110px;">
 			      <label class="layui-form-label" style="color:#1589bc;font-weight:bold;width:150px;">个人缴存比例:<span style="color:red">*</span></label>
 			      <div class="layui-input-block">
-			      <input type="text"  id="unitsindividua"  style="left:70px;top:3px;position:absolute;width:170px"  required  lay-verify="required" placeholder="请输入个人缴存比例" autocomplete="off" class="layui-input">
+			      <input type="text"  id="unitsindividua"  name="unitsindividua" style="left:70px;top:3px;position:absolute;width:170px"  required  lay-verify="required" placeholder="请输入个人缴存比例" autocomplete="off" class="layui-input">
 			      </div>
 			   </div>
 			
@@ -560,9 +564,6 @@ function updateUnitinfo(){
 	       	 	dataType : 'text',//返回的数据类型
 	        	success : function(data) {
 	        		 $("#gslxbh2").val($("#gslxbh  option:selected").text());
-	        	
-	        		 
-	        	
 	        	}
 	 		});
 	 		return false;

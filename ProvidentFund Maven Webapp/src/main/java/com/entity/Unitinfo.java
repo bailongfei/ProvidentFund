@@ -60,6 +60,16 @@ public class Unitinfo {
     private String unitinfoaccountlusd;
 
     private String fattype;
+    
+    private Integer ustateid;
+    
+    public Integer getUstateid() {
+        return ustateid;
+    }
+
+    public void setUstateid(Integer ustateid) {
+        this.ustateid = ustateid;
+    }
 
     public Integer getUnitinfoid() {
         return unitinfoid;
@@ -300,4 +310,23 @@ public class Unitinfo {
     public void setFattype(String fattype) {
         this.fattype = fattype == null ? null : fattype.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Unitinfo [unitinfoid=" + unitinfoid + ", gslxbh=" + gslxbh + ", gshylxbh=" + gshylxbh + ", jjlxbh="
+				+ jjlxbh + ", unitinfoaccount=" + unitinfoaccount + ", unitinfoname=" + unitinfoname
+				+ ", unitinfocredit=" + unitinfocredit + ", unitinfoproperty=" + unitinfoproperty + ", unitinfoaddress="
+				+ unitinfoaddress + ", unitinfofader=" + unitinfofader + ", unitinfotype=" + unitinfotype
+				+ ", unitinfonumber=" + unitinfonumber + ", unitinfosubjection=" + unitinfosubjection
+				+ ", unitinfoeconomic=" + unitinfoeconomic + ", unitinfoclass=" + unitinfoclass + ", unitinfopostcode="
+				+ unitinfopostcode + ", unitinfoemail=" + unitinfoemail + ", unitinfopayday=" + unitinfopayday
+				+ ", unitinfooperatorname=" + unitinfooperatorname + ", unitinfooperatorphone=" + unitinfooperatorphone
+				+ ", nitinfooperatortype=" + nitinfooperatortype + ", unitinfooperatornumber=" + unitinfooperatornumber
+				+ ", unitinfobankname=" + unitinfobankname + ", unitinfoswiftcode=" + unitinfoswiftcode
+				+ ", unitinfosocialaccount=" + unitinfosocialaccount + ", unitinfosection=" + unitinfosection
+				+ ", unitinfotissuecode=" + unitinfotissuecode + ", unitinfofoundlusd=" + unitinfofoundlusd
+				+ ", unitinfoaccountlusd=" + unitinfoaccountlusd + ", fattype=" + fattype + ", ustateid=" + ustateid
+				+ "]";
+	}
+    
 }

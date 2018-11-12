@@ -85,7 +85,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="layui-form-item" style="left:520px;position:absolute;top:35px;">
 	    <label class="layui-form-label" style="color:#1589bc;font-weight:bold;width:140px;">统一社会信用代码： <span style="color:red">*</span></label>
-	    <input type="text" name="unitinfocredit" style="left:160px;width:200px;top:5px;position:absolute;" required  lay-verify="required" autocomplete="off" class="layui-input">
+	    <input type="text" id="unitinfocredit" name="unitinfocredit" style="left:160px;width:200px;top:5px;position:absolute;" required  lay-verify="required" autocomplete="off" class="layui-input">
+        <span id="accountText" style="width:190px;height:30px;position:absolute;left:375px;top:10px"></span>
     </div>
  </div>
  <div style="width:1100px;height:200px;background-color:#ffffff;left:230px;top:440px;position:absolute;">
@@ -143,7 +144,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		</span>
 		<div style="background-color:#2f78b1;width:120px;height:40px;color:#FFFFFF;left:460px;top:290px;position:absolute;">
-     	<a href="/ProvidentFund/danwei.jsp" style="color:#ffffff;position:absolute;top:5px;left:17px;text-decoration:none">√点击登录</a>
+     	<a href="/ProvidentFund/jym/danwei.jsp" style="color:#ffffff;position:absolute;top:5px;left:17px;text-decoration:none">√点击登录</a>
      	</div>
 		</div> 	
   
@@ -183,6 +184,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	});
 	
+	//离开验证 函数 
+   $("#unitinfocredit").blur(function(){
+    //获取账号后的提示信息文本
+
+      var accountText = document.getElementById("accountText");
+        var unitinfocredit=$("#unitinfocredit").val();
+        if(unitinfocredit!=""){
+            $.ajax({
+                url: 'Peraccount/selectunitinfocredit',
+                data:{"unitinfocredit":unitinfocredit},
+                type: 'POST',
+                dataType:"text",
+                success: function (data) {
+                    if(data==0){
+                    // 账号已经存在
+                       accountText.innerHTML = "<font color='red'>抱歉，"+unitinfocredit+"已存在，请更换！</font>"
+                        $("#unitinfocredit").val("");
+                    }else{
+                       // 账号不存在
+                      accountText.innerHTML = "<font color='green'>恭喜，"+unitinfocredit+"信用代码可用！</font>"
+                    }
+                }
+            })
+        }
+    })
 	$("#form1").submit(function(){
 	alert("555")
 				$.ajax({

@@ -14,7 +14,7 @@ public interface UnitsaccountMapper {
 
     int insertSelective(Unitsaccount record);
 
-    Unitsaccount selectByPrimaryKey(Integer unitinfoaccount);
+    Unitsaccount selectByPrimaryKey(Integer unitinfoid);
 
     int updateByPrimaryKeySelective(Unitsaccount record);
 

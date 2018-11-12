@@ -210,4 +210,18 @@ public class Unitsaccount {
     public void setUnitesperson(String unitesperson) {
         this.unitesperson = unitesperson == null ? null : unitesperson.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Unitsaccount [unitinfoaccount=" + unitinfoaccount + ", unitinfoid=" + unitinfoid + ", unitsname="
+				+ unitsname + ", unitsdepositratio=" + unitsdepositratio + ", unitsindividua=" + unitsindividua
+				+ ", unitsdeposite=" + unitsdeposite + ", unitsarchive=" + unitsarchive + ", unitsbalance="
+				+ unitsbalance + ", nitscanceldate=" + nitscanceldate + ", unitescancelcause=" + unitescancelcause
+				+ ", unitesstate=" + unitesstate + ", unitespaiduntil=" + unitespaiduntil + ", unitesarrearsmoney="
+				+ unitesarrearsmoney + ", unitesarrearsmonths=" + unitesarrearsmonths + ", unitesdeposit="
+				+ unitesdeposit + ", unitesusername=" + unitesusername + ", unitesaccount=" + unitesaccount
+				+ ", unitestrustee=" + unitestrustee + ", unitesbankname=" + unitesbankname + ", unitesaccounts="
+				+ unitesaccounts + ", unitesperson=" + unitesperson + "]";
+	}
+    
 }

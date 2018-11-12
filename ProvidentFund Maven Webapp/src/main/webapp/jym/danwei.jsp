@@ -86,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </tr>
 	  <tr style="width:250px;height:30px;background-color:#ffffff;border:1px solid #000;top:135px;left:30px;position:absolute;">
 	  <td >登陆密码：</td>
-	  <td>  <input type="text" name="peracloginpw" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">  
+	  <td>  <input type="password" name="peracloginpw" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">  
 	  </tr>
 	  <tr style="width:266px;height:30px;background-color:#ffffff;border:1px solid #000;top:185px;left:30px;position:absolute;">
 	  <td >验证码：</td>
@@ -102,7 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 
 	 
 	  <div style="width:130px;height:30px;background-color:#fbb113;border:1px solid #000;top:295px;left:30px;position:absolute;">  
-		  	<a href="zhuce.jsp" style="color:#ffffff;position:absolute;top:5px;left:3px;text-decoration : none">未认证用户注册</a>
+		  	<a href="jym/zhuce.jsp" style="color:#ffffff;position:absolute;top:5px;left:3px;text-decoration : none">未认证用户注册</a>
 		  </div>
 		  <div style="width:100px;height:30px;background-color:#fbb113;border:1px solid #000;top:295px;left:180px;position:absolute;">  
 		  	<a onclick="fomtj()" style="color:#ffffff;position:absolute;top:5px;left:30px">登录</a>
@@ -125,14 +125,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  		if(data.bkname==0){
  			alert("用户名或密码错误！");
  		}else{
- 			window.location.href="shouye.jsp"; 
+ 		 
+ 			window.location.href="jym/shouye.jsp"; 
+ 			
  		}
  			
  		}
  	})
  }
  
-var verifyCode = new GVerify("v_container");
+ var verifyCode = new GVerify("v_container");
 		var oInput = document.getElementById("code_input");
 		var oButton = document.getElementById("my_button");
 		var oDiv = document.getElementById("changeBtn");
@@ -151,7 +153,7 @@ var verifyCode = new GVerify("v_container");
 		//看不清，换一张事件
 		oDiv.onclick = function(){
 			verifyCode.refresh();
-		}
+		} 
 
 
 
