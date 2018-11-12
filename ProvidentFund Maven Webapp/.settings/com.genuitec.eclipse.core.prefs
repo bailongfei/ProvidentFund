@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 validator.Checked=src/main/webapp/frame/layuiadmin/json
 =======
 validator.Checked=src/main/webapp/resources,src/main/webapp/frame
@@ -13,3 +14,7 @@ validator.Checked=src/main/webapp/frame
 validator.Checked=src/main/webapp/frame/layuiadmin
 >>>>>>> refs/remotes/origin/wangcc
 validator.Unchecked=
+=======
+validator.Checked=src/main/webapp/resources,src/main/webapp/frame,src/main/resources/applicationContext.xml
+validator.Unchecked=src/main/webapp/resources/js/bootstrap/js/bootstrapValidator.min.js
+>>>>>>> refs/remotes/origin/jym

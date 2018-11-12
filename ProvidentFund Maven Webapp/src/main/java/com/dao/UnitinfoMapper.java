@@ -15,8 +15,8 @@ public interface UnitinfoMapper {
 
     Unitinfo selectByPrimaryKey(Integer unitinfoid);
 
-    int updateByPrimaryKeySelective(Unitinfo record);
 
+    int updateByPrimaryKeySelective(Unitinfo record1);
     int updateByPrimaryKey(Unitinfo record);
     //²éÑ¯ËùÓÐ
     public List<Map>queryAllcwh();

@@ -7,8 +7,7 @@
   useGeneratedKeys="true" keyProperty="unitinfoid" keyColumn="id">
   
     insert into unitinfo (unitinfoname,unitinfocredit)
-    values (#{unitinfoname,jdbcType=VARCHAR}, 
-      #{unitinfocredit,jdbcType=VARCHAR}) 
+    values (#{unitinfoname},#{unitinfocredit}) 
   </insert>           
    <insert id="insertUnitinfo1" parameterType="com.entity.Unitinfo" 
   useGeneratedKeys="true" keyProperty="unitinfoid" keyColumn="id">
@@ -21,7 +20,17 @@
     #{unitinfofoundlusd},#{unitinfooperatorname},#{unitinfooperatorphone},#{nitinfooperatortype},#{unitinfooperatornumber},#{unitinfobankname},
     #{unitinfoswiftcode})
   </insert>
+  <insert id="insertUnitinfo2" parameterType="com.entity.Unitinfo" 
+  useGeneratedKeys="true" keyProperty="unitinfoid" keyColumn="unitinfoid">
   
+    insert into unitinfo (unitinfoname,unitinfocredit,unitinfoaddress,gslxbh,gshylxbh,jjlxbh,unitinfosubjection,unitinfopostcode,
+    unitinfoemail,unitinfopayday,unitinfofoundlusd,unitinfoaccountlusd,unitinfooperatorname,unitinfooperatorphone,unitinfooperatornumber,
+    unitinfofader,unitinfotype,unitinfonumber,unitinfosocialaccount,unitinfosection,fattype,unitinfoaccount)
+    values (#{unitinfoname},#{unitinfocredit},#{unitinfoaddress},#{gslxbh},#{gshylxbh},#{jjlxbh},#{unitinfosubjection},#{unitinfopostcode},
+    #{unitinfoemail},#{unitinfopayday},#{unitinfofoundlusd},#{unitinfoaccountlusd},#{unitinfooperatorname},#{unitinfooperatorphone},
+    #{unitinfooperatornumber},#{unitinfofader},#{unitinfotype},#{unitinfonumber},#{unitinfosocialaccount},#{unitinfosection},#{fattype},
+    #{unitinfoaccount})
+  </insert>
   <update id="updateUnitinfo" parameterType="com.entity.Unitinfo" 
   useGeneratedKeys="true" keyProperty="unitinfoid" keyColumn="id">
 	  update unitinfo set 
@@ -34,6 +43,14 @@
 	  unitinfoswiftcode=#{unitinfoswiftcode}
 	  where unitinfoid=#{unitinfoid}
 	</update>
+	 <update id="updateUnitsaccount" parameterType="Unitsaccount"  
+	 useGeneratedKeys="true" keyProperty="unitsaccount" keyColumn="id">
+	 update unitsaccount set 
+	 unitsdepositratio=#{unitsdepositratio},unitsindividua=#{unitsindividua},unitsdeposite=#{unitsdeposite},
+	 unitsbalance=#{unitsbalance},unitesstate=#{unitesstate}, unitesusername=#{unitesusername}, unitesaccount=#{unitesaccount},
+	 unitesbankname=#{unitesbankname},unitestrustee=#{unitestrustee}
+	 where unitinfoid=#{unitinfoid}
+	</update>
 	
 	<insert id="insertUnitsaccount" parameterType="com.entity.Unitsaccount" 
   useGeneratedKeys="true" keyProperty="unitinfoaccount" keyColumn="id">
@@ -43,13 +60,70 @@
     values (#{unitinfoaccount},#{unitinfoid},#{unitsname},#{unitesstate},#{unitsdepositratio},
       #{unitsindividua},#{unitesusername},#{unitesaccount},#{unitesbankname},#{unitestrustee},#{unitesperson})
   </insert>
-  <!-- <select id="selectUnitinfoId" resultType="java.util.Map"  parameterType="Integer">
-  select *  from unitinfo where  unitinfoid=#{unitinfoid}
-  </select> -->
+  <insert id="insertUnitsaccount1" parameterType="com.entity.Unitsaccount" 
+  useGeneratedKeys="true" keyProperty="unitinfoaccount" keyColumn="id">
+    insert into unitsaccount (unitinfoaccount,unitinfoid,unitsname,unitesstate,unitsdepositratio,
+    unitsdeposite,unitsarchive,unitsbalance,unitespaiduntil,
+    unitsindividua,unitesusername,unitesaccount,unitesbankname,unitestrustee,unitesperson)
+    values (#{unitinfoaccount},#{unitinfoid},#{unitsname},#{unitesstate},#{unitsdepositratio},
+    #{unitsdeposite},#{unitsarchive},#{unitsbalance},#{unitespaiduntil},
+      #{unitsindividua},#{unitesusername},#{unitesaccount},#{unitesbankname},#{unitestrustee},#{unitesperson})
+  </insert>
+   <select id="selectUnitsaccountid"  resultType="java.util.Map">
+    select * from unitsaccount n join unitinfo u on n.unitinfoid=u.unitinfoid  where n.unitinfoid=#{unitinfoid}
+   </select>
+   
+  <select id="queryPageUnfo" parameterType="map"  resultType="map">
+   select * from unitsaccount
+    <where>
+        <if test="UnitsName!=null and UnitsName!=''">
+          and UnitsName like "%"#{UnitsName}"%"
+       </if>
+
+    </where>
+    order by unitinfoid desc
+    limit #{startIndex},#{pageSize} 
+  </select>
+  
+  <select id="getPageCount" resultType="int">
+        
+       select count(*) from unitsaccount 
+       <where>
+         <if test="UnitsName!=null and UnitsName!=''">
+          and UnitsName like "%"#{UnitsName}"%"
+        </if>
+       </where>
+         order by unitinfoid desc
+  </select>
+  <update id="updateUccount" parameterType="Unitsaccount" >
+  update
+  
+  </update>
+  <delete id="deleteUnitsaccount" >
+     DELETE FROM  unitsaccount WHERE unitinfoid=#{unitinfoid}
+  </delete>
+  <delete id="deleteUnitinfo" >
+     DELETE FROM  unitinfo WHERE unitinfoid=#{unitinfoid}
+  </delete>
+  
+  <select id="selectUnitsaccount"  resultType="java.util.Map">
+  select * from unitsaccount
+  </select>
+  
+  <select id="selectUnitinfo" resultType="java.util.Map">
+       select * from unitinfo
+  </select>
+  
+  <!-- //根据社会信用代码查询社会信用代码 验证唯一 -->
+  <select id="selectunitinfocredit" resultType="java.util.Map">
+    select u.unitinfocredit from unitinfo u where u.unitinfocredit=#{unitinfocredit}
+  </select>
+	
    <select id="selectUnitinfot"  resultType="java.util.Map">
    
-  select u.unitlnfostateid from unitinfo u where  u.unitinfoname=#{unitinfoname} and u.unitinfocredit=#{unitinfocredit}
+  select u.ustateid from unitinfo u where  u.unitinfoname=#{unitinfoname} and u.unitinfocredit=#{unitinfocredit}
   </select>
+  
    <select id="selectGshylx"  resultType="java.util.Map">
        select * from gshylx
   </select>

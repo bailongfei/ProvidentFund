@@ -294,7 +294,7 @@
         UnitesPerson = #{unitesperson,jdbcType=VARCHAR},
       </if>
     </set>
-    where UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER}
+    where UnitInfoId=#{unitinfoid}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.Unitsaccount">
 
@@ -319,7 +319,7 @@
       UnitesBankname = #{unitesbankname,jdbcType=VARCHAR},
       UnitesAccounts = #{unitesaccounts,jdbcType=VARCHAR},
       UnitesPerson = #{unitesperson,jdbcType=VARCHAR}
-    where UnitInfoAccount = #{unitinfoaccount,jdbcType=INTEGER}
+    where unitinfoid = #{unitinfoid,jdbcType=INTEGER}
   </update>
    <select id="queryAllcwh" resultType="java.util.Map">
 select*from Unitsaccount 
