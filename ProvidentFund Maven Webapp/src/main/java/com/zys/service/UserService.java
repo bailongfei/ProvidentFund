@@ -4,7 +4,7 @@ package com.zys.service;
 import java.util.List;
 import java.util.Map;
 
-import com.zys.entity.User;
+import com.entity.User;
 
 public interface UserService {
 	public List<Map<String,Object>> queryAll();

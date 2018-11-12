@@ -17,6 +17,7 @@ public interface IndividualpayMapper {
 	public int insertIpayPer(Map<String,Object> map);
 	public int saveIpaer(Individualpay iper);
 
+public List<Individualpay> queryIndividualpay();//zys
     int deleteByPrimaryKey(Integer grzhbhs);
 
    // public int updateIpar(@Param("unitinfoaccount")Integer unitinfoaccount,@Param("nhyf")Integer hjys);

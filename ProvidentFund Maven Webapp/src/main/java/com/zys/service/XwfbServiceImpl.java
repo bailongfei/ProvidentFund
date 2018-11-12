@@ -4,8 +4,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zys.dao.XwfbDao;
-import com.zys.entity.Xwfb;
+import com.dao.XwfbDao;
+import com.entity.Xwfb;
+
+
+
 
 @Service
 public class XwfbServiceImpl implements XwfbService{

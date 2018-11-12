@@ -2,15 +2,8 @@ package com.dao;
 import java.util.List;
 import java.util.Map;
 
-import java.util.List;
-import java.util.Map;
-
-import java.util.List;
-import java.util.Map;
-
 import com.entity.Peraccount;
 import com.entity.Unitinfo;
-import com.zhl.pager.Pager;
 
 
 public interface PeraccountMapper {

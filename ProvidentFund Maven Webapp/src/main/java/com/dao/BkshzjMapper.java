@@ -1,6 +1,5 @@
 package com.dao;
 
-import com.entity.Accumulation;
 import com.entity.Bkshzjb;
 
 public interface BkshzjMapper {

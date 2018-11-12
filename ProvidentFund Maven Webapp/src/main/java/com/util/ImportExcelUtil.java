@@ -1,6 +1,5 @@
 package com.util;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -14,15 +13,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-/*Excelè§£æå·¥å…·ç±»*/
+
 
 public class ImportExcelUtil {
 
-    private final static String excel2003L =".xls";    //2003- ç‰ˆæœ¬çš„excel
-    private final static String excel2007U =".xlsx";   //2007+ ç‰ˆæœ¬çš„excel
+    private final static String excel2003L =".xls";    //2003- °æ±¾µÄexcel
+    private final static String excel2007U =".xlsx";   //2007+ °æ±¾µÄexcel
 
     /**
-     * æè¿°ï¼šè·å–IOæµä¸­çš„æ•°æ®ï¼Œç»„è£…æˆList<List<Object>>å¯¹è±¡
+     * ÃèÊö£º»ñÈ¡IOÁ÷ÖĞµÄÊı¾İ£¬×é×°³ÉList<List<Object>>¶ÔÏó
      * @param in,fileName
      * @return
      * @throws IOException 
@@ -30,27 +29,28 @@ public class ImportExcelUtil {
     public  List<List<Object>> getBankListByExcel(InputStream in,String fileName) throws Exception{
         List<List<Object>> list = null;
 
-        //åˆ›å»ºExcelå·¥ä½œè–„
+        //´´½¨Excel¹¤×÷±¡
         Workbook work = this.getWorkbook(in,fileName);
         if(null == work){
-            throw new Exception("åˆ›å»ºExcelå·¥ä½œè–„ä¸ºç©ºï¼");
+            throw new Exception("´´½¨Excel¹¤×÷±¡Îª¿Õ£¡");
         }
         Sheet sheet = null;
         Row row = null;
         Cell cell = null;
 
         list = new ArrayList<List<Object>>();
-        //éå†Excelä¸­æ‰€æœ‰çš„sheet
+        //±éÀúExcelÖĞËùÓĞµÄsheet
         for (int i = 0; i < work.getNumberOfSheets(); i++) {
             sheet = work.getSheetAt(i);
             if(sheet==null){continue;}
 
-            //éå†å½“å‰sheetä¸­çš„æ‰€æœ‰è¡Œ
-            for (int j = sheet.getFirstRowNum(); j <= sheet.getLastRowNum(); j++) {
+            //±éÀúµ±Ç°sheetÖĞµÄËùÓĞĞĞ
+            //j <=sheet.getLastRowNum()ÊÇÒòÎªexcel±íµÚÒ»ĞĞÎªÊôĞÔÃû
+            for (int j = sheet.getFirstRowNum(); j <=sheet.getLastRowNum(); j++) {
                 row = sheet.getRow(j);
                 if(row==null||row.getFirstCellNum()==j){continue;}
 
-                //éå†æ‰€æœ‰çš„åˆ—
+                //±éÀúËùÓĞµÄÁĞ
                 List<Object> li = new ArrayList<Object>();
                 for (int y = row.getFirstCellNum(); y < row.getLastCellNum(); y++) {
                     cell = row.getCell(y);
@@ -59,11 +59,12 @@ public class ImportExcelUtil {
                 list.add(li);
             }
         }
+         /*work.close();*/
         return list;
     }
 
     /**
-     * æè¿°ï¼šæ ¹æ®æ–‡ä»¶åç¼€ï¼Œè‡ªé€‚åº”ä¸Šä¼ æ–‡ä»¶çš„ç‰ˆæœ¬ 
+     * ÃèÊö£º¸ù¾İÎÄ¼şºó×º£¬×ÔÊÊÓ¦ÉÏ´«ÎÄ¼şµÄ°æ±¾ 
      * @param inStr,fileName
      * @return
      * @throws Exception
@@ -76,32 +77,29 @@ public class ImportExcelUtil {
         }else if(excel2007U.equals(fileType)){
             wb = new XSSFWorkbook(inStr);  //2007+
         }else{
-            throw new Exception("è§£æçš„æ–‡ä»¶æ ¼å¼æœ‰è¯¯ï¼");
+            throw new Exception("½âÎöµÄÎÄ¼ş¸ñÊ½ÓĞÎó£¡");
         }
         return wb;
     }
 
     /**
-     * æè¿°ï¼šå¯¹è¡¨æ ¼ä¸­æ•°å€¼è¿›è¡Œæ ¼å¼åŒ–
+     * ÃèÊö£º¶Ô±í¸ñÖĞÊıÖµ½øĞĞ¸ñÊ½»¯
      * @param cell
      * @return
      */
     public  Object getCellValue(Cell cell){
         Object value = null;
-        DecimalFormat df = new DecimalFormat("0");  //æ ¼å¼åŒ–number Stringå­—ç¬¦
-        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");  //æ—¥æœŸæ ¼å¼åŒ–
-        DecimalFormat df2 = new DecimalFormat("0.00");  //æ ¼å¼åŒ–æ•°å­—
+        DecimalFormat df = new DecimalFormat("0");  //¸ñÊ½»¯number String×Ö·û
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");  //ÈÕÆÚ¸ñÊ½»¯
+        DecimalFormat df2 = new DecimalFormat("0.00");  //¸ñÊ½»¯Êı×Ö
 
         switch (cell.getCellType()) {
         case Cell.CELL_TYPE_STRING:
             value = cell.getRichStringCellValue().getString();
-           
             break;
         case Cell.CELL_TYPE_NUMERIC:
-        	
             if("General".equals(cell.getCellStyle().getDataFormatString())){
-               /* value = df.format(cell.getNumericCellValue());*/
-            	 value = df.format(cell.getNumericCellValue());
+                value = df.format(cell.getNumericCellValue());
             }else if("m/d/yy".equals(cell.getCellStyle().getDataFormatString())){
                 value = sdf.format(cell.getDateCellValue());
             }else{

@@ -21,7 +21,7 @@ import com.entity.Individualpay;
 import com.entity.Peraccount;
 
 @Controller
-@RequestMapping("/uploadExcel/*")  
+@RequestMapping("/uploadExcelblf/*")  
 public class UploadExcelControlsblf {
 @Autowired
 private individualPayService ips;
@@ -30,7 +30,7 @@ private individualPayService ips;
      * @param request
      * @throws Exception
      */
-    @RequestMapping(value="upload.do",method={RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value="uploadblf.do",method={RequestMethod.GET,RequestMethod.POST})
     public  String  uploadExcel(HttpServletRequest request) throws Exception {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;  
         System.out.println("通过传统方式form表单提交方式导入excel文件！");
@@ -66,7 +66,7 @@ private individualPayService ips;
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping(value="ajaxUpload.do",method={RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value="ajaxUploadblf.do",method={RequestMethod.GET,RequestMethod.POST})
     public  void  ajaxUploadExcel(HttpServletRequest request,HttpServletResponse response) throws Exception {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;  
 

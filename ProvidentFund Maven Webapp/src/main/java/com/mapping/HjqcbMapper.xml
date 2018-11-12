@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.HjqcbMapper">
+<!-- 汇缴清册查询zys -->
+
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="Hjqcb">
+    select * from hjqcb
+  </select>
+  
 <select id="queryHjceb" parameterType="Integer" resultType="map">
    <!--  select uc.*,uf.* from Unitsaccount uc join UnitInfo uf on uc.UnitInfoAccount=uf.UnitInfoAccount  where uc.UnitInfoAccount=#{unitinfoaccount} -->
 SELECT *, ABS(NOW() - h.bjjzrq)  AS diffTime FROM hjqcb h where h.UnitInfoAccount=#{unitinfoaccount} ORDER BY h.hjbh desc LIMIT 0,1 

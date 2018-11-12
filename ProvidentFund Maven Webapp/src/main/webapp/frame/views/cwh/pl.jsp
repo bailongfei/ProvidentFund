@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         if(checkData()){  
                           $("#jdt2").css("width","100%");
                             $('#form1').ajaxSubmit({    
-                                url:'uploadExcel/ajaxUpload.do',  
+                                url:'uploadExcelcwh/ajaxUpload.do',  
                                 dataType: 'text',  
                                 success: resutlMsg,  
                                 error: errorMsg  

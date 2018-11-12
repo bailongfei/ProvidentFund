@@ -2,7 +2,8 @@ package com.zys.service;
 
 import java.util.List;
 
-import com.zys.entity.Xwfb;
+import com.entity.Xwfb;
+
 
 
 public interface XwfbService {

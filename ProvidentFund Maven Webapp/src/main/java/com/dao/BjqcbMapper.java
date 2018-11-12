@@ -1,11 +1,13 @@
 package com.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.entity.Bjqcb;
 
 public interface BjqcbMapper {
 
+public List<Bjqcb> queryBjqcb();//≤πΩ…«Â≤·≤È—Ø
 	public int saveBujiao(Map<String,Object> map);
 
     int deleteByPrimaryKey(Integer bjbh);

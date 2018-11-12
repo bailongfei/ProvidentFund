@@ -260,7 +260,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    </div>
 						 </div>
 						 <!-- <div>1.通过简单的form表单提交方式，进行文件的上</br> 2.通过jquery.form.js插件提供的form表单一步提交功能 </div></br>  --> 
-        <form method="POST"  enctype="multipart/form-data" id="form2" action="uploadExcel/upload.do">  
+        <form method="POST"  enctype="multipart/form-data" id="form2" action="uploadExcel/uploadblf.do">  
              <table>  
              <tr>  
                 <td>上传文件:</td>  
@@ -523,7 +523,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         if(checkData()){  
                           $("#jdt2").css("width","100%");
                             $('#form2').ajaxSubmit({    
-                                url:'uploadExcel/ajaxUpload.do',  
+                                url:'uploadExcelblf/ajaxUploadblf.do',  
                                 dataType: 'text',  
                                 success: resutlMsg,  
                                 error: errorMsg  

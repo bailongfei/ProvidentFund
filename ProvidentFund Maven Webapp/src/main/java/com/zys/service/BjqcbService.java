@@ -2,7 +2,7 @@ package com.zys.service;
 
 import java.util.List;
 
-import com.zys.entity.Bjqcb;
+import com.entity.Bjqcb;
 
 
 public interface BjqcbService {

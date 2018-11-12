@@ -14,6 +14,8 @@ public interface HjqcbMapper {
 
     int deleteByPrimaryKey(Integer hjbh);
 
+    public List<Hjqcb> queryAll();//ª„Ω…«Â≤·≤È—Ø
+    public int insertss(Hjqcb h);//
 
    public int insert(Hjqcb record);
 

@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zys.dao.BjqcbDao;
-import com.zys.entity.Bjqcb;
+import com.dao.BjqcbMapper;
+import com.entity.Bjqcb;
+
 
 @Service
 public class BjqcbServiceImpl implements BjqcbService{
 @Autowired
-private BjqcbDao dao;
+private BjqcbMapper dao;
 	@Override
 	public List<Bjqcb> queryBjqcb() {
 		// TODO Auto-generated method stub

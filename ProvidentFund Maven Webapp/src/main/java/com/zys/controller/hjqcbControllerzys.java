@@ -8,8 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zys.entity.hjqcb;
+import com.entity.Hjqcb;
 import com.zys.service.hjqcbService;
+
 
 @Controller
 @RequestMapping("/hjqcb")
@@ -18,12 +19,12 @@ public class hjqcbControllerzys {
 private hjqcbService service;
 @RequestMapping("/queryAll")
 @ResponseBody
-public List<hjqcb> queryAll(){
-	 List<hjqcb> list=service.queryAll();
+public List<Hjqcb> queryAll(){
+	 List<Hjqcb> list=service.queryAll();
 	return list; 
 }
 @RequestMapping("/insert")
-public String insert(hjqcb h,Map map){
+public String insert(Hjqcb h,Map map){
 	int result= service.insert(h);
 	map.put("hjqcb", h);
 	return "list";

@@ -5,19 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zys.dao.hjqcbMapper;
-import com.zys.entity.hjqcb;
+import com.dao.HjqcbMapper;
+import com.entity.Hjqcb;
+
 
 @Service
 public class hjqcbServiceImpl implements hjqcbService{
 @Autowired
-    private hjqcbMapper mapper;
+    private HjqcbMapper mapper;
 @Override
-public List<hjqcb> queryAll() {
+public List<Hjqcb> queryAll() {
 	return mapper.queryAll();
 }
 @Override
-public int insert(hjqcb h) {
-	return mapper.insert(h);
+public int insert(Hjqcb h) {
+	return mapper.insertss(h);
 }
 }

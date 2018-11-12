@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.util.ImportExcelUtil;
 import com.cwh.service.PerdeService;
-import com.entity.Individualpay;
+import com.cwh.util.ImportExcelUtilcwh;
 import com.entity.Peraccount;
 
 @Controller
-@RequestMapping("/uploadExcel/*")  
+@RequestMapping("/uploadExcelcwh/*")  
 public class UploadExcelControlcwh {
 @Autowired
 private PerdeService ips;
@@ -42,7 +40,7 @@ private PerdeService ips;
             throw new Exception("文件不存在！");
         }
         in = file.getInputStream();
-        listob = new ImportExcelUtil().getBankListByExcel(in,file.getOriginalFilename());
+        listob = new ImportExcelUtilcwh().getBankListByExcel(in,file.getOriginalFilename());
         in.close();
 
         //该处可调用service相应方法进行数据保存到数据库中，现只对数据输出
@@ -80,7 +78,7 @@ private PerdeService ips;
         }
 
         in = file.getInputStream();
-        listob = new ImportExcelUtil().getBankListByExcel(in,file.getOriginalFilename());
+        listob = new ImportExcelUtilcwh().getBankListByExcel(in,file.getOriginalFilename());
 
         //该处可调用service相应方法进行数据保存到数据库中，现只对数据输出
         for (int i = 0; i < listob.size(); i++) {

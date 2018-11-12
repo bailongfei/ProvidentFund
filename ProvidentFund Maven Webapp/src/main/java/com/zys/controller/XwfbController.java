@@ -10,8 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zys.entity.Xwfb;
+import com.entity.Xwfb;
 import com.zys.service.XwfbService;
+
 
 @Controller
 //²éÑ¯ËùÓÐ

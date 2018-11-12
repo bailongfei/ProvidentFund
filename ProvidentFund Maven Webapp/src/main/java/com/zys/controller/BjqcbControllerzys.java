@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zys.entity.Bjqcb;
+import com.entity.Bjqcb;
 import com.zys.service.BjqcbService;
 
 @Controller
