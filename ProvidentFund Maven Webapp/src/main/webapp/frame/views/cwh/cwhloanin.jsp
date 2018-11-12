@@ -52,118 +52,79 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  </div>  
    </div>
   <!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div class="modal fade" id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:900px;">
+        <div class="modal-content" style="height:750px;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">审核信息</h4>
             </div>
             <div class="modal-body">
             	    <form  method="post" id="form2">
-            	<div class="form-group">
-		<label for="fourname" class="col-sm-2 control-label">编号</label>
-		<div class="col-sm-10">
-			<input  name="dkxxbh"   type="text" class="form-control"  id="dkxxbh" ><br>
-		</div>
-		<div class="form-group">
-		<label for="therename" class="col-sm-2 control-label">姓名</label>
-		<div class="col-sm-10">
-			<input     type="text" class="form-control"  name="bkname" id="bkname"><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fourname" class="col-sm-2 control-label">性别</label>
-		<div class="col-sm-10">
-			<input  name="unitinfoname"   type="text" class="form-control"  id="bksex" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fivename" class="col-sm-2 control-label">手机号</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="phone"class="form-control"  id="phone" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fuvename" class="col-sm-2 control-label">证件类型</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="unitinfooperatorphone"class="form-control"  id="zjtype" readonly="readonly"><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="ftvename" class="col-sm-2 control-label">身份证号</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="nitinfooperatortype"class="form-control"  id="idNumber" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="ftvename" class="col-sm-2 control-label">还款账号</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="hkzh"class="form-control"  id="hkzh" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">贷款金额</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="dkje"class="form-control"  id="dkje" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">单位账号</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="unitinfooperatornumber"class="form-control"  id="dwzh" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">合同利率</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="jkhtll"class="form-control"  id="jkhtll" ><br>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">购房类型</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="unitinfooperatornumber"class="form-control"  id="gfxxId" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">房屋位置</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="unitinfooperatornumber"class="form-control"  id="belocated" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">房屋面积</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="unitinfooperatornumber"class="form-control"  id="acreage" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">房主姓名</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="unitinfooperatornumber"class="form-control"  id="nameHouse" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">银行账户</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="unitinfooperatornumber"class="form-control"  id="gfbankAccount" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">房屋总价</label>
-		<div class="col-sm-10">
-			<input    type="text"  name="unitinfooperatornumber"class="form-control"  id="housePrice" ><br>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="fiename" class="col-sm-2 control-label">审核状态</label>
-		<div class="col-sm-10">
-			<select name='shbh' class='shbh' ></select><br>
-		</div>
-	</div>
-	</form>
+            	    <div style="font-weight:bold;font-size:25px;color:#5CACEE">贷款人资料：<br><br></div>
+            	      <div>
+            	   <span style="font-weight:bold;font-size:20px;"> 编号：</span><input  name="dkxxbh"   type="text"  id="dkxxbh" readonly="readonly">
+            	    
+            	    </div>
+            	    
+            	   <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  姓名：</span><input     type="text"  name="bkname" id="bkname" readonly="readonly">       	    
+            	    </div>
+            	    
+            	      <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 手机号：</span><input  name="phone"   type="text"  id="phone" readonly="readonly"><br><br>    
+            	    
+            	    </div>
+            	  <div>
+            	   <span style="font-weight:bold;font-size:20px;">  证件类型：</span><input     type="text"  name="unitinfooperatorphone" id="zjtype" readonly="readonly">         	    
+            	    </div>
+            	      <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 身份证号：</span><input  name="nitinfooperatortype"   type="text"  id="idNumber" readonly="readonly">
+            	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;">  还款账号：</span><input     type="text"  name="hkzh" id="hkzh" readonly="readonly"> <br><br>          	    
+            	    </div>
+            	       <div>
+            	   <span style="font-weight:bold;font-size:20px;"> 贷款金额：</span><input  name="dkje"   type="text"  id="dkje" readonly="readonly">
+            	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  单位账号：</span><input     type="text"  name="unitinfooperatornumber" id="dwzh" readonly="readonly">      	    
+            	    </div>
+            	         <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 合同利率：</span><input  name="jkhtll"   type="text"  id="jkhtll"  readonly="readonly"><br><br>     
+            	     
+            	    </div>
+            	    <div style="font-weight:bold;font-size:25px;color:#5CACEE">房屋信息：<br><br></div>
+             	    <div>
+            	   <span style="font-weight:bold;font-size:20px;">  购房类型：</span><input     type="text"  name="unitinfooperatornumber" id="gfxxId" readonly="readonly">         	    
+            	    </div>
+            	     <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 房屋位置：</span><input  name="jkhtll"   type="text"  id="belocated" readonly="readonly">
+            	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;">  房屋面积：</span><input     type="text"  name="unitinfooperatornumber" id="acreage" readonly="readonly"> <br><br>          	    
+            	    </div>
+            	     <div>
+            	   <span style="font-weight:bold;font-size:20px;"> 房主姓名：</span><input  name="jkhtll"   type="text"  id="nameHouse" readonly="readonly">
+            	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  银行账户：</span><input     type="text"  name="unitinfooperatornumber" id="gfbankAccount" readonly="readonly">    	    
+            	    </div>
+            	      <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 房屋总价：</span><input  name="jkhtll"   type="text"  id="housePrice" readonly="readonly"><br><br>       
+            	    
+            	    </div>
+            	    <div>
+            	   <span style="font-weight:bold;font-size:20px;">  审核状态：</span><select name='shbh' class='shbh' ></select><br><br>          	    
+            	    </div>
+            	      <div>
+            	   <span style="font-weight:bold;font-size:20px;">  驳回原因：</span><textarea class="form-control" rows="3"  id="bhyy" ></textarea><br><br>          	    
+            	    </div>
+      </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -255,6 +216,7 @@ $(function(){
                     $("#gfbankAccount").val(data[0].gfbankAccount);
                     $("#housePrice").val(data[0].housePrice);
                     $("#shtype").val(data[0].shtype);
+                    $("#bhyy").val(data[0].bhyy);
                    
 
        alert(date);
@@ -278,12 +240,16 @@ $(function(){
 
             })
         }
-        
-        function update(){
+          function update(){
+        	update1();
+        	update2();
+        }
+        function update1(){
     
          var jsonArr=[];
          var dkxxbh=$("#dkxxbh").val();
          var shbh=$(".shbh").val();
+
          alert(dkxxbh);
          alert(shbh);
          var jsonStr={"dkxxbh":dkxxbh,"shbh":shbh};
@@ -298,8 +264,32 @@ $(function(){
                 success: function (data) {
                       /* window.location.href = "../frame/views/cwh/cwhloanin.jsp"; */
                       
+/*                       window.location.reload();
+ */                 }
+            })
+        }
+   function update2(){
+    
+         var jsonArr=[];
+         var dkxxbh=$("#dkxxbh").val();
+         var bhyy=$(".bhyy").val();
+
+     
+         var jsonStr={"dkxxbh":dkxxbh,"bhyy":bhyy};
+    
+         jsonArr.push(jsonStr);
+          $.ajax({
+                url: "loaninfocwh/updatebhyycwh",
+                contentType: "application/json",
+                type: "post",
+                data: JSON.stringify(jsonArr),//将数组转成json字符串
+                dataType: "json",
+                success: function (data) {
+                      /* window.location.href = "../frame/views/cwh/cwhloanin.jsp"; */
+                      
                       window.location.reload();
                  }
             })
         }
+
 </script>

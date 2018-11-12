@@ -129,7 +129,7 @@ value=浙江>浙江</OPTION>
       <table  class="table table-striped">
      
     		<tr>
-    			<td style="font-weight:bold;font-size:22px;>编号</td>
+    			<td style="font-weight:bold;font-size:22px;">编号</td>
     			<td style="font-weight:bold;font-size:22px;">姓名</td>
     			<td style="font-weight:bold;font-size:22px;">手机号</td>
     			<td style="font-weight:bold;font-size:22px;">身份证号</td>

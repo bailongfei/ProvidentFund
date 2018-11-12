@@ -71,8 +71,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	</div>
   <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog" style="width:990px;">
+        <div class="modal-content" style="height:600px;">
             <div class="modal-header" style="background-color:#6495ED">
 <!--                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
  -->                <h4 class="modal-title" id="myModalLabel"><span style="font-weight:bold;">个人信息</span></h4>
@@ -80,90 +80,90 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="modal-body">
             	    <form  method="post" id="form2">
             	    <div>
-            	   <span style="font-weight:bold;font-size:15px;"> 编号：</span><input  name="grzhbh"   type="text" class="grzhbh"  id="grzhbh" readonly="readonly">
+            	   <span style="font-weight:bold;font-size:20px;"> 编号：</span><input  name="grzhbh"   type="text" class="grzhbh"  id="grzhbh" readonly="readonly">
             	    
             	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	   <span style="font-weight:bold;font-size:15px;">  姓名：</span><input     type="text" class="bkname"  name="bkname" id="bkname"> <br><br>          	    
+            	    <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  姓名：</span><input     type="text" class="bkname"  name="bkname" id="bkname">        	    
             	    </div>
-            	    <div>
-            	   <span style="font-weight:bold;font-size:15px;">  性别：</span><input  name="grsex"   type="text" class="bksex"  id="bksex" readonly="readonly" >
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;">  性别：</span><input  name="grsex"   type="text" class="bksex"  id="bksex" readonly="readonly" ><br><br>   
             	    
             	    </div>
-              	    <div style="margin-top:-28px;margin-left:50%;">
-    				<span style="font-weight:bold;font-size:15px;"> 手机号：</span><input    type="text"  name="phoneNum"class="phoneNum"  id="phoneNum" ><br><br>
+              	    <div>
+    				<span style="font-weight:bold;font-size:20px;"> 手机号：</span><input    type="text"  name="phoneNum"class="phoneNum"  id="phoneNum" >
     				</div>    
-    				<div>
-            	   <span style="font-weight:bold;font-size:15px;">  证件类型：</span><input    type="text"  name="IdType"class="IdType"  id="IdType" value="身份证" readonly="readonly">
+    				<div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  证件类型：</span><input    type="text"  name="IdType"class="IdType"  id="IdType" value="身份证" readonly="readonly">
 
             	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	   <span style="font-weight:bold;font-size:15px;">  身份证号：</span><input    type="text"  name="IdNumbers"class="IdNumbers"  id="IdNumbers" readonly="readonly"> <br><br>          	    
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;">  身份证号：</span><input    type="text"  name="IdNumbers"class="IdNumbers"  id="IdNumbers" readonly="readonly"> <br><br>          	    
             	    </div>
             	    <div>
-            	    <span style="font-weight:bold;font-size:15px;"> 出生年月：</span><input    type="text"  name="birthday"class="birthday"  id="birthday" readonly="readonly">
+            	    <span style="font-weight:bold;font-size:20px;"> 出生年月：</span><input    type="text"  name="birthday"class="birthday"  id="birthday" readonly="readonly">
 
             	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	   <span style="font-weight:bold;font-size:15px;">  婚姻状态：</span><input    type="text"  name="marital"class="marital"  id="marital" > <br><br>          	    
+            	    <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  婚姻状态：</span><input    type="text"  name="marital"class="marital"  id="marital" >       	    
             	    </div>  
+            	    <div  style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;">  学历：</span><input    type="text"  name="education"class="education"  id="education" readonly="readonly"><br><br>    
+
+            	    </div>
             	    <div>
-            	   <span style="font-weight:bold;font-size:15px;">  学历：</span><input    type="text"  name="education"class="education"  id="education" readonly="readonly">
+            	   <span style="font-weight:bold;font-size:20px;">  家庭住址：</span><input    type="text"  name="address"class="address"  id="address" >         	    
+            	    </div>
+            	     <div style="margin-top:-28px;margin-left:33%;">
+            	    <span style="font-weight:bold;font-size:20px;"> 个人缴存基数：</span><input    type="text"  name="personalDepositBase"class="personalDepositBase"  id="personalDepositBase" readonly="readonly">
 
             	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	   <span style="font-weight:bold;font-size:15px;">  家庭住址：</span><input    type="text"  name="address"class="address"  id="address" > <br><br>          	    
-            	    </div>
-            	     <div>
-            	    <span style="font-weight:bold;font-size:15px;"> 个人缴存基数：</span><input    type="text"  name="personalDepositBase"class="personalDepositBase"  id="personalDepositBase" readonly="readonly">
-
-            	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	    <span style="font-weight:bold;font-size:15px;"> 单位缴存比例：</span><input    type="text"  name="unitRateDeposit"class="unitRateDeposit"  id="unitRateDeposit" readonly="readonly"> <br><br>          	    
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	    <span style="font-weight:bold;font-size:20px;"> 单位缴存比例：</span><input    type="text"  name="unitRateDeposit"class="unitRateDeposit"  id="unitRateDeposit" readonly="readonly"> <br><br>          	    
             	    </div>    	    
             	<div>
-            	  <span style="font-weight:bold;font-size:15px;">   个人缴存比例：</span><input    type="text"  name="perContributionRate"class="perContributionRate"  id="perContributionRate" readonly="readonly">
+            	  <span style="font-weight:bold;font-size:20px;">   个人缴存比例：</span><input    type="text"  name="perContributionRate"class="perContributionRate"  id="perContributionRate" readonly="readonly">
 
             	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	   <span style="font-weight:bold;font-size:15px;">  个人账户状态：</span><input    type="text"  name="openAccountStatus"class="openAccountStatus"  id="openAccountStatus" readonly="readonly"> <br><br>          	    
+            	    <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  个人账户状态：</span><input    type="text"  name="openAccountStatus"class="openAccountStatus"  id="openAccountStatus" readonly="readonly">         	    
             	    </div> 
-	<div>
-            	   <span style="font-weight:bold;font-size:15px;">  开户日期：</span><input    type="text"  name="openingDate"class="openingDate"  id="openingDate" readonly="readonly">
+	<div style="margin-top:-28px;margin-left:67%;">
+            	   <span style="font-weight:bold;font-size:20px;">  开户日期：</span><input    type="text"  name="openingDate"class="openingDate"  id="openingDate" readonly="readonly"><br><br>  
 
-            	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	    <span style="font-weight:bold;font-size:15px;"> 个人账户余额：</span><input    type="text"  name="perAccountBalance"class="perAccountBalance"  id="perAccountBalance" readonly="readonly"> <br><br>          	    
             	    </div>
             	    <div>
-            	   <span style="font-weight:bold;font-size:15px;">  个人月缴存额：</span><input    type="text"  name="monPayAmount"class="monPayAmount"  id="monPayAmount" readonly="readonly">
+            	    <span style="font-weight:bold;font-size:20px;"> 个人账户余额：</span><input    type="text"  name="perAccountBalance"class="perAccountBalance"  id="perAccountBalance" readonly="readonly">          	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  个人月缴存额：</span><input    type="text"  name="monPayAmount"class="monPayAmount"  id="monPayAmount" readonly="readonly">
 
             	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	    <span style="font-weight:bold;font-size:15px;"> 单位月缴存额：</span><input    type="text"  name="unitMonPayAmount"class="unitMonPayAmount"  id="unitMonPayAmount" readonly="readonly"> <br><br>          	    
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	    <span style="font-weight:bold;font-size:20px;"> 单位月缴存额：</span><input    type="text"  name="unitMonPayAmount"class="unitMonPayAmount"  id="unitMonPayAmount" readonly="readonly"> <br><br>          	    
             	    </div>
             	      <div>
-            	    <span style="font-weight:bold;font-size:15px;"> 银行账号：</span><input    type="text"  name="gfbankAccount"class="gfbankAccount"  id=gfbankAccount readonly="readonly">
+            	    <span style="font-weight:bold;font-size:20px;"> 银行账号：</span><input    type="text"  name="gfbankAccount"class="gfbankAccount"  id=gfbankAccount readonly="readonly">
 
             	    </div>
-            	                 	    <div style="margin-top:-28px;margin-left:50%;">
+            	                 	    <div style="margin-top:-28px;margin-left:33%;">
             	     
-            	    <span style="font-weight:bold;font-size:15px;"> 本年提取：</span><input    type="text"  name="extractThisYear"class="extractThisYear"  id="extractThisYear" readonly="readonly"><br><br>  
+            	    <span style="font-weight:bold;font-size:20px;"> 本年提取：</span><input    type="text"  name="extractThisYear"class="extractThisYear"  id="extractThisYear" readonly="readonly">  
 
             	    </div>
             	   
-            	     <div>
-            	    <span style="font-weight:bold;font-size:15px;"> 上年定期积数：</span><input    type="text"  name="lastYearAccumulationRegularly"class="lastYearAccumulationRegularly"  id="lastYearAccumulationRegularly" readonly="readonly">
+            	     <div style="margin-top:-28px;margin-left:65%;">
+            	    <span style="font-weight:bold;font-size:20px;"> 上年定期积数：</span><input    type="text"  name="lastYearAccumulationRegularly"class="lastYearAccumulationRegularly"  id="lastYearAccumulationRegularly" readonly="readonly"><br><br>
 
             	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	    <span style="font-weight:bold;font-size:15px;"> 上年活期积数：</span><input    type="text"  name="lastYearcurrentAccumulation"class="lastYearcurrentAccumulation"  id="lastYearcurrentAccumulation" readonly="readonly"> <br><br>          	    
-            	    </div> <div>
-            	    <span style="font-weight:bold;font-size:15px;"> 上年定期利息：</span><input    type="text"  name="annualInterest"class="annualInterest"  id="annualInterest" readonly="readonly">
+            	    <div>
+            	    <span style="font-weight:bold;font-size:20px;"> 上年活期积数：</span><input    type="text"  name="lastYearcurrentAccumulation"class="lastYearcurrentAccumulation"  id="lastYearcurrentAccumulation" readonly="readonly">         	    
+            	    </div> <div style="margin-top:-28px;margin-left:33%;">
+            	    <span style="font-weight:bold;font-size:20px;"> 上年定期利息：</span><input    type="text"  name="annualInterest"class="annualInterest"  id="annualInterest" readonly="readonly">
 
             	    </div>
-            	    <div style="margin-top:-28px;margin-left:50%;">
-            	   <span style="font-weight:bold;font-size:15px;">  上年活期利息：</span><input    type="text"  name="demandInterest"class="demandInterest"  id="demandInterest" readonly="readonly"> <br><br>          	    
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;">  上年活期利息：</span><input    type="text"  name="demandInterest"class="demandInterest"  id="demandInterest" readonly="readonly"> <br><br>          	    
             	    </div>
             	   
 	</form>

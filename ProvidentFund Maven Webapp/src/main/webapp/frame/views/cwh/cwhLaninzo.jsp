@@ -54,18 +54,89 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    
   <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog" style="width:900px;">
+        <div class="modal-content" style="height:800px;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">审核信息</h4>
             </div>
             <div class="modal-body">
             	    <form  method="post" id="form2">
-            	<div class="form-group">
+            	                	    <div style="font-weight:bold;font-size:25px;color:#5CACEE">贷款人资料：<br><br></div>
+            	    <div>
+            	   <span style="font-weight:bold;font-size:20px;"> 编号：</span><input  name="dkxxbh"   type="text"  id="dkxxbh" readonly="readonly">
+            	    
+            	    </div>
+            	    
+            	   <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  姓名：</span><input     type="text"  name="name" id="bkname" readonly="readonly">       	    
+            	    </div>
+            	    
+            	      <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 手机号：</span><input  name="phone"   type="text"  id="phone" readonly="readonly"><br><br>    
+            	    
+            	    </div>
+            	  <div>
+            	   <span style="font-weight:bold;font-size:20px;">  证件类型：</span><input     type="text"  name="unitinfooperatorphone" id="zjtype" readonly="readonly">         	    
+            	    </div>
+            	      <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 身份证号：</span><input  name="nitinfooperatortype"   type="text"  id="idNumber" readonly="readonly">
+            	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;">  还款账号：</span><input     type="text"  name="dkzh" id="hkzh" readonly="readonly"> <br><br>          	    
+            	    </div>
+            	       <div>
+            	   <span style="font-weight:bold;font-size:20px;"> 贷款金额：</span><input  name="dkffe"   type="text"  id="dkje" readonly="readonly">
+            	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  单位账号：</span><input     type="text"  name="unitinfooperatornumber" id="dwzh" readonly="readonly">      	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 期数：</span><input    type="text"  name="hsbjze" id="grdkqs"  readonly="readonly"><br><br>     
+            	     
+            	    </div>
+            	       <div>
+            	   <span style="font-weight:bold;font-size:20px;"> 还款期数：</span><input    type="text"  name="dksyqs"  id="grdkqs1" >
+            	    
+            	    </div>
+            	         <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 合同利率：</span><input  name="zxll"   type="text"  id="jkhtll"  readonly="readonly"><br><br>     
+            	     
+            	    </div>
+            	    <div style="font-weight:bold;font-size:25px;color:#5CACEE">房屋信息：<br><br></div>
+             	    <div>
+            	   <span style="font-weight:bold;font-size:20px;">  购房类型：</span><input     type="text"  name="unitinfooperatornumber" id="gfxxId" readonly="readonly">         	    
+            	    </div>
+            	     <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 房屋位置：</span><input  name="jkhtll"   type="text"  id="belocated" readonly="readonly">
+            	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;">  房屋面积：</span><input     type="text"  name="unitinfooperatornumber" id="acreage" readonly="readonly"> <br><br>          	    
+            	    </div>
+            	     <div>
+            	   <span style="font-weight:bold;font-size:20px;"> 房主姓名：</span><input  name="jkhtll"   type="text"  id="nameHouse" readonly="readonly">
+            	    
+            	    </div>
+            	    <div style="margin-top:-28px;margin-left:33%;">
+            	   <span style="font-weight:bold;font-size:20px;">  银行账户：</span><input     type="text"  name="unitinfooperatornumber" id="gfbankAccount" readonly="readonly">    	    
+            	    </div>
+            	      <div style="margin-top:-28px;margin-left:65%;">
+            	   <span style="font-weight:bold;font-size:20px;"> 房屋总价：</span><input  name="jkhtll"   type="text"  id="housePrice" readonly="readonly"><br><br>       
+            	    
+            	    </div>
+            	    <div>
+            	   <span style="font-weight:bold;font-size:20px;">  审核状态：</span><select name='shbh' class='shbh' ></select><br><br>          	    
+            	    </div>
+            	      <div>
+            	   <span style="font-weight:bold;font-size:20px;">  驳回原因：</span><textarea class="form-control" rows="3"  id="bhyy" ></textarea><br><br>          	    
+            	    </div>
+          <!-- <div class="form-group">
 		<label for="fourname" class="col-sm-2 control-label">编号</label>
 		<div class="col-sm-10">
-			<input  name="unitinfoname"   type="text" class="form-control"  id="dkxxbh" ><br>
+			<input  name="dkxxbh"   type="text" class="form-control"  id="dkxxbh" ><br>
 		</div>
 		<div class="form-group">
 		<label for="therename" class="col-sm-2 control-label">姓名</label>
@@ -175,7 +246,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="col-sm-10">
 			<select name='shbh' class='shbh' ></select><br>
 		</div>
-	</div>
+	</div> -->
 	</form>
             </div>
             <div class="modal-footer">
