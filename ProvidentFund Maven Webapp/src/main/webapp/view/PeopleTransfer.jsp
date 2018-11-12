@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       });
       function queryUnitinfos(){
       	$.ajax({
-            url:"Peraccount/queryUnitinfos",
+            url:"Peraccountzhl/queryUnitinfos",
             type:"post", 
             dataType:'json',
             success:function(data){
@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  $(document).ready(function(){
       	  $("#transfer").click(function(){
       	  	$.ajax({
-      	  		url:"Peraccount/PeopleTransfer",
+      	  		url:"Peraccountzhl/PeopleTransfer",
       	  		type:"post",
       	  		data:$("#fm").serialize(),
       	  		dataType:'text',
@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	  $("#peracId").blur(function(){
       	  	var peracId=$("#peracId").val();
       	  	$.ajax({
-      	  		url:"Peraccount/findUnitName",
+      	  		url:"Peraccountzhl/findUnitName",
       	  		type:"post",
       	  		data:{
       	  			"peracId":peracId

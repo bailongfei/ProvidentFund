@@ -21,8 +21,8 @@ import com.github.pagehelper.PageInfo;
 import com.zhl.pager.Pager;
 import com.zhl.service.PerbusinessService;
 @Controller
-@RequestMapping("/Perbusiness")
-public class PerbusinessController {
+@RequestMapping("/Perbusinesszhl")
+public class PerbusinessControllerzhl {
 	@Autowired
 	private PerbusinessService service;
 	/*@ResponseBody

@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          var grperbuType=$("#grperbuType").val();
          var bkname=$("#bkname").val();
          $.ajax({
-            url:"Perbusiness/findbycondition",
+            url:"Perbusinesszhl/findbycondition",
             type:"post", 
             data:{"pageNum":pageNum,
             	  "grperbuType":grperbuType,

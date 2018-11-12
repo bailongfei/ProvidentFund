@@ -24,8 +24,8 @@ import com.zhl.service.PeraccountService;
 import com.zhl.service.ReturnpayService;
 
 @Controller
-@RequestMapping("/Peraccount")
-public class PeraccountController {
+@RequestMapping("/Peraccountzhl")
+public class PeraccountControllerzhl {
 	@Autowired
 	private PeraccountService service;
 	@Autowired
@@ -154,6 +154,7 @@ public class PeraccountController {
 		List<Map<String, Object>> list=service.findbyIdnumber(IdNumber);
 		return list.get(0);
 	}
+	//根据用户姓名查询信息
 	@ResponseBody
 	@RequestMapping("/findbyname")
 	public Pager findbyname(@RequestParam Map<String, Object> map){
@@ -161,5 +162,12 @@ public class PeraccountController {
 		p.setPageSize(2);//设置每页条数
 		Pager pager=service.findbyname(map,p);
 		return pager;
+	}
+	//根据单位id查询单位受托银行
+	@ResponseBody
+	@RequestMapping("/findbanknamebyid")
+	public Map<String, Object> findbanknamebyid(Integer UnitInfoId){
+		Map<String, Object> map=service.findbanknamebyid(UnitInfoId);
+		return map;
 	}
 }

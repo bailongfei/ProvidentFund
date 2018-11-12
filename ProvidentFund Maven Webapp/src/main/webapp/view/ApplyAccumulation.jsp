@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//查询提取原因输出到下拉框
 		function findtqyy(){
 			$.ajax({
-				url:"Accumulation/findtqyy",
+				url:"Accumulationzhl/findtqyy",
 				type:"post",
 				dataType:'json',
 				success:function(data){
@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//查询单位信息
 		function findunitName(pid){
 			$.ajax({
-				url:"Peraccount/findUnitName",
+				url:"Peraccountzhl/findUnitName",
 				type:"post",
 				data:{
 					"peracId":pid
@@ -97,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	$("#dkxxbh").blur(function(){
 	    		alert(111);
 	    		$.ajax({
-	    			url:"Peraccount/finddkInfo",
+	    			url:"Peraccountzhl/finddkInfo",
 	    			type:"post",
 	    			data:{
 	    				"dkxxbh":$("#dkxxbh").val()
@@ -116,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	});
 	    	$("#apply").click(function(){
 	    		$.ajax({
-	    			url:"Accumulation/ApplyAccumulation",
+	    			url:"Accumulationzhl/ApplyAccumulation",
 	    			type:"post",
 	    			data:$("#fm").serialize(),
 	    			dataType:'json',
@@ -136,61 +136,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<td>个人公积金账户:</td>
     		<td>
     			<input type="hidden" name="grzhbh" id="grzhbh">
-    			<input type="text" id="peracid">
+    			<input type="text" class="form-control input-sm" id="peracid">
     		</td>
     		<td>姓名:</td>
-    		<td><input type="text" id="pname" readonly="readonly"></td>
-    		<td><input type="hidden" name="unitinfoid" id="unitinfoid"></td>
+    		<td><input type="text" id="pname" class="form-control input-sm" readonly="readonly"></td>
+    		<input type="hidden" name="unitinfoid" id="unitinfoid">
     		<td>单位名称:</td>
-    		<td><input type="text" id="unitname" readonly="readonly"></td>
+    		<td><input type="text" id="unitname" class="form-control input-sm" readonly="readonly"></td>
     	</tr>
     	<tr>
     		<td>提取金额:</td>
-    		<td><input type="text" name="extractingamount"></td>
+    		<td><input type="text" class="form-control input-sm" name="extractingamount"></td>
     		<td>提取原因:</td>
     		<td>
-    			<select id="tqyyid" name="tqyyid"></select>
+    			<select id="tqyyid" name="tqyyid" class="form-control input-sm"></select>
     		</td>
     	</tr>
     	<tr id="houseaddress" style="display: none;">
     		<td>房屋地址:</td>
-    		<td><input type="text" name="fwdz" id="fwdz"></td>
+    		<td><input type="text" class="form-control input-sm" name="fwdz" id="fwdz"></td>
     	</tr>
     	<tr id="gf" style="display: none;">
     		<td>购房合同编号:</td>
-    		<td><input type="text" name="gfhtxybh" id="gfhtxybh"></td>
+    		<td><input type="text" class="form-control input-sm" name="gfhtxybh" id="gfhtxybh"></td>
     		<td>房屋面积:</td>
-    		<td><input type="text" name="fwmj" id="fwmj"></td>
+    		<td><input type="text" class="form-control input-sm" name="fwmj" id="fwmj"></td>
     	</tr>
     	<tr id="gf2" style="display: none;">
     		<!-- <td>房屋单价:</td>
     		<td><input type="text" name="fwdj"></td> -->
     		<td>房屋总价:</td>
-    		<td><input type="text" name="fwzj" id="fwzj"></td>
+    		<td><input type="text" class="form-control input-sm" name="fwzj" id="fwzj"></td>
     		<td>贷款总金额</td>
     		<td>
-    			<input type="text" name="dkzje" id="dkzje">
+    			<input type="text" class="form-control input-sm" name="dkzje" id="dkzje">
     		</td>
     	</tr>
     	<tr id="gf3" style="display: none;">
     		<td>贷款合同编号:</td>
-    		<td><input type="text" name="dkxxbh" id="dkxxbh"></td>
+    		<td><input type="text" class="form-control input-sm" name="dkxxbh" id="dkxxbh"></td>
     		<td>贷款人姓名</td>
-    		<td><input type="text" id="bkname"></td>
+    		<td><input type="text" class="form-control input-sm" id="bkname"></td>
     		<td>贷款人身份证号</td>
-    		<td><input type="text" id="idNumber"></td>
+    		<td><input type="text" class="form-control input-sm" id="idNumber"></td>
     	</tr>
     	<tr id="zf" style="display: none;">
     		<td>租房合同编号:</td>
-    		<td><input type="text" name="zfhth"></td>
+    		<td><input type="text" class="form-control input-sm" name="zfhth"></td>
     		<td>房租支出</td>
     		<td>
-    			<input type="text" name="fzzc">
+    			<input type="text" class="form-control input-sm" name="fzzc">
     		</td>
     	</tr>
     	<tr id="tx" style="display: none;">
     		<td>退休批文文号:</td>
-    		<td><input type="text" name="zfhth"></td>
+    		<td><input type="text" class="form-control input-sm" name="zfhth"></td>
     	</tr>
     	<tr>
     		<td><button type="button" id="apply">申请</button></td>

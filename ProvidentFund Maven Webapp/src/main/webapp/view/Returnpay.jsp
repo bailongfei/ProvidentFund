@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          alert(pageNum);
          var bkname=$("#bkname").val();
          $.ajax({
-            url:"Peraccount/findaccountinfo",
+            url:"Peraccountzhl/findaccountinfo",
             type:"post", 
             data:{"curPage":pageNum,
             },

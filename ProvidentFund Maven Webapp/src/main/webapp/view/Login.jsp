@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	$(function(){
 		$("#btn").click(function(){
 			$.ajax({
-				url:"Peraccount/login",
+				url:"Peraccountzhl/login",
 				type:"post",
 				data:$("#loginform").serialize(),
 				dataType:'text',

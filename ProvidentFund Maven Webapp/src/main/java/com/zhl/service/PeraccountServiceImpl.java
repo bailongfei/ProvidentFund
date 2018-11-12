@@ -152,6 +152,12 @@ public class PeraccountServiceImpl implements PeraccountService {
 		p.setList(list);
 		return p;
 	}
+
+	@Override
+	public Map<String, Object> findbanknamebyid(Integer UnitInfoId) {
+		// TODO Auto-generated method stub
+		return dao.findbanknamebyid(UnitInfoId);
+	}
 	
 	
 }

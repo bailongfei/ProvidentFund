@@ -23,6 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <a href="Perbusiness/findbypage?grzhbhs=1">查询业务明细</a>
+    <a href="Perbusinesszhl/findbypage?grzhbhs=1">查询业务明细</a>
   </body>
 </html>

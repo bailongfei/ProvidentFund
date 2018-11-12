@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.entity.Accumulation;
 import com.entity.Gjjtqyyb;
 import com.zhl.service.AccumulationService;
-@RequestMapping("/Accumulation")
+@RequestMapping("/Accumulationzhl")
 @Controller
-public class AccumulationController {
+public class AccumulationControllerzhl {
 	@Autowired
 	private AccumulationService service;
 	//添加公积金提取申请

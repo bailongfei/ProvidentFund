@@ -2,6 +2,8 @@ package com.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class ryzy {
     private Integer zyid;
 
@@ -11,10 +13,14 @@ public class ryzy {
 
     private Integer sqr;
 
+    private String zcstyh;
+
+    private String zrstyh;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date sqsj;
 
     private String zyyy;
-
+    
     private Date tjsj;
 
     private Integer shzt;
@@ -51,6 +57,22 @@ public class ryzy {
 
     public void setSqr(Integer sqr) {
         this.sqr = sqr;
+    }
+
+    public String getZcstyh() {
+        return zcstyh;
+    }
+
+    public void setZcstyh(String zcstyh) {
+        this.zcstyh = zcstyh == null ? null : zcstyh.trim();
+    }
+
+    public String getZrstyh() {
+        return zrstyh;
+    }
+
+    public void setZrstyh(String zrstyh) {
+        this.zrstyh = zrstyh == null ? null : zrstyh.trim();
     }
 
     public Date getSqsj() {

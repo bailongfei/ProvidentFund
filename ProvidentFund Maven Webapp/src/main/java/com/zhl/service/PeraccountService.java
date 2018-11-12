@@ -36,4 +36,6 @@ public interface PeraccountService {
     public List<Map<String, Object>> findbyIdnumber(String IdNumber);
     //根据姓名查询账户正常账户信息
     public Pager findbyname(Map<String, Object> map, Pager p);
+    //根据单位信息id查询受托银行信息
+    public Map<String, Object> findbanknamebyid(Integer UnitInfoId);
 }

@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function merge(){
 			alert($("#fm").serialize());
 			$.ajax({
-				url:"Peraccount/AccountMerge",
+				url:"Peraccountzhl/AccountMerge",
 				type:"post",
 				data:$("#fm").serialize(),
 				dataType:'text',
@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		function findunitName(pid,obj){
 			$.ajax({
-				url:"Peraccount/findUnitName",
+				url:"Peraccountzhl/findUnitName",
 				type:"post",
 				data:{
 					"peracId":pid

@@ -27,14 +27,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="resources/js/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	  $(function(){
+	  	$(":text").val('');
 	  	queryUnitinfos();
-	  	findall();
+	  	getAll(1);
+	  	queryapply(1);
       });
       function getAll(pageNum){
          alert(pageNum);
          var bkname=$("#serachbyname").val();
          $.ajax({
-            url:"Peraccount/findbyname",
+            url:"Peraccountzhl/findbyname",
             type:"post", 
             data:{"curPage":pageNum,
             	  "bkname":bkname
@@ -66,38 +68,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          
          });
       }
-      function findall(){
+      function queryapply(curPage){
       	$.ajax({
-      		url:"Peraccount/findbyname",
-      		type:"post",
-      		dataType:'json',
-      		success:function(data){
-      			$("#ltbody").empty();
-      			for(var i=0;i<data.list.length;i++){
-      				var obj=data.list[i];
-      				var tr="<tr>";
+            url:"Ryzyzhl/queryapply",
+            type:"post", 
+            data:{
+            	"curPage":curPage
+            },
+            dataType:'json',
+            success:function(data){
+            $("#rtbody").empty();
+            var datalist=data.list;
+               for(var i=0;i<datalist.length;i++){
+               	   var obj=datalist[i];
+				   var tr="<tr>";
       				tr+="<td>"+obj.bkname+"</td>";
       				tr+="<td>"+obj.IdNumbers+"</td>";
       				tr+="<td>"+obj.peracBalance+"</td>";
       				tr+="<td>正常</td>";
       				tr+="</tr>";
-      				$("#ltbody").append(tr);
-      			}
-      			$("#nowPage").html(data.curPage);
-                $("#countPage").html(data.totalPages);
-                //alert(data.isFirstPage)
-                if(data.curPage==data.first){$("#prepage").hide()}else{
-                  $("#prepage").show();
+                   $("#rtbody").append(tr);
+               }
+               $("#nowPage2").html(data.curPage);
+               $("#countPage2").html(data.totalPages);
+               //alert(data.isFirstPage)
+               if(data.curPage==data.first){$("#prepage2").hide()}else{
+                 $("#prepage2").show();
+               }
+                if(data.curPage==data.last){$("#nextpage2").hide()}else{
+                  $("#nextpage2").show();
                 }
-                if(data.curPage==data.last){$("#nextpage").hide()}else{
-                  $("#nextpage").show();
-                }
-      		}
-      	})
+            }
+         
+         });
       }
       function queryUnitinfos(){
       	$.ajax({
-            url:"Peraccount/queryUnitinfos",
+            url:"Peraccountzhl/queryUnitinfos",
             type:"post", 
             dataType:'json',
             success:function(data){
@@ -124,18 +131,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            var nowpage=parseInt($("#nowPage").html());
            getAll(nowpage+1);
       	  });
-      	  $("#grperbuType").change(function(){
-      	  	getAll(1);
-      	  })
+      	  $("#prepage2").click(function(){
+             var nowpage=parseInt($("#nowPage2").html());
+             getAll(nowpage-1);
+     	  });
+     	  $("#nextpage2").click(function(){
+           var nowpage=parseInt($("#nowPage2").html());
+           getAll(nowpage+1);
+      	  });
       	  $("#transfer").click(function(){
       	  	$.ajax({
-      	  		url:"Peraccount/PeopleTransfer",
+      	  		url:"Ryzyzhl/SaveApply",
       	  		type:"post",
       	  		data:$("#fm").serialize(),
       	  		dataType:'text',
       	  		success:function(data){
       	  			if(data=='1'){
-      	  				alert("转移成功!");
+      	  				alert("申请已提交!");
       	  			}
       	  		}
       	  	});
@@ -143,7 +155,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	  $("#peracId").blur(function(){
       	  	var peracId=$("#peracId").val();
       	  	$.ajax({
-      	  		url:"Peraccount/findUnitName",
+      	  		url:"Peraccountzhl/findUnitName",
       	  		type:"post",
       	  		data:{
       	  			"peracId":peracId
@@ -162,7 +174,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	  	var IdNumber=$("#IdNumber").val();
       	  	alert(IdNumber);
       	  	$.ajax({
-      	  		url:"Peraccount/findbyIdnumber",
+      	  		url:"Peraccountzhl/findbyIdnumber",
       	  		data:{
       	  			"IdNumber":IdNumber
       	  		},
@@ -172,9 +184,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	  			$("#bkname").html(data.bkname);
       	  			$("#fromunitname").val(data.UnitInfoName);
       	  			$("#ydw").val(data.UnitInfoId);
+      	  			$("#frombankname").val(data.UnitesBankname);
+      	  			queryUnitinfos();
       	  		}
       	  	})
-      	  })
+      	  });
+      	  $("#xdw").change(function(){
+      	  	var UnitInfoId=$("#xdw").val();
+      	  	$.ajax({
+      	  		url:"Peraccountzhl/findbanknamebyid",
+      	  		type:"post",
+      	  		data:{
+      	  			"UnitInfoId":UnitInfoId
+      	  		},
+      	  		dataType:'json',
+      	  		success:function(data){
+      	  			$("#tobankname").val(data.UnitesBankname);
+      	  		}
+      	  	})
+      	  });
 	  });
 	</script>	
   </head>
@@ -197,7 +225,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		</table>
   	</div>
     <div style="margin:0px auto;height: 200px;width: 600px;margin-top: 20px;border: 2px dashed #000;border-radius: 15px;">
-    	<form action="">
+    	<form action="" id="fm">
     	<table class="table" cellspacing="30" style="border: 0px">
     		<tr>
     			<td>
@@ -211,7 +239,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			<td>
     				<div class="form-group">
 				      <center><label for="name">转出受托银行名称</label></center>
-				      <input type="text" class="form-control input-sm" style="width:130px;" id="frombankname"  placeholder="转出受托银行名称">
+				      <input type="text" class="form-control input-sm" style="width:130px;" name="zcstyh" id="frombankname"  placeholder="转出受托银行名称">
 				    </div>
     			</td>
     			<td>
@@ -223,7 +251,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			<td>
     				<div class="form-group">
 				      <center><label for="name">转入受托银行名称</label></center>
-				      <input type="text" class="form-control input-sm" style="width:130px;"  id="tobankname" placeholder="转入受托银行名称">
+				      <input type="text" class="form-control input-sm" style="width:130px;" name="zrstyh" id="tobankname" placeholder="转入受托银行名称">
 				    </div>
     			</td>
     		</tr>
@@ -231,7 +259,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			<td>
     				<div class="form-group">
 				      <center><label for="name">会计凭证日期</label></center>
-				      <input type="date" class="form-control input-sm" style="width:130px;" name="sqjs" id="sqsj">
+				      <input type="date" class="form-control input-sm" style="width:130px;" name="sqsj" id="sqsj">
 				    </div>
     			</td>
     			<td>
@@ -240,11 +268,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				      <input type="text" class="form-control input-sm" style="width:130px;" name="zyyy"  placeholder="转出单位名称">
 				    </div>
     			</td>
+    			<td>
+    				<div class="form-group">
+    				  <center><label for="name"></label></center>
+				      <center><button type="button" class="btn btn-info btn-sm" id="transfer">申请转移</button></center>
+				    </div>
+    			</td>
     		</tr>
     	</table>
     	</form>
     </div>
-    <div id="content" style="width: 1000px;height:350px;margin: 0px auto; border: 1px solid #000;">
+    <div id="content" style="width: 1000px;height:350px;margin: 0px auto;">
     <div id="left" style="width: 450px;float:left;border: 0.5px solid #000;border-radius: 10px;margin-top: 20px;margin-left: 20px;">
     	
     	<center><h5>全部人员列表</h5></center>
@@ -270,7 +304,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		</tr>
     		<tbody id="ltbody"></tbody>
     		<tr>
-    			<td>当前是第<span id="nowPage"></span>页 </td>
+    			<td>第<span id="nowPage"></span>页 </td>
 				<td><button id="prepage">上一页</button></td>
 				<td><button id="nextpage">下一页</button>&nbsp;&nbsp;</td>
     			<td>共<span id="countPage"></span>页</td>
@@ -287,6 +321,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			<th>个人账号状态</th>
     		</tr>
     		<tbody id="rtbody"></tbody>
+    		<tr>
+    			<td>第<span id="nowPage2"></span>页 </td>
+				<td><button id="prepage2">上一页</button></td>
+				<td><button id="nextpage2">下一页</button>&nbsp;&nbsp;</td>
+    			<td>共<span id="countPage2"></span>页</td>
+    		</tr>
     	</table>
     </div>
     </div>

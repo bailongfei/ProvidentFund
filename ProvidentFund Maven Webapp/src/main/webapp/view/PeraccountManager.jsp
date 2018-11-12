@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          alert(pageNum);
          var peracId=$("#peracId").val();
          $.ajax({
-            url:"Peraccount/findbyPager",
+            url:"Peraccountzhl/findbyPager",
             type:"post", 
             data:{"curPage":pageNum,
             	  "peracId":peracId
@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  });
 	  function UpdateStates(obj1,obj2){
 	  	$.ajax({
-	  		url:"Peraccount/UpdateStates",
+	  		url:"Peraccountzhl/UpdateStates",
 	  		type:"post",
 	  		data:{
 	  			"grzhbh":obj1,

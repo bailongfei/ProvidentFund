@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zhl.pager.Pager;
 import com.zhl.service.ReturnpayService;
 @Controller
-@RequestMapping("/Returnpay")
-public class ReturnpayController {
+@RequestMapping("/Returnpayzhl")
+public class ReturnpayControllerzhl {
 	@Autowired
 	private ReturnpayService service;
 	//·ÖÒ³²éÑ¯³å½É¼ÇÂ¼

@@ -41,4 +41,6 @@ public interface PeraccountMapper {
     public List<Map<String, Object>> findbyname(Map<String, Object> map);
     //根据姓名查询的总数量
     public int findbynamecount(Map<String, Object> map);
+    //根据单位信息id查询受托银行信息
+    public Map<String, Object> findbanknamebyid(Integer UnitInfoId);
 }

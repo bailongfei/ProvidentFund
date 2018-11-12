@@ -6,6 +6,8 @@
     <result column="ydw" jdbcType="INTEGER" property="ydw" />
     <result column="xdw" jdbcType="INTEGER" property="xdw" />
     <result column="sqr" jdbcType="INTEGER" property="sqr" />
+    <result column="zcstyh" jdbcType="VARCHAR" property="zcstyh" />
+    <result column="zrstyh" jdbcType="VARCHAR" property="zrstyh" />
     <result column="sqsj" jdbcType="DATE" property="sqsj" />
     <result column="zyyy" jdbcType="VARCHAR" property="zyyy" />
     <result column="tjsj" jdbcType="TIMESTAMP" property="tjsj" />
@@ -13,7 +15,7 @@
     <result column="bhyy" jdbcType="VARCHAR" property="bhyy" />
   </resultMap>
   <sql id="Base_Column_List">
-    zyid, ydw, xdw, sqr, sqsj, zyyy, tjsj, shzt, bhyy
+    zyid, ydw, xdw, sqr, zcstyh, zrstyh, sqsj, zyyy, tjsj, shzt, bhyy
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,11 +29,13 @@
   </delete>
   <insert id="insert" parameterType="com.entity.ryzy">
     insert into ryzy (zyid, ydw, xdw, 
-      sqr, sqsj, zyyy, tjsj, 
-      shzt, bhyy)
+      sqr, zcstyh, zrstyh, 
+      sqsj, zyyy, tjsj, shzt, 
+      bhyy)
     values (#{zyid,jdbcType=INTEGER}, #{ydw,jdbcType=INTEGER}, #{xdw,jdbcType=INTEGER}, 
-      #{sqr,jdbcType=INTEGER}, #{sqsj,jdbcType=DATE}, #{zyyy,jdbcType=VARCHAR}, #{tjsj,jdbcType=TIMESTAMP}, 
-      #{shzt,jdbcType=INTEGER}, #{bhyy,jdbcType=VARCHAR})
+      #{sqr,jdbcType=INTEGER}, #{zcstyh,jdbcType=VARCHAR}, #{zrstyh,jdbcType=VARCHAR}, 
+      #{sqsj,jdbcType=DATE}, #{zyyy,jdbcType=VARCHAR}, #{tjsj,jdbcType=TIMESTAMP}, #{shzt,jdbcType=INTEGER}, 
+      #{bhyy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.ryzy">
     insert into ryzy
@@ -47,6 +51,12 @@
       </if>
       <if test="sqr != null">
         sqr,
+      </if>
+      <if test="zcstyh != null">
+        zcstyh,
+      </if>
+      <if test="zrstyh != null">
+        zrstyh,
       </if>
       <if test="sqsj != null">
         sqsj,
@@ -77,6 +87,12 @@
       <if test="sqr != null">
         #{sqr,jdbcType=INTEGER},
       </if>
+      <if test="zcstyh != null">
+        #{zcstyh,jdbcType=VARCHAR},
+      </if>
+      <if test="zrstyh != null">
+        #{zrstyh,jdbcType=VARCHAR},
+      </if>
       <if test="sqsj != null">
         #{sqsj,jdbcType=DATE},
       </if>
@@ -106,6 +122,12 @@
       <if test="sqr != null">
         sqr = #{sqr,jdbcType=INTEGER},
       </if>
+      <if test="zcstyh != null">
+        zcstyh = #{zcstyh,jdbcType=VARCHAR},
+      </if>
+      <if test="zrstyh != null">
+        zrstyh = #{zrstyh,jdbcType=VARCHAR},
+      </if>
       <if test="sqsj != null">
         sqsj = #{sqsj,jdbcType=DATE},
       </if>
@@ -129,6 +151,8 @@
     set ydw = #{ydw,jdbcType=INTEGER},
       xdw = #{xdw,jdbcType=INTEGER},
       sqr = #{sqr,jdbcType=INTEGER},
+      zcstyh = #{zcstyh,jdbcType=VARCHAR},
+      zrstyh = #{zrstyh,jdbcType=VARCHAR},
       sqsj = #{sqsj,jdbcType=DATE},
       zyyy = #{zyyy,jdbcType=VARCHAR},
       tjsj = #{tjsj,jdbcType=TIMESTAMP},
@@ -136,4 +160,18 @@
       bhyy = #{bhyy,jdbcType=VARCHAR}
     where zyid = #{zyid,jdbcType=INTEGER}
   </update>
+  <select id="queryapply" resultType="map" parameterType="map">
+  	select * from ryzy r join shzt s on r.shzt=s.shbh join peraccount p on r.sqr=p.grzhbh where shzt=1
+  	limit #{startIndex},#{pageSize}
+  </select>
+  <select id="queryapplycount" resultType="Integer">
+  	select count(*) from ryzy r join shzt s on r.shzt=s.shbh join peraccount p on r.sqr=p.grzhbh where shzt=1
+  </select>
+  <select id="queryryzysh" parameterType="map" resultType="map">
+  	select r.*,p.bkname,p.peracId,u1.UnitInfoName,u2.UnitInfoName as toUnitinfoNamme,s.shxq from ryzy r join peraccount p on r.sqr=p.grzhbh join unitinfo u1 on r.ydw=u1.UnitInfoId join unitinfo u2 on r.xdw=u2.UnitInfoId join shzt s on r.shzt=s.shbh where r.shzt=1 
+  	limit #{startIndex},#{pageSize}
+  </select>
+  <select id="queryryzyshcount" resultType="Integer">
+  	select count(*) from ryzy r join peraccount p on r.sqr=p.grzhbh join unitinfo u1 on r.ydw=u1.UnitInfoId join unitinfo u2 on r.xdw=u2.UnitInfoId join shzt s on r.shzt=s.shbh 
+  </select>
 </mapper>
