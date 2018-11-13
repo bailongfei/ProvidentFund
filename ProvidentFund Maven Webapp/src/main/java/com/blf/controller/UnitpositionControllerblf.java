@@ -12,7 +12,7 @@ import com.blf.service.UnitpositionService;
 
 @Controller
 @RequestMapping("/utzw")
-public class UnitpositionController {
+public class UnitpositionControllerblf {
  @Autowired
  public UnitpositionService ut;
  @RequestMapping("/queryZw")

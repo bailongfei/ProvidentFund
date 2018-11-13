@@ -12,23 +12,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" href="../frame/layuiadmin/layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="../frame/layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/frame/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/frame/layuiadmin/style/admin.css" media="all">
   <link rel="stylesheet" type="text/css"
-	href="../resources/js/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../resources/js/bootstrap/css/bootstrap-theme.min.css">
-<script src="../resources/js/jquery.min.js"></script>
-<script src="../resources/js/bootstrap/js/bootstrap.min.js"></script>
+	href="${pageContext.request.contextPath}/resources/js/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/bootstrap/css/bootstrap-theme.min.css">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap/js/bootstrap.min.js"></script>
 <!--最基础jQuery.js都是基于这个  -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-1.11.3.min.js"></script>
 <!-- 异步转换参数js -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jqueryExt.js"></script>
 <!-- 上传文件js -->
-<script type="text/javascript" src="../resources/jquery.form.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery.form.js"></script>
 <!-- 日期插件 -->
-<script src="../resources/datejscss/jquery-1.10.1.min.js"></script>
-<script type="text/javascript" src="../resources/datejscss/dateYMPicker.js" ></script>
-<link rel="stylesheet" href="../resources/datejscss/dateYMPicker.css" />
+<script src="${pageContext.request.contextPath}/resources/datejscss/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datejscss/dateYMPicker.js" ></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datejscss/dateYMPicker.css" />
 
 <style>
 #table tr td{

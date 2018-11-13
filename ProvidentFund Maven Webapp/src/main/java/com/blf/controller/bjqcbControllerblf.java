@@ -18,7 +18,7 @@ import com.util.Message;
 
 @Controller
 @RequestMapping("/bj")
-public class bjqcbController {
+public class bjqcbControllerblf {
 @Autowired
 private bjqcbService bjsc;
 @RequestMapping("/saveBjOrIper")	

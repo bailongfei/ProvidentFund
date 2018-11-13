@@ -21,7 +21,7 @@ import com.util.Pager;
 
 @Controller
 @RequestMapping("/hjqcb")
-public class HjqcbController{
+public class HjqcbControllerblf{
 	@Autowired
 	private HjqcbService hs;
  @RequestMapping("/queryHjqcb")

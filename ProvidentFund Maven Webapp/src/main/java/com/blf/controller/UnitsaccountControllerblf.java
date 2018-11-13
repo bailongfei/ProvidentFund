@@ -16,7 +16,7 @@ import com.entity.Unitsaccount;
 import com.util.Pager;
 @Controller
 @RequestMapping("/unfo")
-public class UnitsaccountController {
+public class UnitsaccountControllerblf {
  @Autowired
  private UnitsaccountService unse;
  @RequestMapping("/queryUnfoAndUncc")
