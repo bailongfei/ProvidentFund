@@ -58,21 +58,18 @@
 			<div class="layui-form layui-card-header layuiadmin-card-header-auto">
 				<div class="layui-form-item">
 
-					<div class="layui-inline">
-						<label class="layui-form-label">搜索</label>
-						<div class="layui-input-block">
-							<input type="text" name="id" placeholder="请输入" autocomplete="off"
-								class="layui-input">
-						</div>
-					</div>
-
-					<div class="layui-inline">
-						<button class="layui-btn layuiadmin-btn-useradmin" lay-submit
-							lay-filter="LAY-user-front-search">
-							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-						</button>
-					</div>
-
+					 <div class="layui-inline">
+			            <label class="layui-form-label">搜索</label>
+			            <div class="layui-input-block">
+			             <input type="text" id="ids" name="UnitInfoName" placeholder="请输入" autocomplete="off" class="layui-input">
+			            </div>
+			          </div>
+			          
+			          <div class="layui-inline">
+			            <button id="hhcx" onclick="dwxxAnddwzh()" class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
+			              <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+			            </button>
+			          </div>
 				</div>
 			</div>
 
@@ -175,7 +172,7 @@
 												<td ><input type="text" size="1" id="scrs" name="scjnrs"  readonly="readonly"></td>
 												<td ><input type="text" size="4" id="srje" name="scjnje"  readonly="readonly"></td>
 												<td><input type="text" size="4" id="bczjrs" name="bczjrs" value="0"  readonly="readonly"></td>
-												<td><input type="text" size="1" id="bczjje" name="bczjje"  value="0"   readonly="readonly"></td>
+												<td><input type="text" size="4" id="bczjje" name="bczjje"  value="0"   readonly="readonly"></td>
 												<td><input type="text" size="4" id="bcjsrs" name="bcjsrs"   value="0"   readonly="readonly"></td>
 												<td><input type="text" size="1" id="bcjsje" name="bcjsje"  value="0"    readonly="readonly"></td>
 												<td><input type="text" size="1" class="coumtRs" name="bchnrs" readonly="readonly"></td>
@@ -238,7 +235,18 @@
 					<!-- /.modal -->
 				</div>
 
-				<script type="text/html" id="table-useradmin-webuser">
+<ul class="pager" >
+ 	<li>
+ 	当前页:<span id="curPage"></span>总页数:<span id="totalPages"></span>
+ 	</li>
+ 	<li><a  id="first" onclick="changePage(this)">首页</a></li>
+ 	<li><a  id="prev" onclick="changePage(this)">上一页</a></li>
+ 	<li><a  id="next" onclick="changePage(this)">下一页</a></li>
+ 	<li><a  id="last"  onclick="changePage(this)">尾页</a></li>
+ 	<li><input type="number"  id="txtCurPage"   min="1" max="10"></input><input type="button" class="btn btn-default" value="go" onclick="gotoPage()"/></li>
+  </ul>
+
+				<%-- <script type="text/html" id="table-useradmin-webuser">
           <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
          
         </script>
@@ -279,25 +287,29 @@
 			});
 	
 		}); 
-	</script>
+	</script> --%>
 </body>
 </html>
 <script>
 	/* 页面加载函数 */
 	$(function() {
 	    getDate();
-		dwxxAnddwzh();
+		dwxxAnddwzh(1);
 	});
+	
 	/* 查询表 */
-	function dwxxAnddwzh() {
+	function dwxxAnddwzh(page) {
+	var dwcx=$('#ids').val();
 		$.ajax({
 			url : "${pageContext.request.contextPath}/unfo/queryUnfoAndUncc",
 			type : "post",
+			data:{"UnitInfoName":dwcx,"pageNum":page},
 			dataType : "json",
 			success : function(data) {
 				$("#tbody").empty();
-				for (var i = 0; i < data.length; i++) {
-					var obj = data[i];
+				var ob=data.list;
+				for (var i = 0; i <ob.length; i++) {
+					var obj = ob[i];
 					var tr = "<tr>";
 					tr += "<td>" + obj.UnitInfoAccount + "</td>";
 					tr += "<td>" + obj.UnitInfoName + "</td>";
@@ -313,9 +325,30 @@
 					tr += "</tr>";
 					$("#tbody").append(tr);
 				}
+				 //重新初始化分页链接
+        $("#curPage").html(data.curPage);
+		$("#totalPages").html(data.totalPages);
+        $("#first").attr("data",data.first);
+		$("#prev").attr("data",data.prev);
+		$("#next").attr("data",data.next);
+		$("#last").attr("data",data.last);
+		$("#txtCurPage").val(data.curPage).attr("max",data.last);
 			}
+			
 		});
-	}
+	};
+	
+	//改变页面
+function changePage(obj){
+    var page=$(obj).attr("data");//取出data属性值
+    dwxxAnddwzh(page);
+}
+//跳转到指定页面
+	function gotoPage(page){
+		var page=$("#txtCurPage").val();
+		dwxxAnddwzh(page);
+	}    
+	
 	$(document).on("click",".huijiaoSelect",function(){
 	  $("#bczjrs").val("0");
 	  $("#bczjje").val("0");
@@ -404,18 +437,20 @@
 	    
 	    queryUser();
 	});
-	             //汇缴月数
-	              
-					  function hijiaoyuee(obj){
-					 
-					  var gr=parseFloat($(".gr").val())*obj;
-					   var dw=parseFloat($(".dw").val())*obj;
-					   var ze=gr+dw;
-					    $("#grce").val(gr);
-						$("#dwce").val(dw);
-						$(".jcze").val(ze);
-						hjzjrsje();
-					} ;   
+	            
+	        
+	        
+//汇缴月数 
+  function hijiaoyuee(obj){
+	 
+	  var gr=parseFloat($(".gr").val())*obj;
+	   var dw=parseFloat($(".dw").val())*obj;
+	   var ze=gr+dw;
+	    $("#grce").val(gr);
+		$("#dwce").val(dw);
+		$(".jcze").val(ze);
+		hjzjrsje();
+	} ;   
 	//获取日期
    function getDate(){
     var d=new Date();
@@ -574,6 +609,7 @@
        	 success:function(data){
            if(data.state>0){
              alert(data.message);
+             dwxxAnddwzh(page);
             }else{"提交失败!"}
       //window.location.href="${pageContext.request.contextPath}/blf/mingxicx.jsp";
             

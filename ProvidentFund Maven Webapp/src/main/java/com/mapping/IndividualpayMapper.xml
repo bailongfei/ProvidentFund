@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.IndividualpayMapper">
+
 <!-- zys -->
 <resultMap type="Individualpay" id="int"></resultMap>
   <select id="queryIndividualpay" resultMap="int">
     select * from individualpay
   </select>
+
+<!-- 批量开户修订 -->
+<update id="IperUpdates" parameterType="map">
+   update individualpay set grzhbh=#{grzhbh},perAccountBalance=#{perAccountBalance},unitRateDeposit=#{unitRateDeposit},perContributionRate=#{perContributionRate} where grzhbhs=#{grzhbhs}
+</update>
 <!-- 汇缴修改 -->
 <update id="updateIpar" parameterType="Hjqcb">
    update individualpay set unitMonPayAmount=personalDepositBase*unitRateDeposit*#{nhyf},monPayAmount=personalDepositBase*perContributionRate*#{nhyf},perAccountBalance=(personalDepositBase*unitRateDeposit+personalDepositBase*perContributionRate)*#{nhyf}+(perAccountBalance) where  UnitInfoAccount=#{unitinfoaccount}
@@ -445,10 +451,10 @@
         #{personaldepositbase,jdbcType=VARCHAR},
       </if>
       <if test="unitratedeposit != null and unitratedeposit !=''">
-        #{unitratedeposit,jdbcType=VARCHAR},
+        #{unitratedeposit,jdbcType=DECIMAL},
       </if>
       <if test="percontributionrate != null and percontributionrate !=''">
-        #{percontributionrate,jdbcType=VARCHAR},
+        #{percontributionrate,jdbcType=DECIMAL},
       </if>
       <if test="openaccountstatus != null and openaccountstatus !=''">
         #{openaccountstatus,jdbcType=VARCHAR},
@@ -457,7 +463,7 @@
         #{openingdate,jdbcType=VARCHAR},
       </if>
       <if test="peraccountbalance != null and peraccountbalance!=''">
-        #{peraccountbalance,jdbcType=VARCHAR},
+        #{peraccountbalance,jdbcType=DECIMAL},
       </if>
       <if test="lastyearleftbalance != null and lastyearleftbalance !=''">
         #{lastyearleftbalance,jdbcType=VARCHAR},
@@ -550,7 +556,7 @@
         openingDate = #{openingdate,jdbcType=VARCHAR},
       </if>
       <if test="peraccountbalance != null">
-        perAccountBalance = #{peraccountbalance,jdbcType=VARCHAR},
+        perAccountBalance = #{peraccountbalance,jdbcType=DECIMAL},
       </if>
       <if test="lastyearleftbalance != null">
         lastYearLeftBalance = #{lastyearleftbalance,jdbcType=VARCHAR},

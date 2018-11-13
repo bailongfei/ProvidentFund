@@ -53,11 +53,16 @@ public int insertIparOrPerccOrUpdatePercc(Map<String, Object> map) {
 @Override
 public int saveIparOrperccOrUpdatePercc(Peraccount pecc, Individualpay ip) {
 	percc.savePercc(pecc);
+	System.out.println("ÅúÁ¿±ÈÀý"+ip.getUnitratedeposit()+ip.getPercontributionrate());
 	ipay.saveIpaer(ip);
 	Map<String,Object> map=new HashMap<String,Object>();
 	map.put("grzhbh",pecc.getGrzhbh());
 	map.put("grzhbhs",ip.getGrzhbhs());
-	int r=percc.updatePercc(map);
+	map.put("perAccountBalance",0);
+	map.put("unitRateDeposit",ip.getUnitratedeposit()*0.01);
+	map.put("perContributionRate",ip.getPercontributionrate()*0.01);
+	percc.updatePercc(map);
+	int r=ipay.IperUpdates(map);
 	return r;
 }
 @Override

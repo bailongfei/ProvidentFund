@@ -143,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 			<tr>
 			  <td>补缴年月</td>
-			  <td colspan="3"><input type="month"  id="date1"  value="bjny"  >至<input type="month" onchange="bujiaoyueshu()" id="date2"  value=""  ></td>
+			  <td colspan="3"><input type="month"  id="date1"  name="bjny"  >至<input type="month" onchange="bujiaoyueshu()" id="date2"  value=""  ></td>
 			  <td>补缴月数</td>
 			  <td><input type="text" value="1" class="" id="" name="bjys" ></td>
 			</tr>
@@ -663,7 +663,8 @@ new Date(2010, 2, 12) // March 12th, 2010
                    if(data.state>0){
 		                alert(data.message);
 		            $("#form1 input[type=text],input[text=hidden]").val("");
-		            $("#tbodyId").empty();  
+		            $("#tbodyId").empty();
+		            bujiaomx(page);  
 		              }else{"提交失败!"}
                 }
             });

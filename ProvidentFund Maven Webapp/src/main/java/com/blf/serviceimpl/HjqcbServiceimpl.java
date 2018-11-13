@@ -1,5 +1,6 @@
 package com.blf.serviceimpl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.dao.HjqcbMapper;
 import com.dao.IndividualpayMapper;
 import com.dao.PerbusinessMapper;
 import com.dao.Sys_userMapper;
+import com.dao.UnitsaccountMapper;
 import com.entity.Hjqcb;
 import com.entity.Individualpay;
 import com.entity.Perbusiness;
@@ -24,6 +26,8 @@ public class HjqcbServiceimpl implements HjqcbService {
   private Sys_userMapper userdao;
   @Autowired
   private PerbusinessMapper perssDao;
+  @Autowired
+  private UnitsaccountMapper unfocc;
 	@Override
 	public List<Map<String,Object>> queryHjceb(Integer unitinfoaccount) {
 		List<Map<String,Object>> list=dao.queryHjceb(unitinfoaccount);
@@ -48,7 +52,7 @@ public class HjqcbServiceimpl implements HjqcbService {
 	@Override
 	public int insertHjqcbOrUpdateIparOrqueryIperOrsavepercc(Hjqcb record) {
 		dao.insert(record);
-		int t=daoin.updateIpar(record);
+		daoin.updateIpar(record);
 		List<Individualpay> list=daoin.queryIpaer(record.getUnitinfoaccount());
 		System.out.println("≤È—Øipaer:"+list);
 		for(int i=0;i<list.size();i++){
@@ -73,7 +77,11 @@ public class HjqcbServiceimpl implements HjqcbService {
 			per.setPersonadvancep(list.get(i).getUnitmonpayamount());
 			perssDao.insertSelective(per);
 		}
-		return t;
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("UnitInfoAccount",record.getUnitinfoaccount());
+		map.put("UnitsBalance",record.getSsje());
+		int u=unfocc.updateunfocc(map);
+		return u;
 	}
 	@Override
 	public List<Map<String, Object>> queryHj(Map<String,Object> map) {

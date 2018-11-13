@@ -26,6 +26,8 @@ public List<Individualpay> queryIndividualpay();//zys
     public Map<String,Object> queryCheckdata(@Param("perId")String perId);
     public int BujiaoUpdateIper(@Param("personalaccount")String personalaccount,@Param("grjczes")String grjczes);//补缴
 
+    public int IperUpdates(Map<String,Object> map);//批量开户修订
+
     int insert(Individualpay record);
 
     int insertSelective(Individualpay record);
