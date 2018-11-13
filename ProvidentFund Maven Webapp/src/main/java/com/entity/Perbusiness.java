@@ -89,15 +89,19 @@ public class Perbusiness {
         this.grperbutype = grperbutype == null ? null : grperbutype.trim();
     }
 
-    public Integer getPerbulimit() {
-        return perbulimit;
-    }
+    
 
-    public void setPerbulimit(Integer perbulimit) {
-        this.perbulimit = perbulimit;
-    }
+   
 
-    public String getRetrievingmeans() {
+	public Integer getPerbulimit() {
+		return perbulimit;
+	}
+
+	public void setPerbulimit(Integer perbulimit) {
+		this.perbulimit = perbulimit;
+	}
+
+	public String getRetrievingmeans() {
         return retrievingmeans;
     }
 

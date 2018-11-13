@@ -99,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				      <input type="hidden" id="peracTransactionpw" class="peracloginpw form-control" name="peractransactionpw" placeholder="请输入">
 				      <!--网点信息表(主键)  -->
 				      <input type="hidden" id="" class="form-control" name="netinfoid" placeholder="请输入">
-					<input type="text" id="UnitInfoAccount" onblur="dwgrkh(1)" class="form-control" data-toggle="modal" data-target="#myModal"  name="unitinfoaccount" placeholder="请输入">	              
+					<input type="text" id="UnitInfoAccount" class="form-control" name="unitinfoaccount" placeholder="请输入">	              
 				</div>
 			<label for="description" class="col-sm-1 control-label">单位名称</label>
 				<div class="col-md-2 column">
@@ -288,126 +288,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 </div>
-
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					&times;
-				</button>
-				<h4 class="modal-title" id="myModalLabel" >
-					单位信息:<input  type="text" onblur="dwgrkh(1)"   id="ids" name="UnitInfoName" placeholder="请输入单位名称"  >检索<input style="text-align:right;"  type="text" onblur="dwgrkh(1)"   id="unfoId" name="" placeholder="请输入单位账号"  >
-				</h4>
-			</div>
-			<div class="modal-body">
-			
-			<div id="sch_1" ><!-- style="display: none" -->
-	  <table class="table table-hover">	 	
- 		 <tr class="success">
-            <td >单位账号</td>
-            <td >单位名称</td>
-            <td >单位缴存比例</td>
-            <td >个人缴存比例</td>
-         </tr>
- 	  	<tbody id="tbody3">
- 	  		
- 	  	</tbody>
- 	  </table>
- <ul class="pager" >
- 	<li>
- 	当前页:<span id="curPage"></span>总页数:<span id="totalPages"></span>
- 	</li>
- 	<li><a  id="first" onclick="changePage(this)">首页</a></li>
- 	<li><a  id="prev" onclick="changePage(this)">上一页</a></li>
- 	<li><a  id="next" onclick="changePage(this)">下一页</a></li>
- 	<li><a  id="last"  onclick="changePage(this)">尾页</a></li>
- 	<li><input type="number"  id="txtCurPage"   min="1" max="10"></input><input type="button" class="btn btn-default" value="go" onclick="gotoPage()"/></li>
-  </ul>
- 	</div>
-			
-			
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
-				</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal -->
-</div>
-
   </body>
 </html>
 <script>
   
-   /* 页面加载函数 */
-	/* $(function() {
-	   
-		dwgrkh(1);
-	}); */
-	
-	/* 查询表 */
-	function dwgrkh(page) {
-	var dwcx=$('#ids').val();
-	var foname=$("#unfoId").val();
-		$.ajax({
-			url : "${pageContext.request.contextPath}/unfo/queryUnfoAndUncc",
-			type : "post",
-			data:{"UnitInfoName":dwcx,"pageNum":page,"unfoId":foname},
-			dataType : "json",
-			success : function(data) {
-			   
-				$("#tbody3").empty();
-				var ob=data.list;
-				for (var i = 0; i <ob.length; i++) {
-					var obj = ob[i];
-					var tr = "<tr class='onclicks' data-dismiss='modal'>";
-					tr += "<td>" + obj.UnitInfoAccount + "</td>";
-					tr += "<td>" + obj.UnitInfoName + "</td>";
-					tr += "<td>" + obj.UnitsDepositRatio + "</td>";
-					tr += "<td>" + obj.UnitsIndividua + "</td>";
-					tr += "</tr>";
-					$("#tbody3").append(tr);
-				}
-				 //重新初始化分页链接
-        $("#curPage").html(data.curPage);
-		$("#totalPages").html(data.totalPages);
-        $("#first").attr("data",data.first);
-		$("#prev").attr("data",data.prev);
-		$("#next").attr("data",data.next);
-		$("#last").attr("data",data.last);
-		$("#txtCurPage").val(data.curPage).attr("max",data.last);
-			}
-			
-		});
-	};
-	
-	//改变页面
-function changePage(obj){
-    var page=$(obj).attr("data");//取出data属性值
-    dwgrkh(page);
-}
-//跳转到指定页面
-	function gotoPage(page){
-		var page=$("#txtCurPage").val();
-		dwgrkh(page);
-	} 
-	
-  $(document).on("click",".onclicks",function(){
-     var vals=[];
-      for(var i=0;i<4;i++){
-        var val=$(this).children().eq(i).html();
-          vals.push(val);
-      }
-           $("#UnitInfoAccount").val(vals[0]);
-           $("#UnitInfoName").val(vals[1]);
-           $("#UnitsDepositRatio").val(vals[2]);
-           $("#UnitsIndividua").val(vals[3]);
-           $("#progress").css("width","16%");
-      
-  }); 
-    $(document).on("change","#UnitInfoAccount",function(){
+   
+   
+    $(document).on("blur","#UnitInfoAccount",function(){
     var obj=this.value;
        $.ajax({
        url:"${pageContext.request.contextPath}/unfo/queryUnfo",
@@ -430,7 +317,7 @@ function changePage(obj){
           
        }
     })
-   });  
+   }); 
    $(function(){
      queryZub();
      queryLmk();

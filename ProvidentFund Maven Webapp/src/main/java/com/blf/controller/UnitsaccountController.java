@@ -21,9 +21,22 @@ public class UnitsaccountController {
  private UnitsaccountService unse;
  @RequestMapping("/queryUnfoAndUncc")
  @ResponseBody
- public List<Map<String,Object>> query(){
-	 List<Map<String,Object>> list=unse.queryUnitinfo();
-	return list;
+ public Pager query(String UnitInfoName,@RequestParam(required = false, defaultValue = "1") Integer pageNum,String unfoId){
+	 
+	    Pager p=new Pager();//分页对象
+		p.setCurPage(pageNum);/*当前页*/
+		p.setPageSize(2);/*//每页条数*/
+		Map<String,Object> map=new HashMap<String,Object>();
+		//map.put("startIndex", (curPage-1)*pageSize);
+		map.put("startIndex", p.getStartIndex());//设置开始索引
+		map.put("pageSize", p.getPageSize());//设置每页条数
+		map.put("unfoName", UnitInfoName);
+		map.put("unfoId",unfoId);
+		List<Map<String,Object>> list=unse.queryUnitinfo(map);
+		int i=unse.getPageCount(map);
+		p.setList(list);
+		p.setTotalCount(i);
+	return p;
  }
  @RequestMapping("/queryUnfo")
  @ResponseBody
@@ -37,9 +50,9 @@ public class UnitsaccountController {
 @ResponseBody
  public Pager queryPageUnfo(String UnitInfoName,@RequestParam(required = false, defaultValue = "1") Integer pageNum){
 	System.out.println(UnitInfoName+"汇缴"+pageNum);  
-	Pager p=new Pager();//分页对象
+	    Pager p=new Pager();//分页对象
 		p.setCurPage(pageNum);/*当前页*/
-		p.setPageSize(1);/*//每页条数*/
+		p.setPageSize(2);/*//每页条数*/
 		Map<String,Object> map=new HashMap<String,Object>();
 		//map.put("startIndex", (curPage-1)*pageSize);
 		map.put("startIndex", p.getStartIndex());//设置开始索引

@@ -270,6 +270,9 @@ public class Individualpay {
 		this.personaldepositbase = personaldepositbase;
 	}
 
+	
+	
+
 	public Integer getUnitratedeposit() {
 		return unitratedeposit;
 	}

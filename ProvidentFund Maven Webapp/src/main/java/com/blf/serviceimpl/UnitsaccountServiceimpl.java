@@ -15,8 +15,8 @@ public class UnitsaccountServiceimpl implements UnitsaccountService {
  private UnitsaccountMapper dao;
  
 	@Override
-	public List<Map<String,Object>> queryUnitinfo() {
-		List<Map<String,Object>> list=dao.queryUnccfo();
+	public List<Map<String,Object>> queryUnitinfo(Map<String,Object> map) {
+		List<Map<String,Object>> list=dao.queryUnccfo(map);
 		return list;
 	}
 

@@ -21,8 +21,8 @@ import com.entity.Individualpay;
 import com.entity.Peraccount;
 
 @Controller
-@RequestMapping("/uploadExcel/*")  
-public class UploadExcelControl {
+@RequestMapping("/uploadExcelblf/*")  
+public class UploadExcelControlblf {
 @Autowired
 private individualPayService ips;
     /**
@@ -30,7 +30,7 @@ private individualPayService ips;
      * @param request
      * @throws Exception
      */
-    @RequestMapping(value="upload.do",method={RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value="uploadblf.do",method={RequestMethod.GET,RequestMethod.POST})
     public  String  uploadExcel(HttpServletRequest request) throws Exception {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;  
         System.out.println("通过传统方式form表单提交方式导入excel文件！");
@@ -66,7 +66,7 @@ private individualPayService ips;
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping(value="ajaxUpload.do",method={RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value="ajaxUploadblf.do",method={RequestMethod.GET,RequestMethod.POST})
     public  void  ajaxUploadExcel(HttpServletRequest request,HttpServletResponse response) throws Exception {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;  
 
@@ -115,7 +115,7 @@ private individualPayService ips;
             ip.setOpeningdate(String.valueOf(lo.get(23)));
             ip.setPeraccountbalance(Integer.valueOf((String) lo.get(24)));
             ips.saveIparOrperccOrUpdatePercc(vo, ip);
-            System.out.println("打印信息-->机构:"+vo.getZhztbh()+" 机构:"+vo.getUnitinfoaccount()+"  名称："+vo.getEmail()+"   时间："+ip.getOpeningdate()+"   资产："+ip.getPersonaldepositbase());
+            System.out.println("打印信息-->机构:"+vo.getZhztbh()+"汇缴比例"+lo.get(20)+"汇缴比例"+lo.get(21)+"金额"+lo.get(24)+" 机构:"+vo.getUnitinfoaccount()+"  名称："+vo.getEmail()+"   时间："+ip.getOpeningdate()+"   资产："+ip.getPersonaldepositbase());
         }
 
         PrintWriter out = null;

@@ -143,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 			<tr>
 			  <td>补缴年月</td>
-			  <td colspan="3"><input type="month"  id="date1"  value="bjny"  >至<input type="month" onchange="bujiaoyueshu()" id="date2"  value=""  ></td>
+			  <td colspan="3"><input type="month"  id="date1"  name="bjny"  >至<input type="month" onchange="bujiaoyueshu()" id="date2"  value=""  ></td>
 			  <td>补缴月数</td>
 			  <td><input type="text" value="1" class="" id="" name="bjys" ></td>
 			</tr>

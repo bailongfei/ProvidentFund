@@ -6,7 +6,7 @@ import java.util.Map;
 import com.entity.Unitsaccount;
 
 public interface UnitsaccountMapper {
-	public List<Map<String,Object>> queryUnccfo();
+	public List<Map<String,Object>> queryUnccfo(Map<String,Object> map);
 	public List<Map<String,Object>> queryUnfo(Unitsaccount unitinfoaccount);
 	public List<Map<String,Object>> queryPageUnfo(Map<String, Object> map);
     public int getPageCount(Map<String, Object> map);
