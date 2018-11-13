@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -28,6 +29,7 @@ import com.github.pagehelper.PageInfo;
 import com.llt.service.AdminService;
 
 @Controller
+@SessionAttributes(value="user1")
 @RequestMapping("/login")
 public class AdminControllerllt {
 
@@ -54,6 +56,7 @@ public class AdminControllerllt {
 	@ResponseBody
 	public List<Map<String, Object>> queryMenu(HttpSession session) {
 		String username = (String) session.getAttribute("adminUsers");
+		System.out.println(username+"99999999999999999999");
 		List<Map<String, Object>> list = adminService.findModules(username);
 		return list;
 	}
