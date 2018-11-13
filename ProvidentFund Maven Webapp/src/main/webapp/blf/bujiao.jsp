@@ -665,7 +665,8 @@ new Date(2010, 2, 12) // March 12th, 2010
                    if(data.state>0){
 		                alert(data.message);
 		            $("#form1 input[type=text],input[text=hidden]").val("");
-		            $("#tbodyId").empty();  
+		            $("#tbodyId").empty();
+		            bujiaomx(page);  
 		              }else{"提交失败!"}
                 }
             });

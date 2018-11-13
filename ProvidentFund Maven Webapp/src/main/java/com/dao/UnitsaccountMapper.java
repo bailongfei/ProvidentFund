@@ -10,6 +10,7 @@ public interface UnitsaccountMapper {
 	public List<Map<String,Object>> queryUnfo(Unitsaccount unitinfoaccount);
 	public List<Map<String,Object>> queryPageUnfo(Map<String, Object> map);
     public int getPageCount(Map<String, Object> map);
+    public int updateunfocc(Map<String, Object> map);
     int deleteByPrimaryKey(Integer unitinfoaccount);
 
     int insert(Unitsaccount record);

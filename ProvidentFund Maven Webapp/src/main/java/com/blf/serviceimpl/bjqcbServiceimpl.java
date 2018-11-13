@@ -1,5 +1,6 @@
 package com.blf.serviceimpl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.blf.service.bjqcbService;
 import com.dao.BjqcbMapper;
 import com.dao.IndividualpayMapper;
+import com.dao.UnitsaccountMapper;
 @Service
 public class bjqcbServiceimpl implements bjqcbService {
 @Autowired
 private IndividualpayMapper Ip;
 @Autowired
 private BjqcbMapper bj;
+@Autowired
+private UnitsaccountMapper unfo;
 @Transactional
 	@Override
 	public int savebjqcbOrUpdateIper(Map<String, Object> map) {
@@ -28,8 +32,12 @@ private BjqcbMapper bj;
             int ip=Ip.BujiaoUpdateIper(personalaccount, grjczes);
             
 		}
-		int i=bj.saveBujiao(map);
-		return i;
+		bj.saveBujiao(map);
+		Map<String,Object> mp=new HashMap<String, Object>();
+		mp.put("UnitInfoAccount",map.get("unitinfoaccount"));
+		mp.put("UnitsBalance",map.get("bjssje"));
+		int c=unfo.updateunfocc(mp);
+		return c;
 		
 	}
 

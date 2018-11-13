@@ -609,6 +609,7 @@ function changePage(obj){
        	 success:function(data){
            if(data.state>0){
              alert(data.message);
+             dwxxAnddwzh(page);
             }else{"提交失败!"}
       //window.location.href="${pageContext.request.contextPath}/blf/mingxicx.jsp";
             
