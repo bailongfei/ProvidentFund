@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.PerbusinessMapper">
+<!-- 汇缴明细查询 -->
+<select id="quertPeraccs" parameterType="map" resultType="map">
+  select * from perbusiness ps join individualPay ip on ps.grzhbhs=ip.grzhbhs join peraccount pt on ip.grzhbh=pt.grzhbh 
+  <where>
+     <if test="UnitInfoAccount!=null and UnitInfoAccount!=''">
+          and ip.UnitInfoAccount like "%"#{UnitInfoAccount}"%"
+     </if>
+     <if test="date1!=null and date1!='' and date2!=null and date2!=''">
+         and ps.grperbuTime between #{date1} and #{date2}
+     </if>
+ </where>
+   order by ps.grperbuTime desc
+  limit #{startIndex},#{pageSize}
+</select>
+ <select id="queryCountPeraccs" parameterType="map" resultType="int">
+        select count(*) from perbusiness ps join individualPay ip on ps.grzhbhs=ip.grzhbhs join peraccount pt on ip.grzhbh=pt.grzhbh 
+		 <where>
+		     <if test="UnitInfoAccount!=null and UnitInfoAccount!=''">
+		          and ip.UnitInfoAccount like "%"#{UnitInfoAccount}"%"
+		     </if>
+		     <if test="date1!=null and date1!='' and date2!=null and date2!=''">
+		         and ps.grperbuTime between #{date1} and #{date2}
+		     </if>
+		 </where>
+  </select>
   <resultMap id="BaseResultMap" type="com.entity.Perbusiness">
     <id column="perbuid" jdbcType="INTEGER" property="perbuid" />
     <result column="grzhbhs" jdbcType="INTEGER" property="grzhbhs" />
@@ -46,6 +71,104 @@
       #{grapprovalstatuss,jdbcType=VARCHAR}, #{settlementstatus,jdbcType=VARCHAR}, #{strike,jdbcType=VARCHAR}, 
       #{unitadvancep,jdbcType=DECIMAL}, #{personadvancep,jdbcType=DECIMAL}, #{bglx,jdbcType=VARCHAR}
       )
+  </insert>
+  <!--添加补缴明细  -->
+  <insert id="savePeress" parameterType="map">
+    insert into perbusiness
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="perbuid != null and perbuid != ''">
+        perbuid,
+      </if>
+      <if test="grzhbhs != null and grzhbhs !=''">
+        grzhbhs,
+      </if>
+      <if test="netinfoid != null and netinfoid !=''">
+        netinfoId,
+      </if>
+      <if test="grzhbh != null and grzhbh !=''">
+        grzhbh,
+      </if>
+      <if test="grpersonids != null and grpersonids !=''">
+        grpersonIds,
+      </if>
+      <if test="grperbutime != null and grperbutime !=''">
+        grperbuTime,
+      </if>
+      <if test="grperbutype != null and grperbutype !=''">
+        grperbuType,
+      </if>
+      <if test="perbulimit != null and perbulimit !=''">
+        perbuLimit,
+      </if>
+      <if test="retrievingmeans != null and retrievingmeans !=''">
+        retrievingMeans,
+      </if>
+      <if test="grapprovalstatuss != null and grapprovalstatuss !=''">
+        grapprovalStatuss,
+      </if>
+      <if test="settlementstatus != null and settlementstatus !=''">
+        SettlementStatus,
+      </if>
+      <if test="strike != null and strike !=''">
+        strike,
+      </if>
+      <if test="unitadvancep != null and unitadvancep !=''">
+        unitAdvancep,
+      </if>
+      <if test="personadvancep != null and personadvancep !=''">
+        personAdvancep,
+      </if>
+      <if test="bglx != null and bglx !=''">
+        bglx,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="perbuid != null and perbuid !=''">
+        #{perbuid,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbhs != null and grzhbhs !=''">
+        #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="netinfoid != null and netinfoid !=''">
+        #{netinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="grzhbh != null and grzhbh !=''">
+        #{grzhbh,jdbcType=INTEGER},
+      </if>
+      <if test="grpersonids != null and grpersonids !=''">
+        #{grpersonids,jdbcType=VARCHAR},
+      </if>
+      <if test="grperbutime != null and grperbutime !=''">
+        #{grperbutime,jdbcType=DATE},
+      </if>
+      <if test="grperbutype != null and grperbutype !=''">
+        #{grperbutype,jdbcType=VARCHAR},
+      </if>
+      <if test="perbulimit != null and perbulimit !=''">
+        #{perbulimit,jdbcType=DECIMAL},
+      </if>
+      <if test="retrievingmeans != null and retrievingmeans !=''">
+        #{retrievingmeans,jdbcType=VARCHAR},
+      </if>
+      <if test="grapprovalstatuss != null and grapprovalstatuss !=''">
+        #{grapprovalstatuss,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementstatus != null and settlementstatus !=''">
+        #{settlementstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="strike != null and strike !=''">
+        #{strike,jdbcType=VARCHAR},
+      </if>
+      <if test="unitadvancep != null and unitadvancep !=''">
+        #{unitadvancep,jdbcType=DECIMAL},
+      </if>
+      <if test="personadvancep != null and personadvancep !=''">
+        #{personadvancep,jdbcType=DECIMAL},
+      </if>
+      <if test="bglx != null and bglx !=''">
+        #{bglx,jdbcType=VARCHAR},
+      </if>
+    </trim>
   </insert>
   <!--添加明细  -->
   <insert id="insertSelective" parameterType="com.entity.Perbusiness">

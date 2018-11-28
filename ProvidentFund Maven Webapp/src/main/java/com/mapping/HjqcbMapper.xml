@@ -11,19 +11,19 @@ SELECT *, ABS(NOW() - h.bjjzrq)  AS diffTime FROM hjqcb h where h.UnitInfoAccoun
    <select id="queryHj" parameterType="map"  resultType="map">
     select h.*,uf.UnitInfoName,uf.UnitInfoCredit,us.user_account from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId  
     <where>
-         <!-- <if test="unitinfoaccount!=null and unitinfoaccount.unitinfoname!=null and unitinfoaccount.unitinfoname!=''">
-           and uf.UnitInfoName like "%"#{unitinfoname}"%"
-       </if> -->  
-       <!-- <if test="unitinfoaccount!=null and unitinfoaccount!=''">
-          and h.UnitInfoAccount like "%"#{unitnum}"%"
-       </if> -->
-        <if test="unfoName!=null and unfoName!=''">
+        
+        <!-- <if test="unfoName!=null and unfoName!=''">
           and uf.UnitInfoName like "%"#{unfoName}"%"
-       </if>
-       
-       <!-- <if test="hjywlx!=null and hjywlx!=''">
-         and hjywlx like "%"#{hjywlx}"%"
        </if> -->
+      <if test="UnitInfoName!=null and UnitInfoName!=''">
+          and uf.UnitInfoName like "%"#{UnitInfoName}"%"
+     </if>
+     <if test="bjywllx!=null and bjywllx!=''">
+          and h.hjywlx like "%"#{bjywllx}"%"
+     </if>
+     <if test="date1!=null and date1!='' and date2!=null and date2!=''">
+         and h.bjjzrq between #{date1} and #{date2}
+     </if>
     </where>
     order by hjbh desc
     limit #{startIndex},#{pageSize}
@@ -31,9 +31,15 @@ SELECT *, ABS(NOW() - h.bjjzrq)  AS diffTime FROM hjqcb h where h.UnitInfoAccoun
   <select id="getCount" resultType="int">
         select count(*) from hjqcb h join unitsaccount uc on h.UnitInfoAccount=uc.UnitInfoAccount join UnitInfo uf on uc.UnitInfoId=uf.UnitInfoId join sys_user us on h.userId=us.userId 
        <where>
-         <if test="unfoName!=null and unfoName!=''">
-          and uf.UnitInfoName like "%"#{unfoName}"%"
-        </if>
+         <if test="UnitInfoName!=null and UnitInfoName!=''">
+          and uf.UnitInfoName like "%"#{UnitInfoName}"%"
+	     </if>
+	     <if test="bjywllx!=null and bjywllx!=''">
+	          and h.hjywlx like "%"#{bjywllx}"%"
+	     </if>
+	     <if test="date1!=null and date1!='' and date2!=null and date2!=''">
+	         and h.bjjzrq between #{date1} and #{date2}
+	     </if>
        </where>
          order by hjbh desc 
   </select>

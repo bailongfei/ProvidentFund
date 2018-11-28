@@ -65,7 +65,7 @@
   </insert>
   <!--引入账户外键  -->
   <update id="updatePercc" parameterType="map">
-    update peraccount set grzhbhs=#{grzhbhs} where grzhbh=#{grzhbh}
+    update peraccount set grzhbhs=#{grzhbhs},dkzt=0 where grzhbh=#{grzhbh}
   </update>
   <!--添加人员  -->
   <insert id="insertPercc" parameterType="map" >
@@ -95,6 +95,9 @@
       </if>
       <if test="grzhbhs != null and grzhbhs !=''">
         grzhbhs,
+      </if>
+      <if test="lmkbh != null and lmkbh !=''">
+        lmkbh,
       </if>
       <if test="peracid != null and peracid !=''">
         peracId,
@@ -144,6 +147,9 @@
       <if test="address != null and address !=''">
         address,
       </if>
+      <if test="dkzt != null and dkzt !=''">
+        dkzt,
+      </if>
       <if test="monthlyprofit != null and monthlyprofit !=''">
         monthlyProfit,
       </if>
@@ -169,6 +175,9 @@
       </if>
       <if test="grzhbhs != null and grzhbhs !=''">
         #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="lmkbh != null and lmkbh !=''">
+        #{lmkbh,jdbcType=INTEGER},
       </if>
       <if test="peracid != null and peracid !=''">
         #{peracid,jdbcType=VARCHAR},
@@ -217,6 +226,9 @@
       </if>
       <if test="address != null and address !=''">
         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="dkzt != null and dkzt !=''">
+        #{dkzt,jdbcType=INTEGER},
       </if>
       <if test="monthlyprofit != null and monthlyprofit !=''">
         #{monthlyprofit,jdbcType=DECIMAL},
@@ -252,6 +264,9 @@
       <if test="grzhbhs != null and grzhbhs !=''">
         grzhbhs,
       </if>
+      <if test="lmkbh != null and lmkbh !=''">
+        lmkbh,
+      </if>
       <if test="peracid != null and peracid !=''">
         peracId,
       </if>
@@ -300,6 +315,9 @@
       <if test="address != null and address !=''">
         address,
       </if>
+      <if test="dkzt != null and dkzt !=''">
+        dkzt,
+      </if>
       <if test="monthlyprofit != null and monthlyprofit !=''">
         monthlyProfit,
       </if>
@@ -325,6 +343,9 @@
       </if>
       <if test="grzhbhs != null and grzhbhs !=''">
         #{grzhbhs,jdbcType=INTEGER},
+      </if>
+      <if test="lmkbh != null and lmkbh !=''">
+        #{lmkbh,jdbcType=INTEGER},
       </if>
       <if test="peracid != null and peracid !=''">
         #{peracid,jdbcType=VARCHAR},
@@ -373,6 +394,9 @@
       </if>
       <if test="address != null and address !=''">
         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="dkzt != null and dkzt !=''">
+        #{dkzt,jdbcType=INTEGER},
       </if>
       <if test="monthlyprofit != null and monthlyprofit !=''">
         #{monthlyprofit,jdbcType=DECIMAL},

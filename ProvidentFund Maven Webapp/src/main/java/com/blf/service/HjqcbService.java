@@ -14,4 +14,6 @@ public interface HjqcbService {
 	public int insertHjqcbOrUpdateIparOrqueryIperOrsavepercc(Hjqcb record);
 	public List<Map<String,Object>> queryHj(Map<String,Object> map);
 	public int getCount(Map<String, Object> map);
+	public List<Map<String,Object>> queryPeraccs(Map<String,Object> map);
+	public int queryCountPeracc(Map<String,Object> map);
 }

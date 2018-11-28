@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.ReturnpayMapper">
+<select id="findaccountinfo2" resultType="map" parameterType="map">
+  	select * from peraccount p right join unitinfo u on p.UnitInfoId=u.UnitInfoId join individualpay ip on ip.grzhbh=p.grzhbh 
+  	where p.zhztbh=1
+  	<if test="UnitInfoAccount!=null and UnitInfoAccount!=''">
+  	   and p.UnitInfoAccount=#{UnitInfoAccount}
+  	</if>
+  	<if test="bkname!=null and bkname!=''">
+  		and p.bkname like concat('%',#{bkname},'%')
+  	</if>
+  </select>
   <resultMap id="BaseResultMap" type="com.entity.Returnpay">
     <id column="chbh" jdbcType="INTEGER" property="chbh" />
     <result column="grzhbhs" jdbcType="INTEGER" property="grzhbhs" />

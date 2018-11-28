@@ -531,28 +531,28 @@
 							    </a>
 							<dl class="layui-nav-child">
 							   <dd>
-									<a lay-href="${pageContext.request.contextPath}/blf/grkh.jsp">个人开户</a>
+									<a lay-href="${pageContext.request.contextPath}/frame/views/blf/grkh.jsp">个人开户</a>
 								</dd>
 								<dd>
-									<a lay-href="${pageContext.request.contextPath}/blf/huijiao.jsp">汇缴办理</a>
+									<a lay-href="${pageContext.request.contextPath}/frame/views/blf/huijiao.jsp">汇缴办理</a>
 								</dd>
 								<dd>
-									<a lay-href="${pageContext.request.contextPath}/blf/bujiao.jsp">补缴办理</a>
+									<a lay-href="${pageContext.request.contextPath}/frame/views/blf/bujiao.jsp">补缴办理</a>
 								</dd>
 								<dd>
-									<a lay-href="index.jsp">跨年清册核定</a>
+									<a lay-href="${pageContext.request.contextPath}/frame/views/blf/grjsbg.jsp">跨年清册核定</a>
 								</dd>
 								<dd>
 									<a lay-href="index.jsp">比例变更</a>
 								</dd>
 								<dd>
-									<a lay-href="index.jsp">冲缴办理</a>
+									<a lay-href="${pageContext.request.contextPath}/frame/views/blf/chongjiao.jsp">冲缴办理</a>
 								</dd>
 								<dd>
-									<a lay-href="${pageContext.request.contextPath}/blf/mingxicx.jsp">明细查询</a>
+									<a lay-href="${pageContext.request.contextPath}/frame/views/blf/dwmxcx.jsp">明细查询</a>
 								</dd>
 								<dd>
-									<a lay-href="${pageContext.request.contextPath}/blf/layUi.jsp">变更记录</a>
+									<a lay-href="${pageContext.request.contextPath}/frame/views/blf/layUi.jsp">变更记录</a>
 								</dd>
 							</dl>
 						</li>
@@ -564,7 +564,7 @@
 							    </a>
 							<dl class="layui-nav-child">
 								<dd>
-									<a lay-href="${pageContext.request.contextPath}/blf/grmx.jsp">个人明细</a>
+									<a lay-href="${pageContext.request.contextPath}/frame/views/blf/grmx.jsp">个人明细</a>
 								</dd>
 								
 								

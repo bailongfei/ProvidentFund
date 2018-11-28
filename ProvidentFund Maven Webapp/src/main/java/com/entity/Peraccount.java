@@ -12,9 +12,11 @@ public class Peraccount {
     private Integer netinfoid;
 
     private Integer unitinfoaccount;
-
+    
+    private Integer lmkbh;
+    
     private Integer grzhbhs;
-
+    
     private String peracid;
 
     private String peracloginpw;
@@ -46,6 +48,8 @@ public class Peraccount {
     private String postcode;
 
     private String address;
+    
+    private Integer dkzt;
 
     private Integer monthlyprofit;
 
@@ -283,4 +287,23 @@ public class Peraccount {
 		this.grzhbh = grzhbh;
 		this.zhztbh = zhztbh;
 	}
+
+	public Integer getLmkbh() {
+		return lmkbh;
+	}
+
+	public void setLmkbh(Integer lmkbh) {
+		this.lmkbh = lmkbh;
+	}
+
+	public Integer getDkzt() {
+		return dkzt;
+	}
+
+	public void setDkzt(Integer dkzt) {
+		this.dkzt = dkzt;
+	}
+
+	
+	
 }

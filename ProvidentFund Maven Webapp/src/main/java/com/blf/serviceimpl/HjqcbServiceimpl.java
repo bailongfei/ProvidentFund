@@ -64,18 +64,8 @@ public class HjqcbServiceimpl implements HjqcbService {
 			per.setGrperbutime(record.getJnmy());
 			per.setGrperbutype(record.getHjywlx());
 			per.setPerbulimit(list.get(i).getPeraccountbalance());
-			/*if(list.get(i).getUnitmonpayamount().contains(".")){
-				per.setUnitadvancep(Integer.parseInt(list.get(i).getUnitmonpayamount().substring(0,list.get(i).getUnitmonpayamount().indexOf("."))));//截取小数点前面的内容	
-			}else{
-				per.setUnitadvancep(Integer.parseInt(list.get(i).getUnitmonpayamount()));
-			}*/
-			/*if(list.get(i).getUnitmonpayamount().contains(".")){
-				per.setUnitadvancep(Integer.parseInt(list.get(i).getUnitmonpayamount().split(".")[0]));
-			}else{
-				per.setUnitadvancep(Integer.parseInt(list.get(i).getUnitmonpayamount()));
-			}*/
-			per.setUnitadvancep(list.get(i).getUnitmonpayamount());
-			per.setPersonadvancep(list.get(i).getUnitmonpayamount());
+			per.setUnitadvancep(list.get(i).getUnitmonpayamount()*Integer.valueOf(list.get(i).getDemandinterestand()));
+			per.setPersonadvancep(list.get(i).getUnitmonpayamount()*Integer.valueOf(list.get(i).getDemandinterestand()));
 			perssDao.insertSelective(per);
 		}
 		Map<String,Object> map=new HashMap<String, Object>();
@@ -99,6 +89,17 @@ public class HjqcbServiceimpl implements HjqcbService {
 	public List<Map<String, Object>> queryUcOrUf(Integer unitinfoaccount) {
 		List<Map<String, Object>> list=dao.queryUcOrUf(unitinfoaccount);
 		return list;
+	}
+	@Override
+	public List<Map<String, Object>> queryPeraccs(Map<String, Object> map) {
+		List<Map<String, Object>> m=perssDao.quertPeraccs(map);
+		
+		return m;
+	}
+	@Override
+	public int queryCountPeracc(Map<String, Object> map) {
+		int i=perssDao.queryCountPeraccs(map);
+		return i;
 	}
 
 }

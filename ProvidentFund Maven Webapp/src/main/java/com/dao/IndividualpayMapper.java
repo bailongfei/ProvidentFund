@@ -22,6 +22,9 @@ public interface IndividualpayMapper {
     public Map<String,Object> queryCheckdata(@Param("perId")String perId);
     public int BujiaoUpdateIper(@Param("personalaccount")String personalaccount,@Param("grjczes")String grjczes);//补缴
     public int IperUpdates(Map<String,Object> map);//批量开户修订
+    public int updateIperJstz(Map<String,Object> map);
+    public int UpdatePlperjstz(@Param("personalAccount")String personalAccount,@Param("personalDepositBase")String personalDepositBase,@Param("unitMonPayAmount")String unitMonPayAmount,@Param("monPayAmount")String monPayAmount);
+    public List<Map<String,Object>> queryBjmx(Map<String,Object> map);
     int insert(Individualpay record);
 
     int insertSelective(Individualpay record);

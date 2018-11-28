@@ -19,22 +19,6 @@ public class individualPayServiceImpl implements individualPayService {
 private IndividualpayMapper ipay;
 @Autowired
 private PeraccountMapper percc;
-    
-	/*@Override
-	public int insertPercc(Map<String, Object> map) {
-		int i=percc.insertPercc(map);
-		Integer id=(Integer) map.get("grzhbh");
-		ipay.insertIpayPer(map);
-		
-		System.out.println(id);
-		return i;
-	}
-    
-	@Override
-	public int insertIparPer(Map<String, Object> map) {
-		int i=ipay.insertIpayPer(map);
-		return i;
-	}*/
 	
 @Transactional
 @Override
@@ -73,6 +57,21 @@ public List<Map<String, Object>> queryIperss(String UnitInfoAccount, String bkna
 @Override
 public Map<String, Object> queryCheckdata(String perId) {
 	Map<String, Object> list=ipay.queryCheckdata(perId);
+	return list;
+}
+@Override
+public int updateIperJstz(Map<String, Object> map) {
+	int i=ipay.updateIperJstz(map);
+	return i;
+}
+@Override
+public int updatePlIperjstz(String personalAccount, String personalDepositBase,String unitMonPayAmount,String monPayAmount) {
+	int i=ipay.UpdatePlperjstz(personalAccount, personalDepositBase,unitMonPayAmount,monPayAmount);
+	return i;
+}
+@Override
+public List<Map<String, Object>> queryBjmx(Map<String, Object> map) {
+	List<Map<String, Object>> list=ipay.queryBjmx(map);
 	return list;
 }
 

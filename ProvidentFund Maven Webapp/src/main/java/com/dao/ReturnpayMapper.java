@@ -6,8 +6,11 @@ import java.util.Map;
 import com.entity.Returnpay;
 
 public interface ReturnpayMapper {
-    int deleteByPrimaryKey(Integer chbh);
+	//根据单位id查询个人账号信息
+    public List<Map<String,Object>> findaccountinfo2(Map<String,Object> map);
 
+    int deleteByPrimaryKey(Integer chbh);
+    
     int insert(Returnpay record);
 
     int insertSelective(Returnpay record);
